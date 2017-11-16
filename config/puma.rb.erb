@@ -1,0 +1,45 @@
+
+workers Integer(ENV["WEB_CONCURRENCY"] || 2)
+
+threads_count = Integer(ENV["MAX_THREADS"] || 5)
+
+threads threads_count, threads_count
+
+bind "unix://<%=  fetch(:puma_socket) %>"
+
+daemonize
+
+pidfile "<%=  fetch(:puma_pid) %>"
+
+state_path "<%=  fetch(:puma_state) %>"
+
+stdout_redirect "<%= "#{ fetch(:shared_path)}/log" %>/puma_access.log", "<%= "#{ fetch(:shared_path)}/log" %>/puma_error.log", true
+
+directory "<%= "#{ fetch(:current_path)}" %>"
+
+#preload_app!
+
+prune_bundler
+
+rackup      DefaultRackup
+
+environment ENV["RAILS_ENV"] || "development"
+
+activate_control_app "unix://<%=  fetch(:pumactl_socket) %>"
+
+before_fork do
+  # require "puma_worker_killer"
+  # PumaWorkerKiller.config do |config|
+  #   # 自动定时重启
+  #   config.rolling_restart_frequency = 3 * 3600 # 3 hours in seconds
+  # 
+  #   config.ram = 1000     # 允许 1 G 内存
+  # end
+  # PumaWorkerKiller.start
+end
+
+on_worker_boot do
+#  ActiveRecord::Base.establish_connection
+end
+
+plugin :tmp_restart

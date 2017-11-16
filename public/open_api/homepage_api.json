@@ -1,0 +1,295 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Zero Rails APIs",
+    "description": "API documentation of Zero-Rails Application. <br/>Optional multiline or single-line Markdown-formatted description in [CommonMark](http://spec.commonmark.org/) or `HTML`.",
+    "contact": {
+      "name": "API Support",
+      "url": "http://www.skippingcat.com",
+      "email": "x@skippingcat.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Optional server description, e.g. Main (production) server"
+    },
+    {
+      "url": "http://localhost:3000",
+      "description": "Optional server description, e.g. Internal staging server for testing"
+    }
+  ],
+  "security": [
+    {
+      "ApiKeyAuth": [
+
+      ]
+    }
+  ],
+  "tags": [
+    {
+      "name": "EEExam",
+      "description": "descccc"
+    }
+  ],
+  "paths": {
+    "/api/v1/examples": {
+      "get": {
+        "description": "Optional multiline or single-line Markdown-formatted description",
+        "summary": "(SUMMARY) this api blah blah ...",
+        "operationId": "index",
+        "tags": [
+          "EEExam"
+        ],
+        "parameters": [
+          {
+            "name": "Token",
+            "in": "header",
+            "required": true,
+            "description": "user token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "description": "description<br/>id",
+            "schema": {
+              "type": "integer",
+              "minLength": 1,
+              "maxLength": 2,
+              "enum": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "minimum": 0,
+              "exclusiveMinimum": true,
+              "maximum": 5,
+              "pattern": "^[0-9]$"
+            }
+          },
+          {
+            "name": "done",
+            "in": "query",
+            "required": true,
+            "description": "must be false",
+            "schema": {
+              "type": "boolean",
+              "enum": [
+                false
+              ],
+              "default": true
+            }
+          },
+          {
+            "name": "email_addr",
+            "in": "query",
+            "required": false,
+            "description": "user_email_addr's desc",
+            "schema": {
+              "type": "string",
+              "minLength": 3,
+              "format": "email",
+              "is": "email",
+              "default": "zero@zero-rails.org"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "default": 200
+                    },
+                    "msg": {
+                      "type": "string",
+                      "default": "success"
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "timestamp": {
+                      "type": "integer",
+                      "format": "time",
+                      "is": "time"
+                    },
+                    "language": {
+                      "type": "string",
+                      "default": "Ruby"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "can not find the name"
+          },
+          "400": {
+            "description": "parameter validation failed"
+          },
+          "success": {
+            "description": "success response",
+            "content": {
+              "application/json": {
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": [
+
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v1/examples/{id}": {
+      "get": {
+        "operationId": "show",
+        "tags": [
+          "EEExam"
+        ],
+        "parameters": [
+          {
+            "name": "Token",
+            "in": "header",
+            "required": true,
+            "description": "user token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "$ref": "#components/parameters/Query"
+          },
+          {
+            "name": "uuid",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#components/schemas/Uuid",
+              "format": "uuid",
+              "is": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "default": 200
+                    },
+                    "msg": {
+                      "type": "string",
+                      "default": "success"
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "timestamp": {
+                      "type": "integer",
+                      "format": "time",
+                      "is": "time"
+                    },
+                    "language": {
+                      "type": "string",
+                      "default": "Ruby"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": ""
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "parameter validation failed"
+          },
+          "123": {
+            "$ref": "#components/responses/Resp"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "name": "server_token",
+        "in": "query"
+      }
+    },
+    "schemas": {
+      "Uuid": {
+        "type": "string",
+        "enum": [
+          "2"
+        ]
+      }
+    },
+    "responses": {
+      "Resp": {
+        "description": "bad request",
+        "content": {
+          "application/json": {
+          }
+        }
+      }
+    },
+    "parameters": {
+      "Query": {
+        "name": "name",
+        "in": "query",
+        "required": true,
+        "description": "user name",
+        "schema": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
