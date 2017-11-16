@@ -7,6 +7,8 @@ end
 
 ruby '2.4.1'
 
+# TODO: 分组
+
 # gem 'zero-rails_openapi'
 # gem 'zero-params_processor'
 # gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
@@ -175,6 +177,7 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
 
+  ### Security and Code Quality tools
   # an open source static analysis tool which checks Ruby on Rails applications for security vulnerabilities.
   # https://github.com/presidentbeef/brakeman
   gem 'brakeman', :require => false
@@ -231,7 +234,7 @@ group :test do
   # gem 'rspec-sidekiq'
 end
 
-group :production do
+group :production, :staging do
   # https://github.com/newrelic/rpm
   # https://newrelic.com
   gem 'newrelic_rpm'
