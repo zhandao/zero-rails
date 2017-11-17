@@ -1,4 +1,4 @@
-class V1::InventoriesDoc < ApiDoc
+class Api::V1::InventoriesDoc < ApiDoc
 
   open_api :index, 'Get list of Inventories.', builder: :index,
            use: [ :created_start_at, :created_end_at, :value, :page, :rows ], skip: token do

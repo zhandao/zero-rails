@@ -8,5 +8,5 @@ ParamsProcessor::Config.tap do |it|
   # it.not_in_allowable_values = ''
   # it.not_match_pattern       = ''
   # it.out_of_range            = ''
-  it.production_msg          = 'parameter validation failed' if Rails.env.production?
+  it.production_msg          = ' validation failed' if Rails.env.production?
 end

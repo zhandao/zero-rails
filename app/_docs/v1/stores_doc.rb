@@ -1,4 +1,4 @@
-class V1::StoresDoc < ApiDoc
+class Api::V1::StoresDoc < ApiDoc
 
   open_api :index, 'Get list of Stores.', builder: :cache_index, use: none, skip: token do
     query :page, Integer, desc: '偏移量，从 0 开始', range: { ge: 1 }

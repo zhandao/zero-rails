@@ -76,7 +76,7 @@ module RspecGenerator
 
       def _instance_eval(block)
         content_stack.push ''
-        instance_eval &block
+        instance_eval(&block)
         content_stack.pop
       end
 

@@ -1,4 +1,4 @@
-class V1::PermissionsDoc < ApiDoc
+class Api::V1::PermissionsDoc < ApiDoc
 
   open_api :index, 'GET list of Permissions of specified model', builder: :index, use: token do
     query :model, String, dft: 'User', reg: /^[A-Z]/
