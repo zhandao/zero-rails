@@ -12,7 +12,7 @@ module ZConfigurable
     end
 
     def configure(&block)
-      config.instance_eval &block
+      config.instance_eval(&block)
     end
 
     def default(hash = { })

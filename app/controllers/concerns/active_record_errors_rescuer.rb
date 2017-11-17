@@ -5,13 +5,14 @@ module ActiveRecordErrorsRescuer
         @status = true
       end
 
-      rescue_from ::ActiveRecord::ActiveRecordError do
+      rescue_from ::ActiveRecord::ActiveRecordError do |e|
         @status = false
         @error_info = Rails.env.production? ? [ 0, 'Internal Server Error' ] : [ -100, e.message ]
-        render "api/v1/#{controller_name}/#{action_name}"
+        render "#{controller_path}/#{action_name}"
       end
 
-      if const_defined? "#{controller_name.camelize}Error"
+      # if const_defined? "#{controller_name.camelize}Error" FIXME
+      if (Object.const_get("#{controller_name.camelize}Error") rescue false)
         ar_errors = {
                 record_invalid: ::ActiveRecord::RecordInvalid,
                      not_saved: ::ActiveRecord::RecordNotSaved,
@@ -26,8 +27,9 @@ module ActiveRecordErrorsRescuer
         (error_class.errors.values.flatten & ar_errors.keys).each do |error_name|
           rescue_from ar_errors[error_name] do |e|
             @status = false
-            @error_info = Rails.env.production? ? error_class.send(error_name, :info).values : [ -100, e.message ]
-            render "api/v1/#{controller_name}/#{action_name}"
+            # @error_info = Rails.env.production? ? error_class.send(error_name, :info).values : [ -100, e.message ]
+            @error_info = error_class.send(error_name, :info).values
+            render "#{controller_path}/#{action_name}"
           end
         end
       end

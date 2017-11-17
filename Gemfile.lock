@@ -7,6 +7,8 @@ PATH
   remote: ../zero-rails_openapi
   specs:
     zero-rails_openapi (1.3.2)
+      activesupport (>= 3)
+      rails (>= 3)
 
 GEM
   remote: https://gems.ruby-china.org/
@@ -153,9 +155,9 @@ GEM
       actionpack (>= 4.1, < 5.2)
       activesupport (>= 4.1, < 5.2)
     hirb (0.7.3)
-    hirb-unicode (0.0.5)
+    hirb-unicode-steakknife (0.0.8)
       hirb (~> 0.5)
-      unicode-display_width (~> 0.1.1)
+      unicode-display_width (~> 1.1)
     i18n (0.9.0)
       concurrent-ruby (~> 1.0)
     inflecto (0.0.2)
@@ -226,10 +228,11 @@ GEM
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
     open4 (1.3.4)
+    parallel (1.12.0)
     paranoia (2.3.1)
       activerecord (>= 4.0, < 5.2)
-    parser (2.4.0.0)
-      ast (~> 2.2)
+    parser (2.4.0.2)
+      ast (~> 2.3)
     polyamorous (1.3.1)
       activerecord (>= 3.0)
     powerpack (0.1.1)
@@ -277,7 +280,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rainbow (2.2.2)
       rake
-    rake (12.2.1)
+    rake (12.3.0)
     ransack (1.8.4)
       actionpack (>= 3.0)
       activerecord (>= 3.0)
@@ -308,11 +311,13 @@ GEM
       rspec-mocks (~> 3.7.0)
       rspec-support (~> 3.7.0)
     rspec-support (3.7.0)
-    rubocop (0.36.0)
-      parser (>= 2.3.0.0, < 3.0)
+    rubocop (0.51.0)
+      parallel (~> 1.10)
+      parser (>= 2.3.3.1, < 3.0)
       powerpack (~> 0.1)
-      rainbow (>= 1.99.1, < 3.0)
+      rainbow (>= 2.2.2, < 3.0)
       ruby-progressbar (~> 1.7)
+      unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-progressbar (1.9.0)
     ruby_dep (1.5.0)
     sass (3.5.3)
@@ -343,7 +348,7 @@ GEM
     tilt (2.0.8)
     tzinfo (1.2.4)
       thread_safe (~> 0.1)
-    unicode-display_width (0.1.1)
+    unicode-display_width (1.3.0)
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -366,11 +371,11 @@ DEPENDENCIES
   did_you_mean
   factory_bot_rails
   hirb
-  hirb-unicode
+  hirb-unicode-steakknife
   jbuilder
   jwt
   kaminari
-  listen (>= 3.0.5, < 3.2)
+  listen (~> 3.0)
   lograge
   logstasher
   mina
@@ -391,7 +396,7 @@ DEPENDENCIES
   rspec-rails
   rubocop
   spring
-  spring-watcher-listen (~> 2.0.0)
+  spring-watcher-listen
   whenever
   zero-params_processor!
   zero-rails_openapi!

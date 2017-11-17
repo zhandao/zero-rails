@@ -105,7 +105,7 @@ module RspecGenerator
       def inherited(base)
         super
         base.class_eval do
-          self.ctrl_path = "api/#{name.sub('Spdoc', '').underscore.gsub('::', '/')}" if name.match? /sSpdoc/
+          self.ctrl_path = "#{name.sub('Spdoc', '').underscore.gsub('::', '/')}" if name.match? /sSpdoc/
           self.content_stack = [ ]
           content_stack.push ''
           self.doc = apis[$api_paths_index[ctrl_path]]['paths']

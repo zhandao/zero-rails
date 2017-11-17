@@ -1,4 +1,4 @@
-class V1::GoodsDoc < ApiDoc
+class Api::V1::GoodsDoc < ApiDoc
 
   open_api :index, 'Get list of Goods.', builder: :index,
            use: token + [ :created_start_at, :created_end_at, :value, :page, :rows ] do

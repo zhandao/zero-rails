@@ -160,21 +160,27 @@ gem "paranoia", "~> 2.2"
 group :development do
   # http://nadarei.co/mina/
   gem 'mina', require: false
+  # https://github.com/untitledkingdom/mina-puma
   gem 'mina-puma', require: false
   # Plugin for Mina that adds support for multiple stages.
   # https://github.com/endoze/mina-multistage
   gem 'mina-multistage', require: false
   # gem 'mina-sidekiq', require: false
 
-  gem 'listen', '>= 3.0.5', '< 3.2'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  # Spring speeds up development by keeping your application running in the background.
+  # Read more: https://github.com/rails/spring
   gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
+  # https://github.com/jonleighton/spring-watcher-listen
+  gem 'spring-watcher-listen'
+  # https://github.com/guard/listen
+  gem 'listen', '~> 3.0'
 
   # https://github.com/yuki24/did_you_mean
   gem 'did_you_mean'
 
+  # https://github.com/charliesome/better_errors
   gem 'better_errors'
+  # https://github.com/banister/binding_of_caller
   gem 'binding_of_caller'
 
   ### Security and Code Quality tools
@@ -199,10 +205,16 @@ gem 'awesome_rails_console'
 # Feel free to remove gems that you don't want to use or if they conflict with other gem dependencies. (you might need to update .pryrc also)
 group :development, :test do
   # -- awesome_rails_console
+  # https://github.com/cldwalker/hirb TODO 3 years ago
   gem 'hirb'
-  gem 'hirb-unicode'
+  # Unused, see: https://github.com/miaout17/hirb-unicode/pull/5
+  ## gem 'hirb-unicode'
+  # Instead of steakknife/hirb-unicode: https://github.com/steakknife/hirb-unicode
+  gem 'hirb-unicode-steakknife'
   gem 'pry'
+  # https://github.com/deivid-rodriguez/pry-byebug
   gem 'pry-byebug'
+  # https://github.com/pry/pry-stack_explorer
   gem 'pry-stack_explorer'
   # -- awesome_rails_console
 
@@ -224,14 +236,13 @@ group :development, :test do
   gem 'database_cleaner'
   # gem 'selenium-webdriver'
   # gem 'shoulda-matchers'
+  # gem 'rspec-sidekiq'
 end
 
 group :test do
   # Code coverage for Ruby 1.9+ with a powerful configuration library and automatic merging of coverage across test suites
   # https://github.com/colszowka/simplecov
   # gem 'simplecov', :require => false
-
-  # gem 'rspec-sidekiq'
 end
 
 group :production, :staging do

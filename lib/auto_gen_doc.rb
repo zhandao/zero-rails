@@ -10,7 +10,7 @@ module AutoGenDoc
       super
       subclass.class_eval do
         break unless self.name.match? /sController|sDoc/
-        ctrl_path "api/#{self.name.sub('Doc', '').underscore.gsub('::', '/')}" if self.name.match? /sDoc/
+        ctrl_path "#{self.name.sub('Doc', '').underscore.gsub('::', '/')}" if self.name.match? /sDoc/
         open_api_dry
       end
     end

@@ -1,4 +1,4 @@
-class V1::CategoriesDoc < ApiDoc
+class Api::V1::CategoriesDoc < ApiDoc
 
   open_api :index, 'Get list of Categories.', builder: :cache_index, use: none, skip: token do
     query :page, Integer, desc: '偏移量，从 0 开始', range: { ge: 1 }

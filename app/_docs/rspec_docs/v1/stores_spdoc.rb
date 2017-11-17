@@ -1,4 +1,4 @@
-# class V1::StoresSpdoc < RequestSpdoc
+# class Api::V1::StoresSpdoc < BaseSpdoc
 #   describe :index do
 #     biz 'business scenario x' do
 #       context 'when case y' do

@@ -34,7 +34,7 @@ module RolePermissionMapper
       return false unless @_make_sure_obj.can_all_of? *vp
     end
 
-    instance_eval &block if block_given?
+    instance_eval(&block) if block_given?
     true
   end
 

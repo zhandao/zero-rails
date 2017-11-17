@@ -1,4 +1,4 @@
-class V1::UsersDoc < ApiDoc
+class Api::V1::UsersDoc < ApiDoc
   # ctrl_path 'api/v1/users' # Note: auto_gen at lib/auto
 
   components do

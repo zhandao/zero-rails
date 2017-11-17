@@ -25,7 +25,7 @@ module ZeroRole
   def group_roles *args, arg, &block
     if block_given?
       old_roles_keys = current_roles.keys
-      instance_eval &block
+      instance_eval(&block)
       roles_groups[arg] = current_roles.keys - old_roles_keys
     elsif arg[:members].present?
       roles_groups[args.first] = arg[:members]
@@ -77,7 +77,7 @@ module ZeroRole
 
   def family role, options = { }, &block
     old_roles_keys = current_roles.keys
-    instance_eval &block
+    instance_eval(&block)
     new_roles = current_roles.keys - old_roles_keys
     is role, options.merge!(children: new_roles)
     new_roles.each do |new_role|

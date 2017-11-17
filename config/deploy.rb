@@ -95,7 +95,7 @@ task deploy: :remote_environment do
 
     on :launch do
       in_path(fetch(:current_path)) do
-        command %{touch tmp/restart.txt} # Spring?
+        command %{touch tmp/restart.txt}
       end
       command %[touch "#{fetch(:lograte_file)}"]
       invoke :'puma:start'          if fetch(:first_start_puma)
