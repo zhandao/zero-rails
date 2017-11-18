@@ -216,4 +216,4 @@ Object.const_set('Boolean', 'boolean')
 
 OpenApi.write_docs generate_files: !Rails.env.production?
 
-BaseSpdoc.run
+NormalSpdoc.run

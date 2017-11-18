@@ -713,39 +713,7 @@
           "400": {
             "description": "parameter validation failed"
           }
-        },
-        "examples": [
-          {
-            "right_input": {
-              "value": {
-                "Token": "token",
-                "created_start_at": "begin",
-                "created_end_at": "end",
-                "value": "value",
-                "page": "page",
-                "rows": "rows",
-                "view": "view",
-                "search_type": "type",
-                "export": "expo"
-              }
-            }
-          },
-          {
-            "wrong_input": {
-              "value": {
-                "Token": null,
-                "created_start_at": null,
-                "created_end_at": null,
-                "value": null,
-                "page": null,
-                "rows": null,
-                "view": null,
-                "search_type": null,
-                "export": null
-              }
-            }
-          }
-        ]
+        }
       },
       "post": {
         "summary": "Create a Good, returns id of the good that was created.",

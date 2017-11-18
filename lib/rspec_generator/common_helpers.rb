@@ -46,8 +46,27 @@ module RspecGenerator
                 .gsub(/ *TODO\n/, '')       # 去掉 TO DO 标记的行
     end
 
-    def pr(hash)
-      hash.to_s[1..-2].sub(':', '').gsub(', :', ', ').gsub('=>', ': ').gsub('\"', '"').tr(?", ?')
+    def pr(obj, full = nil)
+      if obj.is_a? Hash
+        obj = obj.to_s[1..-2].sub(':', '').gsub(', :', ', ').gsub('=>', ': ').gsub('\"', '"').tr(?", ?')
+        full ? "{ #{obj} }" : obj
+      else
+        obj
+      end
+    end
+
+    def _error_info(error_name, code_or_msg = :code)
+      return error_name unless error_name.is_a?(Symbol) && !error_name.match?(' ')
+
+      error_class_name = ctrl_path.split('/').last.camelize.concat('Error')
+      error_class = Object.const_get(error_class_name) rescue ApiError
+      error_class.send(error_name, :info)[code_or_msg]
+    end
+
+    def _does_what(does_what, err_msg)
+      desc = _error_info(err_msg, :msg)
+      # 如果 error msg 存在，则输出，且如果 desc 空，则不加逗号
+      desc != (err_msg) ? "#{does_what.blank? ? '' : ', ' }#{desc}" : ''
     end
   end
 end

@@ -18,10 +18,10 @@ class Api::V1::GoodsDoc < ApiDoc
              }}
     }
 
-    examples :all, {
-        :right_input => [ 'token', 'begin', 'end', 'value', 'page', 'rows', 'view', 'type', 'expo'],
-        :wrong_input => []
-    }
+    # examples :all, {
+    #     :right_input => [ 'token', 'begin', 'end', 'value', 'page', 'rows', 'view', 'type', 'expo'],
+    #     :wrong_input => []
+    # }
   end
 
 

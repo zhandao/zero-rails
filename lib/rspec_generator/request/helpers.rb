@@ -59,14 +59,6 @@ module RspecGenerator
           end.compact
         end.join("\n") << '  '
       end
-
-      def _error_info(error_name, code_or_msg = :code)
-        return error_name unless error_name.is_a?(Symbol) && !error_name.match?(' ')
-
-        error_class_name = ctrl_path.split('/').last.camelize.concat('Error')
-        error_class = Object.const_get(error_class_name) rescue ApiError
-        error_class.send(error_name, :info)[code_or_msg]
-      end
     end
   end
 end

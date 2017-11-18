@@ -8,7 +8,8 @@ module RspecGenerator
       include Helpers
       include RspecGenerator::CommonHelpers
 
-      attr_accessor :content_stack ,:ctrl_path, :doc, :describe_doc, :let_param_name
+      attr_accessor :doc, :describe_doc, :let_param_name
+      alias_attribute :ctrl_path, :path
 
       def describe action = nil, add_desc = nil, desc: nil, template: nil, &block
         _biz add_desc, template: template, &block if action.nil?
@@ -65,12 +66,9 @@ module RspecGenerator
         sub_content = _instance_eval(block) if block_given?
         what = is_expected || should
         not_what = isnt_expected || shouldnt
-        err_msg = _error_info(what || not_what, :msg)
-        # 如果 error msg 存在，则输出，且如果 desc 空，则不加逗号
-        err_msg = err_msg != (what || not_what) ? "#{does_what.blank? ? '' : ', ' }#{err_msg}" : ''
         expects = _expect(binding.local_variable_get(:then), its || then_its, what, not_what)
         content_stack.last << <<~IT
-          it '#{does_what}#{err_msg}' do
+          it '#{_does_what(does_what, what || not_what)}' do
             #{_request_by(binding.local_variable_get(:when), params)}
             #{add_ind_to expects}
             #{add_ind_to sub_content}
@@ -108,7 +106,7 @@ module RspecGenerator
           self.ctrl_path = "#{name.sub('Spdoc', '').underscore.gsub('::', '/')}" if name.match? /sSpdoc/
           self.content_stack = [ ]
           content_stack.push ''
-          self.doc = apis[$api_paths_index[ctrl_path]]['paths']
+          # self.doc = apis[$api_paths_index[ctrl_path]]['paths']
         end
       end
     end

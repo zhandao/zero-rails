@@ -15,8 +15,10 @@ module RspecGenerator
       include RspecGenerator::CommonHelpers
 
       def describe method = nil, add_desc = nil, desc: nil, template: nil, &block
-        _biz add_desc, template: template, &block if action.nil?
+        _biz add_desc, template: template, &block if method.nil?
 
+        desc = desc || method.is_a?(Symbol) ? "##{method}" : method
+        desc << ", #{add_desc}" if add_desc
         sub_content = _instance_eval(block) if block_given?
 
         content_stack.last << <<~DESCRIBE
@@ -28,12 +30,10 @@ module RspecGenerator
       end
 
       def subject(what)
-        #
+        content_stack.last << "subject { #{pr(what, :full)} }\n\n"
       end
 
-      def is(what)
-        subject what
-      end
+      def is(what); what; end
 
       def biz_scenario desc = '', template: nil, &block
         _biz desc, template: template, &block
@@ -51,41 +51,27 @@ module RspecGenerator
         content_stack.last << "\n"
       end
 
-      def request_by(merge = nil, params = { })
-        content_stack.last << <<~REQ
-          before { #{_request_by(merge, params)} }
-        REQ
-        content_stack.last << "\n"
-      end
-      alias_method :request, :request_by
-
       def it does_what = nil, when: nil, then: nil, its: nil, then_its: nil,
              is_expected: nil, isnt_expected: nil, should: nil, shouldnt: nil, **params, &block
-        return oneline_it(binding.local_variable_get(:when), params) if does_what.nil?
+        return oneline_it if does_what.nil?
 
         sub_content = _instance_eval(block) if block_given?
         what = is_expected || should
         not_what = isnt_expected || shouldnt
-        err_msg = _error_info(what || not_what, :msg)
-        # 如果 error msg 存在，则输出，且如果 desc 空，则不加逗号
-        err_msg = err_msg != (what || not_what) ? "#{does_what.blank? ? '' : ', ' }#{err_msg}" : ''
         expects = _expect(binding.local_variable_get(:then), its || then_its, what, not_what)
         content_stack.last << <<~IT
-          it '#{does_what}#{err_msg}' do
-            #{_request_by(binding.local_variable_get(:when), params)}
-        #{add_ind_to expects}
-        #{add_ind_to sub_content}
+          it '#{_does_what(does_what, what || not_what)}' do
+            #{add_ind_to expects}
+            #{add_ind_to sub_content}
           end
         IT
         content_stack.last << "\n"
       end
 
-      def oneline_it(merge = nil, params = { })
+      def oneline_it
         content_stack.last << <<~IT
-          before { #{_request_by(merge, params)} }
-          it { expect(json['code']).to eq 200 }
+          it { is_expected.to eq '' }
         IT
-        # it { is_expected.to include('code' => 200) }
         content_stack.last << "\n"
       end
 

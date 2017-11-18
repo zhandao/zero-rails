@@ -1,21 +1,6 @@
 module RspecGenerator
-  module Request
+  module Normal
     module Helpers
-      def _request_params
-        if (examples = describe_doc.doc[:examples]).present?
-          self.let_param_name = examples.first.keys[0]
-          pr(Hash[ examples.first[let_param_name][:value].map { |k, v| [k.to_sym, v] } ])
-        else
-          self.let_param_name = 'params'
-          params_doc = describe_doc.doc['parameters']
-          params_keys = params_doc.map { |p| p['name'] }
-          pr Hash[ params_keys.map do |key|
-            value = key.to_sym.in?([]) ? '' : params_doc[params_keys.index(key)]['schema']['type']
-            [key.to_sym, value]
-          end ]
-        end
-      end
-
       def _biz desc = '', template: nil, &block
         sub_content = _instance_eval(block) if block_given?
         content_stack.last << <<~BIZ
@@ -24,13 +9,6 @@ module RspecGenerator
           end
         BIZ
         content_stack.last << "\n"
-      end
-
-      def _request_by(merge = nil, params = { })
-        params = merge if merge.is_a? Hash
-        params = merge == :merge ? ", #{let_param_name}.merge(#{pr(params)})" : ", #{pr(params)}" if params.present?
-        url = describe_doc.path.match?('{') ? %{"#{describe_doc.path.gsub('{', '#{')}"} : "'#{describe_doc.path}'"
-        %{#{describe_doc.verb} #{url}#{params if params.present?}}
       end
 
       def _expect(who, whos, what, not_what)
@@ -60,12 +38,12 @@ module RspecGenerator
         end.join("\n") << '  '
       end
 
-      def _error_info(error_name, code_or_msg = :code)
-        return error_name unless error_name.is_a?(Symbol) && !error_name.match?(' ')
+      def let
+        #
+      end
 
-        error_class_name = ctrl_path.split('/').last.camelize.concat('Error')
-        error_class = Object.const_get(error_class_name) rescue ApiError
-        error_class.send(error_name, :info)[code_or_msg]
+      def create
+        #
       end
     end
   end
