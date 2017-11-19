@@ -2,7 +2,17 @@ module RspecGenerator
   module CommonHelpers
     def self.included(base)
       base.class_eval do
-        attr_accessor :content_stack ,:path
+        attr_accessor :content_stack ,:path, :each
+      end
+    end
+
+    def inherited(base)
+      super
+      base.class_eval do
+        self.path = "#{name.sub('Spdoc', '').underscore.gsub('::', '/')}" if name.match? /sSpdoc/
+        self.content_stack = [ ]
+        content_stack.push ''
+        self.each = { describe: '', conetxt: '' }
       end
     end
 
@@ -33,13 +43,14 @@ module RspecGenerator
     # end
 
     def _instance_eval(block)
+      self.each = { describe: '', context: '' }
       content_stack.push ''
       instance_eval &block
       content_stack.pop
     end
 
     def add_ind_to(mtline_str) # indentation
-      return 'TODO' if mtline_str.nil?
+      return 'TODO' if mtline_str.blank?
       mtline_str.gsub("\n", "\n  ")[0..-3]  # 缩进
                 .gsub(/ *\n/, "\n")         # 去除带空行的空格
                 .gsub(/end\n\n\n/, "end\n") # 去掉多余的多空行
@@ -50,13 +61,21 @@ module RspecGenerator
       if obj.is_a? Hash
         obj = obj.to_s[1..-2].sub(':', '').gsub(', :', ', ').gsub('=>', ': ').gsub('\"', '"').tr(?", ?')
         full ? "{ #{obj} }" : obj
+      elsif obj.is_a? String
+        "'#{obj}'"
       else
         obj
       end
     end
 
+    # process desc by using template
+    def d desc
+      return desc unless desc.is_a? Symbol
+      RspecGenerator::Config.desc_templates[desc] || desc
+    end
+
     def _error_info(error_name, code_or_msg = :code)
-      return error_name unless error_name.is_a?(Symbol) && !error_name.match?(' ')
+      return error_name unless error_name.is_a?(Symbol) && !error_name.match?(' ') && !error_name.match?('\(')
 
       error_class_name = ctrl_path.split('/').last.camelize.concat('Error')
       error_class = Object.const_get(error_class_name) rescue ApiError
@@ -66,7 +85,22 @@ module RspecGenerator
     def _does_what(does_what, err_msg)
       desc = _error_info(err_msg, :msg)
       # 如果 error msg 存在，则输出，且如果 desc 空，则不加逗号
-      desc != (err_msg) ? "#{does_what.blank? ? '' : ', ' }#{desc}" : ''
+      unless desc == err_msg
+        "#{does_what.blank? ? '' : does_what + ', ' }#{desc}"
+      else
+        does_what
+      end
+    end
+
+    def _biz desc = '', template: nil, &block
+      sub_content = _instance_eval(block) if block_given?
+      content_stack.last << <<~BIZ
+        describe '#{d(desc)}' do
+          #{add_ind_to each[:describe]}
+          #{add_ind_to sub_content}
+        end
+      BIZ
+      content_stack.last << "\n"
     end
   end
 end

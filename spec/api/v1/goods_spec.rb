@@ -6,7 +6,7 @@ RSpec.describe 'API V1', 'goods', type: :request do
   let(:json) { MultiJson.load(response.body, symbolize_keys: true) }
 
   describe 'GET /api/v1/goods #index, Get list of Goods.' do
-    let!(:right_input) { { Token: 'token', created_start_at: 'begin', created_end_at: 'end', value: 'value', page: 'page', rows: 'rows', view: 'view', search_type: 'type', export: 'expo' } }
+    let(:right_input) { { Token: 'Token', view: :view, search_type: :search_type, value: :value, created_start_at: :created_start_at, created_end_at: :created_end_at, page: :page, rows: :rows, export: :export } }
 
     describe 'business scenario x' do
       context 'when case y' do
@@ -32,7 +32,7 @@ RSpec.describe 'API V1', 'goods', type: :request do
   end
 
   describe 'GET /api/v1/goods/{id} #show, Show a Good.' do
-    let!(:params) { { Token: 'string', id: 'integer' } }
+    let(:params) { { Token: '123456', id: 'integer' } }
 
     describe 'business scenario x' do
       context 'when case y' do

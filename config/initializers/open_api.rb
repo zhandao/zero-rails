@@ -49,9 +49,14 @@ BASE_API_CONFIG = {
 
 require 'open_api'
 OpenApi::Config.tap do |c|
-  # c.instance_eval do
-  #   info
-  # end
+  c.instance_eval do
+    api :zero_rails_api, root_controller: ApiDoc
+    info version: '0.0.1', title: 'Zero Rails APIs', description: 'API documentation of Zero-Rails Application.'
+    server 'http://localhost:3000', desc: 'Main (production) server'
+    server 'http://localhost:3000', desc: 'Internal staging server for testing'
+    security ApiKeyAuth: [ ]
+    security_scheme :ApiKeyAuth, type: 'apiKey', name: 'server_token', in: 'query'
+  end
 
   # [REQUIRED] The location where .json doc file will be output.
   c.file_output_path = 'public/open_api'
@@ -216,4 +221,6 @@ Object.const_set('Boolean', 'boolean')
 
 OpenApi.write_docs generate_files: !Rails.env.production?
 
+require './config/initializers/rspec_generator'
 NormalSpdoc.run
+RequestSpdoc.run

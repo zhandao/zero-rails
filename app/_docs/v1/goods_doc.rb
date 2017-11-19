@@ -18,10 +18,12 @@ class Api::V1::GoodsDoc < ApiDoc
              }}
     }
 
-    # examples :all, {
-    #     :right_input => [ 'token', 'begin', 'end', 'value', 'page', 'rows', 'view', 'type', 'expo'],
-    #     :wrong_input => []
-    # }
+    sort 'Token', :view, :search_type, :value, :created_start_at, :created_end_at, :page, :rows, :export
+
+    examples :all, {
+        :right_input => param_sort,
+        :wrong_input => [ ]
+    }
   end
 
 

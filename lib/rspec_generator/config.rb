@@ -1,6 +1,14 @@
 module RspecGenerator
   module Config
-    cattr_accessor :request_fields do
+    cattr_accessor :params do
+      { }
+    end
+
+    cattr_accessor :it_templates do
+      { }
+    end
+
+    cattr_accessor :desc_templates do
       { }
     end
   end

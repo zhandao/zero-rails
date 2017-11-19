@@ -9,58 +9,40 @@ module RspecGenerator
     #   1. Allow you to first consider the test description that needs to be achieved.
     #   2. Splitting the work of test code also helps to reduce the pain.
     #   3. Gathering the description of the test code helps to quickly understand the test.
-    #   4. You can even write it with the demand-side!
     module ClassMethods
       include Helpers
       include RspecGenerator::CommonHelpers
+      include RspecGenerator::CommonDSL
 
       def describe method = nil, add_desc = nil, desc: nil, template: nil, &block
         _biz add_desc, template: template, &block if method.nil?
 
-        desc = desc || method.is_a?(Symbol) ? "##{method}" : method
+        desc = d(desc) || method.is_a?(Symbol) ? "##{method}" : method
         desc << ", #{add_desc}" if add_desc
         sub_content = _instance_eval(block) if block_given?
 
         content_stack.last << <<~DESCRIBE
           describe '#{desc}' do
+            #{add_ind_to each[:describe]}
             #{add_ind_to sub_content}
           end
         DESCRIBE
         content_stack.last << "\n"
       end
 
-      def subject(what)
-        content_stack.last << "subject { #{pr(what, :full)} }\n\n"
-      end
-
-      def is(what); what; end
-
-      def biz_scenario desc = '', template: nil, &block
-        _biz desc, template: template, &block
-      end
-
-      alias_method :biz, :biz_scenario
-
-      def context when_what = '', &block
-        sub_content = _instance_eval(block) if block_given?
-        content_stack.last << <<~CONTEXT
-          context '#{when_what}' do
-            #{add_ind_to sub_content}
-          end
-        CONTEXT
-        content_stack.last << "\n"
-      end
-
       def it does_what = nil, when: nil, then: nil, its: nil, then_its: nil,
-             is_expected: nil, isnt_expected: nil, should: nil, shouldnt: nil, **params, &block
+             is_expected: nil, isnt_expected: nil, should: nil, shouldnt: nil, &block
         return oneline_it if does_what.nil?
+        if (templates = RspecGenerator::Config.it_templates).key?(does_what)
+          content_stack.last << "it { #{templates[does_what]} }\n" and return
+        end
 
         sub_content = _instance_eval(block) if block_given?
         what = is_expected || should
         not_what = isnt_expected || shouldnt
         expects = _expect(binding.local_variable_get(:then), its || then_its, what, not_what)
         content_stack.last << <<~IT
-          it '#{_does_what(does_what, what || not_what)}' do
+          it '#{_does_what(d(does_what), what || not_what)}' do
             #{add_ind_to expects}
             #{add_ind_to sub_content}
           end
@@ -70,6 +52,7 @@ module RspecGenerator
 
       def oneline_it
         content_stack.last << <<~IT
+          subject { '' }
           it { is_expected.to eq '' }
         IT
         content_stack.last << "\n"
@@ -83,15 +66,6 @@ module RspecGenerator
             #{add_ind_to content_stack.last}
           end
         OUTER
-      end
-
-      def inherited(base)
-        super
-        base.class_eval do
-          self.ctrl_path = "#{name.sub('Spdoc', '').underscore.gsub('::', '/')}" if name.match? /sSpdoc/
-          self.content_stack = [ ]
-          content_stack.push ''
-        end
       end
     end
   end

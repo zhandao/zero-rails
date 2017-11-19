@@ -16,7 +16,7 @@ common: &default_settings
 
   # Your application name. Renaming here affects where data displays in New
   # Relic.  For more details, see https://docs.newrelic.com/docs/apm/new-relic-apm/maintenance/renaming-applications
-  app_name: My Application
+  app_name: Zero Rails
 
   # To disable the agent regardless of other settings, uncomment the following:
   # agent_enabled: false
@@ -24,13 +24,17 @@ common: &default_settings
   # Logging level for log/newrelic_agent.log
   log_level: info
 
+  # Error ignore
+  error_collector:
+    ignore_errors: 'BizError'
+
 
 # Environment-specific settings are in this section.
 # RAILS_ENV or RACK_ENV (as appropriate) is used to determine the environment.
 # If your application has other named environments, configure them here.
 development:
   <<: *default_settings
-  app_name: My Application (Development)
+  app_name: Zero Rails (Development)
 
 test:
   <<: *default_settings
@@ -39,7 +43,7 @@ test:
 
 staging:
   <<: *default_settings
-  app_name: My Application (Staging)
+  app_name: Zero Rails (Staging)
 
 production:
   <<: *default_settings

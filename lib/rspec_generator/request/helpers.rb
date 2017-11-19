@@ -1,6 +1,10 @@
 module RspecGenerator
   module Request
     module Helpers
+      def default_context
+        "it { expect(json['code']).to eq 200 }  "
+      end
+
       def _request_params
         if (examples = describe_doc.doc[:examples]).present?
           self.let_param_name = examples.first.keys[0]
@@ -9,21 +13,12 @@ module RspecGenerator
           self.let_param_name = 'params'
           params_doc = describe_doc.doc['parameters']
           params_keys = params_doc.map { |p| p['name'] }
-          pr Hash[ params_keys.map do |key|
-            value = key.to_sym.in?([]) ? '' : params_doc[params_keys.index(key)]['schema']['type']
+          flatten_examples = params_keys.map do |key|
+            value = RspecGenerator::Config.params[key.to_sym] || params_doc[params_keys.index(key)]['schema']['type']
             [key.to_sym, value]
-          end ]
-        end
-      end
-
-      def _biz desc = '', template: nil, &block
-        sub_content = _instance_eval(block) if block_given?
-        content_stack.last << <<~BIZ
-          describe '#{desc}' do
-            #{add_ind_to sub_content}
           end
-        BIZ
-        content_stack.last << "\n"
+          pr Hash[flatten_examples]
+        end
       end
 
       def _request_by(merge = nil, params = { })
@@ -34,8 +29,6 @@ module RspecGenerator
       end
 
       def _expect(who, whos, what, not_what)
-        return 'TODO  ' if who.nil? && whos.nil?
-
         if who.is_a? Hash
           who.map do |obj_name, exp_value|
             exp_value = _error_info(exp_value)
@@ -49,7 +42,7 @@ module RspecGenerator
             "expect(json['#{obj_name.to_s.delete('!')}']).#{obj_name['!'] ? 'not_to' : 'to'} #{exp_value}"
           end
         else
-          obj = who ? who : "json['#{whos}']"
+          obj = whos ? "json['#{whos}']" : who || 'json'
           [ what, not_what ].map do |w|
             next if w.nil?
             w = _error_info(w)

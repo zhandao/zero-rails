@@ -7,6 +7,7 @@ module RspecGenerator
     module ClassMethods
       include Helpers
       include RspecGenerator::CommonHelpers
+      include RspecGenerator::CommonDSL
 
       attr_accessor :doc, :describe_doc, :let_param_name
       alias_attribute :ctrl_path, :path
@@ -21,33 +22,18 @@ module RspecGenerator
         )
         request_params = _request_params
 
-        desc = desc || "#{http_verb.upcase} #{path} ##{action}" \
+        desc = d(desc) || "#{http_verb.upcase} #{path} ##{action}" \
                        ", #{add_desc || action_doc['summary'] || action_doc['description']}"
         sub_content = _instance_eval(block) if block_given?
 
         content_stack.last << <<~DESCRIBE
           describe '#{desc}' do
             let(:#{let_param_name}) { { #{request_params} } }
+            #{add_ind_to each[:describe]}
 
             #{add_ind_to sub_content}
           end
         DESCRIBE
-        content_stack.last << "\n"
-      end
-
-      def biz_scenario desc = '', template: nil, &block
-        _biz desc, template: template, &block
-      end
-
-      alias_method :biz, :biz_scenario
-
-      def context when_what = '', &block
-        sub_content = _instance_eval(block) if block_given?
-        content_stack.last << <<~CONTEXT
-          context '#{when_what}' do
-            #{add_ind_to sub_content}
-          end
-        CONTEXT
         content_stack.last << "\n"
       end
 
@@ -62,13 +48,16 @@ module RspecGenerator
       def it does_what = nil, when: nil, then: nil, its: nil, then_its: nil,
              is_expected: nil, isnt_expected: nil, should: nil, shouldnt: nil, **params, &block
         return oneline_it(binding.local_variable_get(:when), params) if does_what.nil?
+        if (templates = RspecGenerator::Config.it_templates).key?(does_what)
+          content_stack.last << "it { #{templates[does_what]} }\n" and return
+        end
 
         sub_content = _instance_eval(block) if block_given?
         what = is_expected || should
         not_what = isnt_expected || shouldnt
         expects = _expect(binding.local_variable_get(:then), its || then_its, what, not_what)
         content_stack.last << <<~IT
-          it '#{_does_what(does_what, what || not_what)}' do
+          it '#{_does_what(d(does_what), what || not_what)}' do
             #{_request_by(binding.local_variable_get(:when), params)}
             #{add_ind_to expects}
             #{add_ind_to sub_content}
@@ -103,10 +92,7 @@ module RspecGenerator
       def inherited(base)
         super
         base.class_eval do
-          self.ctrl_path = "#{name.sub('Spdoc', '').underscore.gsub('::', '/')}" if name.match? /sSpdoc/
-          self.content_stack = [ ]
-          content_stack.push ''
-          # self.doc = apis[$api_paths_index[ctrl_path]]['paths']
+          self.doc = apis[$api_paths_index[ctrl_path]]['paths']
         end
       end
     end

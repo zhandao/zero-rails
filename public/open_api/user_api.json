@@ -497,59 +497,6 @@
             }
           },
           {
-            "name": "created_start_at",
-            "in": "query",
-            "required": false,
-            "description": "时间起点, YY-MM-DD (HH:MM:SS, 可选)",
-            "schema": {
-              "type": "string",
-              "format": "date-time",
-              "as": "start"
-            }
-          },
-          {
-            "name": "created_end_at",
-            "in": "query",
-            "required": false,
-            "description": "时间终点, YY-MM-DD (HH:MM:SS, 可选)",
-            "schema": {
-              "type": "string",
-              "format": "date-time",
-              "as": "end"
-            }
-          },
-          {
-            "name": "value",
-            "in": "query",
-            "required": false,
-            "description": "查询词",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "required": false,
-            "description": "页数，从 1 开始",
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "default": 1
-            }
-          },
-          {
-            "name": "rows",
-            "in": "query",
-            "required": false,
-            "description": "per page, 请求的数据条数",
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "default": 10
-            }
-          },
-          {
             "name": "view",
             "in": "query",
             "required": false,
@@ -579,6 +526,59 @@
                 "price"
               ],
               "as": "field"
+            }
+          },
+          {
+            "name": "value",
+            "in": "query",
+            "required": false,
+            "description": "查询词",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "created_start_at",
+            "in": "query",
+            "required": false,
+            "description": "时间起点, YY-MM-DD (HH:MM:SS, 可选)",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "as": "start"
+            }
+          },
+          {
+            "name": "created_end_at",
+            "in": "query",
+            "required": false,
+            "description": "时间终点, YY-MM-DD (HH:MM:SS, 可选)",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "as": "end"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "页数，从 1 开始",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "rows",
+            "in": "query",
+            "required": false,
+            "description": "per page, 请求的数据条数",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 10
             }
           },
           {
@@ -713,7 +713,39 @@
           "400": {
             "description": "parameter validation failed"
           }
-        }
+        },
+        "examples": [
+          {
+            "right_input": {
+              "value": {
+                "Token": "Token",
+                "view": "view",
+                "search_type": "search_type",
+                "value": "value",
+                "created_start_at": "created_start_at",
+                "created_end_at": "created_end_at",
+                "page": "page",
+                "rows": "rows",
+                "export": "export"
+              }
+            }
+          },
+          {
+            "wrong_input": {
+              "value": {
+                "Token": null,
+                "view": null,
+                "search_type": null,
+                "value": null,
+                "created_start_at": null,
+                "created_end_at": null,
+                "page": null,
+                "rows": null,
+                "export": null
+              }
+            }
+          }
+        ]
       },
       "post": {
         "summary": "Create a Good, returns id of the good that was created.",

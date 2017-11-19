@@ -5,26 +5,31 @@ RSpec.describe Array do
     subject { [1, 2, 3, 4, 5] }
 
     context 'when there is no call to #page' do
+      it { is_expected.to eq :success }
+      it 'does something' do
+        is_expected.to eq [1, 2, 3]
+      end
     end
 
     context 'when no args are passed' do
+      it { is_expected.to eq '' }
     end
 
     describe 'abnormal call' do
       context 'when pass illegal args' do
+        it { is_expected.to eq '' }
       end
 
       context 'when it is called many times' do
+        it { is_expected.to eq '' }
       end
     end
   end
 
   describe '#page' do
-
   end
 
   describe '#to_builder' do
-
   end
 
 
