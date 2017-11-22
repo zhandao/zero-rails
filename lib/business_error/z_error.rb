@@ -24,7 +24,7 @@ module BusinessError
         { code: code, msg: message }
       else
         raise ZError.new(name, message, code)
-        # raise ZError, name, message, code
+        # TODO: raise ZError, name, message, code
       end
     end
 

@@ -3,6 +3,7 @@ class Api::V1::ExamplesController < Api::V1::BaseController
   apis_tag name: 'EEExam', desc: 'descccc'
 
   components do
+    schema :DogSchema => [ { id: Integer, name: String }, dft: { id: 1, name: 'pet' } ]
     resp   :Resp  => [ 'bad request', :json ]
     query! :Query => [ :name, String, desc: 'user name' ]
     schema :Uuid  => [ String, must_be: '2' ]
@@ -18,6 +19,7 @@ class Api::V1::ExamplesController < Api::V1::BaseController
     query! :id,         Integer, enum: 0..5,     length: [1, 2], pattern: /^[0-9]$/, range: {gt:0, le:5}
     query! :done,       Boolean, must_be: false, default: true,  desc: 'must be false'
     query  :email_addr, String,  lth: :ge_3,     dft: email # is_a: :email
+    query  :doge, :DogSchema
 
     # form! 'form', type: { id!: Integer, name: String }
     # file :xwww, 'application/x-www-form-urlencoded'

@@ -14,16 +14,16 @@ class Api::V1::CategoriesController < Api::V1::BaseController
 
 
   def create
-     Category.create! permitted
+    Category.create! permitted
   end
 
 
   def update
-    Category.find(@_id).update! permitted
+    @category.update! permitted
   end
 
 
   def destroy
-    @status = Category.find(@_id).destroy
+    @status = @category.destroy
   end
 end

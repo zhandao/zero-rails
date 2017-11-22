@@ -7,7 +7,7 @@ module CUDFailed
     base.class_eval do
       active_record
 
-      set_global :prefix, 600
+      set_global :prefix, ERROR_CUD
       mattr_reader :create_failed,  ''
       mattr_reader :update_failed,  ''
       mattr_reader :destroy_failed, ''

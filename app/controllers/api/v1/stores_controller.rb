@@ -19,11 +19,11 @@ class Api::V1::StoresController < Api::V1::BaseController
 
 
   def update
-    Store.find(@_id).update! permitted
+    @store.update! permitted
   end
 
 
   def destroy
-    @status = Store.find(@_id).destroy
+    @status = @store.destroy
   end
 end

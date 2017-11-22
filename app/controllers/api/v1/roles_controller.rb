@@ -1,5 +1,8 @@
 class Api::V1::RolesController < Api::V1::BaseController
   include ActiveRecordErrorsRescuer
+  include RolePermissionMapper
+  if_can :manage_role_permission, allow: [ :CRUDI, :permissions, :permissions_modify ]
+
 
   def index
     @data = Role.where belongs_to_model: @_model
@@ -7,7 +10,7 @@ class Api::V1::RolesController < Api::V1::BaseController
 
 
   def show
-    @data = Role.find(@_id)
+    @datum = @role
   end
 
 
@@ -17,21 +20,22 @@ class Api::V1::RolesController < Api::V1::BaseController
 
 
   def update
-    Role.find(@_id).update! permitted
+    @role.update! permitted
   end
 
 
   def destroy
-    @status = Role.find(@_id).destroy!
+    @role.destroy!
   end
 
 
   def permissions
-    output Role.find(@_id).permissions.pluck :name
+    # TODO: 非 db
+    output @role.permissions.pluck :name
   end
 
 
   def permissions_modify
-    Role.find(@_id).permissions = Permission.where(id: @_permission_ids)
+    @role.permissions = Permission.where id: @_permission_ids
   end
 end

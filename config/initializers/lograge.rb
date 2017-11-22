@@ -9,13 +9,11 @@ Rails.application.configure do
 
   config.lograge.custom_payload do |controller|
     {
-        params: controller.params.reject do |k|
-                  k.in? %w[controller action]
-                end,
+        params: controller.params.reject { |k| k.in? %w[ controller action api ] },
         host: controller.request.host,
         ip: controller.request.remote_ip,
-        user: controller.respond_to?(:current_admin) ? controller.current_admin&.id : '',
-        jwt: controller.respond_to?(:token) ? controller.token : ''
+        user: controller.try(:current_admin)&.id || '',
+        jwt: controller.try(:token) || ''
     }
   end
 
@@ -25,8 +23,8 @@ Rails.application.configure do
         host: event.payload[:host],
         time: event.time.to_s(:standard),
         params: event.payload[:params],
-        user: controller.respond_to?(:current_admin) ? controller.current_admin&.id : '',
-        jwt: controller.respond_to?(:token) ? controller.token : ''
+        user: event.payload[:user],
+        jwt: event.payload[:jwt]
 
     }
   end

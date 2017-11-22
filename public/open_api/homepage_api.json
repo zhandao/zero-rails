@@ -104,6 +104,14 @@
               "is": "email",
               "default": "zero@zero-rails.org"
             }
+          },
+          {
+            "name": "doge",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#components/schemas/DogSchema"
+            }
           }
         ],
         "responses": {
@@ -264,6 +272,21 @@
       }
     },
     "schemas": {
+      "DogSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "default": {
+          "id": 1,
+          "name": "pet"
+        }
+      },
       "Uuid": {
         "type": "string",
         "enum": [

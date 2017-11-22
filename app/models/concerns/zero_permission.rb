@@ -125,6 +125,7 @@ module ZeroPermission
   # TODO: 父子权限：如果父权限无效，则子孙无效，逻辑同 role family
   def load_permissions_from_database
     roles_setting # TODO: 优化（这句还是必要的，如果不是所有都走数据库）
+    # TODO: 一个发现的问题是，console 和 rails server 的 cache 似乎是不共享的？或者说是其他问题？
     Rails.cache.fetch("#{self.class.name.underscore}_#{self.id}_permissions") do
       assoc_roles = roles.includes(:role_permissions, :permissions).to_a
       role_permissions = assoc_roles.map(&:role_permissions).flatten.uniq

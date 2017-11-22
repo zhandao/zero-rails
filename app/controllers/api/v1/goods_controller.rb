@@ -12,7 +12,7 @@ class Api::V1::GoodsController < Api::V1::BaseController
 
 
   def show
-    @datum = Good.find_by! permitted
+    @datum = @good
   end
 
 
@@ -24,16 +24,16 @@ class Api::V1::GoodsController < Api::V1::BaseController
 
   def update
     permitted.merge! category: Category.find(@_cate) if @_cate
-    Good.find(@_id).update! permitted
+    @good.update! permitted
   end
 
 
   def destroy
-    @status = Good.find(@_id).destroy
+    @status = @good.destroy
   end
 
 
   def change_online
-    @status = Good.find(@_id).change_online
+    @status = @good.change_online
   end
 end

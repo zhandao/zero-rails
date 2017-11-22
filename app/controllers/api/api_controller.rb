@@ -2,6 +2,7 @@ require 'params_processor' # TODO
 require './lib/monkey_patches/array' # TODO
 
 class Api::ApiController < ActionController::API
+  include ActionController::Caching
   include OpenApi::DSL, Zero::Log, Rescuer
   include OutPut, AutoGenDoc, ParamsProcessor
   include RolePermissionMapper
@@ -17,9 +18,11 @@ class Api::ApiController < ActionController::API
   before_action :convert_params_type
   before_action :set_permitted
 
-  rescue_from JWT::DecodeError do log_and_render ApiError.invalid_token :info end
-  rescue_from ZeroRole::VerificationFailed do log_and_render ApiError.role_error :info end
-  rescue_from ZeroPermission::InsufficientPermission do log_and_render ApiError.permission_error :info end
+  error_map(
+         invalid_token: JWT::DecodeError,
+            role_error: ZeroRole::VerificationFailed,
+      permission_error: ZeroPermission::InsufficientPermission
+  )
 
   private
 
@@ -31,16 +34,6 @@ class Api::ApiController < ActionController::API
 
   def input(key = nil)
     key.present? ? params[key] : (@zpa ||= Zero::ParamsAgent.tap { |zpa| zpa.params = params })
-  end
-
-  permission_map manage_role_permission: nil, manage_user: nil
-
-  def can_manage_role_permission!
-    make_sure current_user, :can!, :manage_role_permission
-  end
-
-  def can_manage_user!
-    make_sure current_user, :can!, :manage_user
   end
 end
 

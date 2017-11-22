@@ -47,7 +47,7 @@
   "paths": {
     "/api/v1/categories": {
       "get": {
-        "summary": "Get list of Categories.",
+        "summary": "GET list of categories.",
         "operationId": "index",
         "tags": [
           "Categories"
@@ -57,10 +57,11 @@
             "name": "page",
             "in": "query",
             "required": false,
-            "description": "偏移量，从 0 开始",
+            "description": "页数，从 1 开始",
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "default": 1
             }
           },
           {
@@ -70,7 +71,8 @@
             "description": "per page, 请求的数据条数",
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "default": 10
             }
           }
         ],
@@ -128,7 +130,7 @@
         }
       },
       "post": {
-        "summary": "Create a Category, returns id of the category that was created.",
+        "summary": "POST create a category.",
         "operationId": "create",
         "tags": [
           "Categories"
@@ -146,7 +148,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for creating a category",
+          "description": "for creating the specified category",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -233,7 +235,7 @@
     },
     "/api/v1/categories/list": {
       "get": {
-        "summary": "Get nested list of Categories.",
+        "summary": "GET nested list of categories.",
         "operationId": "nested_list",
         "tags": [
           "Categories"
@@ -291,7 +293,7 @@
     },
     "/api/v1/categories/{id}": {
       "patch": {
-        "summary": "Update a Category.",
+        "summary": "PATCH update the specified category.",
         "operationId": "update",
         "tags": [
           "Categories"
@@ -318,7 +320,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for creating a category",
+          "description": "for updating the specified category",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -399,7 +401,7 @@
         }
       },
       "delete": {
-        "summary": "Delete a Category.",
+        "summary": "DELETE the specified category.",
         "operationId": "destroy",
         "tags": [
           "Categories"
@@ -480,8 +482,8 @@
     },
     "/api/v1/goods": {
       "get": {
-        "description": "Get list of Goods.",
-        "summary": "Get list of Goods.",
+        "description": "GET list of goods.",
+        "summary": "GET list of goods.",
         "operationId": "index",
         "tags": [
           "Goods"
@@ -748,7 +750,7 @@
         ]
       },
       "post": {
-        "summary": "Create a Good, returns id of the good that was created.",
+        "summary": "POST create a good.",
         "operationId": "create",
         "tags": [
           "Goods"
@@ -766,7 +768,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for creating a good",
+          "description": "for creating the specified good",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -896,7 +898,7 @@
     },
     "/api/v1/goods/{id}": {
       "get": {
-        "summary": "Show a Good.",
+        "summary": "GET the specified good.",
         "operationId": "show",
         "tags": [
           "Goods"
@@ -1034,7 +1036,7 @@
         }
       },
       "patch": {
-        "summary": "Update a Good.",
+        "summary": "PATCH update the specified Good.",
         "operationId": "update",
         "tags": [
           "Goods"
@@ -1061,7 +1063,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for updating a good",
+          "description": "for updating the specified good",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -1161,7 +1163,7 @@
         }
       },
       "delete": {
-        "summary": "Delete a Good.",
+        "summary": "DELETE the specified good.",
         "operationId": "destroy",
         "tags": [
           "Goods"
@@ -1242,7 +1244,7 @@
     },
     "/api/v1/goods/{id}/change_online": {
       "post": {
-        "summary": "Change online status of Good, will do: is_online = !is_online.",
+        "summary": "POST change online status of the specified good.",
         "operationId": "change_online",
         "tags": [
           "Goods"
@@ -1323,8 +1325,8 @@
     },
     "/api/v1/inventories": {
       "get": {
-        "description": "Get list of Goods",
-        "summary": "Get list of Inventories.",
+        "description": "GET list of inventories.",
+        "summary": "GET list of inventories.",
         "operationId": "index",
         "tags": [
           "Inventories"
@@ -1396,7 +1398,7 @@
             "name": "search_type",
             "in": "query",
             "required": false,
-            "description": "搜索的字段名，允许值：<br/>1/ name<br/>2/ creator<br/>3/ category_name<br/>4/ unit<br/>5/ price",
+            "description": "搜索的字段名，允许值：<br/><br/>1/ name<br/>2/ creator<br/>3/ category_name<br/>4/ unit<br/>5/ price",
             "schema": {
               "type": "string",
               "enum": [
@@ -1475,7 +1477,7 @@
     },
     "/api/v1/permissions": {
       "get": {
-        "summary": "GET list of Permissions of specified model",
+        "summary": "GET permissions list of the specified model.",
         "operationId": "index",
         "tags": [
           "Permissions"
@@ -1574,7 +1576,7 @@
         }
       },
       "post": {
-        "summary": "PATCH update a Permission",
+        "summary": "PATCH update the specified permission.",
         "operationId": "create",
         "tags": [
           "Permissions"
@@ -1592,7 +1594,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for updating a permission",
+          "description": "for updating the specified permission",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -1651,6 +1653,9 @@
               }
             }
           },
+          "600": {
+            "description": "create failed"
+          },
           "-1": {
             "description": "invalid token"
           },
@@ -1668,7 +1673,7 @@
     },
     "/api/v1/permissions/{id}": {
       "delete": {
-        "summary": "DELETE a Permission.",
+        "summary": "DELETE the specified permission.",
         "operationId": "destroy",
         "tags": [
           "Permissions"
@@ -1729,6 +1734,9 @@
               }
             }
           },
+          "602": {
+            "description": "destroy failed"
+          },
           "-1": {
             "description": "invalid token"
           },
@@ -1746,7 +1754,7 @@
     },
     "/api/v1/roles": {
       "get": {
-        "summary": "Get list of Roles of specified model",
+        "summary": "GET roles list of the specified model",
         "operationId": "index",
         "tags": [
           "Roles"
@@ -1848,7 +1856,7 @@
         }
       },
       "post": {
-        "summary": "POST create a Role",
+        "summary": "POST create a role",
         "operationId": "create",
         "tags": [
           "Roles"
@@ -1866,7 +1874,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for creating a role",
+          "description": "for creating the specified role",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -1928,6 +1936,9 @@
               }
             }
           },
+          "600": {
+            "description": "create failed"
+          },
           "-1": {
             "description": "invalid token"
           },
@@ -1945,7 +1956,7 @@
     },
     "/api/v1/roles/{id}": {
       "get": {
-        "summary": "Show a Role.",
+        "summary": "GET the specified role.",
         "operationId": "show",
         "tags": [
           "Roles"
@@ -2046,7 +2057,7 @@
         }
       },
       "delete": {
-        "summary": "Delete a Role.",
+        "summary": "DELETE the specified role.",
         "operationId": "destroy",
         "tags": [
           "Roles"
@@ -2107,6 +2118,9 @@
               }
             }
           },
+          "602": {
+            "description": "destroy failed"
+          },
           "-1": {
             "description": "invalid token"
           },
@@ -2124,7 +2138,7 @@
     },
     "/api/v1/roles/{id}/permissions": {
       "get": {
-        "summary": "GET Permissions of specified role",
+        "summary": "GET permissions of specified role",
         "operationId": "permissions",
         "tags": [
           "Roles"
@@ -2202,7 +2216,7 @@
     },
     "/api/v1/roles/{id}/permissions/modify": {
       "post": {
-        "summary": "POST modify Permissions to specified role",
+        "summary": "POST modify permissions to the specified role and then save to db",
         "operationId": "permissions_modify",
         "tags": [
           "Roles"
@@ -2229,7 +2243,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for modifying permissions to role",
+          "description": "for modifying permissions to the specified role",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -2304,7 +2318,7 @@
     },
     "/api/v1/stores": {
       "get": {
-        "summary": "Get list of Stores.",
+        "summary": "GET list of stores.",
         "operationId": "index",
         "tags": [
           "Stores"
@@ -2396,7 +2410,7 @@
         }
       },
       "post": {
-        "summary": "Create a Store, returns id of the store that was created.",
+        "summary": "POST create a store.",
         "operationId": "create",
         "tags": [
           "Stores"
@@ -2414,7 +2428,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for creating a store",
+          "description": "for creating the specified store",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -2493,7 +2507,7 @@
     },
     "/api/v1/stores/{id}": {
       "get": {
-        "summary": "Show a Store.",
+        "summary": "GET the specified store.",
         "operationId": "show",
         "tags": [
           "Stores"
@@ -2574,7 +2588,7 @@
         }
       },
       "patch": {
-        "summary": "Update a Store.",
+        "summary": "POST update the specified store.",
         "operationId": "update",
         "tags": [
           "Stores"
@@ -2601,7 +2615,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for updating a store",
+          "description": "for updating the specified store",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -2674,7 +2688,7 @@
         }
       },
       "delete": {
-        "summary": "Delete a Store.",
+        "summary": "DELETE the specified store.",
         "operationId": "destroy",
         "tags": [
           "Stores"
@@ -2755,7 +2769,7 @@
     },
     "/api/v1/u/{name}": {
       "get": {
-        "summary": "GET find and show a user by name.",
+        "summary": "GET the specified user by name.",
         "operationId": "show_via_name",
         "tags": [
           "Users"
@@ -2824,7 +2838,7 @@
     },
     "/api/v1/users": {
       "get": {
-        "summary": "GET list of Users.",
+        "summary": "GET list of users.",
         "operationId": "index",
         "tags": [
           "Users"
@@ -3010,8 +3024,14 @@
               }
             }
           },
-          "600": {
+          "700": {
             "description": "invalid info"
+          },
+          "701": {
+            "description": "invalid info"
+          },
+          "702": {
+            "description": "repeated info"
           },
           "400": {
             "description": "parameter validation failed"
@@ -3086,7 +3106,7 @@
               }
             }
           },
-          "601": {
+          "800": {
             "description": "login failed"
           },
           "400": {
@@ -3097,7 +3117,7 @@
     },
     "/api/v1/users/{id}": {
       "get": {
-        "summary": "GET show a user.",
+        "summary": "GET the specified user.",
         "operationId": "show",
         "tags": [
           "Users"
@@ -3196,7 +3216,7 @@
         }
       },
       "patch": {
-        "summary": "PATCH update a User.",
+        "summary": "PATCH update the specified User.",
         "operationId": "update",
         "tags": [
           "Users"
@@ -3223,7 +3243,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for updating a user",
+          "description": "for updating the specified user",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -3291,7 +3311,7 @@
         }
       },
       "delete": {
-        "summary": "Delete a User.",
+        "summary": "DELETE the specified User.",
         "operationId": "destroy",
         "tags": [
           "Users"
@@ -3360,7 +3380,7 @@
     },
     "/api/v1/users/{id}/permissions": {
       "get": {
-        "summary": "GET Permissions of specified user",
+        "summary": "GET permissions of the specified user",
         "operationId": "permissions",
         "tags": [
           "Users"
@@ -3429,7 +3449,7 @@
     },
     "/api/v1/users/{id}/roles": {
       "get": {
-        "summary": "GET Roles of specified user",
+        "summary": "GET roles of the specified user",
         "operationId": "roles",
         "tags": [
           "Users"
@@ -3498,7 +3518,7 @@
     },
     "/api/v1/users/{id}/roles/modify": {
       "post": {
-        "summary": "POST modify Roles to specified user",
+        "summary": "POST modify roles to the specified user",
         "operationId": "roles_modify",
         "tags": [
           "Users"
@@ -3525,7 +3545,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for modifying roles to user",
+          "description": "for modifying roles to the specified user",
           "content": {
             "multipart/form-data": {
               "schema": {
