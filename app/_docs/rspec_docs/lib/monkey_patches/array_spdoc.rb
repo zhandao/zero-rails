@@ -1,5 +1,5 @@
 class ArraySpdoc < NormalSpdoc
-  set_path 'lib/monkey_patches/array' # TODO
+  set_path 'lib/monkey_patches' # TODO
 
   describe :per do
     subject is Array[1, 2, 3, 4, 5]

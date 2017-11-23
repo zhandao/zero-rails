@@ -1,5 +1,5 @@
 module ZeroRole
-
+  # TODO: class eval attr_
   def current_roles
     @_current_roles ||= { }
   end
@@ -34,7 +34,7 @@ module ZeroRole
     end
   end
 
-  def in_the_group? group
+  def in_the_group?(group)
     roles_groups.fetch(group).each do |role|
       return true if is? role
     end
@@ -93,7 +93,7 @@ module ZeroRole
         options = {
             when: instance_eval(role.condition || 'true') || role.entity_role&.skip_condition?,
             parent: role.base_role&.name,
-            children: role.sub_roles&.pluck(:name),
+            children: role.sub_roles&.pluck(:name)
         }.delete_if { |_, v| v.blank? }
         [ role.name.to_sym, options ]
       end

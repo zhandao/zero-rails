@@ -92,7 +92,7 @@ module RspecGenerator
       def inherited(base)
         super
         base.class_eval do
-          self.doc = apis[$api_paths_index[ctrl_path]]['paths']
+          self.doc = apis[OpenApi.paths_index[ctrl_path]]['paths']
         end
       end
     end

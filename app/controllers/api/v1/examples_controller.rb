@@ -1,34 +1,34 @@
 class Api::V1::ExamplesController < Api::V1::BaseController
-
-  apis_tag name: 'EEExam', desc: 'descccc'
+  apis_tag name: 'Examples', desc: 'tag_desc'
 
   components do
-    resp   :Resp  => [ 'bad request', :json ]
-    query! :Query => [ :name, String, desc: 'user name' ]
-    schema :Uuid  => [ String, must_be: '2' ]
+    schema :DogSchema => [ { id: Integer, name: String }, dft: { id: 1, name: 'pet' } ]
+    resp   :BadRqResp => [ 'bad request', :json ]
+    query! :NameQuery => [ :name, String, desc: 'user name' ]
   end
 
   open_api :index, '(SUMMARY) this api blah blah ...', use: ['Token'] do
     # this_api_is_invalid! 'this api is expired!'
     desc 'Optional multiline or single-line Markdown-formatted description',
-         id: 'description<br/>id',
-         email_addr: 'user_email_addr\'s desc'
+         id: 'description of<br/>id',
+         email: 'user_email_addr\'s desc'
     email = 'zero@zero-rails.org'
 
-    query! :id,         Integer, enum: 0..5,     length: [1, 2], pattern: /^[0-9]$/, range: {gt:0, le:5}
-    query! :done,       Boolean, must_be: false, default: true,  desc: 'must be false'
-    query  :email_addr, String,  lth: :ge_3,     dft: email # is_a: :email
+    query! :id,    Integer, enum: 0..5,     length: [1, 2], pattern: /^[0-9]$/, range: { gt: 0, le: 5 }
+    query! :done,  Boolean, must_be: false, default: true,  desc: 'must be false'
+    query  :email, String,  lth: :ge_3,     dft: email # is_a: :email
 
-    # form! 'form', type: { id!: Integer, name: String }
-    # file :xwww, 'application/x-www-form-urlencoded'
+    # file :a_file, 'application/x-www-form-urlencoded'
     response :success, 'success response', :json#, type: :Pet
     security :ApiKeyAuth
 
-    override_response 200, { data: {
-        type: [
-            String
-        ]
-    }}
+    merge_to_resp 200, by: {
+        data: {
+            type: [
+                String
+            ]
+        }
+    }
   end
 
   def index
@@ -64,9 +64,9 @@ class Api::V1::ExamplesController < Api::V1::BaseController
 
   open_api :show, '', use: ['Token'] do
     path! :id, Integer
-    param_ref    :Query
-    query! :uuid, :Uuid # type 传 symbol 表示 ref
-    response_ref '123' => :Resp
+    param_ref    :NameQuery
+    query  :doge, :DogSchema
+    response_ref '123' => :BadRqResp
   end
 
   def show

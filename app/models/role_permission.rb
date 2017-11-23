@@ -8,7 +8,7 @@ class RolePermission < ApplicationRecord
 
   after_commit :delete_entity_cache
   def delete_entity_cache
-    Rails.cache.delete_matched /_permissions/
+    Rails.cache.delete_matched(/_permissions/)
   end
 
   def self.add(role, permission)

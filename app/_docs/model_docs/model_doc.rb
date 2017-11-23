@@ -1,5 +1,4 @@
 class ModelDoc < Object
-  # Generate: model, controller_doc, migration, factory
   # soft_delete
   #
   # desc 'name'

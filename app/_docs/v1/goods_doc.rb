@@ -1,13 +1,12 @@
 class Api::V1::GoodsDoc < ApiDoc
-
-  open_api :index, 'Get list of Goods.', builder: :index,
-           use: token + [ :created_start_at, :created_end_at, :value, :page, :rows ] do
-    desc 'Get list of Goods.', view!: '请求来自的视图，允许值：', search_type!: '搜索的字段名，允许值：'
+  open_api :index, 'GET list of goods.', builder: :index,
+           use: token + %i[ created_start_at created_end_at value page rows ] do
+    desc 'GET list of goods.', view!: '请求来自的视图，允许值：', search_type!: '搜索的字段名，允许值：'
 
     query :view, String, enum: {
         '所有物品 (default)': 'all',
                   '上线物品': 'online',
-                  '下线物品': 'offline',
+                  '下线物品': 'offline'
     }, dft: 'all'
 
     do_query by: {
@@ -18,26 +17,25 @@ class Api::V1::GoodsDoc < ApiDoc
              }}
     }
 
-    sort 'Token', :view, :search_type, :value, :created_start_at, :created_end_at, :page, :rows, :export
+    order 'Token', :view, :search_type, :value, :created_start_at, :created_end_at, :page, :rows, :export
 
     examples :all, {
-        :right_input => param_sort,
+        :right_input => param_order,
         :wrong_input => [ ]
     }
   end
 
 
-  open_api :create, 'Create a Good, returns id of the good that was created.',
-           builder: :success_or_not, use: token do
-    form! 'for creating a good', data: {
+  open_api :create, 'POST create a good.', builder: :success_or_not, use: token do
+    form! 'for creating the specified good', data: {
                :name! => { type: String,  desc: '名字' },
-        :category_id! => { type: Integer, desc: '子类 id', npmt: true, range: { ge: 1 }, as: :cate  },
+        :category_id! => { type: Integer, desc: '子类 id', npmt: true, range: { ge: 1 }, as: :cate },
                :unit! => { type: String,  desc: '单位' },
               :price! => { type: Float,   desc: '单价', range: { ge: 0} },
         # -- optional
            :is_online => { type: Boolean, desc: '是否上线?' },
              :remarks => { type: String,  desc: '其他说明' },
-            :pic_path => { type: String,  desc: '图片路径', is: :url },
+            :pic_path => { type: String,  desc: '图片路径', is: :url }
     },
           exp_by:       %i[ name category_id unit price ],
           examples: {
@@ -47,28 +45,27 @@ class Api::V1::GoodsDoc < ApiDoc
   end
 
 
-  open_api :show, 'Show a Good.', builder: :show, use: token + id
+  open_api :show, 'GET the specified good.', builder: :show, use: token + id
 
 
-  open_api :update, 'Update a Good.', builder: :success_or_not, use: token + id do
-    form! 'for updating a good', data: {
+  open_api :update, 'PATCH update the specified Good.', builder: :success_or_not, use: token + id do
+    form! 'for updating the specified good', data: {
                :name => { type: String,  desc: '名字' },
-        :category_id => { type: Integer, desc: '子类 id', npmt: true, range: { ge: 1 }, as: :cate  },
+        :category_id => { type: Integer, desc: '子类 id', npmt: true, range: { ge: 1 }, as: :cate },
                :unit => { type: String,  desc: '单位' },
               :price => { type: Float,   desc: '单价', range: { ge: 0 } },
             :remarks => { type: String,  desc: '其他说明' },
            :pic_path => { type: String,  desc: '图片路径', is: :url },
-          :is_online => { type: Boolean, desc: '是否上线' },
+          :is_online => { type: Boolean, desc: '是否上线' }
     }
   end
 
 
-  open_api :destroy, 'Delete a Good.', builder: :success_or_not, use: token + id
+  open_api :destroy, 'DELETE the specified good.', builder: :success_or_not, use: token + id
 
 
   # /goods/:id/change_online
-  open_api :change_online, 'Change online status of Good, will do: is_online = !is_online.',
-           builder: :success_or_not, use: token do
+  open_api :change_online, 'POST change online status of the specified good.', builder: :success_or_not, use: token do
     path! :id, Integer, desc: '要上/下线的物品 id'
   end
 end

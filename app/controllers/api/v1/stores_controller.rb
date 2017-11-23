@@ -1,7 +1,7 @@
 class Api::V1::StoresController < Api::V1::BaseController
   include ActiveRecordErrorsRescuer
 
-  skip_token only: [:index, :show]
+  skip_token only: %i[ index show ]
 
   def index
     @data = Store.all_from_cache
@@ -19,11 +19,11 @@ class Api::V1::StoresController < Api::V1::BaseController
 
 
   def update
-    Store.find(@_id).update! permitted
+    @store.update! permitted
   end
 
 
   def destroy
-    @status = Store.find(@_id).destroy
+    @status = @store.destroy
   end
 end

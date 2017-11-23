@@ -1,10 +1,12 @@
 class Api::V1::UsersController < Api::V1::BaseController
   include ActiveRecordErrorsRescuer
+  include RolePermissionMapper
 
-  skip_token only: [:create, :login]
-  # skip_callback :process_action, :before, :user_token_verify!
-
-  before_action :can_manage_user!, only: %i[ index show create update destroy ]
+  skip_token only: %i[ create login ]
+  # before_action :can_manage_user!, only: %i[ index show create update destroy ]
+  # to_access %i[ index show create update destroy ], should_can: :manage_user
+  if_can :manage_user, allow: :CRUDI
+  if_can :manage_role_permission, allow_matched: %i[ role permission ]
 
   def index
     out 'pong'
@@ -22,8 +24,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 
 
   def create
-    status = User.create permitted
-    UsersError.create_error unless status
+    User.create! permitted
   end
 
 
@@ -43,21 +44,18 @@ class Api::V1::UsersController < Api::V1::BaseController
     @data = { token: user.token }
   end
 
-  before_action :can_manage_role_permission!, only: %i[ roles permissions roles_modify ]
-
-
   def roles
-    output User.find(@_id).all_roles
+    output @user.all_roles
   end
 
 
   def permissions
-    output User.find(@_id).all_permissions
+    output @user.all_permissions
   end
 
 
   def roles_modify
-    User.find(@_id).roles = Role.where(id: @_role_ids)
+    @user.roles = Role.where(id: @_role_ids)
   end
 end
 

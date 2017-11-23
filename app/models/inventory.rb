@@ -13,7 +13,7 @@ class Inventory < ApplicationRecord
 
   def decrease(much)
     self.amount -= much
-    return false if amount < 0
+    return false if amount.negative?
     save
   end
 end

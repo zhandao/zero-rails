@@ -51,8 +51,8 @@ module BuilderSupport
         if status_or_block.is_a? Symbol
           show_attrs << attr if instance_variable_get("@#{status_or_block}")
           # instance_variable_set("@#{status_or_block}", false)
-        else
-          show_attrs << attr if instance_eval &status_or_block
+        elsif instance_eval &status_or_block
+          show_attrs << attr
         end
       end
 
@@ -61,10 +61,8 @@ module BuilderSupport
 
     delegate :show_attrs, to: self
 
-    private
-
-    def self.builder_add_with_when args
-      (@builder_add_later ||= { }).merge!(args.first => args[1][:when])
+    def self.builder_add_with_when(args)
+      (@builder_add_later ||= { })[args.first] = args[1][:when]
       # 生成 when 设置的同名函数
       # 用以设置状态
       define_singleton_method args[1][:when] do
@@ -76,13 +74,13 @@ module BuilderSupport
       generate_assoc_info_method args.first, false
     end
 
-    def self.generate_assoc_info_method attrs, is_unscoped
+    def self.generate_assoc_info_method(attrs, is_unscoped)
       # 匹配关联模型 `name_info` 形式的 attr，并自动生成该方法
       # 方法调用模型的 to_builder 方法并取得最终渲染结果
       # unscoped 主要是为了支持去除软删除的默认 scope
       Array(attrs).each do |attr|
-        next unless attr.to_s.match? /_info/
-        assoc_method = attr.to_s.gsub '_info', ''
+        next unless attr.to_s.match?(/_info/)
+        assoc_method = attr.to_s.gsub('_info', '')
         next unless new.respond_to?(assoc_method)
 
         define_method attr do

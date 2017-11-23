@@ -1,5 +1,4 @@
 module Export
-
   private
 
   # To use export, open gem axlsx, and:
@@ -13,23 +12,23 @@ module Export
   #     command %[sudo chown -R -v #{fetch(:user)}:#{fetch(:user)} "#{fetch(:export_path)}"]
   #   end
 
-def export_goods
-  #   xlsx = File.new("#{Settings.export_path}/#{Time.current.to_i} goods_list.xlsx", 'w')
-  #   Axlsx::Package.new do |p|
-  #     p.workbook.add_worksheet(:name => 'Goods List') do |sheet|
-  #       sheet.add_row %w[name base_category sub_category unit price creator created_at remarks is_online]
-  #       @data.page(@_page).per(@_rows).each do |good|
-  #         sheet.add_row [
-  #                           good.name,
-  #                           *good.category.path,
-  #                           *good.serializable_hash.values_at(*%w[unit price creator remarks]),
-  #                           good.created_at.to_s,
-  #                           good.is_online ? 'yes' : 'no'
-  #                       ]
-  #       end
-  #     end
-  #     p.serialize(xlsx.path)
-  #   end
-  #   send_file xlsx.path
+  def export_goods
+    #   xlsx = File.new("#{Settings.export_path}/#{Time.current.to_i} goods_list.xlsx", 'w')
+    #   Axlsx::Package.new do |p|
+    #     p.workbook.add_worksheet(:name => 'Goods List') do |sheet|
+    #       sheet.add_row %w[name base_category sub_category unit price creator created_at remarks is_online]
+    #       @data.page(@_page).per(@_rows).each do |good|
+    #         sheet.add_row [
+    #                           good.name,
+    #                           *good.category.path,
+    #                           *good.serializable_hash.values_at(*%w[unit price creator remarks]),
+    #                           good.created_at.to_s,
+    #                           good.is_online ? 'yes' : 'no'
+    #                       ]
+    #       end
+    #     end
+    #     p.serialize(xlsx.path)
+    #   end
+    #   send_file xlsx.path
   end
 end

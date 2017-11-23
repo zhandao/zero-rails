@@ -88,7 +88,7 @@ class User < ApplicationRecord
 
     role :admin, can: :login
     # role :admin, :people, can: [:signup, :logout]
-    role [:admin, :people], can: [:signup, :logout] # => can `signup` and `logout`
+    role %i[admin people], can: %i[signup logout] # => can `signup` and `logout`
     can :login, role: :admin
     # can :login, when: proc { is? :admin }
 
@@ -97,11 +97,11 @@ class User < ApplicationRecord
 
     # role :other, can: :talk_to, model: User, if_case: :id_eql
     role :other, can: :talk_to, model: User do |dist|
-      has_relation_with? dist
+      relation_with? dist
     end
     # 相同的 action_source，其 block 只要有一个为 true，且 when 也为 true，就表示 it can
     can :talk_to, User, if_case do |dist| # TODO: only_case
-      is?(:people) && has_relation_with?(dist)
+      is?(:people) && relation_with?(dist)
     end # => cannot judge
 
     role_group :ad, can: :read # => can `read`
@@ -125,7 +125,7 @@ class User < ApplicationRecord
     puts 'fighting'
   end
 
-  def has_relation_with? user
+  def relation_with?(user)
     user.id == id
   end
 end

@@ -1,6 +1,6 @@
 module ZeroPermission
-
   # TODO: private
+
   def self.included(base)
     # # TODO: 这里应该可选择性配置：如果不需要 AOP check，那么应该在第一次调 can? 和 in_the_group? 时调用配置
     # base.after_initialize :roles_setting
@@ -22,7 +22,7 @@ module ZeroPermission
     permissions_setting
     current_permissions.keys.map do |key|
       # TODO: 带有 block 的判断是无法在这里进行的，所以不返回
-      next if key.match? /_block/
+      next if key.match?(/_block/)
       can?(key) ? key : nil rescue nil
     end.compact
   end
@@ -43,11 +43,11 @@ module ZeroPermission
   end
 
   def can actions, source = nil, options, &block
-    [options[:role]].flatten.each do |_role|
+    [options[:role]].flatten.each do |given_role|
       Array(actions).each do |action|
         key = source ? "#{action}_#{source.name.downcase}" : action
         # TODO: 怎么延迟做 when
-        current_permissions[key] ||= is?(_role) && (options[:when].nil? || options[:when])
+        current_permissions[key] ||= is?(given_role) && (options[:when].nil? || options[:when])
         # TODO: block 不要放到 c_p
         (current_permissions["#{key}_block"] ||= [ ]) << block if block_given?
       end
@@ -71,8 +71,8 @@ module ZeroPermission
     return true if action.nil?
     permissions_setting # TODO: 优化
 
-    _source = source.is_a?(Module) ? source : source.class if source
-    key = _source ? "#{action}_#{_source.name.downcase}".to_sym : action
+    module_source = source.is_a?(Module) ? source : source.class if source
+    key = module_source ? "#{action}_#{module_source.name.downcase}".to_sym : action
     current_permissions[key] && permission_blocks_result(source, key) || false
   end
   alias has_permission? can?
@@ -125,6 +125,7 @@ module ZeroPermission
   # TODO: 父子权限：如果父权限无效，则子孙无效，逻辑同 role family
   def load_permissions_from_database
     roles_setting # TODO: 优化（这句还是必要的，如果不是所有都走数据库）
+    # TODO: 一个发现的问题是，console 和 rails server 的 cache 似乎是不共享的？或者说是其他问题？
     Rails.cache.fetch("#{self.class.name.underscore}_#{self.id}_permissions") do
       assoc_roles = roles.includes(:role_permissions, :permissions).to_a
       role_permissions = assoc_roles.map(&:role_permissions).flatten.uniq
@@ -137,7 +138,7 @@ module ZeroPermission
         options = { when: relation.skip_condition || instance_eval(pmi.condition || 'true') }
         [ (pmi.is_method ? :can_call : :can), pmi.name.to_sym, pmi.source, options ]
       end
-    end.each { |args| send *args }
+    end.each { |args| send(*args) }
   end
 
   def permissions_setting
