@@ -1,6 +1,5 @@
 class Api::V1::CategoriesDoc < ApiDoc
-
-  open_api :index, 'GET list of categories.', builder: :cache_index, use: [:page, :rows], skip: token
+  open_api :index, 'GET list of categories.', builder: :cache_index, use: %i[ page rows ], skip: token
 
 
   open_api :nested_list, 'GET nested list of categories.', builder: :cache_index, use: none, skip: token
@@ -11,7 +10,7 @@ class Api::V1::CategoriesDoc < ApiDoc
               :name! => { type: String,  desc: '名字' },
         :is_smaller! => { type: Boolean, desc: 'icon name' },
           :icon_name => { type: String,  desc: '是否二级分类?' },
-            :base_id => { type: Integer, desc: '一级分类的 id' },
+            :base_id => { type: Integer, desc: '一级分类的 id' }
     }
   end
 
@@ -21,7 +20,7 @@ class Api::V1::CategoriesDoc < ApiDoc
               :name  => { type: String,  desc: '名字' },
         :is_smaller  => { type: Boolean, desc: 'icon name' },
          :icon_name  => { type: String,  desc: '是否二级分类?' },
-           :base_id  => { type: Integer, desc: '一级分类的 id' },
+           :base_id  => { type: Integer, desc: '一级分类的 id' }
     }
   end
 

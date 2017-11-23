@@ -1,13 +1,12 @@
 class Api::V1::GoodsDoc < ApiDoc
-
   open_api :index, 'GET list of goods.', builder: :index,
-           use: token + [ :created_start_at, :created_end_at, :value, :page, :rows ] do
+           use: token + %i[ created_start_at created_end_at value page rows ] do
     desc 'GET list of goods.', view!: '请求来自的视图，允许值：', search_type!: '搜索的字段名，允许值：'
 
     query :view, String, enum: {
         '所有物品 (default)': 'all',
                   '上线物品': 'online',
-                  '下线物品': 'offline',
+                  '下线物品': 'offline'
     }, dft: 'all'
 
     do_query by: {
@@ -30,13 +29,13 @@ class Api::V1::GoodsDoc < ApiDoc
   open_api :create, 'POST create a good.', builder: :success_or_not, use: token do
     form! 'for creating the specified good', data: {
                :name! => { type: String,  desc: '名字' },
-        :category_id! => { type: Integer, desc: '子类 id', npmt: true, range: { ge: 1 }, as: :cate  },
+        :category_id! => { type: Integer, desc: '子类 id', npmt: true, range: { ge: 1 }, as: :cate },
                :unit! => { type: String,  desc: '单位' },
               :price! => { type: Float,   desc: '单价', range: { ge: 0} },
         # -- optional
            :is_online => { type: Boolean, desc: '是否上线?' },
              :remarks => { type: String,  desc: '其他说明' },
-            :pic_path => { type: String,  desc: '图片路径', is: :url },
+            :pic_path => { type: String,  desc: '图片路径', is: :url }
     },
           exp_by:       %i[ name category_id unit price ],
           examples: {
@@ -52,12 +51,12 @@ class Api::V1::GoodsDoc < ApiDoc
   open_api :update, 'PATCH update the specified Good.', builder: :success_or_not, use: token + id do
     form! 'for updating the specified good', data: {
                :name => { type: String,  desc: '名字' },
-        :category_id => { type: Integer, desc: '子类 id', npmt: true, range: { ge: 1 }, as: :cate  },
+        :category_id => { type: Integer, desc: '子类 id', npmt: true, range: { ge: 1 }, as: :cate },
                :unit => { type: String,  desc: '单位' },
               :price => { type: Float,   desc: '单价', range: { ge: 0 } },
             :remarks => { type: String,  desc: '其他说明' },
            :pic_path => { type: String,  desc: '图片路径', is: :url },
-          :is_online => { type: Boolean, desc: '是否上线' },
+          :is_online => { type: Boolean, desc: '是否上线' }
     }
   end
 

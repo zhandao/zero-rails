@@ -3,11 +3,13 @@ require './lib/monkey_patches/array' # TODO
 
 class Api::ApiController < ActionController::API
   include ActionController::Caching
-  include OpenApi::DSL, Zero::Log, Rescuer
-  include OutPut, AutoGenDoc, ParamsProcessor
+  include Zero::Log, OutPut
+  include OpenApi::DSL, AutoGenDoc
+  include Rescuer
+  include ParamsProcessor
   include RolePermissionMapper
-
   include Token
+
   before_action :user_token_verify!
 
   def self.skip_token options = { }

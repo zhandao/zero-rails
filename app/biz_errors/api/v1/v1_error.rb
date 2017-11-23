@@ -1,5 +1,5 @@
 class V1Error < ApiError
-
+  #
 end
 
 module CUDFailed

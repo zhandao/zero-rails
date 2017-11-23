@@ -1,7 +1,7 @@
 class Api::V1::StoresController < Api::V1::BaseController
   include ActiveRecordErrorsRescuer
 
-  skip_token only: [:index, :show]
+  skip_token only: %i[ index show ]
 
   def index
     @data = Store.all_from_cache

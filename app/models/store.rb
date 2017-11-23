@@ -9,14 +9,14 @@ class Store < ApplicationRecord
   builder_rmv :deleted_at
 
   after_commit do
-    Rails.cache.delete_matched /stores/
+    Rails.cache.delete_matched(/stores/)
   end
 
   after_create do
-    Inventory.create! Good.all { |good| { store: self, good: good } }
+    Inventory.create!(Good.all { |good| { store: self, good: good } })
   end
 
   def self.all_from_cache
-    Rails.cache.fetch("stores") { all.to_a }
+    Rails.cache.fetch('stores') { all.to_a }
   end
 end

@@ -24,8 +24,8 @@ module RspecGenerator
       def _request_by(merge = nil, params = { })
         params = merge if merge.is_a? Hash
         params = merge == :merge ? ", #{let_param_name}.merge(#{pr(params)})" : ", #{pr(params)}" if params.present?
-        url = describe_doc.path.match?('{') ? %{"#{describe_doc.path.gsub('{', '#{')}"} : "'#{describe_doc.path}'"
-        %{#{describe_doc.verb} #{url}#{params if params.present?}}
+        url = describe_doc.path.match?('{') ? %("#{describe_doc.path.gsub('{', '#{')}") : "'#{describe_doc.path}'"
+        %(#{describe_doc.verb} #{url}#{params if params.present?})
       end
 
       def _expect(who, whos, what, not_what)

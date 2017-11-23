@@ -1,5 +1,4 @@
 class Api::V1::GoodsSpdoc < RequestSpdoc
-
   describe :index do
     biz 'business scenario x' do
       context 'when case y' do

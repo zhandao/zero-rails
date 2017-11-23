@@ -2,14 +2,14 @@ module RspecGenerator
   module CommonHelpers
     def self.included(base)
       base.class_eval do
-        attr_accessor :content_stack ,:path, :each
+        attr_accessor :content_stack, :path, :each
       end
     end
 
     def inherited(base)
       super
       base.class_eval do
-        self.path = "#{name.sub('Spdoc', '').underscore.gsub('::', '/')}" if name.match? /sSpdoc/
+        self.path = name.sub('Spdoc', '').underscore.gsub('::', '/') if name.match?(/sSpdoc/)
         self.content_stack = [ ]
         content_stack.push ''
         self.each = { describe: '', conetxt: '' }
@@ -33,7 +33,7 @@ module RspecGenerator
     end
 
     def set_path(path)
-      self.path = path
+      self.path = "#{path}/#{name.sub('Spdoc', '').downcase}"
     end
 
     # def content_stack_last block, template_result
@@ -77,7 +77,7 @@ module RspecGenerator
     def _error_info(error_name, code_or_msg = :code)
       return error_name unless error_name.is_a?(Symbol) && !error_name.match?(' ') && !error_name.match?('\(')
 
-      error_class_name = ctrl_path.split('/').last.camelize.concat('Error')
+      error_class_name = path.split('/').last.camelize.concat('Error')
       error_class = Object.const_get(error_class_name) rescue ApiError
       error_class.send(error_name, :info)[code_or_msg]
     end
@@ -86,7 +86,7 @@ module RspecGenerator
       desc = _error_info(err_msg, :msg)
       # 如果 error msg 存在，则输出，且如果 desc 空，则不加逗号
       unless desc == err_msg
-        "#{does_what.blank? ? '' : does_what + ', ' }#{desc}"
+        "#{does_what.blank? ? '' : does_what + ', '}#{desc}"
       else
         does_what
       end

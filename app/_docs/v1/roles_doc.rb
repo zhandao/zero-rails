@@ -1,5 +1,4 @@
 class Api::V1::RolesDoc < ApiDoc
-
   open_api :index, 'GET roles list of the specified model', builder: :index, use: token do
     query :model, String, dft: 'User', reg: /^[A-Z]/
   end

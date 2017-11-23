@@ -2,17 +2,7 @@ class ApiDoc < Object
   include OpenApi::DSL
   include AutoGenDoc
 
-  # TODO: generate controller.rb, error.rb, rspec_doc, jbuilder
-
   class << self
-    def skip *params
-      @skip = params
-    end
-
-    def use *params
-      @use = params
-    end
-
     def undo_dry
       @_apis_blocks = nil
     end

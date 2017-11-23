@@ -1,6 +1,6 @@
 # This is the configuration used to check the rubocop source code.
 
-inherit_from: .rubocop_todo.yml
+inherit_from: .rubocop_ignore.yml
 #require: rbocop/cop/internal_affairs
 
 AllCops:
@@ -12,6 +12,7 @@ AllCops:
     - 'spec/**/*'
     - 'app/views/**/*'
     - 'Gemfile'
+    - 'bin/**/*'
   DisplayCopNames: true
   TargetRubyVersion: 2.4
   TargetRailsVersion: 5.1
@@ -58,6 +59,15 @@ Layout/AlignHash:
 Style/HashSyntax:
   Enabled: false
 
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Layout/EmptyLines:
+  Enabled: false
+
+Lint/UnneededSplatExpansion:
+  Enabled: false
+
 #Style/StringLiterals:
 #  Enabled: true
 #  EnforcedStyle: double_quotes
@@ -78,4 +88,8 @@ Metrics/AbcSize:
   Enabled: false
 
 Metrics/PerceivedComplexity:
+  Enabled: false
+
+# False positives
+Layout/EmptyLineBetweenDefs:
   Enabled: false

@@ -1,5 +1,4 @@
 module BusinessError
-
   class ZError < StandardError
     attr_accessor :name, :message, :code
     def initialize(name, message, code)

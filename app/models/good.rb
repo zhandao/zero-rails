@@ -16,31 +16,31 @@ class Good < ApplicationRecord
   scope :online_view, -> { where is_online: true }
   scope :offline_view, -> { where is_online: false }
 
-  scope :created_between, -> (start_at, end_at) do
+  scope :created_between, ->(start_at, end_at) do
     where created_at: start_at||0..end_at||Float::INFINITY unless start_at.nil? && end_at.nil?
   end
 
-  scope :search_by_category, -> (category_name) do
+  scope :search_by_category, ->(category_name) do
     category_ids = Category.extend_search_by_name(category_name)
     where 'categories.id': category_ids
   end
 
-  scope :search_by, -> (field, value) do
+  scope :search_by, ->(field, value) do
     return if field.nil? || value.nil?
     if field == 'category_name'
       search_by_category name = value
     else
-      where "? LIKE ?", field, "%#{value}%"
+      # has no SQL injection risk
+      where "#{field} LIKE ?", "%#{value}%"
     end
   end
 
   scope :ordered, -> { order created_at: :desc }
 
-  # TODO: 写成个 lib 吧
-  scope :get, -> (association) { includes(association).map(&"#{association}".to_sym).flatten.compact }
+  scope :get, ->(association) { includes(association).map(&association.to_sym).flatten.compact }
 
   after_create do
-    Inventory.create! Store.all_from_cache.map { |store| { store: store, good: self } }
+    Inventory.create!(Store.all_from_cache.map { |store| { store: store, good: self } })
   end
 
   def change_online

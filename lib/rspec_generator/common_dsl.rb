@@ -35,7 +35,7 @@ module RspecGenerator
     def context when_what = '', &block
       sub_content = block_given? ? _instance_eval(block) : default_context
       content_stack.last << <<~CONTEXT
-        context '#{(d(when_what))}' do
+        context '#{d(when_what)}' do
           #{add_ind_to each[:context]}
           #{add_ind_to sub_content}
         end

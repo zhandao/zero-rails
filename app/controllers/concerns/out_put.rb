@@ -21,12 +21,12 @@ module OutPut
         data:      data.nil? ? '' : data
     }, :status => 200
   end
-  alias_method :out, :ren
-  alias_method :output, :ren
-  alias_method :response_ok, :ren
+  alias out ren
+  alias output ren
+  alias response_ok ren
 
   def ren_processed(json)
     return json.info if json.is_a? StandardError
-    json.is_a?(Hash) && (json.keys & [:data, :msg]).any? ? json : { data: json }
+    json.is_a?(Hash) && (json.keys & %i[ data msg ]).any? ? json : { data: json }
   end
 end

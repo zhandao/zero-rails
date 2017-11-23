@@ -2,11 +2,10 @@ class Api::V1::GoodsController < Api::V1::BaseController
   include ActiveRecordErrorsRescuer
 
   def index
-    @data =
-        Good.send("#{@_view}_view")
-            .created_between(@_start, @_end)
-            .search_by(@_field, @_value)
-            .ordered
+    @data = Good.send("#{@_view}_view")
+                .created_between(@_start, @_end)
+                .search_by(@_field, @_value)
+                .ordered
     export_goods if @_export
   end
 
@@ -23,7 +22,7 @@ class Api::V1::GoodsController < Api::V1::BaseController
 
 
   def update
-    permitted.merge! category: Category.find(@_cate) if @_cate
+    permitted[:category] = Category.find(@_cate) if @_cate
     @good.update! permitted
   end
 

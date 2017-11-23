@@ -25,7 +25,7 @@ class Api::V1::UsersDoc < ApiDoc
   open_api :login, 'POST user login.', builder: :success_or_not, skip: token do
     form! 'for user login', data: {
             :name! => { type: String, desc: 'user name' },
-        :password! => String,
+        :password! => String
     }
   end
 
@@ -36,7 +36,7 @@ class Api::V1::UsersDoc < ApiDoc
                      password!: String,
         password_confirmation!: String,
                          email: String,
-                  phone_number: String,
+                  phone_number: String
     }
   end
 
@@ -47,7 +47,7 @@ class Api::V1::UsersDoc < ApiDoc
                      password: String,
         password_confirmation: String,
                         email: String,
-                 phone_number: String,
+                 phone_number: String
     }
   end
 

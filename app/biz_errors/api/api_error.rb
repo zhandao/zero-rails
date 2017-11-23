@@ -1,6 +1,6 @@
 ERROR_BEGIN          = 700
 ERROR_CUD            = 600
-ERROR_SEVER_ERROR    = [ 0, 'server error' ]
+ERROR_SEVER_ERROR    = [ 0, 'server error' ].freeze
 ERROR_AUTHENTICATION = -1
 ERROR_AUTHORIZATION  = -10
 ERROR_ACTIVE_RECORD  = -100
@@ -43,5 +43,5 @@ ACTIVE_RECORD_ERRORS_MAPPING = {
          not_destroyed: ::ActiveRecord::RecordNotDestroyed,
             not_unique: ::ActiveRecord::RecordNotUnique,
     invalid_foreignkey: ::ActiveRecord::InvalidForeignKey,
-              not_null: ::ActiveRecord::NotNullViolation,
-}
+              not_null: ::ActiveRecord::NotNullViolation
+}.freeze
