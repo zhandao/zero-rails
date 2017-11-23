@@ -30,6 +30,7 @@ module RspecGenerator
         content_stack.last << "\n"
       end
 
+      # TODO: auto gen desc
       def it does_what = nil, when: nil, then: nil, its: nil, then_its: nil,
              is_expected: nil, isnt_expected: nil, should: nil, shouldnt: nil, &block
         return oneline_it if does_what.nil?

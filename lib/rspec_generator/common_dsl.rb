@@ -21,7 +21,7 @@ module RspecGenerator
 
     def is(what); what; end
 
-    # context when
+    # context when TODO: name
     def wh what = '', &block
       context "when #{what}", &block
     end
@@ -41,6 +41,14 @@ module RspecGenerator
         end
       CONTEXT
       content_stack.last << "\n"
+    end
+
+    def right &block
+      context :right, &block
+    end
+
+    def wrong &block
+      context :wrong, &block
     end
   end
 end

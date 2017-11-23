@@ -3,14 +3,16 @@ class ArraySpdoc < NormalSpdoc
 
   describe :per do
     subject is Array[1, 2, 3, 4, 5]
-    # TODO: desc template
 
     let :each, 'each', :each_context
+
     wh 'there is no call to #page' do
       it :success
       it :does_something, is_expected: [1, 2, 3]
     end
+
     wh 'no args are passed'
+
     biz 'abnormal call' do # biz?
       wh 'pass illegal args'
       wh 'it is called many times'

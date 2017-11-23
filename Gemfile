@@ -167,6 +167,9 @@ group :development do
   gem 'mina-multistage', require: false
   # gem 'mina-sidekiq', require: false
 
+  # https://github.com/capistrano/capistrano
+  # gem "capistrano", "~> 3.10"
+
   # Spring speeds up development by keeping your application running in the background.
   # Read more: https://github.com/rails/spring
   gem 'spring'
