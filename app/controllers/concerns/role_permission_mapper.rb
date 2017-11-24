@@ -38,13 +38,12 @@ module RolePermissionMapper
 
   # make_sure obj, :can, :permission
   # TODO: 可以延伸 action 为策略，但如果过重，还是抽成服务好一些
-  def make_sure(obj = nil, action = nil, *permission_codes)
+  def make_sure(obj = nil, action = nil, *args, &block)
     @_make_sure_obj = obj || current_user
     return self if action.nil?
 
     if action.match?(/can/)
-      action = :can? if action == :can
-      send(action, *permission_codes)
+      send(action, *args, &block)
     elsif action.match?(/is/)
       #
     else
@@ -54,21 +53,25 @@ module RolePermissionMapper
     self
   end
 
+  # make_sure(obj).can :permission { }
+  # make_sure(obj).can :permission, :then { }
+  # make_sure(obj).can :permission, :else { }
   def can? *permission_codes, &block
-    permission_codes.each do |code|
+    block_condition = permission_codes.delete(:then) || permission_codes.delete(:else)
+    permission_codes.flatten.each do |code|
       vp = vactual_permissions = [ *Array(self.class.permission_mapper&.[](code) || code) ]
       # vp = [ *vp, *PermissionCode.where(code: code).map(&:permissions).flatten.compact.map(&:name).uniq ]
-      return false unless @_make_sure_obj.can_all_of? *vp
+      unless @_make_sure_obj.can_all_of? *vp
+        instance_eval(&block) if block_condition == :else
+        return false
+      end
     end
 
     instance_eval(&block) if block_given?
     true
   end
 
-  # make_sure(obj).can? :permission, and_then do .. end
-  def and_then
-    { }
-  end
+  alias_method :can, :can?
 
   def can! *permission_codes
     raise ZeroPermission::InsufficientPermission unless can? *permission_codes

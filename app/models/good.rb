@@ -25,12 +25,15 @@ class Good < ApplicationRecord
     where 'categories.id': category_ids
   end
 
+  # TODO: Lib: search engine
   scope :search_by, ->(field, value) do
     return if field.nil? || value.nil?
     if field == 'category_name'
       search_by_category name = value
+    elsif field == 'price'
+      where price: value
     else
-      # has no SQL injection risk
+      # Note: 这里不会有注入风险，在参数检查的时候已经校验其输入在合法范围内了
       where "#{field} LIKE ?", "%#{value}%"
     end
   end
