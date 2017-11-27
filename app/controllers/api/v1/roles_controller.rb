@@ -6,7 +6,7 @@ class Api::V1::RolesController < Api::V1::BaseController
 
 
   def index
-    @data = Role.where belongs_to_model: @_model
+    @data = Role.where belongs_to_model: @model
   end
 
 
@@ -37,6 +37,6 @@ class Api::V1::RolesController < Api::V1::BaseController
 
 
   def permissions_modify
-    @role.permissions = Permission.where id: @_permission_ids
+    @role.permissions = Permission.where id: @permission_ids
   end
 end

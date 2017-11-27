@@ -1,0 +1,68 @@
+                        Prefix Verb   URI Pattern                                    Controller#Action
+              activeadmin_root GET    /activeadmin(.:format)                         activeadmin/dashboard#index
+         activeadmin_dashboard GET    /activeadmin/dashboard(.:format)               activeadmin/dashboard#index
+batch_action_activeadmin_users POST   /activeadmin/users/batch_action(.:format)      activeadmin/users#batch_action
+             activeadmin_users GET    /activeadmin/users(.:format)                   activeadmin/users#index
+                               POST   /activeadmin/users(.:format)                   activeadmin/users#create
+          new_activeadmin_user GET    /activeadmin/users/new(.:format)               activeadmin/users#new
+         edit_activeadmin_user GET    /activeadmin/users/:id/edit(.:format)          activeadmin/users#edit
+              activeadmin_user GET    /activeadmin/users/:id(.:format)               activeadmin/users#show
+                               PATCH  /activeadmin/users/:id(.:format)               activeadmin/users#update
+                               PUT    /activeadmin/users/:id(.:format)               activeadmin/users#update
+                               DELETE /activeadmin/users/:id(.:format)               activeadmin/users#destroy
+          activeadmin_comments GET    /activeadmin/comments(.:format)                activeadmin/comments#index
+                               POST   /activeadmin/comments(.:format)                activeadmin/comments#create
+           activeadmin_comment GET    /activeadmin/comments/:id(.:format)            activeadmin/comments#show
+                               DELETE /activeadmin/comments/:id(.:format)            activeadmin/comments#destroy
+               api_v1_examples GET    /api/v1/examples(.:format)                     api/v1/examples#index
+                               POST   /api/v1/examples(.:format)                     api/v1/examples#create
+                api_v1_example GET    /api/v1/examples/:id(.:format)                 api/v1/examples#show
+                               PATCH  /api/v1/examples/:id(.:format)                 api/v1/examples#update
+                               PUT    /api/v1/examples/:id(.:format)                 api/v1/examples#update
+                               DELETE /api/v1/examples/:id(.:format)                 api/v1/examples#destroy
+     change_online_api_v1_good POST   /api/v1/goods/:id/change_online(.:format)      api/v1/goods#change_online
+                  api_v1_goods GET    /api/v1/goods(.:format)                        api/v1/goods#index
+                               POST   /api/v1/goods(.:format)                        api/v1/goods#create
+                   api_v1_good GET    /api/v1/goods/:id(.:format)                    api/v1/goods#show
+                               PATCH  /api/v1/goods/:id(.:format)                    api/v1/goods#update
+                               PUT    /api/v1/goods/:id(.:format)                    api/v1/goods#update
+                               DELETE /api/v1/goods/:id(.:format)                    api/v1/goods#destroy
+                 api_v1_stores GET    /api/v1/stores(.:format)                       api/v1/stores#index
+                               POST   /api/v1/stores(.:format)                       api/v1/stores#create
+                  api_v1_store GET    /api/v1/stores/:id(.:format)                   api/v1/stores#show
+                               PATCH  /api/v1/stores/:id(.:format)                   api/v1/stores#update
+                               PUT    /api/v1/stores/:id(.:format)                   api/v1/stores#update
+                               DELETE /api/v1/stores/:id(.:format)                   api/v1/stores#destroy
+        list_api_v1_categories GET    /api/v1/categories/list(.:format)              api/v1/categories#nested_list
+             api_v1_categories GET    /api/v1/categories(.:format)                   api/v1/categories#index
+                               POST   /api/v1/categories(.:format)                   api/v1/categories#create
+               api_v1_category PATCH  /api/v1/categories/:id(.:format)               api/v1/categories#update
+                               PUT    /api/v1/categories/:id(.:format)               api/v1/categories#update
+                               DELETE /api/v1/categories/:id(.:format)               api/v1/categories#destroy
+            api_v1_inventories GET    /api/v1/inventories(.:format)                  api/v1/inventories#index
+                        api_v1 GET    /api/v1/u/:name(.:format)                      api/v1/users#show_via_name
+            login_api_v1_users POST   /api/v1/users/login(.:format)                  api/v1/users#login
+             roles_api_v1_user GET    /api/v1/users/:id/roles(.:format)              api/v1/users#roles
+       permissions_api_v1_user GET    /api/v1/users/:id/permissions(.:format)        api/v1/users#permissions
+      roles_modify_api_v1_user POST   /api/v1/users/:id/roles/modify(.:format)       api/v1/users#roles_modify
+permissions_modify_api_v1_user POST   /api/v1/users/:id/permissions/modify(.:format) api/v1/users#permissions_modify
+                  api_v1_users GET    /api/v1/users(.:format)                        api/v1/users#index
+                               POST   /api/v1/users(.:format)                        api/v1/users#create
+                   api_v1_user GET    /api/v1/users/:id(.:format)                    api/v1/users#show
+                               PATCH  /api/v1/users/:id(.:format)                    api/v1/users#update
+                               PUT    /api/v1/users/:id(.:format)                    api/v1/users#update
+                               DELETE /api/v1/users/:id(.:format)                    api/v1/users#destroy
+       permissions_api_v1_role GET    /api/v1/roles/:id/permissions(.:format)        api/v1/roles#permissions
+permissions_modify_api_v1_role POST   /api/v1/roles/:id/permissions/modify(.:format) api/v1/roles#permissions_modify
+                  api_v1_roles GET    /api/v1/roles(.:format)                        api/v1/roles#index
+                               POST   /api/v1/roles(.:format)                        api/v1/roles#create
+                   api_v1_role GET    /api/v1/roles/:id(.:format)                    api/v1/roles#show
+                               PATCH  /api/v1/roles/:id(.:format)                    api/v1/roles#update
+                               PUT    /api/v1/roles/:id(.:format)                    api/v1/roles#update
+                               DELETE /api/v1/roles/:id(.:format)                    api/v1/roles#destroy
+            api_v1_permissions GET    /api/v1/permissions(.:format)                  api/v1/permissions#index
+                               POST   /api/v1/permissions(.:format)                  api/v1/permissions#create
+             api_v1_permission GET    /api/v1/permissions/:id(.:format)              api/v1/permissions#show
+                               PATCH  /api/v1/permissions/:id(.:format)              api/v1/permissions#update
+                               PUT    /api/v1/permissions/:id(.:format)              api/v1/permissions#update
+                               DELETE /api/v1/permissions/:id(.:format)              api/v1/permissions#destroy

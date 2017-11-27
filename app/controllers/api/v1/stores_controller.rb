@@ -14,7 +14,7 @@ class Api::V1::StoresController < Api::V1::BaseController
 
 
   def show
-    @datum = Store.all_from_cache[@_id - 2]
+    @datum = Store.all_from_cache[@id - 2]
   end
 
 

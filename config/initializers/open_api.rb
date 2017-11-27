@@ -61,6 +61,8 @@ OpenApi::Config.tap do |c|
   # [REQUIRED] The location where .json doc file will be output.
   c.file_output_path = 'public/open_api'
 
+  c.rails_routes_file = 'config/routes.txt'
+
   # Everything about OAS3 is on https://github.com/OAI/OpenAPI-Specification/blob/OpenAPI.next/versions/3.0.0.md
   # Getting started: **https://swagger.io/docs/specification/basic-structure/**
   c.register_docs = {
@@ -133,9 +135,9 @@ OpenApi::Config.tap do |c|
         else
           json.partial! 'api/base', total: @data.size
         
-          # @data = @data.page(@_page).per(@_rows) if @_page || @_rows
+          # @data = @data.page(@page).per(@row) if @page || @row
           # json.data @data.to_a.to_builder
-          json.data @data.page(@_page).per(@_rows).to_a.to_builder
+          json.data @data.page(@page).per(@row).to_a.to_builder
         end
       FILE
       ),
@@ -159,10 +161,10 @@ OpenApi::Config.tap do |c|
         else
           json.partial! 'api/base', total: @data.size
           
-          # @data = @data.page(@_page).per(@_rows) if @_page || @_rows
+          # @data = @data.page(@page).per(@row) if @page || @row
           json.cache! [ 'key' ], expires_in: 10.minutes do
             # json.data @data.to_a.to_builder
-            json.data @data.page(@_page).per(@_rows).to_a.to_builder
+            json.data @data.page(@page).per(@row).to_a.to_builder
           end
         end
       FILE

@@ -17,7 +17,7 @@ module Export
     #   Axlsx::Package.new do |p|
     #     p.workbook.add_worksheet(:name => 'Goods List') do |sheet|
     #       sheet.add_row %w[name base_category sub_category unit price creator created_at remarks is_online]
-    #       @data.page(@_page).per(@_rows).each do |good|
+    #       @data.page(@page).per(@rows).each do |good|
     #         sheet.add_row [
     #                           good.name,
     #                           *good.category.path,

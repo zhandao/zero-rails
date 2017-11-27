@@ -15,7 +15,7 @@ if @data.nil?
 else
   json.partial! 'api/base', total: @data.size
 
-  # @data = @data.page(@_page).per(@_rows) if @_page || @_rows
+  # @data = @data.page(@page).per(@rows) if @page || @rows
   # json.data @data.to_a.to_builder
-  json.data @data.page(@_page).per(@_rows).to_a.to_builder
+  json.data @data.page(@page).per(@rows).to_a.to_builder
 end
