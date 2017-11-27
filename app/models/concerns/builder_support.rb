@@ -22,11 +22,17 @@ module BuilderSupport
       (@builder_rmv ||= [ ]).concat attrs
     end
 
-    def self.builder_add *attrs
-      if attrs[1].is_a? Hash
+    def self.builder_add *attrs, &block
+      if block_given?
+        define_method attrs.first do
+          instance_eval(&block)
+        end
+      elsif attrs[1].is_a? Hash
         builder_add_with_when attrs
+      elsif attrs.delete(:flatten)
+        # TODO
       else
-        is_unscoped = attrs.delete :unscoped
+        is_unscoped = attrs.delete(:unscoped)
         (@builder_add ||= [ ]).concat attrs
         generate_assoc_info_method attrs, is_unscoped
       end
@@ -42,7 +48,7 @@ module BuilderSupport
       end
     end
 
-    def self.show_attrs
+    def self.show_attrs(rmv: [], add: [])
       show_attrs = self.column_names.map(&:to_sym) \
                        - (@builder_rmv || [ ]) \
                        + (@builder_add || [ ])
@@ -56,7 +62,7 @@ module BuilderSupport
         end
       end
 
-      show_attrs
+      show_attrs - rmv + add
     end
 
     delegate :show_attrs, to: self
@@ -90,7 +96,7 @@ module BuilderSupport
         assoc_model = assoc_method.to_s.singularize
         builder_rmv "#{assoc_model}_id".to_sym if respond_to? "#{assoc_model}_id"
         define_method assoc_model do
-          Object.const_get(assoc_model.camelize).unscoped { super() }
+          assoc_model.camelize.constantize.unscoped { super() }
         end if is_unscoped
       end
     end
