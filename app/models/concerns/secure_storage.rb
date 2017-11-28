@@ -6,8 +6,8 @@ module SecureStorage
   end
 
   module ClassMethods
-    # acts_as_secure_storage :name
-    def acts_as_secure_storage *fields
+    # secure_storage :name
+    def secure_storage *fields
       @secure_storage = fields
 
       class_exec(fields) do |fields|

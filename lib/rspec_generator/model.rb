@@ -1,5 +1,5 @@
 module RspecGenerator
-  module Normal
+  module Model
     def self.included(base)
       base.extend ClassMethods
     end

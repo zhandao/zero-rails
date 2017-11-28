@@ -17,6 +17,7 @@ module RspecGenerator
     end
 
     def run
+      super() rescue nil
       Dir['./app/**/*_spdoc.rb'].each { |file| require file }
       descendants.each do |spdoc|
         *dir_path, file_name = spdoc.path.split('/')
@@ -24,10 +25,10 @@ module RspecGenerator
         FileUtils.mkdir_p dir_path
         file_path = "#{dir_path}/#{file_name}_spec.rb"
 
-        # unless File::exists?(file_path)
+        # if Config.overwrite_files || !File::exist?(file_path)
         if true
           File.open(file_path, 'w') { |file| file.write spdoc.whole_file }
-          puts "[ZRO] Spec file has been generated: #{file_path}"
+          puts "[Zero] Spec file has been generated: #{file_path}"
         end
       end
     end

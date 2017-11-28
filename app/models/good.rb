@@ -40,7 +40,6 @@ class Good < ApplicationRecord
   scope :get, ->(association) { includes(association).map(&association.to_sym).flatten.compact }
 
   after_create do
-
     Inventory.create!(Store.all_from_cache.map { |store| { store: store, good: self } })
   end
 
