@@ -7,9 +7,7 @@ class Good < ApplicationRecord
 
   acts_as_paranoid
 
-  include BuilderSupport
-  builder_rmv :deleted_at
-  builder_add :unscoped, :category_info
+  builder_support rmv: %i[ deleted_at ], add: %i[ unscoped: category_info ]
 
   default_scope { includes :category }
   scope :all_view, -> { all }
@@ -25,7 +23,6 @@ class Good < ApplicationRecord
     where 'categories.id': category_ids
   end
 
-  # TODO: Lib: search engine
   scope :search_by, ->(field, value) do
     return if field.nil? || value.nil?
     if field == 'category_name'

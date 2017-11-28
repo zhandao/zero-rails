@@ -3,8 +3,7 @@ class Inventory < ApplicationRecord
 
   belongs_to :good
 
-  include BuilderSupport
-  builder_add :unscoped, :good_info, :floor_info
+  builder_support add: %i[ unscoped: good_info store_info ]
 
   def increase(much)
     self.amount += much

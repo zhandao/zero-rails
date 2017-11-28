@@ -5,8 +5,7 @@ class Store < ApplicationRecord
 
   acts_as_paranoid
 
-  include BuilderSupport
-  builder_rmv :deleted_at
+  builder_support rmv: %i[ deleted_at ]
 
   after_commit do
     Rails.cache.delete_matched(/stores/)

@@ -644,9 +644,6 @@
                           "name": {
                             "type": "string"
                           },
-                          "category_id": {
-                            "type": "integer"
-                          },
                           "unit": {
                             "type": "string"
                           },
@@ -961,9 +958,6 @@
                           },
                           "name": {
                             "type": "string"
-                          },
-                          "category_id": {
-                            "type": "integer"
                           },
                           "unit": {
                             "type": "string"

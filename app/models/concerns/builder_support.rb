@@ -1,44 +1,64 @@
 module BuilderSupport
-  extend ActiveSupport::Concern
+  def self.included(base)
+    base.class_eval do
+      def self.builder_support rmv: [ ], add: [ ]
+        extend ClassMethods
+        delegate :show_attrs, to: self
+        include InstanceMethods
 
-  def to_builder
-    Jbuilder.new do |json|
-      json.(self, *self.show_attrs)
-      instance_exec(json, &json_addition)
-    end.attributes!
+        builder_rmv *rmv
+        # %i[ a, b, c d ]
+        # %i[ unscoped: a b, flatten: c d ]
+        add.map { |item| item[','] ? [item.to_s.delete(','), ','] : item }
+           .flatten.map(&:to_sym).split(:',').each do |attrs|
+          builder_add *attrs
+        end
+      end
+    end
   end
 
-  def json_addition
-    proc { }
+  module InstanceMethods
+    def to_builder
+      Jbuilder.new do |json|
+        json.(self, *self.show_attrs)
+        instance_exec(json, &json_addition)
+      end.attributes!
+    end
+
+    def json_addition
+      proc { }
+    end
   end
 
-  included do
+  module ClassMethods
     # FIXME: 很奇怪的 scope 影响，尽量用转成 arr 的 to_bd 而不是直接调
-    def self.to_builder
+    def to_builder
       all.to_a.to_builder
     end
 
-    def self.builder_rmv *attrs
+    def builder_rmv *attrs
       (@builder_rmv ||= [ ]).concat attrs
     end
 
-    def self.builder_add *attrs, &block
+    def builder_add *attrs, &block
       if block_given?
         define_method attrs.first do
           instance_eval(&block)
         end
+        (@builder_add ||= [ ]) << attrs.first
       elsif attrs[1].is_a? Hash
         builder_add_with_when attrs
       elsif attrs.delete(:flatten)
         # TODO
       else
-        is_unscoped = attrs.delete(:unscoped)
+        # %i[ unscoped: a b ]
+        is_unscoped = attrs.delete(:unscoped) || attrs.delete(:'unscoped:')
         (@builder_add ||= [ ]).concat attrs
         generate_assoc_info_method attrs, is_unscoped
       end
     end
 
-    def self.builder_map settings = { }
+    def builder_map settings = { }
       settings.each do |field_name, alias_key|
         builder_rmv field_name
         builder_add alias_key
@@ -48,7 +68,7 @@ module BuilderSupport
       end
     end
 
-    def self.show_attrs(rmv: [], add: [])
+    def show_attrs(rmv: [ ], add: [ ])
       show_attrs = self.column_names.map(&:to_sym) \
                        - (@builder_rmv || [ ]) \
                        + (@builder_add || [ ])
@@ -65,9 +85,7 @@ module BuilderSupport
       show_attrs - rmv + add
     end
 
-    delegate :show_attrs, to: self
-
-    def self.builder_add_with_when(args)
+    def builder_add_with_when(args)
       (@builder_add_later ||= { })[args.first] = args[1][:when]
       # 生成 when 设置的同名函数
       # 用以设置状态
@@ -80,7 +98,7 @@ module BuilderSupport
       generate_assoc_info_method args.first, false
     end
 
-    def self.generate_assoc_info_method(attrs, is_unscoped)
+    def generate_assoc_info_method(attrs, is_unscoped)
       # 匹配关联模型 `name_info` 形式的 attr，并自动生成该方法
       # 方法调用模型的 to_builder 方法并取得最终渲染结果
       # unscoped 主要是为了支持去除软删除的默认 scope
@@ -94,7 +112,7 @@ module BuilderSupport
         end
 
         assoc_model = assoc_method.to_s.singularize
-        builder_rmv "#{assoc_model}_id".to_sym if respond_to? "#{assoc_model}_id"
+        builder_rmv "#{assoc_model}_id".to_sym
         define_method assoc_model do
           assoc_model.camelize.constantize.unscoped { super() }
         end if is_unscoped

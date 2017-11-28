@@ -10,6 +10,5 @@ class Role < ApplicationRecord
   has_many   :sub_roles, class_name: 'Role', foreign_key: 'base_role_id'
   belongs_to :base_role, class_name: 'Role', optional: true
 
-  include BuilderSupport
-  builder_rmv :condition, :belongs_to_model
+  builder_support rmv: %i[ condition belongs_to_model ]
 end

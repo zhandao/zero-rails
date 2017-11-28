@@ -34,7 +34,12 @@ module BusinessError
       ((@errors ||= { })[:private] ||= []) << name
     end
   end
+
   alias_method :define, :mattr_reader
+
+  def def_errors mapping
+    mapping.each { |(name, msg)| mattr_reader name, msg }
+  end
 
   # 目的是在 autogen doc resp 时指定特定的 action
   def set_for who, code_start_at = nil, code_op = :inc

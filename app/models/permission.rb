@@ -7,6 +7,5 @@ class Permission < ApplicationRecord
 
   has_many :roles, through: :role_permissions
 
-  include BuilderSupport
-  builder_rmv :is_method, :source, :condition, :belongs_to_model
+  builder_support rmv: %i[ is_method source condition belongs_to_model ]
 end

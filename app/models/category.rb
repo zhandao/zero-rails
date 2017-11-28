@@ -6,8 +6,7 @@ class Category < ApplicationRecord
 
   acts_as_paranoid
 
-  include BuilderSupport
-  builder_rmv :updated_at, :created_at, :delete_at
+  builder_support rmv: %i[ updated_at created_at delete_at ]
   # builder_add :base_category, when: proc { is_smaller }
   builder_add :sub_categories_info, when: :get_nested_list
 

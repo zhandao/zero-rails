@@ -3,8 +3,7 @@ class RolePermission < ApplicationRecord
 
   belongs_to :permission
 
-  include BuilderSupport
-  builder_rmv :skip_condition
+  builder_support rmv: %i[ skip_condition ]
 
   after_commit :delete_entity_cache
   def delete_entity_cache

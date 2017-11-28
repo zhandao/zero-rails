@@ -3,8 +3,7 @@ class EntityRole < ApplicationRecord
 
   belongs_to :role
 
-  include BuilderSupport
-  builder_rmv :skip_condition
+  builder_support rmv: %i[ skip_condition ]
 
   before_create  :check_belongs
   def check_belongs
