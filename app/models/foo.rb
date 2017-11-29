@@ -3,12 +3,14 @@
 class Foo < ApplicationRecord
   acts_as_paranoid
 
-  belongs_to :user
+  belongs_to :user, polymorphic: true
 
   has_many :stars
 
   has_many :sub_foos, class_name: 'Foo', foreign_key: 'sub_foo_id', dependent: :destroy
   belongs_to :sub_foo, class_name: 'Foo', optional: true
+
+  builder_support rmv: %i[ name actived ]
 
   scope :ordered, -> { all }
 

@@ -22,8 +22,8 @@ module RailsApi
     Dir["#{Rails.root}/app/biz_errors/**/*"].each { |p| config.eager_load_paths << p }
     config.eager_load_paths << "#{Rails.root}/app/_docs/rspec_docs/"
     config.eager_load_paths << "#{Rails.root}/app/_docs/model_docs/"
-    # config.eager_load_paths << Rails.root.join('app/controllers/api')
     config.eager_load_paths << Rails.root.join('lib')
+    # config.autoload_paths << Rails.root.join('lib')
 
     config.generators do |g|
       g.test_framework :rspec,
@@ -38,7 +38,7 @@ module RailsApi
       g.orm :active_record
     end
 
-    config.encoding = "utf-8"
+    config.encoding = 'utf-8'
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

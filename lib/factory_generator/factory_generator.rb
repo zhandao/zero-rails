@@ -1,15 +1,13 @@
 module FactoryGenerator
-  def self.included(base)
-    base.class_eval do
-      attr_accessor :fields, :scopes, :imethods, :cmethods
+  module DSL
+    def self.included(base)
+      base.extend FactoryGenerator::ClassMethods
     end
-    base.extend ClassMethods
   end
 
   module ClassMethods
     def run
-      super() rescue nil
-      Dir['./app/**/*_mdoc.rb'].each { |file| require file }
+      rescue_no_run { super() }
       descendants.each do |mdoc|
         *dir_path, file_name = mdoc.path.split('/')
         dir_path = "spec/factories/#{dir_path.join('/')}"

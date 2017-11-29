@@ -1,11 +1,15 @@
 class FooMdoc < ModelDoc
   soft_destroy
 
-  belongs_to :user
+  belongs_to :user, polymorphic: true
   has_many :stars
   self_joins :has_many
 
-  string! :name, index: true
+  string! :name, index: true, unique: true, show: true
+  boolean :actived, default: false, show: true
+  end_of_attrs
+
+  index :user, :name
 
   scope :ordered
 

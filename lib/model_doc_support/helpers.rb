@@ -3,7 +3,7 @@ module ModelDocSupport
     def inherited(base)
       super
       base.class_eval do
-        cattr_accessor :model_name, :model_rb_stack, :migration_rb_stack
+        cattr_accessor :model_name, :model_rb_stack, :migration_rb_stack, :migration_indexes, :builder_rmv
         cattr_accessor :fields, :scopes, :imethods, :cmethods
 
         self.model_name = name.sub('Mdoc', '')
@@ -12,9 +12,18 @@ module ModelDocSupport
         self.migration_rb_stack = [ ]
         migration_rb_stack.push ''
         self.fields = { }
+        self.migration_indexes = [ ]
+        self.builder_rmv = [ ]
 
         self.path = "models/#{model_name.underscore}"
       end
+    end
+
+    def process_and_returns_options(name, type, req, options)
+      if options.delete(:show)
+        builder_rmv << name
+      end
+      options
     end
 
     def run
@@ -44,11 +53,16 @@ module ModelDocSupport
       fields[:deleted_at] = _t unless _t.nil?
       type_max_length = fields.values.map(&:first).map(&:length).sort.last
       name_max_length = fields.keys.map(&:length).sort.last
-      key_order = %i[ foreign_key null index ] # TODO
+      key_order = %i[ foreign_key polymorphic null default index ] # TODO
 
       fields.each do |name, info|
         type = info.shift.to_s.ljust(type_max_length)
         info = info.reduce({ }, :merge)
+        if info.delete(:unique)
+          migration_indexes << name
+          info.delete(:index)
+        end
+
         info = key_order.map { |key| { key => info[key] } if info.key?(key) }.compact.reduce({ }, :merge)
         params = info.present? ? "#{name},".ljust(name_max_length + 2) << pr(info) : name.to_s
 
@@ -56,6 +70,15 @@ module ModelDocSupport
           t.#{type} :#{params}
         FIELD
       end
+    end
+
+    def indexes_to_migration
+      return nil if migration_indexes.blank?
+      "\n" << migration_indexes.map do |name|
+        <<~INDEX
+          add_index :#{model_name.underscore.pluralize}, :#{name}, unique: true
+        INDEX
+      end.join
     end
 
     def model_rb
@@ -80,6 +103,7 @@ module ModelDocSupport
               #{add_ind_to migration_rb_stack.last, 3}
               t.timestamps
             end
+            #{add_ind_to indexes_to_migration, 2}
           end
         end
       MG

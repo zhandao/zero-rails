@@ -11,7 +11,7 @@ module RspecGenerator
       base.class_eval do
         self.path = name.sub('Spdoc', '').underscore.gsub('::', '/') unless path
         self.content_stack = [ ]
-        content_stack.push ''
+        content_stack.push('')
         self.each = { describe: '', conetxt: '' }
       end
     end
@@ -36,7 +36,7 @@ module RspecGenerator
     def rescue_no_run
       yield
     rescue NoMethodError => e
-      pp "[ERROR] #{e.message}"
+      pp "[ERROR] #{e.message}" unless e.message.match?('no superclass method')
     end
 
     def set_path(path)
@@ -52,7 +52,7 @@ module RspecGenerator
     def _instance_eval(block)
       self.each = { describe: '', context: '' }
       content_stack.push ''
-      instance_eval &block
+      instance_eval(&block)
       content_stack.pop
     end
 
@@ -61,7 +61,7 @@ module RspecGenerator
       mtline_str.gsub("\n", "\n#{'  ' * space_times}")[0..-3]  # 缩进
                 .gsub(/ *\n/, "\n")         # 去除带空行的空格
                 .gsub(/end\n\n\n/, "end\n") # 去掉多余的多空行
-                .gsub(/ *XXX\n/, '')       # 去掉 XXX 标记的行
+                .gsub(/ *XXX\n/, '')        # 去掉 XXX 标记的行
     end
 
     def pr(obj, full = nil)
