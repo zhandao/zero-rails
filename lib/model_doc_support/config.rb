@@ -1,4 +1,4 @@
-module ModelDocDSL
+module ModelDocSupport
   module Config
     cattr_accessor :overwrite_files do
       false

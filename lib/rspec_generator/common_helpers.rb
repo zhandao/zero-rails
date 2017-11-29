@@ -9,7 +9,7 @@ module RspecGenerator
     def inherited(base)
       super
       base.class_eval do
-        self.path = name.sub('Spdoc', '').underscore.gsub('::', '/') if name.match?(/sSpdoc/)
+        self.path = name.sub('Spdoc', '').underscore.gsub('::', '/') unless path
         self.content_stack = [ ]
         content_stack.push ''
         self.each = { describe: '', conetxt: '' }
@@ -17,7 +17,7 @@ module RspecGenerator
     end
 
     def run
-      super() rescue nil
+      rescue_no_run { super() }
       Dir['./app/**/*_spdoc.rb'].each { |file| require file }
       descendants.each do |spdoc|
         *dir_path, file_name = spdoc.path.split('/')
@@ -27,10 +27,16 @@ module RspecGenerator
 
         # if Config.overwrite_files || !File::exist?(file_path)
         if true
-          File.open(file_path, 'w') { |file| file.write spdoc.whole_file }
+          File.open(file_path, 'w') { |file| file.write spdoc.whole_file.sub("\n\n\nend\n", "\nend\n") }
           puts "[Zero] Spec file has been generated: #{file_path}"
         end
       end
+    end
+
+    def rescue_no_run
+      yield
+    rescue NoMethodError => e
+      pp "[ERROR] #{e.message}"
     end
 
     def set_path(path)
@@ -50,12 +56,12 @@ module RspecGenerator
       content_stack.pop
     end
 
-    def add_ind_to(mtline_str) # indentation
-      return 'TODO' if mtline_str.blank?
-      mtline_str.gsub("\n", "\n  ")[0..-3]  # 缩进
+    def add_ind_to(mtline_str, space_times = 1) # indentation
+      return 'XXX' if mtline_str.blank?
+      mtline_str.gsub("\n", "\n#{'  ' * space_times}")[0..-3]  # 缩进
                 .gsub(/ *\n/, "\n")         # 去除带空行的空格
                 .gsub(/end\n\n\n/, "end\n") # 去掉多余的多空行
-                .gsub(/ *TODO\n/, '')       # 去掉 TO DO 标记的行
+                .gsub(/ *XXX\n/, '')       # 去掉 XXX 标记的行
     end
 
     def pr(obj, full = nil)

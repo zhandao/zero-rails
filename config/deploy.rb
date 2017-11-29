@@ -50,12 +50,12 @@ end
 
 desc 'Tail lograte log from server'
 task l: :remote_environment do
-  command %{tail -f #{fetch(:lograte_file)}}
+  command %{tailf -100 #{fetch(:lograte_file)}}
 end
 
 desc 'Tail original log from server'
 task ol: :remote_environment do
-  command %{tail -f #{fetch(:deploy_to)}/shared/log/#{fetch(:rails_env)}.log}
+  command %{tailf -100 #{fetch(:deploy_to)}/shared/log/#{fetch(:rails_env)}.log}
 end
 
 # Put any custom commands you need to run at setup

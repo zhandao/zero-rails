@@ -21,6 +21,7 @@ module RailsApi
     # config.eager_load_paths << Rails.root.join('app') # TODO
     Dir["#{Rails.root}/app/biz_errors/**/*"].each { |p| config.eager_load_paths << p }
     config.eager_load_paths << "#{Rails.root}/app/_docs/rspec_docs/"
+    config.eager_load_paths << "#{Rails.root}/app/_docs/model_docs/"
     # config.eager_load_paths << Rails.root.join('app/controllers/api')
     config.eager_load_paths << Rails.root.join('lib')
 

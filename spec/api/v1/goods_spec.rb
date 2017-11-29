@@ -53,6 +53,4 @@ RSpec.describe 'API V1', 'goods', type: :request do
       get "/api/v1/goods/#{id}"
     end
   end
-
-
 end

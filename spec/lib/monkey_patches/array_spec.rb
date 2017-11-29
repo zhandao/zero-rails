@@ -31,6 +31,4 @@ RSpec.describe Array do
 
   describe '#to_builder' do
   end
-
-
 end

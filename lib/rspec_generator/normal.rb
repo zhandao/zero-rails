@@ -17,7 +17,7 @@ module RspecGenerator
       def describe method = nil, add_desc = nil, desc: nil, template: nil, &block
         _biz add_desc, template: template, &block if method.nil?
 
-        desc = d(desc) || method.is_a?(Symbol) ? "##{method}" : method
+        desc = d(desc) || method.is_a?(Symbol) ? "##{method}" : ".#{method}"
         desc << ", #{add_desc}" if add_desc
         sub_content = _instance_eval(block) if block_given?
 
