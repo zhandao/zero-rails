@@ -1,6 +1,6 @@
 class Api::V1::PermissionsController < Api::V1::BaseController
   include ActiveRecordErrorsRescuer
-  include RolePermissionMapper
+
   if_can :manage_role_permission, allow: :CRUDI
 
   def index

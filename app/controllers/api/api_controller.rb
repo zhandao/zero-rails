@@ -7,7 +7,7 @@ class Api::ApiController < ActionController::API
   include OpenApi::DSL, AutoGenDoc
   include Rescuer
   include ParamsProcessor
-  include RolePermissionMapper
+  include MakeSure
   include Token
 
   before_action :user_token_verify!

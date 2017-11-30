@@ -2,20 +2,12 @@ class Api::V1::GoodsController < Api::V1::BaseController
   include ActiveRecordErrorsRescuer
 
   def index
-    @data = Good.send("#{@view}_view")
-                .created_between(@start, @end)
-                .search_by(@field, @value)
-                .ordered
+    @data = Good.send("#{@view}_view").created_between(@start, @end).search_by(@field, @value).ordered
     export_goods if @export
   end
 
 
-  logic :valid, fail: :invalid_param do
-    false
-  end
-
   def show
-    make_sure(1).valid
     @datum = @good
   end
 
