@@ -10,7 +10,12 @@ class Api::V1::GoodsController < Api::V1::BaseController
   end
 
 
+  logic :valid, fail: :invalid_param do
+    false
+  end
+
   def show
+    make_sure(1).valid
     @datum = @good
   end
 

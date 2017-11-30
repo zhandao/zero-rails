@@ -1,28 +1,29 @@
 module BusinessError
   class ZError < StandardError
-    attr_accessor :name, :message, :code
-    def initialize(name, message, code)
+    attr_accessor :name, :message, :code, :http_status
+    def initialize(name, message, code, http_status = 200)
       message = name if message.blank?
-      @name, @message, @code = name, message, code
+      @name, @message, @code, @http_status = name, message, code, http_status
     end
 
     def info
-      { code: @code, msg: @message}
+      { code: @code, msg: @message, http_status: @http_status }
     end
   end
 
   attr_accessor :errors
 
-  def mattr_reader name, message, code = nil
+  def mattr_reader name, message, code = nil, http: 200
     set_for name.to_s.split('_').first.to_sym, @code if @set_for_by_prefix
-    code = @code and code_op if code.nil?
-    define_singleton_method name do |watch_info = nil|
+    (code = @code) and code_op if code.nil?
+    http = @http_status if @http_status.present?
+
+    define_singleton_method name do |watch = nil|
       message = name.to_s.humanize.downcase if message == ''
-      if watch_info == :info
-        # ZError.new(name, message, code).info
-        { code: code, msg: message }
+      if watch == :info
+        { code: code, msg: message, http_status: http }
       else
-        raise ZError.new(name, message, code)
+        raise ZError.new(name, message, code, http)
         # TODO: raise ZError, name, message, code
       end
     end
@@ -71,6 +72,14 @@ module BusinessError
 
   def code_op
     @code = @code_op == :inc ? @code + 1 : @code - 1
+  end
+
+  def http status_code
+    @http_status = status_code
+  end
+
+  def unset_http
+    @http_status = nil
   end
 
   def inherited(subclass)

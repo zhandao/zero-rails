@@ -7,10 +7,8 @@ module ModelDocSupport
         cattr_accessor :fields, :scopes, :imethods, :cmethods
 
         self.model_name = name.sub('Mdoc', '')
-        self.model_rb_stack = [ ]
-        model_rb_stack.push ''
-        self.migration_rb_stack = [ ]
-        migration_rb_stack.push ''
+        self.model_rb_stack = [ '' ]
+        self.migration_rb_stack = [ '' ]
         self.fields = { }
         self.migration_indexes = [ ]
         self.builder_rmv = [ ]
@@ -31,17 +29,14 @@ module ModelDocSupport
       descendants.each do |mdoc|
         model_file_name = mdoc.model_name.underscore
         model_path = "app/models/#{model_file_name}.rb"
+        mg_next_version = ::ActiveRecord::Migration.next_migration_number(::ActiveRecord::Migrator.current_version)
+        mg_file_name = "#{mg_next_version}_create_#{mdoc.model_name.underscore.pluralize}"
+        mg_path = "db/migrate/#{mg_file_name}.rb"
+
         # if Config.overwrite_files || !File::exist?(model_path)
         if true
           File.open(model_path, 'w') { |file| file.write mdoc.model_rb.sub("\n\n\nend\n", "\nend\n") }
           puts "[Zero] Model file has been generated: #{model_path}"
-        end
-
-        mg_next_version = ::ActiveRecord::Migration.next_migration_number(::ActiveRecord::Migrator.current_version)
-        mg_file_name = "#{mg_next_version}_create_#{mdoc.model_name.underscore.pluralize}"
-        mg_path = "db/migrate/#{mg_file_name}.rb"
-        # if Config.overwrite_files || !File::exist?(mg_path)
-        if true
           File.open(mg_path, 'w') { |file| file.write mdoc.migration_rb.sub("\n\n\nend\n", "\nend\n") }
           puts "[Zero] Migration file has been generated: #{mg_path}"
         end
@@ -49,8 +44,8 @@ module ModelDocSupport
     end
 
     def fields_to_migration
-      _t = fields.delete(:deleted_at)
-      fields[:deleted_at] = _t unless _t.nil?
+      soft_destroy = fields.delete(:deleted_at)
+      fields[:deleted_at] = soft_destroy unless soft_destroy.nil?
       type_max_length = fields.values.map(&:first).map(&:length).sort.last
       name_max_length = fields.keys.map(&:length).sort.last
       key_order = %i[ foreign_key polymorphic null default index ] # TODO
@@ -58,13 +53,10 @@ module ModelDocSupport
       fields.each do |name, info|
         type = info.shift.to_s.ljust(type_max_length)
         info = info.reduce({ }, :merge)
-        if info.delete(:unique)
-          migration_indexes << name
-          info.delete(:index)
-        end
+        migration_indexes << name and info.delete(:index) if info.delete(:unique)
 
         info = key_order.map { |key| { key => info[key] } if info.key?(key) }.compact.reduce({ }, :merge)
-        params = info.present? ? "#{name},".ljust(name_max_length + 2) << pr(info) : name.to_s
+        params = info.present? ? ("#{name},".ljust(name_max_length + 2) << pr(info)) : name.to_s
 
         migration_rb_stack.last << <<~FIELD
           t.#{type} :#{params}

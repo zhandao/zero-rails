@@ -9,6 +9,7 @@ module ModelDocSupport
 
   module ClassMethods
     include Helpers
+    # TODO: schema component
 
     # 验证、枚举、builder、should test
     def field name, type, req, options = [ ], options_hash = { }

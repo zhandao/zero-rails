@@ -76,6 +76,22 @@ module RolePermissionMapper
   def can! *permission_codes
     raise ZeroPermission::InsufficientPermission unless can? *permission_codes
   end
+
+  def logic name, eval_str = nil, success: true, fail:, &block
+    (@_logic ||= { })[name] = { eval_str: eval_str, block: block, success: success, fail: fail}
+  end
+
+  def must logic_name
+    logic = @_logic[logic_name]
+    result = @_make_sure_obj.instance_eval(&logic[:block] || logic[:eval_str])
+    if result
+      logic[:success]
+    elsif logic[:fail].is_a?(Symbol)
+      ApiError.send(logic[:fail])
+    else
+      false
+    end
+  end
 end
 
 

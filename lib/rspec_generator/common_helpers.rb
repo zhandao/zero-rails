@@ -10,8 +10,7 @@ module RspecGenerator
       super
       base.class_eval do
         self.path = name.sub('Spdoc', '').underscore.gsub('::', '/') unless path
-        self.content_stack = [ ]
-        content_stack.push('')
+        self.content_stack = [ '' ]
         self.each = { describe: '', conetxt: '' }
       end
     end

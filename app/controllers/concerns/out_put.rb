@@ -19,7 +19,7 @@ module OutPut
         timestamp: Time.current.to_i,
         language:  'Ruby',
         data:      data.nil? ? '' : data
-    }, :status => 200
+    }, :status => json[:http] || 200
   end
   alias out ren
   alias output ren
