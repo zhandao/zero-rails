@@ -5,6 +5,8 @@ module OutPut
 
   def ren(json = { })
     json  = ren_processed json
+    return render json: json[:output], status: json[:http] if json[:output].present?
+
     total = json[:total]
     data  = json[:data]
     total = if    json[:msg].present?; 0

@@ -4,7 +4,7 @@ module Rescuer
       def self.error_map(error_to_bizerror_mapping)
         error_to_bizerror_mapping.each do |biz_error_name, error|
           rescue_from error do |_|
-            log_and_render ApiError.send(biz_error_name, :info)
+            log_and_render ApiError.send(biz_error_name).info
           end
         end
       end

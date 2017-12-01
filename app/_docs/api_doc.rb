@@ -4,7 +4,7 @@ class ApiDoc < Object
 
   class << self
     def undo_dry
-      @_apis_blocks = nil
+      @_api_dry_blocks = nil
     end
 
     def id

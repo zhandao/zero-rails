@@ -40,7 +40,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def login
     user = User.find_by!(name: @name).try(:authenticate, @password)
-    UsersError.login_failed unless user
+    UsersError.login_failed! unless user
     @data = { token: user.token }
   end
 

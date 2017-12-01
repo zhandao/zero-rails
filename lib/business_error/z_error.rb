@@ -3,12 +3,30 @@ module BusinessError
     attr_accessor :name, :message, :code, :http_status
     def initialize(name, message, code, http_status = 200)
       message = name if message.blank?
-      @name, @message, @code, @http_status = name, message, code, http_status
+      @name, @message, @code, @http_status, @output = name, message, code, http_status
     end
 
     def info
-      { code: @code, msg: @message, http_status: @http_status }
+      @info ||= { code: @code, msg: @message, http_status: @http_status }
     end
+
+    def output(content)
+      @info = info.merge output: content
+      raise self
+    end
+
+    alias out output
+
+    def and(addtion_content)
+      @info = info.merge output: info.merge(addtion_content)
+      raise self
+    end
+
+    alias addput and
+    alias addout and
+    alias and_out and
+
+    def message; info.to_s end
   end
 
   attr_accessor :errors
@@ -17,15 +35,15 @@ module BusinessError
     set_for name.to_s.split('_').first.to_sym, @code if @set_for_by_prefix
     (code = @code) and code_op if code.nil?
     http = @http_status if @http_status.present?
+    message = name.to_s.humanize.downcase if message == ''
 
-    define_singleton_method name do |watch = nil|
-      message = name.to_s.humanize.downcase if message == ''
-      if watch == :info
-        { code: code, msg: message, http_status: http }
-      else
-        raise ZError.new(name, message, code, http)
-        # TODO: raise ZError, name, message, code
-      end
+    define_singleton_method name do
+      ZError.new(name, message, code, http)
+    end
+
+    define_singleton_method "#{name}!" do
+      raise ZError.new(name, message, code, http)
+      # TODO: raise ZError, name, message, code
     end
 
     if @for.present?

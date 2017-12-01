@@ -9,8 +9,8 @@ module AutoGenDoc
     def inherited(subclass)
       super
       subclass.class_eval do
-        break unless self.name.match?(/sController|sDoc/)
-        ctrl_path self.name.sub('Doc', '').underscore.gsub('::', '/') if self.name.match?(/sDoc/)
+        break unless self.name.match?(/Controller|Doc/)
+        ctrl_path self.name.sub('Doc', '').underscore.gsub('::', '/') if self.name.match?(/Doc/)
         open_api_dry
       end
     end
@@ -68,7 +68,7 @@ module AutoGenDoc
           error_class = Object.const_get(error_class_name) rescue ApiError
           cur_api_errs = error_class.errors.values_at(action.to_sym, :private, :_public).flatten.compact.uniq
           cur_api_errs.each do |error|
-            info = error_class.send(error, :info)
+            info = error_class.send(error).info
             response info[:code], info[:msg]
           end
         end

@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
   def pa(key = nil)
     key.present? ? params[key] : (@zpa ||= Zero::ParamsAgent.tap { |zpa| zpa.params = params })
   end
+
   alias input pa
 
   def log_and_render(e)

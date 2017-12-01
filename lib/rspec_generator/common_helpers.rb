@@ -85,7 +85,7 @@ module RspecGenerator
 
       error_class_name = path.split('/').last.camelize.concat('Error')
       error_class = Object.const_get(error_class_name) rescue ApiError
-      error_class.send(error_name, :info)[code_or_msg]
+      error_class.send(error_name).info[code_or_msg]
     end
 
     def _does_what(does_what, err_msg)

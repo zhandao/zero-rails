@@ -16,8 +16,7 @@ class Api::ApiController < ActionController::API
     skip_before_action :user_token_verify!, options
   end
 
-  before_action :validate_params!
-  before_action :convert_params_type
+  before_action :validate_and_convert_params!
   before_action :set_permitted
 
   error_map(
