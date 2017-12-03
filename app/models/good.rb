@@ -11,8 +11,8 @@ class Good < ApplicationRecord
 
   default_scope { includes :category }
   scope :all_view, -> { all }
-  scope :online_view, -> { where is_online: true }
-  scope :offline_view, -> { where is_online: false }
+  scope :online_view, -> { where on_sale: true }
+  scope :offline_view, -> { where on_sale: false }
 
   scope :created_between, ->(start_at, end_at) do
     where created_at: start_at||0..end_at||Float::INFINITY unless start_at.nil? && end_at.nil?
@@ -43,8 +43,8 @@ class Good < ApplicationRecord
     Inventory.create!(Store.all_from_cache.map { |store| { store: store, good: self } })
   end
 
-  def change_online
-    self.is_online = !is_online
+  def change_onsale
+    self.on_sale = !on_sale
     save
   end
 end

@@ -1,11 +1,11 @@
 class Api::V1::CategoriesDoc < ApiDoc
-  open_api :index, 'GET list of categories.', builder: :cache_index, use: %i[ page rows ], skip: token
+  api :index, 'GET list of categories.', builder: :cache_index, use: %i[ page rows ], skip: token
 
 
-  open_api :nested_list, 'GET nested list of categories.', builder: :cache_index, use: none, skip: token
+  api :nested_list, 'GET nested list of categories.', builder: :cache_index, use: none, skip: token
 
 
-  open_api :create, 'POST create a category.', builder: :success_or_not, use: token do
+  api :create, 'POST create a category.', builder: :success_or_not, use: token do
     form! 'for creating the specified category', data: {
               :name! => { type: String,  desc: '名字' },
         :is_smaller! => { type: Boolean, desc: 'icon name' },
@@ -15,7 +15,7 @@ class Api::V1::CategoriesDoc < ApiDoc
   end
 
 
-  open_api :update, 'PATCH update the specified category.', builder: :success_or_not, use: id_and_token do
+  api :update, 'PATCH update the specified category.', builder: :success_or_not, use: id_and_token do
     form! 'for updating the specified category', data: {
               :name  => { type: String,  desc: '名字' },
         :is_smaller  => { type: Boolean, desc: 'icon name' },
@@ -25,5 +25,5 @@ class Api::V1::CategoriesDoc < ApiDoc
   end
 
 
-  open_api :destroy, 'DELETE the specified category.', builder: :success_or_not, use: id_and_token
+  api :destroy, 'DELETE the specified category.', builder: :success_or_not, use: id_and_token
 end

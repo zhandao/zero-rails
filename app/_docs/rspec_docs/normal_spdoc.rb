@@ -1,3 +1,3 @@
 class NormalSpdoc
-  include RspecGenerator::Normal
+  include Generators::Rspec::Normal
 end

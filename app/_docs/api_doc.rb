@@ -1,6 +1,7 @@
 class ApiDoc < Object
   include OpenApi::DSL
   include AutoGenDoc
+  include Generators::Jbuilder::DSL
 
   class << self
     def undo_dry

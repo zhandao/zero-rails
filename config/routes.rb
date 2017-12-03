@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       # end
 
       resources :goods do
-        post 'change_online', on: :member
+        post 'change_onsale', on: :member
       end
 
       resources :stores

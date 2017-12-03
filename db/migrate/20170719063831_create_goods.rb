@@ -8,7 +8,7 @@ class CreateGoods < ActiveRecord::Migration[5.1]
       t.string     :remarks
       t.string     :pic_path
       t.string     :creator,    null: false
-      t.boolean    :is_online,               default: true
+      t.boolean    :on_sale,                 default: true
       t.datetime   :deleted_at
 
       t.timestamps

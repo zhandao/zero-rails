@@ -12,9 +12,9 @@ class Array
     self[ page * per..(page + 1) * per - 1 ]
   end
 
-  def to_builder
+  def to_builder(rmv: [ ], add: [ ], merge: { })
     self.map do |datum|
-      datum.to_builder if datum.respond_to? :to_builder
+      datum.to_builder(rmv: rmv, add: add, merge: merge) if datum.respond_to? :to_builder
     end.compact
   end
 end

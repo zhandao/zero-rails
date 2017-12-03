@@ -136,7 +136,7 @@ module ZeroPermission
       relations.map do |relation|
         pmi = permission = relation.permission
         options = { when: relation.skip_condition || instance_eval(pmi.condition || 'true') }
-        [ (pmi.is_method ? :can_call : :can), pmi.name.to_sym, pmi.source, options ]
+        [ (pmi.for_method ? :can_call : :can), pmi.name.to_sym, pmi.source, options ]
       end
     end.each { |args| send(*args) }
   end

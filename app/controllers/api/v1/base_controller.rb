@@ -9,5 +9,5 @@ class Api::V1::BaseController < Api::ApiController
   # subject 'ikkiuchi'
   # pp 'hello world!' if it is?: :not_null
   # pp 'hello world!' if it.must! :not_null
-  logic :not_null { !self.nil? }
+  logic :not_null do !nil? end
 end

@@ -38,7 +38,7 @@ module SecureStorage
         end
 
         define_singleton_method :where do |*args|
-          return super(*args) if args.blank?
+          return super() if args.blank?
           fields.each do |field|
             next unless args.last.key? field
             value = args.last[field]
@@ -58,6 +58,7 @@ module SecureStorage
 
     def secure_storage!
       all
+      true
       #     .to_a.each do |item|
       #   data = @secure_storage.map do |field|
       #     [field, item.send(field)]

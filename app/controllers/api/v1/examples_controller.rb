@@ -3,11 +3,12 @@ class Api::V1::ExamplesController < Api::V1::BaseController
 
   components do
     schema :DogSchema => [ { id: Integer, name: String }, dft: { id: 1, name: 'pet' } ]
+    schema :PetSchema => [ not: [ Integer, Boolean ] ]
     resp   :BadRqResp => [ 'bad request', :json ]
     query! :NameQuery => [ :name, String, desc: 'user name' ]
   end
 
-  open_api :index, '(SUMMARY) this api blah blah ...', use: ['Token'] do
+  api :index, '(SUMMARY) this api blah blah ...', use: ['Token'] do
     # this_api_is_invalid! 'this api is expired!'
     desc 'Optional multiline or single-line Markdown-formatted description',
          id: 'description of<br/>id',
@@ -18,9 +19,16 @@ class Api::V1::ExamplesController < Api::V1::BaseController
     query! :done,  Boolean, must_be: false, default: true,  desc: 'must be false'
     query  :email, String,  lth: :ge_3,     dft: email # is_a: :email
 
+    query :test_type, type: String
+    query :combination, one_of: [ :DogSchema, String, { type: Integer, desc: 'integer input'}]
+
+    form '', data: {
+        :combination => { any_of: [ Integer, String ] }
+    }
+
     # file :a_file, 'application/x-www-form-urlencoded'
     response :success, 'success response', :json#, type: :Pet
-    security :ApiKeyAuth
+    security :Token
 
     merge_to_resp 200, by: {
         data: {
@@ -62,7 +70,7 @@ class Api::V1::ExamplesController < Api::V1::BaseController
   end
 
 
-  open_api :show, '', use: ['Token'] do
+  api :show, '', use: ['Token'] do
     path! :id, Integer
     param_ref    :NameQuery
     query  :doge, :DogSchema

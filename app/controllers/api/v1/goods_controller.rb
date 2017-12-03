@@ -29,7 +29,7 @@ class Api::V1::GoodsController < Api::V1::BaseController
   end
 
 
-  def change_online
-    @status = @good.change_online
+  def change_onsale
+    @status = @good.change_onsale
   end
 end

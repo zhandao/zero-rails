@@ -7,7 +7,7 @@ ERROR_ACTIVE_RECORD  = -100
 
 
 class ApiError
-  extend BusinessError
+  extend BusinessError::DSL
 
   class << self
     def authentication

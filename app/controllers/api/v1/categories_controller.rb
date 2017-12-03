@@ -1,7 +1,7 @@
 class Api::V1::CategoriesController < Api::V1::BaseController
   include ActiveRecordErrorsRescuer
 
-  skip_token only: [:index, :nested_list]
+  skip_token only: %i[ index nested_list ]
 
   def index
     @data = Category.all_from_cache

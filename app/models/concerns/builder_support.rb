@@ -1,9 +1,10 @@
 module BuilderSupport
   def self.included(base)
+    base.include AssocUnscope
     base.class_eval do
       def self.builder_support rmv: [ ], add: [ ]
         extend ClassMethods
-        delegate :show_attrs, to: self
+        delegate :show_attrs, :flatten_attrs, to: self
         include InstanceMethods
 
         builder_rmv *rmv
@@ -18,10 +19,14 @@ module BuilderSupport
   end
 
   module InstanceMethods
-    def to_builder
+    def to_builder(rmv: [ ], add: [ ], merge: { })
       Jbuilder.new do |json|
-        json.(self, *self.show_attrs)
+        json.(self, *self.show_attrs(rmv: rmv, add: add))
+        self.flatten_attrs(rmv: rmv, add: add).each do |flatten_attr|
+          json.merge! self.send(flatten_attr)
+        end
         instance_exec(json, &json_addition)
+        json.merge! merge
       end.attributes!
     end
 
@@ -32,8 +37,8 @@ module BuilderSupport
 
   module ClassMethods
     # FIXME: 很奇怪的 scope 影响，尽量用转成 arr 的 to_bd 而不是直接调
-    def to_builder
-      all.to_a.to_builder
+    def to_builder(rmv: [ ], add: [ ], merge: { })
+      all.to_a.to_builder(rmv: rmv, add: add, merge: merge)
     end
 
     def builder_rmv *attrs
@@ -41,15 +46,14 @@ module BuilderSupport
     end
 
     def builder_add *attrs, &block
-      if block_given?
-        define_method attrs.first do
-          instance_eval(&block)
-        end
-        (@builder_add ||= [ ]) << attrs.first
-      elsif attrs[1].is_a? Hash
+      define_method attrs.first do
+        instance_eval(&block)
+      end if block_given?
+
+      if attrs[1].is_a?(Hash)
         builder_add_with_when attrs
       elsif attrs.delete(:flatten)
-        # TODO
+        (@flatten_attrs ||= [ ]).concat attrs
       else
         # %i[ unscoped: a b ]
         is_unscoped = attrs.delete(:unscoped) || attrs.delete(:'unscoped:')
@@ -85,6 +89,10 @@ module BuilderSupport
       show_attrs - rmv + add
     end
 
+    def flatten_attrs(rmv: [ ], add: [ ])
+      (@flatten_attrs ||= [ ]) - rmv + add
+    end
+
     def builder_add_with_when(args)
       (@builder_add_later ||= { })[args.first] = args[1][:when]
       # 生成 when 设置的同名函数
@@ -93,7 +101,7 @@ module BuilderSupport
         # TODO: 想一个不用在视图层重新置非的方案
         instance_variable_set("@#{args[1][:when]}", true)
         all
-      end if args[1][:when].is_a? Symbol
+      end if args[1][:when].is_a?(Symbol)
 
       generate_assoc_info_method args.first, false
     end
@@ -108,14 +116,12 @@ module BuilderSupport
         next unless new.respond_to?(assoc_method)
 
         define_method attr do
-          send(assoc_method).to_builder
+          send(assoc_method)&.to_builder || nil
         end
 
+        assoc_unscope assoc_method if is_unscoped
         assoc_model = assoc_method.to_s.singularize
         builder_rmv "#{assoc_model}_id".to_sym
-        define_method assoc_model do
-          assoc_model.camelize.constantize.unscoped { super() }
-        end if is_unscoped
       end
     end
   end
