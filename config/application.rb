@@ -19,9 +19,9 @@ module RailsApi
 
     config.load_defaults 5.1
     # config.eager_load_paths << Rails.root.join('app') # TODO
-    Dir["#{Rails.root}/app/biz_errors/**/*"].each { |p| config.eager_load_paths << p }
-    config.eager_load_paths << "#{Rails.root}/app/_docs/rspec_docs/"
-    config.eager_load_paths << "#{Rails.root}/app/_docs/model_docs/"
+    Dir["#{Rails.root}/app/_docs/**/*"].each { |p| config.eager_load_paths << p }
+    # config.eager_load_paths << "#{Rails.root}/app/_docs/rspec_docs/"
+    # config.eager_load_paths << "#{Rails.root}/app/_docs/model_docs/"
     config.eager_load_paths << Rails.root.join('lib')
     # config.autoload_paths << Rails.root.join('lib')
 

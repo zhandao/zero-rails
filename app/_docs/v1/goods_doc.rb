@@ -1,3 +1,10 @@
+class GoodsError < V1Error
+  include CUDFailed, AuthFailed
+
+  set_for :change_onsale
+  mattr_reader :change_onsale_failed, '', ERROR_BEGIN
+end
+
 class Api::V1::GoodsDoc < ApiDoc
   api :index, 'GET list of goods.', builder: :index,
            use: token + %i[ created_start_at created_end_at value page rows ] do

@@ -2,6 +2,8 @@ module Generators::Rspec
   module Request
     def self.included(base)
       base.class_eval do
+        require 'params_processor/doc_converter'
+
         cattr_reader :apis do
           ::ParamsProcessor::DocConverter.new OpenApi.docs
         end

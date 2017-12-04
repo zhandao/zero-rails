@@ -1,3 +1,7 @@
+class RolesError < V1Error
+  include CUDFailed, AuthFailed
+end
+
 class Api::V1::RolesDoc < ApiDoc
   api :index, 'GET roles list of the specified model', builder: :index, use: token do
     query :model, String, dft: 'User', reg: /^[A-Z]/

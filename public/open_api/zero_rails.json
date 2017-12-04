@@ -119,10 +119,10 @@
           "-1": {
             "description": "invalid token"
           },
-          "-10": {
+          "-2": {
             "description": "role verification failed"
           },
-          "-11": {
+          "-3": {
             "description": "insufficient permission"
           },
           "400": {
@@ -222,10 +222,10 @@
           "-1": {
             "description": "invalid token"
           },
-          "-10": {
+          "-2": {
             "description": "role verification failed"
           },
-          "-11": {
+          "-3": {
             "description": "insufficient permission"
           },
           "400": {
@@ -280,10 +280,10 @@
           "-1": {
             "description": "invalid token"
           },
-          "-10": {
+          "-2": {
             "description": "role verification failed"
           },
-          "-11": {
+          "-3": {
             "description": "insufficient permission"
           },
           "400": {
@@ -390,10 +390,10 @@
           "-1": {
             "description": "invalid token"
           },
-          "-10": {
+          "-2": {
             "description": "role verification failed"
           },
-          "-11": {
+          "-3": {
             "description": "insufficient permission"
           },
           "400": {
@@ -469,10 +469,10 @@
           "-1": {
             "description": "invalid token"
           },
-          "-10": {
+          "-2": {
             "description": "role verification failed"
           },
-          "-11": {
+          "-3": {
             "description": "insufficient permission"
           },
           "400": {
@@ -704,10 +704,10 @@
           "-1": {
             "description": "invalid token"
           },
-          "-10": {
+          "-2": {
             "description": "role verification failed"
           },
-          "-11": {
+          "-3": {
             "description": "insufficient permission"
           },
           "400": {
@@ -882,10 +882,10 @@
           "-1": {
             "description": "invalid token"
           },
-          "-10": {
+          "-2": {
             "description": "role verification failed"
           },
-          "-11": {
+          "-3": {
             "description": "insufficient permission"
           },
           "400": {
@@ -1019,10 +1019,10 @@
           "-1": {
             "description": "invalid token"
           },
-          "-10": {
+          "-2": {
             "description": "role verification failed"
           },
-          "-11": {
+          "-3": {
             "description": "insufficient permission"
           },
           "400": {
@@ -1146,10 +1146,10 @@
           "-1": {
             "description": "invalid token"
           },
-          "-10": {
+          "-2": {
             "description": "role verification failed"
           },
-          "-11": {
+          "-3": {
             "description": "insufficient permission"
           },
           "400": {
@@ -1225,10 +1225,10 @@
           "-1": {
             "description": "invalid token"
           },
-          "-10": {
+          "-2": {
             "description": "role verification failed"
           },
-          "-11": {
+          "-3": {
             "description": "insufficient permission"
           },
           "400": {
@@ -1306,10 +1306,10 @@
           "-1": {
             "description": "invalid token"
           },
-          "-10": {
+          "-2": {
             "description": "role verification failed"
           },
-          "-11": {
+          "-3": {
             "description": "insufficient permission"
           },
           "400": {
@@ -1458,10 +1458,10 @@
           "-1": {
             "description": "invalid token"
           },
-          "-10": {
+          "-2": {
             "description": "role verification failed"
           },
-          "-11": {
+          "-3": {
             "description": "insufficient permission"
           },
           "400": {
@@ -1537,9 +1537,6 @@
                           "name": {
                             "type": "string"
                           },
-                          "for_method": {
-                            "type": "boolean"
-                          },
                           "remarks": {
                             "type": "string"
                           },
@@ -1562,10 +1559,10 @@
           "-1": {
             "description": "invalid token"
           },
-          "-10": {
+          "-2": {
             "description": "role verification failed"
           },
-          "-11": {
+          "-3": {
             "description": "insufficient permission"
           },
           "400": {
@@ -1657,10 +1654,10 @@
           "-1": {
             "description": "invalid token"
           },
-          "-10": {
+          "-2": {
             "description": "role verification failed"
           },
-          "-11": {
+          "-3": {
             "description": "insufficient permission"
           },
           "400": {
@@ -1738,10 +1735,10 @@
           "-1": {
             "description": "invalid token"
           },
-          "-10": {
+          "-2": {
             "description": "role verification failed"
           },
-          "-11": {
+          "-3": {
             "description": "insufficient permission"
           },
           "400": {
@@ -1842,10 +1839,10 @@
           "-1": {
             "description": "invalid token"
           },
-          "-10": {
+          "-2": {
             "description": "role verification failed"
           },
-          "-11": {
+          "-3": {
             "description": "insufficient permission"
           },
           "400": {
@@ -1940,10 +1937,10 @@
           "-1": {
             "description": "invalid token"
           },
-          "-10": {
+          "-2": {
             "description": "role verification failed"
           },
-          "-11": {
+          "-3": {
             "description": "insufficient permission"
           },
           "400": {
@@ -2043,10 +2040,10 @@
           "-1": {
             "description": "invalid token"
           },
-          "-10": {
+          "-2": {
             "description": "role verification failed"
           },
-          "-11": {
+          "-3": {
             "description": "insufficient permission"
           },
           "400": {
@@ -2122,10 +2119,10 @@
           "-1": {
             "description": "invalid token"
           },
-          "-10": {
+          "-2": {
             "description": "role verification failed"
           },
-          "-11": {
+          "-3": {
             "description": "insufficient permission"
           },
           "400": {
@@ -2200,10 +2197,10 @@
           "-1": {
             "description": "invalid token"
           },
-          "-10": {
+          "-2": {
             "description": "role verification failed"
           },
-          "-11": {
+          "-3": {
             "description": "insufficient permission"
           },
           "400": {
@@ -2302,10 +2299,10 @@
           "-1": {
             "description": "invalid token"
           },
-          "-10": {
+          "-2": {
             "description": "role verification failed"
           },
-          "-11": {
+          "-3": {
             "description": "insufficient permission"
           },
           "400": {
@@ -2396,10 +2393,10 @@
           "-1": {
             "description": "invalid token"
           },
-          "-10": {
+          "-2": {
             "description": "role verification failed"
           },
-          "-11": {
+          "-3": {
             "description": "insufficient permission"
           },
           "400": {
@@ -2491,10 +2488,10 @@
           "-1": {
             "description": "invalid token"
           },
-          "-10": {
+          "-2": {
             "description": "role verification failed"
           },
-          "-11": {
+          "-3": {
             "description": "insufficient permission"
           },
           "400": {
@@ -2574,10 +2571,10 @@
           "-1": {
             "description": "invalid token"
           },
-          "-10": {
+          "-2": {
             "description": "role verification failed"
           },
-          "-11": {
+          "-3": {
             "description": "insufficient permission"
           },
           "400": {
@@ -2674,10 +2671,10 @@
           "-1": {
             "description": "invalid token"
           },
-          "-10": {
+          "-2": {
             "description": "role verification failed"
           },
-          "-11": {
+          "-3": {
             "description": "insufficient permission"
           },
           "400": {
@@ -2753,10 +2750,10 @@
           "-1": {
             "description": "invalid token"
           },
-          "-10": {
+          "-2": {
             "description": "role verification failed"
           },
-          "-11": {
+          "-3": {
             "description": "insufficient permission"
           },
           "400": {

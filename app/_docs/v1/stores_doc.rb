@@ -1,3 +1,7 @@
+class StoresError < V1Error
+  include CUDFailed, AuthFailed
+end
+
 class Api::V1::StoresDoc < ApiDoc
   api :index, 'GET list of stores.', builder: :cache_index, use: none, skip: token do
     query :page, Integer, desc: '偏移量，从 0 开始', range: { ge: 1 }

@@ -19,8 +19,7 @@ end
 module AuthFailed
   def self.included(base)
     base.class_eval do
-      authentication
-      authorization
+      auth
     end
   end
 end

@@ -1,3 +1,7 @@
+class CategoriesError < V1Error
+  include CUDFailed, AuthFailed
+end
+
 class Api::V1::CategoriesDoc < ApiDoc
   api :index, 'GET list of categories.', builder: :cache_index, use: %i[ page rows ], skip: token
 

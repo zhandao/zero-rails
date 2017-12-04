@@ -1,3 +1,8 @@
+class ExamplesError < V1Error
+  set_for :index
+  mattr_reader :name_not_found, 'can not find the name', 404
+end
+
 class Api::V1::ExamplesController < Api::V1::BaseController
   apis_tag name: 'Examples', desc: 'tag_desc'
 

@@ -15,15 +15,17 @@ module BusinessError
       raise self
     end
 
-    alias out output
+    alias out    output
+    alias render output
 
     def and(addtion_content)
       @info = info.merge output: info.merge(addtion_content)
       raise self
     end
 
-    alias addput and
-    alias addout and
+    alias set     and
+    alias addput  and
+    alias addout  and
     alias and_out and
 
     def message; info.to_s end
@@ -37,6 +39,7 @@ module BusinessError
     errors.each do |class_name, scopes|
       puts "#{class_name}:"
       scopes.each do |scope, cur_errors|
+        next if scope == :are && class_name != 'ApiError'
         puts "  #{scope}:"
         cur_errors.each do |error|
           puts "    #{error[:name]}:"
