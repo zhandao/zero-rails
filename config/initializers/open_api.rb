@@ -21,7 +21,7 @@ OpenApi::Config.tap do |c|
     server 'http://localhost:3000', desc: 'Main (production) server'
   end
 
-  c.file_output_path = 'public/open_api'
+  c.file_output_path = 'app/_docs/open_api'
 
   c.rails_routes_file = 'config/routes.txt'
 end

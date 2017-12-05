@@ -3,7 +3,7 @@
 class Foo < ApplicationRecord
   acts_as_paranoid
 
-  belongs_to :user, polymorphic: true
+  belongs_to :user, optional: true, polymorphic: true
 
   has_many :stars
 
@@ -29,3 +29,15 @@ class Foo < ApplicationRecord
     # TODO
   end
 end
+
+__END__
+
+t.belongs_to :user,       foreign_key: true, polymorphic: true
+t.references :sub_foo,    index: true
+t.string     :name,       null: false
+t.boolean    :actived,    default: false
+t.datetime   :deleted_at
+
+
+add_index :foos, :name, unique: true
+

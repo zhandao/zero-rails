@@ -13,7 +13,7 @@ module Export
   #   end
 
   def export_goods
-    #   xlsx = File.new("#{Settings.export_path}/#{Time.current.to_i} goods_list.xlsx", 'w')
+    #   xlsx = File.new("#{Keys.export_path}/#{Time.current.to_i} goods_list.xlsx", 'w')
     #   Axlsx::Package.new do |p|
     #     p.workbook.add_worksheet(:name => 'Goods List') do |sheet|
     #       sheet.add_row %w[name base_category sub_category unit price creator created_at remarks on_sale]

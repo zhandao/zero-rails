@@ -2,6 +2,11 @@
 
 [![Build Status](https://travis-ci.org/zhandao/zero-rails.svg?branch=master)](https://travis-ci.org/zhandao/zero-rails)
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/669751e0a8ae32269600/maintainability)](https://codeclimate.com/github/zhandao/zero-rails/maintainability)
+
+[![Dependency Status](https://gemnasium.com/badges/github.com/zhandao/zero-rails.svg)](https://gemnasium.com/github.com/zhandao/zero-rails)
+
+
 ## Features
 
 ## Usage

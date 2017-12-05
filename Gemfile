@@ -6,8 +6,38 @@ git_source(:github) do |repo_name|
 end
 
 ruby '2.4.1'
+# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+gem 'rails', '~> 5.1.2'
 
-# TODO: 分组
+
+# *** Databases ***
+
+# Use mysql as the database for Active Record
+gem 'mysql2', '>= 0.3.18', '< 0.5'
+# Use postgresql as the database for Active Record
+# gem 'pg', '~> 0.18'
+# Use Redis adapter to run Action Cable in production
+gem 'redis', '~> 3.0'
+# https://github.com/redis-store/redis-rails
+gem 'redis-rails'
+
+
+# *** Query Extension ***
+
+# Pagination, https://github.com/kaminari/kaminari
+gem 'kaminari'
+
+# By_* Lets you find ActiveRecord + Mongoid objects by year, month, fortnight, week and more!
+# https://github.com/radar/by_star
+# gem 'by_star', git: "git://github.com/radar/by_star"
+
+# https://github.com/rails/arel
+# Rails integrates it by default
+# https://github.com/activerecord-hackery/ransack, Object-based searching.
+# gem 'ransack', github: 'activerecord-hackery/ransack'
+
+
+# *** Zero ***
 
 # gem 'zero-rails_openapi'
 # gem 'zero-params_processor'
@@ -16,49 +46,66 @@ ruby '2.4.1'
 gem 'zero-rails_openapi', path: '~/ws/zero-rails_openapi'
 gem 'zero-params_processor', path: '~/ws/zero-params_processor'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.2'
-# Use mysql as the database for Active Record
-gem 'mysql2', '>= 0.3.18', '< 0.5'
-# Use postgresql as the database for Active Record
-# gem 'pg', '~> 0.18'
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 3.0'
-# https://github.com/redis-store/redis-rails
-# gem 'redis-rails'
 
-# Use Puma as the app server
+# *** App Server ***
+# https://github.com/puma/puma
 gem 'puma', '~> 3.7'
 
+
+# *** Ruby Extension ***
 # https://github.com/intridea/multi_json/
 gem 'multi_json'
 
+
+# *** View ***
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # https://devblast.com/b/jbuilder
 gem 'jbuilder'
 # https://github.com/rails-api/active_model_serializers/
 # gem 'active_model_serializers'
 
+
+# *** Auth & Security ***
+
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
+
 # ruby-JWT, https://github.com/jwt/ruby-jwt
 gem 'jwt'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
 
-# Easiest way to add multi-environment yaml settings to Rails
-# https://github.com/railsconfig/config
-gem 'config'
-
 # https://github.com/elabs/pundit/
 ## gem "pundit"
 # https://github.com/CanCanCommunity/cancancan
 ## gem 'cancancan', '~> 2.0'
 
-# Office Open XML Spreadsheet Generation, https://github.com/randym/axlsx
-# gem 'axlsx'
-# gem 'axlsx_rails'
+# Easiest way to add multi-environment yaml settings to Rails
+# https://github.com/railsconfig/config
+gem 'config'
+
+# blocking & throttling, https://github.com/kickstarter/rack-attack
+gem 'rack-attack'
+
+# Abort requests that are taking too long, https://github.com/heroku/rack-timeout
+gem 'rack-timeout'
+
+# Exception Notifier, https://github.com/smartinez87/exception_notification
+# gem 'exception_notification'
+
+
+# *** Asynchronous Task ***
+
+# https://github.com/mperham/sidekiq
+# https://github.com/mperham/sidekiq/wiki/Active-Job
+gem 'sidekiq'
+
+# provides a clear syntax for writing and deploying cron jobs, https://github.com/javan/whenever
+gem 'whenever', require: false
+
+
+# *** Log ***
 
 # An attempt to tame Rails' default policy to log everything.
 # https://github.com/roidrage/lograge
@@ -68,52 +115,46 @@ gem 'logstasher'
 # https://github.com/dwbutler/logstash-logger/
 # gem 'logstash-logger'
 
-# 管理后台
+
+# *** Administration Framework ***
+
 # https://activeadmin.info/documentation.html
 gem 'activeadmin', '1.0'#, github: 'activeadmin' TODO: wait for fixing 1.1
-# https://github.com/cle61/arctic_admin
+# UI for ActiveAdmin, https://github.com/cle61/arctic_admin
 gem 'arctic_admin'
-# https://github.com/vigetlabs/active_material
+# UI for ActiveAdmin, https://github.com/vigetlabs/active_material
 # gem "active_material", github: "vigetlabs/active_material"
-# ^ ActiveAdmin UI ^
+
 # https://github.com/sferik/rails_admin
 # gem 'rails_admin', '~> 1.2'
+
 # https://github.com/igorkasyanchuk/rails_db
 # Rails Database Viewer and SQL Query Runner
 # gem 'rails_db', group: :development
 
-# 分页, https://github.com/kaminari/kaminari
-gem 'kaminari'
-# By_* Lets you find ActiveRecord + Mongoid objects by year, month, fortnight, week and more!
-# https://github.com/radar/by_star
-# gem 'by_star', git: "git://github.com/radar/by_star"
 
-# 定时任务处理, https://github.com/javan/whenever
-gem 'whenever', require: false
+# *** Application ***
 
-# 请求频率限制, https://github.com/kickstarter/rack-attack
-gem 'rack-attack'
-
-# 异常邮件通知, https://github.com/smartinez87/exception_notification
-# gem 'exception_notification'
+# Office Open XML Spreadsheet Generation, https://github.com/randym/axlsx
+# gem 'axlsx'
+# gem 'axlsx_rails'
 
 # Classier solution for file uploads for Rails
 # https://github.com/carrierwaveuploader/carrierwave
 # gem 'carrierwave'
 
-# https://github.com/heroku/rack-timeout
-gem 'rack-timeout'
-
-# https://github.com/mperham/sidekiq
-# gem 'sidekiq'
-
 # https://github.com/zhandao/sms
 # gem 'smart_sms', path: '~/ws/sms'
 # gem 'smart_sms', github: 'zhandao/sms'
 
-# 项目的配置管理
+# Settings management for application
 # https://github.com/huacnlee/rails-settings-cached
 # gem "rails-settings-cached"
+# UI interface for `rails-settings-cached in` `activeadmin`
+# https://github.com/artofhuman/activeadmin_settings_cached
+# gem 'activeadmin_settings_cached'
+# Another User interface for manage settings, https://github.com/accessd/rails-settings-ui
+# gem 'rails-settings-ui'
 
 # https://github.com/hooopo/second_level_cache/
 # gem 'second_level_cache', '~> 2.3.0'
@@ -152,11 +193,6 @@ gem "paranoia", "~> 2.2"
 # A micro library providing Ruby objects with Publish-Subscribe capabilities
 # gem 'wisper', '2.0.0'
 
-# https://github.com/rails/arel
-# Rails integrates it by default
-# https://github.com/activerecord-hackery/ransack, Object-based searching.
-# gem 'ransack', github: 'activerecord-hackery/ransack'
-
 group :development do
   # http://nadarei.co/mina/
   gem 'mina', require: false
@@ -165,7 +201,8 @@ group :development do
   # Plugin for Mina that adds support for multiple stages.
   # https://github.com/endoze/mina-multistage
   gem 'mina-multistage', require: false
-  # gem 'mina-sidekiq', require: false
+  # https://github.com/Mic92/mina-sidekiq/
+  gem 'mina-sidekiq', require: false
 
   # https://github.com/capistrano/capistrano
   # gem "capistrano", "~> 3.10"
@@ -230,19 +267,19 @@ group :development, :test do
   gem 'rspec-rails' # TODO
   # http://www.rubydoc.info/gems/factory_bot/file/GETTING_STARTED.md
   gem 'factory_bot_rails'
+end
 
+group :test do
+  # https://github.com/philostler/rspec-sidekiq/
+  gem 'rspec-sidekiq'
   # TODO
-  # gem 'rspec-sidekiq'
   # gem 'faker'
   # gem 'capybara'
   # https://github.com/DatabaseCleaner/database_cleaner/
   gem 'database_cleaner'
   # gem 'selenium-webdriver'
   # gem 'shoulda-matchers'
-  # gem 'rspec-sidekiq'
-end
 
-group :test do
   # Code coverage for Ruby 1.9+ with a powerful configuration library and automatic merging of coverage across test suites
   # https://github.com/colszowka/simplecov
   # gem 'simplecov', :require => false

@@ -34,8 +34,8 @@ module MakeSure
     end
 
     # Logic can't be equivalent to Service Object
-    def logic name, eval_str = nil, success: true, fail: false, &block
-      MakeSure.logics[name] = { eval_str: eval_str, block: block, success: success, fail: fail}
+    def logic name, lambda = nil, success: true, fail: false, &block
+      MakeSure.logics[name] = { block: block, lambda: lambda, success: success, fail: fail }
     end
   end
 
@@ -49,14 +49,16 @@ module MakeSure
     make_sure :it, action, *args, &block
   end
 
+  class NoPass < Object; end
   # make_sure obj, :can, :permission1, :permission2
   #
   # subject current_user
   # make_sure :it, must: :not_null
   # it must: %i[ not_alone be_happy ]
   # TODO: make_sure(a and b)
-  def make_sure(obj = nil, action = nil, *args, &block)
-    @_make_sure_obj = obj || current_user unless obj == :it
+  def make_sure(obj = NoPass, action = nil, *args, &block)
+    @_make_sure_obj = current_user if obj == NoPass
+    @_make_sure_obj = obj unless obj == :it
     return self if action.nil?
 
     if action.is_a?(Symbol)
@@ -101,7 +103,7 @@ module MakeSure
     success = nil
     logic_names.each do |logic_name|
       logic = MakeSure.logics.fetch(logic_name)
-      result = @_make_sure_obj.instance_eval(&logic[:block] || logic[:eval_str])
+      result = logic[:lambda] ? @_make_sure_obj.instance_exec(&logic[:lambda]) : instance_eval(&logic[:block])
 
       if result
         success ||= logic[:success] # Returns the success of the final judgment

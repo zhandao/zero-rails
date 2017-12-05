@@ -37,17 +37,3 @@ class Api::ApiController < ActionController::API
     key.present? ? params[key] : (@zpa ||= Zero::ParamsAgent.tap { |zpa| zpa.params = params })
   end
 end
-
-
-# class ApiErrorMapper
-#   extend BusinessError::ErrorMapper
-#
-#   rules({
-#       cool: {
-#           if: 'obj.nil? == false',
-#           do: proc { puts ApiError.send :invalid_param, :info },
-#           raise: :invalid_param,
-#           error: ApiError
-#       }
-#   })
-# end

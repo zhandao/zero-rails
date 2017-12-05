@@ -12,9 +12,8 @@ module RailsApi
 
     config.before_configuration do
       env_file = File.join(Rails.root, 'config', 'local_env.yml')
-      YAML.load(File.open(env_file)).each do |key, value|
-        ENV[key.to_s] = value
-      end if File.exists?(env_file)
+      break unless File.exist?(env_file)
+      YAML.load(File.open(env_file)).each { |key, value| ENV[key.to_s] = value }
     end
 
     config.load_defaults 5.1
@@ -24,6 +23,9 @@ module RailsApi
     # config.eager_load_paths << "#{Rails.root}/app/_docs/model_docs/"
     config.eager_load_paths << Rails.root.join('lib')
     # config.autoload_paths << Rails.root.join('lib')
+
+    # config.cache_store = :redis_store, Settings.redis.cache_url, { expires_in: 30.days, multithread: true }
+    config.cache_store = :redis_store, Keys.redis.cache_url, { expires_in: 1.day }
 
     config.generators do |g|
       g.test_framework :rspec,
@@ -57,5 +59,7 @@ module RailsApi
 
     config.time_zone = 'Beijing'
     # config.active_record.default_timezone = :local
+
+    config.active_job.queue_adapter = :sidekiq
   end
 end

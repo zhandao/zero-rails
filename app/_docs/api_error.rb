@@ -11,14 +11,14 @@ class ApiError
   class << self
     def auth
       code ERROR_AUTH, :dec
-      mattr_reader :invalid_token,      'invalid token',            http: 401
-      mattr_reader :role_error,         'role verification failed', http: 403
-      mattr_reader :permission_error,   'insufficient permission',  http: 403
+      mattr_reader :invalid_token,      'invalid token',            http: :unauthorized
+      mattr_reader :role_error,         'role verification failed', http: :forbidden
+      mattr_reader :permission_error,   'insufficient permission',  http: :forbidden
     end
 
     def active_record
       set_for :are, ERROR_ACTIVE_RECORD, :dec # ar error 太多， 使之不生成 doc
-      http 500
+      http :internal_server_error
       mattr_reader :record_invalid,     'data validation failed'
       mattr_reader :not_saved,          'failed to save the record'
       mattr_reader :not_found,          ''
@@ -35,7 +35,7 @@ class ApiError
   active_record
 
   set_for_pub
-  mattr_reader :invalid_param, 'parameter validation failed', 400
+  mattr_reader :invalid_param, 'parameter validation failed', 400, http: :bad_request
 end
 
 ACTIVE_RECORD_ERRORS_MAPPING = {

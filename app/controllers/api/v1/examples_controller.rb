@@ -45,18 +45,6 @@ class Api::V1::ExamplesController < Api::V1::BaseController
   end
 
   def index
-    ### Business Error Processor DSL
-    # 这部分大约[总共]会多 20-40 ms - MacMini
-    # processor binding # 变量声明之前
-    # foo = 'foooo'
-    # woo = 'woooo'
-    # @bar = 123
-    # make_sure :@bar, is: :not_null
-    # make_sure(:foo).is :not_null
-    # make_sure_not_null [:oow, woo] # 自己传值，性能更好，也无需写 binding
-    # make_sure(:foo).is :exist
-    # make_sure(:foo).is :cool
-
     ### Exception
     # Tip: the param type is automatically transformed by SwgdParamsValidator
     #      here is: ps.id(.to_i) or p[:id](.to_i)
@@ -87,18 +75,3 @@ class Api::V1::ExamplesController < Api::V1::BaseController
     @show = true
   end
 end
-
-# class ExamplesError < V1Error
-#   set_for :index
-#   mattr_reader :name_not_found, 'can not find the name', 404
-#   # {:_public=>[:invalid_param], :index=>[:name_not_found]}
-#   # 这个方法实现同样目的，但可能无法获得 RubyMine 的自动补全
-#   # define :error_name, 'error info', 200
-# end
-
-
-# class ExamplesErrorMapper < ApiErrorMapper
-#   def self.not_null(obj)
-#     puts '#{obj.name} / #{obj.value}'
-#   end
-# end

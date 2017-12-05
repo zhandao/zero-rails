@@ -1,6 +1,15 @@
-Rails.application.routes.draw do
+require 'sidekiq/web'
 
+Sidekiq::Web.use(Rack::Auth::Basic) do |user_name, password|
+  user_name == Keys.admin.user_name && password == Keys.admin.password
+end
+
+Rails.application.routes.draw do
   ActiveAdmin.routes(self)
+
+  namespace :admin do
+    mount Sidekiq::Web => '/sidekiq'
+  end
 
   namespace :api do
     namespace :v1 do
@@ -46,5 +55,7 @@ Rails.application.routes.draw do
     end
   end
 
-
+  get 'apidoc', to: 'home#apidoc'
+  get 'open_api/:doc', to: 'home#open_api'
+  match '*path', via: :all, to: 'home#error_404'
 end
