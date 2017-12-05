@@ -36,6 +36,23 @@ gem 'kaminari'
 # https://github.com/activerecord-hackery/ransack, Object-based searching.
 # gem 'ransack', github: 'activerecord-hackery/ransack'
 
+# write-through and read-through caching
+# https://github.com/hooopo/second_level_cache/
+# gem 'second_level_cache', '~> 2.3.0'
+
+# https://github.com/norman/friendly_id
+# gem 'friendly_id', '~> 5.1.0'
+
+# Soft Delete, https://github.com/rubysherpas/paranoia
+# gem "paranoia", github: "rubysherpas/paranoia", branch: "rails5" # will bundle install error
+gem 'paranoia'
+
+# https://github.com/ClosureTree/closure_tree
+# Easily and efficiently make your ActiveRecord models support hierarchies
+# gem 'closure_tree'
+# https://github.com/amerine/acts_as_tree
+# gem 'acts_as_tree', '~> 2.7'
+
 
 # *** Zero ***
 
@@ -156,23 +173,8 @@ gem 'arctic_admin'
 # Another User interface for manage settings, https://github.com/accessd/rails-settings-ui
 # gem 'rails-settings-ui'
 
-# https://github.com/hooopo/second_level_cache/
-# gem 'second_level_cache', '~> 2.3.0'
 
-# https://github.com/norman/friendly_id
-# gem 'friendly_id', '~> 5.1.0'
-
-# Soft Delete, https://github.com/rubysherpas/paranoia
-# gem "paranoia", github: "rubysherpas/paranoia", branch: "rails5" # will bundle install error
-gem "paranoia", "~> 2.2"
-
-# https://github.com/ClosureTree/closure_tree
-# Easily and efficiently make your ActiveRecord models support hierarchies
-# gem 'closure_tree'
-# https://github.com/amerine/acts_as_tree
-# gem 'acts_as_tree', '~> 2.7'
-
-# 抽象
+# *** Abstract ***
 # https://github.com/AaronLasseigne/active_interaction
 # Manage application specific business logic.
 # gem 'active_interaction', '~> 3.5'
