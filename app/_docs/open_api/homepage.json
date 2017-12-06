@@ -293,6 +293,27 @@
   },
   "components": {
     "schemas": {
+      "Good": {
+        "type": "object",
+        "properties": {
+          "deleted_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "user": {
+            "type": "integer"
+          },
+          "sub_foo": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "activated": {
+            "type": "boolean"
+          }
+        }
+      },
       "DogSchema": {
         "type": "object",
         "properties": {

@@ -20,14 +20,14 @@ module Generators::ModelDocSupport
     end
 
     def process_and_returns_options(name, type, req, options)
-      if options.delete(:show)
-        builder_rmv << name
-      end
+      builder_rmv << name if options.delete(:show)
+      (options[:unique] ||= options[:uniqueness]) or (options[:uniqueness] ||= options[:unique])
+
       options
     end
 
     def run
-      Dir['./app/**/*_mdoc.rb'].each { |file| require file }
+      # Dir['./app/**/*_mdoc.rb'].each { |file| require file }
       descendants.each do |mdoc|
         model_file_name = mdoc.model_name.underscore
         model_path = "app/models/#{model_file_name}.rb"
@@ -40,8 +40,8 @@ module Generators::ModelDocSupport
           mdoc.fields_to_migration
           File.open(model_path, 'w') { |file| file.write mdoc.model_rb.sub("\n\n\nend\n", "\nend\n") }
           puts "[Zero] Model file has been generated: #{model_path}"
-          File.open(mg_path, 'w') { |file| file.write mdoc.migration_rb.sub("\n\n\nend\n", "\nend\n") }
-          puts "[Zero] Migration file has been generated: #{mg_path}"
+          # File.open(mg_path, 'w') { |file| file.write mdoc.migration_rb.sub("\n\n\nend\n", "\nend\n") }
+          # puts "[Zero] Migration file has been generated: #{mg_path}"
         end
       end
     end
@@ -51,7 +51,7 @@ module Generators::ModelDocSupport
       fields[:deleted_at] = soft_destroy unless soft_destroy.nil?
       type_max_length = fields.values.map(&:first).map(&:length).sort.last
       name_max_length = fields.keys.map(&:length).sort.last
-      key_order = %i[ foreign_key polymorphic null default index ] # TODO
+      key_order = %i[ foreign_key polymorphic null default index unique ] # TODO
 
       fields.each do |name, info|
         type = info.shift.to_s.ljust(type_max_length)
@@ -108,3 +108,58 @@ module Generators::ModelDocSupport
     end
   end
 end
+
+__END__
+
+(1) validates_associated
+如果模型和其他模型有关联，而且关联的模型也要验证，要使用这个辅助方法。保存对象时，会在相关联的每个对象上调用 valid? 方法。
+`validates_associated :books`
+不要在关联的两端都使用 validates_associated，这样会变成无限循环。
+
+(2) inclusion & exclusion
+这个辅助方法检查属性的值是否(不)在指定的集合中。集合可以是任何一种可枚举的对象。
+`validates :size, inclusion: %w(small medium large)`
+
+(3) format
+这个辅助方法检查属性的值是否匹配 :with 选项指定的正则表达式。
+`validates :legacy_code, format: /\A[a-zA-Z]+\z/`
+
+(4) length
+这个辅助方法验证属性值的长度，有多个选项，可以使用不同的方法指定长度约束：
+```
+  validates :name, length: { minimum: 2 }
+  validates :bio, length: { maximum: 500 }
+  validates :password, length: { in: 6..20 }
+  validates :registration_number, length: { is: 6 }
+```
+
+(5) numericality
+这个辅助方法检查属性的值是否只包含数字。
+默认情况下，匹配的值是可选的正负符号后加整数或浮点数。如果只接受整数，把 :only_integer 选项设为 true。
+```
+  validates :points, numericality: true
+  validates :games_played, numericality: { only_integer: true }
+```
+除了 :only_integer 之外，这个方法还可指定以下选项，限制可接受的值：
+  :greater_than：属性值必须比指定的值大。
+  :greater_than_or_equal_to：属性值必须大于或等于指定的值。
+  :equal_to：属性值必须等于指定的值。
+  :less_than：属性值必须比指定的值小。
+  :less_than_or_equal_to：属性值必须小于或等于指定的值。
+  :other_than：属性值必须与指定的值不同。
+  :odd：如果设为 true，属性值必须是奇数。
+  :even：如果设为 true，属性值必须是偶数。
+
+(6) presence & absence
+这个辅助方法检查指定的属性是否为非空 / 空值。它调用 blank? 方法检查值是否为 nil 或空字符串，即空字符串或只包含空白的字符串。
+`validates :name, :login, :email, presence: true`
+验证布尔值字段是否存在: `validates :boolean_field_name, exclusion: { in: [nil] }`
+如果要确保关联对象存在，需要测试关联的对象本身是否存在，而不是用来映射关联的外键。做法见：
+  https://ruby-china.github.io/rails-guides/v5.0/active_record_validations.html#presence
+
+(7) uniqueness
+这个辅助方法在保存对象之前验证属性值是否是唯一的。
+该方法不会在数据库中创建唯一性约束，所以有可能两次数据库连接创建的记录具有相同的字段值。为了避免出现这种问题，必须在数据库的字段上建立唯一性索引。
+`validates :email, uniqueness: true`
+:scope 选项用于指定检查唯一性时使用的一个或多个属性：
+`validates :name, uniqueness: { scope: :year }`

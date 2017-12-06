@@ -10,7 +10,7 @@ class Foo < ApplicationRecord
   has_many :sub_foos, class_name: 'Foo', foreign_key: 'sub_foo_id', dependent: :destroy
   belongs_to :sub_foo, class_name: 'Foo', optional: true
 
-  builder_support rmv: %i[ name actived ]
+  builder_support rmv: %i[ name activated ]
 
   scope :ordered, -> { all }
 
@@ -35,7 +35,7 @@ __END__
 t.belongs_to :user,       foreign_key: true, polymorphic: true
 t.references :sub_foo,    index: true
 t.string     :name,       null: false
-t.boolean    :actived,    default: false
+t.boolean    :activated,  default: false
 t.datetime   :deleted_at
 
 

@@ -12,6 +12,7 @@ module Generators::ModelDocSupport
     # TODO: schema component
 
     # 验证、枚举、builder、should test
+    # fields: { attr_name: [ type, { options }, {} ..]}
     def field name, type, req, options = [ ], options_hash = { }
       options = options.map { |key| { key => true } }.reduce({ }, :merge).merge(options_hash) if options.is_a?(Array)
       info = [type, process_and_returns_options(name, type, req, options)]
@@ -22,6 +23,7 @@ module Generators::ModelDocSupport
       %i[ foreign_key polymorphic null default index ] ; %i[ unique ]
       %i[ validates_associated inclusion exclusion format length numericality presence absence uniqueness ]
         %i[ allow_nil allow_blank ]
+      %i[ foreign_key polymorphic null index unique presence absence numericality ] # boolean
     end
 
     %i[ string boolean integer decimal float text binary date datetime time timestamp ].each do |type|
@@ -34,7 +36,17 @@ module Generators::ModelDocSupport
       end
     end
 
-    def end_of_attrs
+    def process_validates
+      fields.each do |name, info|
+        #
+      end
+    end
+
+    # render validates, schema, builder_support
+    def end_of_attrs schema: nil
+      process_validates
+      to_api_schema schema if schema
+
       if builder_rmv.present?
         model_rb_stack.last << <<~BD
         builder_support rmv: %i[ #{builder_rmv.join(' ')} ]
@@ -142,5 +154,17 @@ module Generators::ModelDocSupport
 
     alias_method :imethod, :instance_method
     alias_method :imethods, :instance_methods
+
+    def to_api_schema schema_key = name.sub('Mdoc', ''), rmv: [ ]
+      ::OpenApi::Config.open_api_docs.each do |_name, doc|
+        doc[:components] = ::OpenApi::DSL::Components.new
+        doc[:components].instance_exec(fields.slice(*(fields.keys - rmv))) do |fields|
+          schema schema_key => [ type: fields.map { |name, info|
+            { name => (t = info.first.to_s).in?(%w[ belongs_to references ]) ? 'integer' : t }
+          }.reduce({ }, :merge) ]
+        end
+        doc[:components]._process_objs
+      end
+    end
   end
 end

@@ -5,9 +5,9 @@ class FooMdoc < ModelDoc
   has_many :stars
   self_joins :has_many
 
-  string! :name, index: true, unique: true, show: true
-  boolean :actived, default: false, show: true
-  end_of_attrs
+  string! :name, %i[ index unique show ]
+  boolean :activated, default: false, show: true
+  end_of_attrs schema: Good
 
   index :user, :name
 

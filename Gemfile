@@ -29,7 +29,7 @@ gem 'kaminari'
 
 # By_* Lets you find ActiveRecord + Mongoid objects by year, month, fortnight, week and more!
 # https://github.com/radar/by_star
-# gem 'by_star', git: "git://github.com/radar/by_star"
+# gem 'by_star', github: 'radar/by_star'
 
 # https://github.com/rails/arel
 # Rails integrates it by default

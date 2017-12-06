@@ -3606,11 +3606,27 @@
     }
   },
   "components": {
-    "securitySchemes": {
-      "Token": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
+    "schemas": {
+      "Good": {
+        "type": "object",
+        "properties": {
+          "deleted_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "user": {
+            "type": "integer"
+          },
+          "sub_foo": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "activated": {
+            "type": "boolean"
+          }
+        }
       }
     }
   }
