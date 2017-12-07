@@ -23,7 +23,7 @@ OpenApi::Config.tap do |c|
 
   c.file_output_path = 'app/_docs/open_api'
 
-  c.doc_location = [ './app/**/*_doc.rb', './app/**/*_mdoc.rb' ]
+  c.doc_location = [ './app/**/*_doc.rb' ]
 
   c.rails_routes_file = 'config/routes.txt'
 end

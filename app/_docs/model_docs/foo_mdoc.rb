@@ -5,9 +5,10 @@ class FooMdoc < ModelDoc
   has_many :stars
   self_joins :has_many
 
-  string! :name, %i[ index unique show ]
-  boolean :activated, default: false, show: true
-  end_of_attrs schema: Good
+  string! :name, %i[ index uniq show ], in: %i[ woo wow ], format: /wow|wow/, lth: { minimum: 2 }
+  integer :type, %i[ uniq not_blank ], num: { int: true, gte: 10 }
+  boolean! :activated, default: false, show: true
+  end_of_attrs
 
   index :user, :name
 

@@ -18,38 +18,25 @@ module Generators::ModelDocSupport
       info = [type, process_and_returns_options(name, type, req, options)]
       info << { null: false } if req == :req
       fields[name] = info
-
-      # TODO
-      %i[ foreign_key polymorphic null default index ] ; %i[ unique ]
-      %i[ validates_associated inclusion exclusion format length numericality presence absence uniqueness ]
-        %i[ allow_nil allow_blank ]
-      %i[ foreign_key polymorphic null index unique presence absence numericality ] # boolean
     end
 
     %i[ string boolean integer decimal float text binary date datetime time timestamp ].each do |type|
-      define_method type do |name, options = { }|
-        field name, type, :opt, options
+      define_method type do |name, options = [ ], options_hash = { }|
+        field name, type, :opt, options, options_hash
       end
 
-      define_method "#{type}!" do |name, options = { }|
-        field name, type, :req, options
-      end
-    end
-
-    def process_validates
-      fields.each do |name, info|
-        #
+      define_method "#{type}!" do |name, options = [ ], options_hash = { }|
+        field name, type, :req, options, options_hash
       end
     end
 
-    # render validates, schema, builder_support
-    def end_of_attrs schema: nil
+    # render validates, builder_support
+    def end_of_attrs
       process_validates
-      to_api_schema schema if schema
 
       if builder_rmv.present?
         model_rb_stack.last << <<~BD
-        builder_support rmv: %i[ #{builder_rmv.join(' ')} ]
+          builder_support rmv: %i[ #{builder_rmv.join(' ')} ]
         BD
       end
       model_rb_stack.last << "\n"
@@ -63,7 +50,7 @@ module Generators::ModelDocSupport
       # TODO
     end
 
-    def belongs_to name, req = :opt, polymorphic: nil
+    def belongs_to name, req = :req, polymorphic: nil
       name = name.to_s.singularize
       options = req == :opt ? { optional: true } : { }
       options[:polymorphic] = true if polymorphic
@@ -80,6 +67,7 @@ module Generators::ModelDocSupport
 
     %i[ has_one has_many has_many_through has_one_through has_and_belongs_to_many ].each do |relation|
       define_method relation do |name|
+        #
         model_rb_stack.last << <<~R
           #{relation} :#{relation['many'] ? name.to_s.pluralize : name.singularize }
         R
@@ -154,17 +142,5 @@ module Generators::ModelDocSupport
 
     alias_method :imethod, :instance_method
     alias_method :imethods, :instance_methods
-
-    def to_api_schema schema_key = name.sub('Mdoc', ''), rmv: [ ]
-      ::OpenApi::Config.open_api_docs.each do |_name, doc|
-        doc[:components] = ::OpenApi::DSL::Components.new
-        doc[:components].instance_exec(fields.slice(*(fields.keys - rmv))) do |fields|
-          schema schema_key => [ type: fields.map { |name, info|
-            { name => (t = info.first.to_s).in?(%w[ belongs_to references ]) ? 'integer' : t }
-          }.reduce({ }, :merge) ]
-        end
-        doc[:components]._process_objs
-      end
-    end
   end
 end

@@ -6,7 +6,7 @@ module Generators::ModelDocSupport
       super
       base.class_eval do
         cattr_accessor :model_name, :model_rb_stack, :migration_rb_stack, :migration_indexes, :builder_rmv
-        cattr_accessor :fields, :scopes, :imethods, :cmethods
+        cattr_accessor :fields, :scopes, :imethods, :cmethods, :to_single_validates
 
         self.model_name = name.sub('Mdoc', '')
         self.model_rb_stack = [ '' ]
@@ -14,6 +14,7 @@ module Generators::ModelDocSupport
         self.fields = { }
         self.migration_indexes = [ ]
         self.builder_rmv = [ ]
+        self.to_single_validates = { }
 
         self.path = "models/#{model_name.underscore}"
       end
@@ -21,13 +22,35 @@ module Generators::ModelDocSupport
 
     def process_and_returns_options(name, type, req, options)
       builder_rmv << name if options.delete(:show)
-      (options[:unique] ||= options[:uniqueness]) or (options[:uniqueness] ||= options[:unique])
+      options = key_alias options, {
+          [:unique, :uniq] =>     :uniqueness,
+          [:uniqueness, :uniq] => :unique,
+          in:  :inclusion,
+          ex:  :exclusion,
+          lth: :length,
+          num: :numericality,
+          should_blank: :presence,
+          not_blank:    :absence
+      }
+      options[:numericality] = key_alias options[:numericality], {
+          int: :only_integer, gt: :greater_than, gte: :greater_than_or_equal_to,
+          eq: :equal_to,      lt: :less_than,    lte: :less_than_or_equal_to
+      } if options.key?(:numericality)
 
       options
     end
 
+    def allow_nil?(names)
+      Array(names).each { |name| return false if _fields[name][:null] == false }
+      true
+    end
+
+    def _fields
+      Hash[fields.map { |name, info| [name, info[1..-1].reduce({ }, :merge)] }]
+    end
+
     def run
-      # Dir['./app/**/*_mdoc.rb'].each { |file| require file }
+      Dir['./app/**/*_mdoc.rb'].each { |file| require file }
       descendants.each do |mdoc|
         model_file_name = mdoc.model_name.underscore
         model_path = "app/models/#{model_file_name}.rb"
@@ -116,7 +139,7 @@ __END__
 `validates_associated :books`
 不要在关联的两端都使用 validates_associated，这样会变成无限循环。
 
-(2) inclusion & exclusion
+(2) inclusion - in & exclusion - ex
 这个辅助方法检查属性的值是否(不)在指定的集合中。集合可以是任何一种可枚举的对象。
 `validates :size, inclusion: %w(small medium large)`
 
@@ -124,7 +147,7 @@ __END__
 这个辅助方法检查属性的值是否匹配 :with 选项指定的正则表达式。
 `validates :legacy_code, format: /\A[a-zA-Z]+\z/`
 
-(4) length
+(4) length - lth
 这个辅助方法验证属性值的长度，有多个选项，可以使用不同的方法指定长度约束：
 ```
   validates :name, length: { minimum: 2 }
@@ -133,7 +156,7 @@ __END__
   validates :registration_number, length: { is: 6 }
 ```
 
-(5) numericality
+(5) numericality - num: { int, gt gte, eq, lt lte }
 这个辅助方法检查属性的值是否只包含数字。
 默认情况下，匹配的值是可选的正负符号后加整数或浮点数。如果只接受整数，把 :only_integer 选项设为 true。
 ```
@@ -150,14 +173,14 @@ __END__
   :odd：如果设为 true，属性值必须是奇数。
   :even：如果设为 true，属性值必须是偶数。
 
-(6) presence & absence
+(6) presence - should_blank & absence - not_blank
 这个辅助方法检查指定的属性是否为非空 / 空值。它调用 blank? 方法检查值是否为 nil 或空字符串，即空字符串或只包含空白的字符串。
 `validates :name, :login, :email, presence: true`
-验证布尔值字段是否存在: `validates :boolean_field_name, exclusion: { in: [nil] }`
+验证布尔值字段是否存在: `validates :boolean_field_name, exclusion: [nil]`
 如果要确保关联对象存在，需要测试关联的对象本身是否存在，而不是用来映射关联的外键。做法见：
   https://ruby-china.github.io/rails-guides/v5.0/active_record_validations.html#presence
 
-(7) uniqueness
+(7) uniqueness - unique
 这个辅助方法在保存对象之前验证属性值是否是唯一的。
 该方法不会在数据库中创建唯一性约束，所以有可能两次数据库连接创建的记录具有相同的字段值。为了避免出现这种问题，必须在数据库的字段上建立唯一性索引。
 `validates :email, uniqueness: true`

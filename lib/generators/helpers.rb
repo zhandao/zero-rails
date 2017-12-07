@@ -18,11 +18,36 @@ module Generators
       if obj.is_a? Hash
         obj = obj.to_s[1..-2].sub(':', '').gsub(', :', ', ').gsub('=>', ': ').gsub('\"', '"').tr(?", ?')
         full ? "{ #{obj} }" : obj
-      elsif obj.is_a? String
+      elsif obj.is_a?(String)
         "'#{obj}'"
+      elsif obj.is_a? Regexp
+        obj.inspect#.delete('/')
+      elsif obj.is_a?(Array) && (is_str_arr?(obj) || is_sym_arr?(obj))
+        is_sym_arr?(obj) ? obj.to_s.gsub(', :', ' ').sub('[:', '%i[ ').sub(']', ' ]') :
+            obj.to_s.gsub(/\"/, ' ').gsub(', ', '').sub('[', '%w[')
       else
         obj
       end
+    end
+
+    def is_str_arr?(arr)
+      arr.each { |item| return false unless item.is_a?(String) }
+      true
+    end
+
+    def is_sym_arr?(arr)
+      arr.each { |item| return false unless item.is_a?(Symbol) }
+      true
+    end
+
+    def key_alias(hash, mapping)
+      mapping.each do |givens, old|
+        Array(givens).each do |given|
+          hash[old] ||= hash[given] if hash.key?(given)
+          hash.delete(given) unless given.match?('unique')
+        end
+      end
+      hash
     end
   end
 end
