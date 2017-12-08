@@ -53,6 +53,23 @@ module Generators::Rspec
         IT
         content_stack.last << "\n"
       end
+
+      # FIXME: hack
+      def run
+        rescue_no_method_run { super() }
+        descendants.each do |spdoc|
+          *dir_path, file_name = spdoc.path.split('/')
+          dir_path = "spec/#{dir_path.join('/')}"
+          FileUtils.mkdir_p dir_path
+          file_path = "#{dir_path}/#{file_name}#{spdoc.version}_spec.rb"
+
+          # if Config.overwrite_files || !File::exist?(file_path)
+          if true
+            File.open(file_path, 'w') { |file| file.write spdoc.whole_file.sub("\n\n\nend\n", "\nend\n") }
+            puts "[Zero] Spec file has been generated: #{file_path}"
+          end
+        end
+      end
     end
   end
 end

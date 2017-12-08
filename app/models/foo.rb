@@ -3,14 +3,14 @@
 class Foo < ApplicationRecord
   acts_as_paranoid
 
-  belongs_to :user, polymorphic: true
+  belongs_to :user, optional: true, polymorphic: true
 
   has_many :stars
 
   has_many :sub_foos, class_name: 'Foo', foreign_key: 'sub_foo_id', dependent: :destroy
-  belongs_to :sub_foo, class_name: 'Foo', optional: true
+  belongs_to :base_foo, class_name: 'Foo', optional: true
 
-  validates *%i[ user name activated ], exclusion: [ nil ]
+  validates *%i[ name activated ], exclusion: [ nil ]
 
   validates :name, uniqueness: true, inclusion: %i[ woo wow ], format: /wow|wow/, length: { minimum: 2 }
   validates :type, absence: true, uniqueness: true, numericality: { only_integer: true, greater_than_or_equal_to: 10 }, allow_nil: true
@@ -37,7 +37,7 @@ end
 
 __END__
 
-t.belongs_to :user,       foreign_key: true, polymorphic: true, null: false
+t.belongs_to :user,       foreign_key: true, polymorphic: true
 t.references :sub_foo,    index: true
 t.string     :name,       null: false
 t.integer    :type

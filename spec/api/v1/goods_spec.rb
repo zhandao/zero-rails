@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'API V1', 'goods', type: :request do
   let(:json) { MultiJson.load(response.body, symbolize_keys: true) }
 
-  describe 'GET /api/v1/goods #index, GET list of goods.' do
+  describe 'GET /api/v1/goods to #index, get list of goods.' do
     let(:right_input) { { Token: 'Token', view: :view, search_type: :search_type, value: :value, created_start_at: :created_start_at, created_end_at: :created_end_at, page: :page, rows: :rows, export: :export } }
 
     describe 'business scenario x' do
@@ -31,7 +31,7 @@ RSpec.describe 'API V1', 'goods', type: :request do
     end
   end
 
-  describe 'GET /api/v1/goods/{id} #show, GET the specified good.' do
+  describe 'GET /api/v1/goods/{id} to #show, get the specified good.' do
     let(:params) { { Token: '123456', id: 'integer' } }
 
     describe 'business scenario x' do

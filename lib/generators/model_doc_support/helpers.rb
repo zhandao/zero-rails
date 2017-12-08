@@ -5,12 +5,13 @@ module Generators::ModelDocSupport
     def inherited(base)
       super
       base.class_eval do
-        cattr_accessor :model_name, :model_rb_stack, :migration_rb_stack, :migration_indexes, :builder_rmv
-        cattr_accessor :fields, :scopes, :imethods, :cmethods, :to_single_validates
+        cattr_accessor :model_name, :model_rb_stack, :migration_rb_stack, :fbot_rb_stack, :migration_indexes, :builder_rmv
+        cattr_accessor :fields, :scopes, :imethods, :cmethods, :to_single_validates, :version, :doc_version
 
         self.model_name = name.sub('Mdoc', '')
         self.model_rb_stack = [ '' ]
         self.migration_rb_stack = [ '' ]
+        self.fbot_rb_stack = [ '' ]
         self.fields = { }
         self.migration_indexes = [ ]
         self.builder_rmv = [ ]
@@ -19,6 +20,20 @@ module Generators::ModelDocSupport
         self.path = "models/#{model_name.underscore}"
       end
     end
+
+    TYPE_TO_DEFAULT_VAL = {
+        string: "'string'",
+        boolean: true,
+        integer: 1,
+        decimal: 1.0,
+        float: 1.0,
+        text: "'text'",
+        binary: 1,
+        date: '{ Date.today }',
+        datetime: '{ DateTime.now }',
+        time: '{ Time.current }',
+        timestamp: '{ Time.current.to_i }'
+    }.freeze
 
     def process_and_returns_options(name, type, req, options)
       builder_rmv << name if options.delete(:show)
@@ -49,22 +64,64 @@ module Generators::ModelDocSupport
       Hash[fields.map { |name, info| [name, info[1..-1].reduce({ }, :merge)] }]
     end
 
+    def process_validates
+      %i[ null presence absence uniqueness ].each do |key|
+        names = _fields.map { |name, info| name unless info[key].nil? }.compact
+        next if names.blank?
+        (to_single_validates[names.first] ||= '') << ", #{key}: true" and next if names.size == 1
+        model_rb_stack.last << "validates *%i[ #{names.join(' ')} ], exclusion: [ nil ]\n" and next if key == :null
+        render_multi_validates(names, ", #{key}: true")
+      end
+      model_rb_stack.last << "\n"
+
+      _fields.each do |name, info|
+        info.slice!(*%i[ validates_associated inclusion exclusion format length numericality ])
+        options = ''
+        options << (to_single_validates[name] || '')
+        info.each { |key, value| options << ", #{key}: #{pr(value, :full)}" }
+        if options.present?
+          content = "validates :#{name}#{options}"
+          content << ', allow_nil: true' if allow_nil?(name)
+          model_rb_stack.last << content << "\n"
+        end
+      end
+      model_rb_stack.last << "\n"
+    end
+
+    def render_multi_validates(attrs, content)
+      return model_rb_stack.last << "validates *%i[ #{attrs.join(' ')} ]#{content}, allow_nil: true\n" if allow_nil?(attrs)
+
+      # model_rb_stack.last << "validates :#{(attrs - allow_nil).join(', :')}, #{content}\n" if (attrs - allow_nil).present?
+      # model_rb_stack.last << "validates :#{allow_nil.join(', :')}, #{content}, allow_nil: true\n" if allow_nil.present?
+      attrs.each { |attr| (to_single_validates[attr] ||= '') << content }
+    end
+
     def run
       Dir['./app/**/*_mdoc.rb'].each { |file| require file }
       descendants.each do |mdoc|
         model_file_name = mdoc.model_name.underscore
-        model_path = "app/models/#{model_file_name}.rb"
+        model_path = "app/models/#{model_file_name}#{mdoc.version}.rb"
         mg_next_version = ::ActiveRecord::Migration.next_migration_number(::ActiveRecord::Migrator.current_version)
-        mg_file_name = "#{mg_next_version}_create_#{mdoc.model_name.underscore.pluralize}"
-        mg_path = "db/migrate/#{mg_file_name}.rb"
+        mg_file_name = "#{mg_next_version}_create_#{model_file_name.pluralize}"
+        mg_path = "db/migrate/#{mg_file_name}#{mdoc.version}.rb"
+        fbot_path = "spec/factories/#{model_file_name.pluralize}#{mdoc.version}.rb"
+        doc_path = "app/_docs/#{mdoc.doc_version}/#{model_file_name.pluralize}_doc.rb"
 
         # if Config.overwrite_files || !File::exist?(model_path)
         if true
           mdoc.fields_to_migration
+          mdoc.fields_to_fbot
           File.open(model_path, 'w') { |file| file.write mdoc.model_rb.sub("\n\n\nend\n", "\nend\n") }
           puts "[Zero] Model file has been generated: #{model_path}"
           # File.open(mg_path, 'w') { |file| file.write mdoc.migration_rb.sub("\n\n\nend\n", "\nend\n") }
           # puts "[Zero] Migration file has been generated: #{mg_path}"
+          File.open(fbot_path, 'w') { |file| file.write mdoc.fbot_rb.sub("\n  \n  end\n", "\n  end\n") }
+          puts "[Zero] Factory file has been generated: #{fbot_path}"
+
+          if mdoc.doc_version
+            File.open(doc_path, 'w') { |file| file.write mdoc.doc_rb }
+            puts "[Zero] Doc file has been generated: #{doc_path}"
+          end
         end
       end
     end
@@ -76,17 +133,15 @@ module Generators::ModelDocSupport
       name_max_length = fields.keys.map(&:length).sort.last
       key_order = %i[ foreign_key polymorphic null default index unique ] # TODO
 
-      fields.each do |name, info|
-        type = info.shift.to_s.ljust(type_max_length)
+      fields.each do |name, (type, *info)|
+        type = type.to_s.ljust(type_max_length)
         info = info.reduce({ }, :merge)
         migration_indexes << name and info.delete(:index) if info.delete(:unique)
 
         info = key_order.map { |key| { key => info[key] } if info.key?(key) }.compact.reduce({ }, :merge)
         params = info.present? ? ("#{name},".ljust(name_max_length + 2) << pr(info)) : name.to_s
 
-        migration_rb_stack.last << <<~FIELD
-          t.#{type} :#{params}
-        FIELD
+        migration_rb_stack.last << "t.#{type} :#{params}\n"
       end
     end
 
@@ -97,6 +152,27 @@ module Generators::ModelDocSupport
           add_index :#{model_name.underscore.pluralize}, :#{name}, unique: true
         INDEX
       end.join
+    end
+
+    def fields_to_fbot
+      name_max_length = fields.keys.map(&:length).sort.last
+      fields.each do |name, (type, *info)|
+        next if type == :references
+        info = info.reduce({ }, :merge)
+        allow_nil = !info.key?(:null) && !info.key?(:absence)
+
+        if type == :belongs_to
+          fbot_rb_stack.last << "#{name}\n"
+        else
+          value = info[:default]
+          value = pr(info[:inclusion]&.first) if value.nil?
+          value = TYPE_TO_DEFAULT_VAL[type] if value.nil?
+
+          fbot_rb_stack.last << <<~BOT
+            #{'# ' if allow_nil}#{name.to_s.ljust(name_max_length)} #{value}
+          BOT
+        end
+      end
     end
 
     def model_rb
@@ -128,6 +204,56 @@ module Generators::ModelDocSupport
           end
         end
       MG
+    end
+
+    def fbot_rb
+      <<~BOT
+        # *** Generated by Zero [ please make sure that you have checked this file ] ***
+
+        FactoryBot.define do
+          factory :#{model_name.underscore} do
+            #{add_ind_to fbot_rb_stack.last, 2}
+          end
+        end
+      BOT
+    end
+
+    def doc_rb
+      name = model_name.underscore
+      <<~DOC
+        # *** Generated by Zero [ please make sure that you have checked this file ] ***
+
+        class #{model_name.pluralize}Error < V1Error
+          include CUDFailed, AuthFailed
+        
+          # set_for :action
+          # mattr_reader :name, '', ERROR_BEGIN
+        end
+        
+        # TODO: when use it, open the comment
+        class Api::#{doc_version.upcase}::#{model_name.pluralize}Doc# < ApiDoc
+          components { schema #{model_name} }
+
+          api :index, 'GET list of #{name.pluralize}', builder: :index do
+          end
+
+          api :show, 'GET the specified #{name}', builder: :show, use: id
+
+          api :create, 'POST create a #{name}', builder: :success_or_not do
+            form! 'for creating the specified #{name}', data: {
+            }
+          end
+
+          api :update, 'PATCH update the specified #{name}', builder: :success_or_not, use: id do
+            form! 'for updating the specified #{name}', data: {
+            }
+          end
+
+          api :destroy, 'DELETE the specified #{name}', builder: :success_or_not, use: id
+
+          g
+        end
+      DOC
     end
   end
 end

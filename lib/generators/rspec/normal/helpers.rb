@@ -5,6 +5,7 @@ module Generators::Rspec
         "it { is_expected.to eq '' }  "
       end
 
+      # TODO: refactoring
       def _expect(who, whos, what, not_what)
         if who.is_a? Hash
           who.map do |obj_name, exp_value|

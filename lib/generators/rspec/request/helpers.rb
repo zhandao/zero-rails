@@ -28,6 +28,7 @@ module Generators::Rspec
         %(#{describe_doc.verb} #{url}#{params if params.present?})
       end
 
+      # TODO: refactoring
       def _expect(who, whos, what, not_what)
         if who.is_a? Hash
           who.map do |obj_name, exp_value|

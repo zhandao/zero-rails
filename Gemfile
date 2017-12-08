@@ -238,6 +238,9 @@ group :development do
   gem 'rubocop', require: false
   # https://github.com/toshimaru/rubocop-rails
   # gem "rubocop-rails", require: false
+
+  # https://github.com/rubysec/bundler-audit
+  gem 'bundler-audit', :require => false
 end
 
 # console beautifying settings

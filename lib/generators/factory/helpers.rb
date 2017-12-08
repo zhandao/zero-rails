@@ -1,5 +1,5 @@
 module Generators::Factory
-  module DSL
+  module Helpers
     def self.included(base)
       base.extend Generators::Factory::ClassMethods
     end
@@ -7,12 +7,12 @@ module Generators::Factory
 
   module ClassMethods
     def run
-      rescue_no_run { super() }
+      rescue_no_method_run { super() }
       descendants.each do |mdoc|
         *dir_path, file_name = mdoc.path.split('/')
         dir_path = "spec/factories/#{dir_path.join('/')}"
         FileUtils.mkdir_p dir_path
-        file_path = "#{dir_path}/#{file_name}.rb"
+        file_path = "#{dir_path}/#{file_name}#{mdoc.version}.rb"
 
         # if Config.overwrite_files || !File::exist?(file_path)
         if true

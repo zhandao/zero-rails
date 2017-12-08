@@ -2,16 +2,14 @@ module Generators::ModelDocSupport
   module DSL
     def self.included(base)
       base.extend Generators::ModelDocSupport::ClassMethods
-      # base.include Generators::Factory::DSL
       base.include Generators::Rspec::Model
     end
   end
 
   module ClassMethods
-    include Helpers
-    # TODO: schema component
+    include Generators::DSL
+    include Generators::ModelDocSupport::Helpers
 
-    # 验证、枚举、builder、should test
     # fields: { attr_name: [ type, { options }, {} ..]}
     def field name, type, req, options = [ ], options_hash = { }
       options = options.map { |key| { key => true } }.reduce({ }, :merge).merge(options_hash) if options.is_a?(Array)
@@ -20,7 +18,7 @@ module Generators::ModelDocSupport
       fields[name] = info
     end
 
-    %i[ string boolean integer decimal float text binary date datetime time timestamp ].each do |type|
+    TYPE_TO_DEFAULT_VAL.keys.each do |type|
       define_method type do |name, options = [ ], options_hash = { }|
         field name, type, :opt, options, options_hash
       end
@@ -43,14 +41,14 @@ module Generators::ModelDocSupport
     end
 
     def references to_what
-      field to_what, :references, :opt,index: true
+      field to_what, :references, :opt, index: true
     end
 
     def index *fields
       # TODO
     end
 
-    def belongs_to name, req = :req, polymorphic: nil
+    def belongs_to name, req = :opt, polymorphic: nil
       name = name.to_s.singularize
       options = req == :opt ? { optional: true } : { }
       options[:polymorphic] = true if polymorphic
@@ -75,14 +73,16 @@ module Generators::ModelDocSupport
       end
     end
 
-    def self_joins has_relation, sub_method_name: nil, through: nil, dependent_destroy: true, optional: true
-      sub_method_name = "sub_#{model_name.underscore.pluralize}" unless sub_method_name
+    # through == through_field_name
+    def self_joins has_relation, base: nil, through: nil, dependent_destroy: true, optional: true
       through = "sub_#{model_name.underscore}" unless through
+      sub_method_name = through.pluralize
+      base = "base_#{model_name.underscore}" unless base
 
       references through
       model_rb_stack.last << <<~SJ
         #{has_relation} :#{sub_method_name}, class_name: '#{model_name}', foreign_key: '#{through}_id'#{', dependent: :destroy' if dependent_destroy}
-        belongs_to :#{through}, class_name: '#{model_name}', optional: #{optional.to_s}
+        belongs_to :#{base}, class_name: '#{model_name}', optional: #{optional.to_s}
       SJ
       model_rb_stack.last << "\n"
     end
@@ -94,8 +94,6 @@ module Generators::ModelDocSupport
       model_rb_stack.last << "\n"
       datetime :deleted_at
     end
-
-    # alias_method :soft, :soft_destroy
 
     def scope name, desc = nil, &block
       describe name.to_s, desc ? "[scope] #{desc}" : '[scope]', &block
@@ -142,5 +140,10 @@ module Generators::ModelDocSupport
 
     alias_method :imethod, :instance_method
     alias_method :imethods, :instance_methods
+
+    # generate api doc
+    def g(path)
+      self.doc_version = path
+    end
   end
 end

@@ -29,8 +29,10 @@ module Generators::Rspec
         )
         request_params = _request_params
 
-        desc = desc_temp(desc) || "#{http_verb.upcase} #{path} ##{action}" \
-                       ", #{add_desc || action_doc['summary'] || action_doc['description']}"
+        summary = action_doc['summary'].sub('GET ', 'get ').sub('PATCH ', '')
+                      .sub('POST', 'post').sub('DELETE', 'delete') if action_doc['summary']
+        desc = desc_temp(desc) || "#{http_verb.upcase} #{path} to ##{action}" \
+                       ", #{add_desc || summary || action_doc['description']}"
         sub_content = _instance_eval(block) if block_given?
 
         content_stack.last << <<~DESCRIBE

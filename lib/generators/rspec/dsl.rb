@@ -1,5 +1,7 @@
 module Generators::Rspec
   module DSL
+    include Generators::DSL
+
     def let name, what, behave = nil
       result = "let(:#{name}) { #{pr(what, :full)} }\n"
       content_stack.last << "#{result}\n" and return if behave.nil?

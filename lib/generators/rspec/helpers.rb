@@ -4,7 +4,7 @@ module Generators::Rspec
 
     def self.included(base)
       base.class_eval do
-        attr_accessor :content_stack, :path, :each
+        attr_accessor :content_stack, :path, :each, :version
       end
     end
 
@@ -18,13 +18,13 @@ module Generators::Rspec
     end
 
     def run
-      rescue_no_run { super() }
+      rescue_no_method_run { super() }
       Dir['./app/**/*_spdoc.rb'].each { |file| require file }
       descendants.each do |spdoc|
         *dir_path, file_name = spdoc.path.split('/')
         dir_path = "spec/#{dir_path.join('/')}"
         FileUtils.mkdir_p dir_path
-        file_path = "#{dir_path}/#{file_name}_spec.rb"
+        file_path = "#{dir_path}/#{file_name}#{spdoc.version}_spec.rb"
 
         # if Config.overwrite_files || !File::exist?(file_path)
         if true
@@ -37,12 +37,6 @@ module Generators::Rspec
     def set_path(path)
       self.path = "#{path}/#{name.sub('Spdoc', '').downcase}"
     end
-
-    # def content_stack_last block, template_result
-    #   sub_content = _instance_eval(block) if block
-    #   content_stack.last << template_result
-    #   content_stack.last << "\n"
-    # end
 
     def _instance_eval(block)
       self.each = { describe: '', context: '' }

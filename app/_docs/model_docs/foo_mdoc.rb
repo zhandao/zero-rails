@@ -24,4 +24,6 @@ class FooMdoc < ModelDoc
   end
 
   imethod :cool
+
+  # g 'v1'
 end

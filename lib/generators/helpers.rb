@@ -1,9 +1,9 @@
 module Generators
   module Helpers
-    def rescue_no_run
+    def rescue_no_method_run
       yield
     rescue NoMethodError => e
-      pp "[ERROR] #{e.message}" unless e.message.match?('no superclass method')
+      raise NoMethodError, e.message unless e.message.match?('no superclass method')
     end
 
     def add_ind_to(mtline_str, space_times = 1) # indentation
@@ -25,6 +25,8 @@ module Generators
       elsif obj.is_a?(Array) && (is_str_arr?(obj) || is_sym_arr?(obj))
         is_sym_arr?(obj) ? obj.to_s.gsub(', :', ' ').sub('[:', '%i[ ').sub(']', ' ]') :
             obj.to_s.gsub(/\"/, ' ').gsub(', ', '').sub('[', '%w[')
+      elsif obj.is_a? Symbol
+        ":#{obj}"
       else
         obj
       end
