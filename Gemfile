@@ -219,7 +219,7 @@ group :development do
   gem 'listen', '~> 3.0'
 
   # https://github.com/yuki24/did_you_mean
-  gem 'did_you_mean'
+  gem 'did_you_mean', require: false
 
   # https://github.com/charliesome/better_errors
   gem 'better_errors'
@@ -236,12 +236,14 @@ group :development do
   # gem 'dawnscanner', :require=>false
 
   # https://github.com/bbatsov/rubocop
-  gem 'rubocop', require: false
+  gem 'rubocop', require: false # or just `gem install`
   # https://github.com/toshimaru/rubocop-rails
   # gem "rubocop-rails", require: false
 
   # https://github.com/rubysec/bundler-audit
-  gem 'bundler-audit', :require => false
+  gem 'bundler-audit', :require => false # or just `gem install`
+  # https://github.com/brigade/overcommit
+  gem 'overcommit', :require => false # or just `gem install`
 end
 
 # console beautifying settings

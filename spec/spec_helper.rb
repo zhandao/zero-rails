@@ -44,15 +44,6 @@ RSpec.configure do |config|
   # triggering implicit auto-inclusion in groups with matching metadata.
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
-  # Clears all job queues before each example
-  config.clear_all_enqueued_jobs = true
-
-  # Whether to use terminal colours when outputting messages
-  config.enable_terminal_colours = true
-
-  # Warn when jobs are not enqueued to Redis but to a job array
-  config.warn_when_jobs_not_processed_by_sidekiq = true
-
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
 =begin
