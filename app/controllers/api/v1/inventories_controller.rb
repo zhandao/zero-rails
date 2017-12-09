@@ -5,8 +5,7 @@ class Api::V1::InventoriesController < Api::V1::BaseController
   skip_token only: [:index]
 
   def index
-    @data = Good.search_by(@_field, @_value).ordered.get(:inventories) \
-            & Store.find_by!(code: @_store_code).inventories
-    export_inventories if @_export
+    @data = Inventory.where good: Good.search_by(@field, @value), store: Store.find_by!(code: @store_code)
+    export_inventories if @export
   end
 end

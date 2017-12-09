@@ -1,0 +1,3 @@
+PreCommit:
+  BundlerAudit:
+    enabled: true

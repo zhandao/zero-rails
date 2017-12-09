@@ -7,8 +7,8 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 User.create name: 'zhandao', password: 'zhandao', phone_number: '13912345678'
 Role.create name: 'man', condition: '!admin?'
-Permission.create name: 'fight', is_method: false, condition: "self.fight == 'pong'"
-Permission.create name: 'fighting', is_method: true, condition: 'false'
+Permission.create name: 'fight', method: false, condition: "self.fight == 'pong'"
+Permission.create name: 'fighting', method: true, condition: 'false'
 RolePermission.create role: Role.first, permission: Permission.first
 Role.create name: 'test_role'
 EntityRole.create entity: User.take, role: Role.last # is `test_role`

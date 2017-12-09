@@ -1,34 +1,37 @@
-class Api::V1::RolesDoc < ApiDoc
+class RolesError < V1Error
+  include CUDFailed, AuthFailed
+end
 
-  open_api :index, 'Get list of Roles of specified model', builder: :index, use: token do
+class Api::V1::RolesDoc < ApiDoc
+  api :index, 'GET roles list of the specified model', builder: :index, use: token do
     query :model, String, dft: 'User', reg: /^[A-Z]/
   end
 
 
-  open_api :show, 'Show a Role.', builder: :show, use: id_and_token
+  api :show, 'GET the specified role.', builder: :show, use: id_and_token
 
 
-  open_api :create, 'POST create a Role', builder: :success_or_not, use: token do
-    form! 'for creating a role', data: {
+  api :create, 'POST create a role', builder: :success_or_not, use: token do
+    form! 'for creating the specified role', data: {
             :name! => { type: String, desc: 'name of role' },
         :condition => { type: String, dft: 'true', desc: '暂不必传' },
           :remarks => String
     }
   end
 
-  open_api :destroy, 'Delete a Role.', builder: :success_or_not, use: id_and_token
+  api :destroy, 'DELETE the specified role.', builder: :success_or_not, use: id_and_token
 
   # /roles/:id/permissions
-  open_api :permissions, 'GET Permissions of specified role', use: token do
+  api :permissions, 'GET permissions of specified role', use: token do
     path! :id, Integer, desc: '要查询的 role id'
   end
 
 
   # /roles/:id/permissions/modify
-  open_api :permissions_modify, 'POST modify Permissions to specified role',
+  api :permissions_modify, 'POST modify permissions to the specified role and then save to db',
            builder: :success_or_not, use: token do
     path! :id, Integer, desc: 'role id'
-    form! 'for modifying permissions to role', data: {
+    form! 'for modifying permissions to the specified role', data: {
         :permission_ids! => { type: Array[{ type: Integer, range: { ge: 1 } }], size: 'ge_1' }
     }
   end

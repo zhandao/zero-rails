@@ -1,5 +1,3 @@
-
-
 namespace :ubuntu do
   task init: :common_env do
     invoke :'ubuntu:install'
@@ -11,7 +9,7 @@ namespace :ubuntu do
     command %[sudo apt-get install -y software-properties-common]
     command %[sudo apt-get -y --force-yes dist-upgrade]
     command %[sudo apt-get install mysql-server mysql-client libmysqlclient-dev]
-    #  command %[sudo apt-get install -y redis-server]
+    command %[sudo apt-get install -y redis-server]
 
     command %[sudo apt-get install -y curl gnupg build-essential]
     command %[sudo apt-get install -y git]

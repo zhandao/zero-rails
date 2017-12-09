@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171020172654) do
+ActiveRecord::Schema.define(version: 20171203092123) do
 
   create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "namespace"
@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(version: 20171020172654) do
     t.string "remarks"
     t.string "pic_path"
     t.string "creator", null: false
-    t.boolean "is_online", default: true
+    t.boolean "on_sale", default: true
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(version: 20171020172654) do
 
   create_table "permissions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC" do |t|
     t.string "name", null: false
-    t.boolean "is_method", default: false
+    t.boolean "for_method", default: false
     t.string "source"
     t.string "condition", default: "true", null: false
     t.string "belongs_to_model", default: "User"

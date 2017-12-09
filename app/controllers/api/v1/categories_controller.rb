@@ -1,7 +1,7 @@
 class Api::V1::CategoriesController < Api::V1::BaseController
   include ActiveRecordErrorsRescuer
 
-  skip_token only: [:index, :nested_list]
+  skip_token only: %i[ index nested_list ]
 
   def index
     @data = Category.all_from_cache
@@ -14,16 +14,16 @@ class Api::V1::CategoriesController < Api::V1::BaseController
 
 
   def create
-     Category.create! permitted
+    Category.create! permitted
   end
 
 
   def update
-    Category.find(@_id).update! permitted
+    @category.update! permitted
   end
 
 
   def destroy
-    @status = Category.find(@_id).destroy
+    @status = @category.destroy
   end
 end

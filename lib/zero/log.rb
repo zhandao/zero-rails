@@ -3,8 +3,7 @@ module Zero::Log
 
   # TODO: unfinished, no idea to log business error now.
   def log_error msg
-    msg = { level: 'ERROR' }
-              .merge msg.is_a?(StandardError) ? msg.info : { msg: msg }
+    msg = { level: 'ERROR' }.merge(msg.respond_to?(:info) ? msg.info : { msg: msg })
     ZLogger.error msg
   end
 end

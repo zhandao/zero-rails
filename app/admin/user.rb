@@ -4,7 +4,7 @@ ActiveAdmin.register User do
   config.sort_order = 'id_desc'
   # config.sort_order = 'id_asc'
 
-  batch_action :action, priority: 1, if: proc { true }, confirm: "Are you sure??" do |ids|
+  batch_action :action, priority: 1, if: proc { true }, confirm: 'Are you sure??' do |ids|
     # ...
   end
 
@@ -64,7 +64,7 @@ ActiveAdmin.register User do
 
     # actions
     actions defaults: true, dropdown: false do |user|
-      item "View", 'http://github.com'
+      item 'View', 'http://github.com'
     end
   end
 

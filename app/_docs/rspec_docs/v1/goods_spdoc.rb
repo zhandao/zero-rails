@@ -1,8 +1,8 @@
-class Api::V1::GoodsSpdoc < BaseSpdoc
+class Api::V1::GoodsSpdoc < RequestSpdoc
   describe :index do
     biz 'business scenario x' do
       context 'when case y' do
-        it 'does something', when: :req, view: 'wrong value', its: :code, is_expected: :invalid_param
+        it :does_something, when: :req, view: 'wrong value', then_its: :code, is_expected: :invalid_param
         it when: :merge, page: 2, rows: 8
         it 'does another thing', when: { view: 'wrong value' }, its: {
             code!: :'eq 200',

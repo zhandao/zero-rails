@@ -1,7 +1,4 @@
-class ModelDoc < Object
-  # Generate: model, controller_doc, migration, factory
-  # soft_delete
-  #
-  # desc 'name'
-  # string :name, range: { ge: 1 }, examples: [ 'name' ], scope: :not_null, visable: false
+class ModelDoc
+  include Generators::ModelDocSupport::DSL
+  # string :name, range: { ge: 1 }, examples: [ 'name' ], dft_scope: :not_null, show: false
 end

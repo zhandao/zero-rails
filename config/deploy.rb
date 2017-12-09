@@ -4,6 +4,7 @@ require 'mina/rails'
 require 'mina/git'
 require 'mina/puma'
 require 'mina/rvm'
+require 'mina_sidekiq/tasks'
 
 Dir['config/mina/*.rb'].each do |file|
   file_name = File.basename(file, '.rb')
@@ -50,12 +51,12 @@ end
 
 desc 'Tail lograte log from server'
 task l: :remote_environment do
-  command %{tail -f #{fetch(:lograte_file)}}
+  command %{tailf -100 #{fetch(:lograte_file)}}
 end
 
 desc 'Tail original log from server'
 task ol: :remote_environment do
-  command %{tail -f #{fetch(:deploy_to)}/shared/log/#{fetch(:rails_env)}.log}
+  command %{tailf -100 #{fetch(:deploy_to)}/shared/log/#{fetch(:rails_env)}.log}
 end
 
 # Put any custom commands you need to run at setup
@@ -78,6 +79,7 @@ task deploy: :remote_environment do
   # invoke :'git:ensure_pushed'
   deploy do
     # Put things that will set up an empty directory into a fully set-up instance of your project.
+    invoke :'sidekiq:quiet'
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     # command %[RAILS_ENV=#{fetch(:rails_env)} bundle install --without development]
@@ -95,12 +97,13 @@ task deploy: :remote_environment do
 
     on :launch do
       in_path(fetch(:current_path)) do
-        command %{touch tmp/restart.txt}
+        command 'touch tmp/restart.txt'
       end
       command %[touch "#{fetch(:lograte_file)}"]
       invoke :'puma:start'          if fetch(:first_start_puma)
       invoke :'puma:phased_restart' unless fetch(:first_start_puma)
       # invoke :'puma:hard_restart'
+      invoke :'sidekiq:restart'
     end
   end
 
