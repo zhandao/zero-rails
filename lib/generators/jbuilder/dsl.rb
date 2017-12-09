@@ -8,7 +8,6 @@ module Generators::Jbuilder
   module ClassMethods
     def api action, summary = '', http: nil, builder: nil, skip: [ ], use: [ ], &block
       api = super(action, summary, http: http, skip: skip, use: use, &block)
-      (@api_actions ||= [ ]) << action
       return unless Rails.env.development?
       generate(api.action_path, builder)
     end

@@ -58,10 +58,10 @@ gem 'paranoia'
 
 # gem 'zero-rails_openapi'
 # gem 'zero-params_processor'
-# gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
-# gem 'zero-params_processor', github: 'zhandao/zero-params_processor'
-gem 'zero-rails_openapi', path: '~/ws/zero-rails_openapi'
-gem 'zero-params_processor', path: '~/ws/zero-params_processor'
+gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
+gem 'zero-params_processor', github: 'zhandao/zero-params_processor'
+# gem 'zero-rails_openapi', path: '~/ws/zero-rails_openapi'
+# gem 'zero-params_processor', path: '~/ws/zero-params_processor'
 
 
 # *** App Server ***
@@ -136,9 +136,10 @@ gem 'logstasher'
 # *** Administration Framework ***
 
 # https://activeadmin.info/documentation.html
-gem 'activeadmin', '1.0'#, github: 'activeadmin' TODO: wait for fixing 1.1
+gem 'activeadmin', github: 'activeadmin/activeadmin', branch: '1-1-stable'
 # UI for ActiveAdmin, https://github.com/cle61/arctic_admin
-gem 'arctic_admin'
+# TODO: github: 'cle61/arctic_admin', branch: '2-0-alpha' # Wait cle61 for fix in 2.0 branch
+gem 'arctic_admin', github: 'rtymchyk/arctic_admin', branch: 'patch-1'
 # UI for ActiveAdmin, https://github.com/vigetlabs/active_material
 # gem "active_material", github: "vigetlabs/active_material"
 

@@ -23,10 +23,6 @@ Rails.application.routes.draw do
         post 'change_onsale', on: :member
       end
 
-      resources :foos do
-        post 'change_onsale', on: :member
-      end
-
       resources :stores
 
       resources :categories, except: [:show] do

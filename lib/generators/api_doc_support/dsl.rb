@@ -10,7 +10,7 @@ module Generators::ApiDocSupport
 
     def api action, summary = '', http: nil, builder: nil, skip: [ ], use: [ ], &block
       super(action, summary, http: http, builder: builder, skip: skip, use: use, &block)
-      (@ads_actions ||= { })[action] = { skip: skip, use: use }
+      (@api_actions ||= { })[action] = { skip: skip, use: use }
     end
 
     def g
@@ -31,19 +31,19 @@ module Generators::ApiDocSupport
         class #{@_ctrl_path.camelize}Controller < Api::#{@_ctrl_path.split('/')[1].upcase}::BaseController
           include ActiveRecordErrorsRescuer
           #{add_ind_to skip_token}
-          #{add_ind_to ads_actions}
+          #{add_ind_to api_actions}
         end
       CTRL
     end
 
     def skip_token
-      skip = @ads_actions.clone.keep_if { |_key, info| info[:skip].include?('Token') }.keys
+      skip = @api_actions.clone.keep_if { |_key, info| info[:skip].include?('Token') }.keys
       return "XXX\n" if skip.blank?
       "skip_token only: #{pr(skip)}\n"
     end
 
-    def ads_actions
-      @ads_actions.keys.map do |action|
+    def api_actions
+      @api_actions.keys.map do |action|
         model = @_ctrl_path.split('/').last.singularize.camelize
         impl = case action
           when :index   then "@data = #{model}"
@@ -63,7 +63,7 @@ module Generators::ApiDocSupport
     end
 
     def describes
-      @ads_actions.keys.map do |action|
+      @api_actions.keys.map do |action|
         <<~DESC
           describe :#{action} do
             # TODO
