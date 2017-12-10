@@ -51,5 +51,10 @@ module Generators
       end
       hash
     end
+
+    def write type, content, to:
+      File.open(to, 'w') { |file| file.write content }
+      puts "[ZERO] #{type} file has been #{File.exist?(to) ? 'OVER-WRITTEN' : 'generated'}: #{to}"
+    end
   end
 end

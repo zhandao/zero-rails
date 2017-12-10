@@ -4,8 +4,8 @@ module Generators::ApiDocSupport
       true
     end
 
-    # cattr_accessor :overwrite do
-    #   false
-    # end
+    cattr_accessor :overwrite do
+      false
+    end
   end
 end

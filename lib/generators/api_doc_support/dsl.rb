@@ -18,10 +18,8 @@ module Generators::ApiDocSupport
       ctrl_path = "app/controllers/#{path}_controller.rb"
       spdoc_path = "app/_docs/rspec_docs/#{path.sub('api/', '')}_spdoc.rb"
 
-      File.open(ctrl_path, 'w') { |file| file.write controller_rb.sub("\n\nend", "\nend") }
-      puts "[Zero] Controller file has been generated: #{ctrl_path}"
-      File.open(spdoc_path, 'w') { |file| file.write spdoc_rb }
-      puts "[Zero] SpecDoc file has been generated: #{spdoc_path}"
+      write :Controller, controller_rb.sub("\n\nend", "\nend"), to: ctrl_path
+      write :SpecDoc, spdoc_rb, to: spdoc_path
     end
 
     def controller_rb

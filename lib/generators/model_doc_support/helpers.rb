@@ -105,23 +105,16 @@ module Generators::ModelDocSupport
         mg_file_name = "#{mg_next_version}_create_#{model_file_name.pluralize}"
         mg_path = "db/migrate/#{mg_file_name}#{mdoc.version}.rb"
         fbot_path = "spec/factories/#{model_file_name.pluralize}#{mdoc.version}.rb"
-        doc_path = "app/_docs/#{mdoc.doc_version}/#{model_file_name.pluralize}_doc.rb"
+        doc_path = "app/_docs/#{mdoc.doc_version}/#{model_file_name.pluralize}#{mdoc.version}_doc.rb"
 
-        # if Config.overwrite_files || !File::exist?(model_path)
-        if true
+        if Config.overwrite || !File::exist?(model_path)
+        # if true
           mdoc.fields_to_migration
           mdoc.fields_to_fbot
-          File.open(model_path, 'w') { |file| file.write mdoc.model_rb.sub("\n\n\nend\n", "\nend\n") }
-          puts "[Zero] Model file has been generated: #{model_path}"
-          # File.open(mg_path, 'w') { |file| file.write mdoc.migration_rb.sub("\n\n\nend\n", "\nend\n") }
-          # puts "[Zero] Migration file has been generated: #{mg_path}"
-          File.open(fbot_path, 'w') { |file| file.write mdoc.fbot_rb.sub("\n  \n  end\n", "\n  end\n") }
-          puts "[Zero] Factory file has been generated: #{fbot_path}"
-
-          if mdoc.doc_version
-            File.open(doc_path, 'w') { |file| file.write mdoc.doc_rb }
-            puts "[Zero] Doc file has been generated: #{doc_path}"
-          end
+          write :Model, mdoc.model_rb.sub("\n\n\nend\n", "\nend\n"), to: model_path
+          write :Migration, mdoc.migration_rb.sub("\n\n\nend\n", "\nend\n"), to: mg_path
+          write :Factory, mdoc.fbot_rb.sub("\n  \n  end\n", "\n  end\n"), to: fbot_path
+          write :Doc, mdoc.doc_rb, to: doc_path if mdoc.doc_version
         end
       end
     end
@@ -215,6 +208,11 @@ module Generators::ModelDocSupport
             #{add_ind_to fbot_rb_stack.last, 2}
           end
         end
+
+        __END__
+
+        http://www.rubydoc.info/gems/factory_bot/file/GETTING_STARTED.md#Inheritance
+        http://www.rubydoc.info/gems/factory_bot/file/GETTING_STARTED.md#Associations
       BOT
     end
 
@@ -251,7 +249,7 @@ module Generators::ModelDocSupport
 
           api :destroy, 'DELETE the specified #{name}', builder: :success_or_not, use: id
 
-          g
+          g # TODO: remove
         end
       DOC
     end

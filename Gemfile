@@ -58,10 +58,10 @@ gem 'paranoia'
 
 # gem 'zero-rails_openapi'
 # gem 'zero-params_processor'
-gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
-gem 'zero-params_processor', github: 'zhandao/zero-params_processor'
-# gem 'zero-rails_openapi', path: '~/ws/zero-rails_openapi'
-# gem 'zero-params_processor', path: '~/ws/zero-params_processor'
+# gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
+# gem 'zero-params_processor', github: 'zhandao/zero-params_processor'
+gem 'zero-rails_openapi', path: '~/ws/zero-rails_openapi'
+gem 'zero-params_processor', path: '~/ws/zero-params_processor'
 
 
 # *** App Server ***

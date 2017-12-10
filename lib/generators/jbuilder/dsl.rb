@@ -6,6 +6,8 @@ module Generators::Jbuilder
   end
 
   module ClassMethods
+    include Generators::Helpers
+
     def api action, summary = '', http: nil, builder: nil, skip: [ ], use: [ ], &block
       api = super(action, summary, http: http, skip: skip, use: use, &block)
       return unless Rails.env.development?
@@ -22,8 +24,7 @@ module Generators::Jbuilder
       file_path = "#{dir_path}/#{action}.json.jbuilder"
 
       if config.overwrite || !File.exist?(file_path)
-        File.open(file_path, 'w') { |file| file.write config.templates[builder] }
-        puts "[ZRO] JBuilder file has been generated: #{path}/#{action}"
+        write :JBuilder, config.templates[builder], to: file_path
       end
     end
   end

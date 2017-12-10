@@ -12,7 +12,7 @@ module Generators::Rspec
       { }
     end
 
-    cattr_accessor :overwrite_files do
+    cattr_accessor :overwrite do
       false
     end
   end
