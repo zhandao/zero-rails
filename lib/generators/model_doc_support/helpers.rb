@@ -107,7 +107,7 @@ module Generators::ModelDocSupport
         fbot_path = "spec/factories/#{model_file_name.pluralize}#{mdoc.version}.rb"
         doc_path = "app/_docs/#{mdoc.doc_version}/#{model_file_name.pluralize}#{mdoc.version}_doc.rb"
 
-        if Config.overwrite || !File::exist?(model_path)
+        if Generators::ModelDocSupport::Config.overwrite || !File::exist?(model_path)
         # if true
           mdoc.fields_to_migration
           mdoc.fields_to_fbot
@@ -238,12 +238,12 @@ module Generators::ModelDocSupport
           api :show, 'GET the specified #{name}', builder: :show, use: id
 
           api :create, 'POST create a #{name}', builder: :success_or_not do
-            form! 'for creating the specified #{name}', data: {
+            form! data: {
             }
           end
 
           api :update, 'PATCH update the specified #{name}', builder: :success_or_not, use: id do
-            form! 'for updating the specified #{name}', data: {
+            form! data: {
             }
           end
 

@@ -34,7 +34,7 @@ class Api::V1::GoodsDoc < ApiDoc
 
 
   api :create, 'POST create a good.', builder: :success_or_not, use: token do
-    form! 'for creating the specified good', data: {
+    form! data: {
                :name! => { type: String,  desc: '名字' },
         :category_id! => { type: Integer, desc: '子类 id', npmt: true, range: { ge: 1 }, as: :cate },
                :unit! => { type: String,  desc: '单位' },
@@ -56,7 +56,7 @@ class Api::V1::GoodsDoc < ApiDoc
 
 
   api :update, 'PATCH update the specified Good.', builder: :success_or_not, use: token + id do
-    form! 'for updating the specified good', data: {
+    form! data: {
                :name => { type: String,  desc: '名字' },
         :category_id => { type: Integer, desc: '子类 id', npmt: true, range: { ge: 1 }, as: :cate },
                :unit => { type: String,  desc: '单位' },

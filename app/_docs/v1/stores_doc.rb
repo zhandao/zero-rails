@@ -11,7 +11,7 @@ class Api::V1::StoresDoc < ApiDoc
 
   api :create, 'POST create a store.',
            builder: :success_or_not, use: token do
-    form! 'for creating the specified store', data: {
+    form! data: {
         :code! => { type: String, desc: '商店代号' },
         :addr! => { type: String, desc: '对应的商店地址' }
     }
@@ -22,7 +22,7 @@ class Api::V1::StoresDoc < ApiDoc
 
 
   api :update, 'POST update the specified store.', builder: :success_or_not, use: token + id do
-    form! 'for updating the specified store', data: {
+    form! data: {
         :code  => { type: String, desc: '商店代号' },
         :addr  => { type: String, desc: '对应的商店地址' }
     }

@@ -63,8 +63,8 @@ module Generators::Rspec
           FileUtils.mkdir_p dir_path
           file_path = "#{dir_path}/#{file_name}#{spdoc.version}_spec.rb"
 
-          # if Config.overwrite_files || !File::exist?(file_path)
-          if true
+          if Generators::Rspec::Config.overwrite || !File::exist?(file_path)
+          # if true
             File.open(file_path, 'w') { |file| file.write spdoc.whole_file.sub("\n\n\nend\n", "\nend\n") }
             puts "[Zero] Spec file has been generated: #{file_path}"
           end

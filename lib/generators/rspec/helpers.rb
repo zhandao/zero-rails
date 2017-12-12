@@ -26,7 +26,7 @@ module Generators::Rspec
         FileUtils.mkdir_p dir_path
         file_path = "#{dir_path}/#{file_name}#{spdoc.version}_spec.rb"
 
-        if Config.overwrite || !File::exist?(file_path)
+        if Generators::Rspec::Config.overwrite || !File::exist?(file_path)
         # if true
           write :Spec, spdoc.whole_file.sub("\n\n\nend\n", "\nend\n"), to: file_path
         end

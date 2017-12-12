@@ -149,7 +149,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for creating the specified category",
+          "description": "",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -321,7 +321,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for updating the specified category",
+          "description": "",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -766,7 +766,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for creating the specified good",
+          "description": "",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -1058,7 +1058,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for updating the specified good",
+          "description": "",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -1589,7 +1589,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for updating the specified permission",
+          "description": "",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -1869,7 +1869,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for creating the specified role",
+          "description": "",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -2238,7 +2238,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for modifying permissions to the specified role",
+          "description": "",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -2423,7 +2423,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for creating the specified store",
+          "description": "",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -2610,7 +2610,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for updating the specified store",
+          "description": "",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -2952,7 +2952,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for registering user",
+          "description": "",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -3043,7 +3043,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for user login",
+          "description": "",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -3238,7 +3238,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for updating the specified user",
+          "description": "",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -3540,7 +3540,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for modifying roles to the specified user",
+          "description": "",
           "content": {
             "multipart/form-data": {
               "schema": {

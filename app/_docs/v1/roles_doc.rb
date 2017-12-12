@@ -12,7 +12,7 @@ class Api::V1::RolesDoc < ApiDoc
 
 
   api :create, 'POST create a role', builder: :success_or_not, use: token do
-    form! 'for creating the specified role', data: {
+    form! data: {
             :name! => { type: String, desc: 'name of role' },
         :condition => { type: String, dft: 'true', desc: '暂不必传' },
           :remarks => String
@@ -31,7 +31,7 @@ class Api::V1::RolesDoc < ApiDoc
   api :permissions_modify, 'POST modify permissions to the specified role and then save to db',
            builder: :success_or_not, use: token do
     path! :id, Integer, desc: 'role id'
-    form! 'for modifying permissions to the specified role', data: {
+    form! data: {
         :permission_ids! => { type: Array[{ type: Integer, range: { ge: 1 } }], size: 'ge_1' }
     }
   end

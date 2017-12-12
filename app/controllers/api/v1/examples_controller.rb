@@ -27,20 +27,16 @@ class Api::V1::ExamplesController < Api::V1::BaseController
     query :test_type, type: String
     query :combination, one_of: [ :DogSchema, String, { type: Integer, desc: 'integer input'}]
 
-    form '', data: {
-        :combination => { any_of: [ Integer, String ] }
+    form data: {
+        :combination_in_data => { any_of: [ Integer, String ] }
     }
 
     # file :a_file, 'application/x-www-form-urlencoded'
-    response :success, 'success response', :json#, type: :Pet
+    response :success, 'success response', :json#, data: :Pet
     security :Token
 
-    merge_to_resp 200, by: {
-        data: {
-            type: [
-                String
-            ]
-        }
+    resp 200, '', :json, data: {
+        a: String
     }
   end
 

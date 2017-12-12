@@ -34,7 +34,7 @@ class Api::V1::UsersDoc < ApiDoc
 
 
   api :login, 'POST user login.', builder: :success_or_not, skip: token do
-    form! 'for user login', data: {
+    form! data: {
             :name! => { type: String, desc: 'user name' },
         :password! => String
     }
@@ -42,7 +42,7 @@ class Api::V1::UsersDoc < ApiDoc
 
 
   api :create, 'POST user register', builder: :success_or_not, skip: token do
-    form! 'for registering user', data: {
+    form! data: {
                          name!: String,
                      password!: String,
         password_confirmation!: String,
@@ -53,7 +53,7 @@ class Api::V1::UsersDoc < ApiDoc
 
 
   api :update, 'PATCH update the specified User.', builder: :success_or_not, use: id_and_token do
-    form! 'for updating the specified user', data: {
+    form! data: {
                          name: String,
                      password: String,
         password_confirmation: String,
@@ -81,7 +81,7 @@ class Api::V1::UsersDoc < ApiDoc
   # /admin/:id/roles/modify
   api :roles_modify, 'POST modify roles to the specified user', builder: :success_or_not, use: token do
     path! :id, Integer, desc: 'user id'
-    form! 'for modifying roles to the specified user', data: {
+    form! data: {
         :role_ids! => { type: Array[{ type: Integer, range: { ge: 1 } }], size: 'ge_1' }
     }
   end

@@ -129,7 +129,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "combination": {
+                  "combination_in_data": {
                     "anyOf": [
                       {
                         "type": "integer"
@@ -175,8 +175,11 @@
                     "data": {
                       "type": "array",
                       "items": {
-                        "type": "string"
+                        "type": ""
                       }
+                    },
+                    "a": {
+                      "type": "string"
                     }
                   }
                 }
@@ -193,6 +196,9 @@
             "description": "success response",
             "content": {
               "application/json": {
+                "schema": {
+                  "type": "object"
+                }
               }
             }
           }
@@ -335,6 +341,9 @@
         "description": "bad request",
         "content": {
           "application/json": {
+            "schema": {
+              "type": "object"
+            }
           }
         }
       }
