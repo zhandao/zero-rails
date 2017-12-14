@@ -242,8 +242,6 @@ group :development do
 
   # https://github.com/rubysec/bundler-audit
   gem 'bundler-audit', :require => false # or just `gem install`
-  # https://github.com/brigade/overcommit
-  gem 'overcommit', :require => false # or just `gem install`
 end
 
 # console beautifying settings
