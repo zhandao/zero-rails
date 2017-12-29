@@ -1,16 +1,9 @@
-class GoodsError < V1Error
-  include CUDFailed, AuthFailed
-
-  set_for :change_onsale
-  mattr_reader :change_onsale_failed, '', ERROR_BEGIN
-end
-
 class Api::V1::GoodsDoc < ApiDoc
   api :index, 'GET list of goods.', builder: :index,
            use: token + %i[ created_start_at created_end_at value page rows ] do
     desc 'GET list of goods.', view!: '请求来自的视图，允许值：', search_type!: '搜索的字段名，允许值：'
 
-    query :view, String, enum: {
+    query :view, String, enum!: {
         '所有物品 (default)': 'all',
                   '上线物品': 'online',
                   '下线物品': 'offline'
@@ -48,7 +41,7 @@ class Api::V1::GoodsDoc < ApiDoc
           examples: {
               :right_input => [ 'good1', 6, 'unit', 5.7 ],
               :wrong_input => [ 'good2', 0, 'unit', -1  ]
-          }
+          }, pmt: true
   end
 
 
@@ -64,7 +57,7 @@ class Api::V1::GoodsDoc < ApiDoc
             :remarks => { type: String,  desc: '其他说明' },
            :pic_path => { type: String,  desc: '图片路径', is: :url },
             :on_sale => { type: Boolean, desc: '是否上线' }
-    }
+    }, pmt: true
   end
 
 

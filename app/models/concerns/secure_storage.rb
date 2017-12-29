@@ -40,18 +40,17 @@ module SecureStorage
         define_singleton_method :where do |*args|
           return super() if args.blank?
           fields.each do |field|
-            next unless args.last.key? field
-            value = args.last[field]
-            args.last[field] = SecureStorage.encrypt(value)
-          end
+            next unless args.first.key?(field)
+            args.first[field] = SecureStorage.encrypt(args.first[field])
+          end if args.first.is_a?(Hash)
           super(*args)
         end
 
         define_singleton_method :find_by do |hash|
-          return super(hash) if fields.exclude?(hash.keys.first)
-          hash = hash.first
-          hash[1] = SecureStorage.encrypt(hash[1])
-          super(Hash[[hash]])
+          if (keys = fields & hash.keys).present?
+            keys.each { |key| hash[key] = SecureStorage.encrypt(hash[key]) }
+          end
+          super(hash)
         end
       end
     end
@@ -59,12 +58,6 @@ module SecureStorage
     def secure_storage!
       all
       true
-      #     .to_a.each do |item|
-      #   data = @secure_storage.map do |field|
-      #     [field, item.send(field)]
-      #   end
-      #   item.update!(Hash[data])
-      # end
     end
   end
 

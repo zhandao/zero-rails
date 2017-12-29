@@ -1,7 +1,3 @@
-class CategoriesError < V1Error
-  include CUDFailed, AuthFailed
-end
-
 class Api::V1::CategoriesDoc < ApiDoc
   api :index, 'GET list of categories.', builder: :cache_index, use: %i[ page rows ], skip: token
 
@@ -15,7 +11,7 @@ class Api::V1::CategoriesDoc < ApiDoc
         :is_smaller! => { type: Boolean, desc: 'icon name' },
           :icon_name => { type: String,  desc: '是否二级分类?' },
             :base_id => { type: Integer, desc: '一级分类的 id' }
-    }
+    }, pmt: true
   end
 
 
@@ -25,7 +21,7 @@ class Api::V1::CategoriesDoc < ApiDoc
         :is_smaller  => { type: Boolean, desc: 'icon name' },
          :icon_name  => { type: String,  desc: '是否二级分类?' },
            :base_id  => { type: Integer, desc: '一级分类的 id' }
-    }
+    }, pmt: true
   end
 
 

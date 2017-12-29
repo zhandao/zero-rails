@@ -1,7 +1,3 @@
-class StoresError < V1Error
-  include CUDFailed, AuthFailed
-end
-
 class Api::V1::StoresDoc < ApiDoc
   api :index, 'GET list of stores.', builder: :cache_index, use: none, skip: token do
     query :page, Integer, desc: '偏移量，从 0 开始', range: { ge: 1 }
@@ -14,7 +10,7 @@ class Api::V1::StoresDoc < ApiDoc
     form! data: {
         :code! => { type: String, desc: '商店代号' },
         :addr! => { type: String, desc: '对应的商店地址' }
-    }
+    }, pmt: true
   end
 
 
@@ -25,7 +21,7 @@ class Api::V1::StoresDoc < ApiDoc
     form! data: {
         :code  => { type: String, desc: '商店代号' },
         :addr  => { type: String, desc: '对应的商店地址' }
-    }
+    }, pmt: true
   end
 
 

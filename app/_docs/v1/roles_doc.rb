@@ -1,7 +1,3 @@
-class RolesError < V1Error
-  include CUDFailed, AuthFailed
-end
-
 class Api::V1::RolesDoc < ApiDoc
   api :index, 'GET roles list of the specified model', builder: :index, use: token do
     query :model, String, dft: 'User', reg: /^[A-Z]/
@@ -16,7 +12,7 @@ class Api::V1::RolesDoc < ApiDoc
             :name! => { type: String, desc: 'name of role' },
         :condition => { type: String, dft: 'true', desc: '暂不必传' },
           :remarks => String
-    }
+    }, pmt: true
   end
 
   api :destroy, 'DELETE the specified role.', builder: :success_or_not, use: id_and_token

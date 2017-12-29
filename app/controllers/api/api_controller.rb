@@ -25,6 +25,14 @@ class Api::ApiController < ActionController::API
       permission_error: ZeroPermission::InsufficientPermission
   )
 
+  def self.error_cls(rt = nil)
+    "#{controller_name.camelize}Error".constantize
+  rescue
+    rt || ApiError
+  end
+
+  def self.error_cls?; error_cls(false) end
+
   private
 
   def log_and_render(e)

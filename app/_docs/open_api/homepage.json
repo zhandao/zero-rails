@@ -88,9 +88,7 @@
             "description": "user_email_addr's desc",
             "schema": {
               "type": "string",
-              "minLength": 3,
-              "format": "email",
-              "is": "email",
+              "maxLength": 3,
               "default": "zero@zero-rails.org"
             }
           },
@@ -164,9 +162,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -268,9 +264,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",

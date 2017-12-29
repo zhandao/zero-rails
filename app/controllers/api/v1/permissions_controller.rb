@@ -1,7 +1,7 @@
 class Api::V1::PermissionsController < Api::V1::BaseController
   include ActiveRecordErrorsRescuer
 
-  if_can :manage_role_permission, allow: :CRUDI
+  if_can :manage_role_permission, allow: :all
 
   def index
     @data = Permission.where belongs_to_model: @model

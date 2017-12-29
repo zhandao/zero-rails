@@ -26,6 +26,7 @@ module MakeSure
     end
 
     def if_can *permission_codes, allow: [ ], allow_matched: [ ]
+      allow = ::OpenApi::Generator.get_actions_by_ctrl_path(controller_path) if allow == :all
       if allow.present?
         to_access *allow, should_can: permission_codes
       else
