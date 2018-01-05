@@ -90,6 +90,7 @@ module SecureStorage
   # TODO: new_key migration support
   def symmetric_key
     key = Keys.secure_storage.send(name.underscore) || Keys.secure_storage.default
+    # TODO: performance
     OpenSSL::Digest::SHA256.new(key).digest
   end
 end

@@ -17,7 +17,7 @@ class EntityRole < ApplicationRecord
     Rails.cache.delete "#{entity_type.underscore}_#{entity_id}_permissions"
   end
 
-  def add(entity, role)
-    create entity: entity, role: role
+  def self.add(entity, role)
+    create! entity: entity, role: role
   end
 end

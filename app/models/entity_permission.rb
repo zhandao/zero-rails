@@ -13,7 +13,7 @@ class EntityPermission < ApplicationRecord
     Rails.cache.delete "#{entity_type.underscore}_#{entity_id}_permissions"
   end
 
-  def add(entity, permission)
-    create entity: entity, permission: permission
+  def self.add(entity, permission)
+    create! entity: entity, permission: permission
   end
 end

@@ -16,8 +16,7 @@ class Api::ApiController < ActionController::API
     skip_before_action :user_token_verify!, options
   end
 
-  before_action :validate_and_convert_params!
-  before_action :set_permitted
+  before_action :process_params!
 
   error_map(
          invalid_token: JWT::DecodeError,

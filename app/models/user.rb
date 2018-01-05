@@ -15,11 +15,11 @@ class User < ApplicationRecord
 
   has_secure_password
 
-  def conn(role: nil, permission: nil)
-    role.present? ? entity_roles.create!(role: role) : entity_permissions.create!(permission: permission)
+  def add(role: nil, permission: nil)
+    role.present? ? roles << Role.find_by(name: role) : permissions << Permission.find_by(name: permission)
   end
 
-  # def unconn
+  # def unconn TODO
 
   def jwt_payload
     {

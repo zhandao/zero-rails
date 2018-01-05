@@ -289,7 +289,114 @@
     },
     "/api/v1/categories/{id}": {
       "patch": {
-        "summary": "PATCH update the specified category.",
+        "summary": "PATCH|PUT update the specified category.",
+        "operationId": "update",
+        "tags": [
+          "Categories"
+        ],
+        "parameters": [
+          {
+            "name": "Token",
+            "in": "header",
+            "required": true,
+            "description": "user token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "要更新的 id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "名字"
+                  },
+                  "is_smaller": {
+                    "type": "boolean",
+                    "description": "icon name"
+                  },
+                  "icon_name": {
+                    "type": "string",
+                    "description": "是否二级分类?"
+                  },
+                  "base_id": {
+                    "type": "integer",
+                    "description": "一级分类的 id"
+                  }
+                },
+                "permit": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "default": 200
+                    },
+                    "msg": {
+                      "type": "string",
+                      "default": "success"
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "timestamp": {
+                      "type": "integer"
+                    },
+                    "language": {
+                      "type": "string",
+                      "default": "Ruby"
+                    },
+                    "data": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "601": {
+            "description": "update failed"
+          },
+          "-1": {
+            "description": "invalid token"
+          },
+          "-2": {
+            "description": "role verification failed"
+          },
+          "-3": {
+            "description": "insufficient permission"
+          },
+          "400": {
+            "description": "parameter validation failed"
+          }
+        }
+      },
+      "put": {
+        "summary": "PATCH|PUT update the specified category.",
         "operationId": "update",
         "tags": [
           "Categories"
@@ -709,13 +816,13 @@
             "right_input": {
               "value": {
                 "Token": "Token",
-                "view": "view",
-                "search_type": "search_type",
+                "created_start_at": "view",
+                "created_end_at": "search_type",
                 "value": "value",
-                "created_start_at": "created_start_at",
-                "created_end_at": "created_end_at",
-                "page": "page",
-                "rows": "rows",
+                "page": "created_start_at",
+                "rows": "created_end_at",
+                "view": "page",
+                "search_type": "rows",
                 "export": "export"
               }
             }
@@ -724,13 +831,13 @@
             "wrong_input": {
               "value": {
                 "Token": null,
-                "view": null,
-                "search_type": null,
-                "value": null,
                 "created_start_at": null,
                 "created_end_at": null,
+                "value": null,
                 "page": null,
                 "rows": null,
+                "view": null,
+                "search_type": null,
                 "export": null
               }
             }
@@ -803,8 +910,7 @@
                   "category_id",
                   "unit",
                   "price"
-                ],
-                "permit": true
+                ]
               },
               "examples": [
                 {
@@ -1018,7 +1124,7 @@
         }
       },
       "patch": {
-        "summary": "PATCH update the specified Good.",
+        "summary": "PATCH|PUT update the specified Good.",
         "operationId": "update",
         "tags": [
           "Goods"
@@ -1086,8 +1192,132 @@
                     "type": "boolean",
                     "description": "是否上线"
                   }
-                },
-                "permit": true
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "default": 200
+                    },
+                    "msg": {
+                      "type": "string",
+                      "default": "success"
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "timestamp": {
+                      "type": "integer"
+                    },
+                    "language": {
+                      "type": "string",
+                      "default": "Ruby"
+                    },
+                    "data": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "601": {
+            "description": "update failed"
+          },
+          "-1": {
+            "description": "invalid token"
+          },
+          "-2": {
+            "description": "role verification failed"
+          },
+          "-3": {
+            "description": "insufficient permission"
+          },
+          "400": {
+            "description": "parameter validation failed"
+          }
+        }
+      },
+      "put": {
+        "summary": "PATCH|PUT update the specified Good.",
+        "operationId": "update",
+        "tags": [
+          "Goods"
+        ],
+        "parameters": [
+          {
+            "name": "Token",
+            "in": "header",
+            "required": true,
+            "description": "user token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "要更新的 id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "名字"
+                  },
+                  "category_id": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "as": "cate",
+                    "not_permit": true,
+                    "description": "子类 id"
+                  },
+                  "unit": {
+                    "type": "string",
+                    "description": "单位"
+                  },
+                  "price": {
+                    "type": "number",
+                    "format": "float",
+                    "minimum": 0,
+                    "description": "单价"
+                  },
+                  "remarks": {
+                    "type": "string",
+                    "description": "其他说明"
+                  },
+                  "pic_path": {
+                    "type": "string",
+                    "is": "url",
+                    "format": "url",
+                    "description": "图片路径"
+                  },
+                  "on_sale": {
+                    "type": "boolean",
+                    "description": "是否上线"
+                  }
+                }
               }
             }
           }
@@ -1648,7 +1878,110 @@
     },
     "/api/v1/permissions/{id}": {
       "patch": {
-        "summary": "PATCH update the specified permission.",
+        "summary": "PATCH|PUT update the specified permission.",
+        "operationId": "update",
+        "tags": [
+          "Permissions"
+        ],
+        "parameters": [
+          {
+            "name": "Token",
+            "in": "header",
+            "required": true,
+            "description": "user token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "要更新的 id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "name of permission"
+                  },
+                  "condition": {
+                    "type": "string",
+                    "default": "true",
+                    "description": "暂不必传"
+                  },
+                  "remarks": {
+                    "type": "string"
+                  }
+                },
+                "permit": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "default": 200
+                    },
+                    "msg": {
+                      "type": "string",
+                      "default": "success"
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "timestamp": {
+                      "type": "integer"
+                    },
+                    "language": {
+                      "type": "string",
+                      "default": "Ruby"
+                    },
+                    "data": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "601": {
+            "description": "update failed"
+          },
+          "-1": {
+            "description": "invalid token"
+          },
+          "-2": {
+            "description": "role verification failed"
+          },
+          "-3": {
+            "description": "insufficient permission"
+          },
+          "400": {
+            "description": "parameter validation failed"
+          }
+        }
+      },
+      "put": {
+        "summary": "PATCH|PUT update the specified permission.",
         "operationId": "update",
         "tags": [
           "Permissions"
@@ -2746,6 +3079,105 @@
           }
         }
       },
+      "put": {
+        "summary": "POST update the specified store.",
+        "operationId": "update",
+        "tags": [
+          "Stores"
+        ],
+        "parameters": [
+          {
+            "name": "Token",
+            "in": "header",
+            "required": true,
+            "description": "user token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "要更新的 id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "description": "商店代号"
+                  },
+                  "addr": {
+                    "type": "string",
+                    "description": "对应的商店地址"
+                  }
+                },
+                "permit": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "default": 200
+                    },
+                    "msg": {
+                      "type": "string",
+                      "default": "success"
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "timestamp": {
+                      "type": "integer"
+                    },
+                    "language": {
+                      "type": "string",
+                      "default": "Ruby"
+                    },
+                    "data": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "601": {
+            "description": "update failed"
+          },
+          "-1": {
+            "description": "invalid token"
+          },
+          "-2": {
+            "description": "role verification failed"
+          },
+          "-3": {
+            "description": "insufficient permission"
+          },
+          "400": {
+            "description": "parameter validation failed"
+          }
+        }
+      },
       "delete": {
         "summary": "DELETE the specified store.",
         "operationId": "destroy",
@@ -3264,7 +3696,101 @@
         }
       },
       "patch": {
-        "summary": "PATCH update the specified User.",
+        "summary": "PATCH|PUT update the specified User.",
+        "operationId": "update",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "Token",
+            "in": "header",
+            "required": true,
+            "description": "user token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "要更新的 id",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "password_confirmation": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "phone_number": {
+                    "type": "string"
+                  }
+                },
+                "permit": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "default": 200
+                    },
+                    "msg": {
+                      "type": "string",
+                      "default": "success"
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "timestamp": {
+                      "type": "integer"
+                    },
+                    "language": {
+                      "type": "string",
+                      "default": "Ruby"
+                    },
+                    "data": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "parameter validation failed"
+          }
+        }
+      },
+      "put": {
+        "summary": "PATCH|PUT update the specified User.",
         "operationId": "update",
         "tags": [
           "Users"

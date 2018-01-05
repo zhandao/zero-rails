@@ -23,28 +23,22 @@ class Good < ApplicationRecord
     where 'categories.id': category_ids
   end
 
-  scope :search_by, ->(field, value) do
+  scope :search_by, -> (field, value) do
     return if field.nil? || value.nil?
-    if field == 'category_name'
-      search_by_category name = value
-    elsif field == 'price'
-      where price: value
-    else
-      # Note: 这里不会有注入风险，在参数检查的时候已经校验其输入在合法范围内了
-      where "#{field} LIKE ?", "%#{value}%"
+    case field
+    when 'category_name' then search_by_category(name = value)
+    when 'price'         then where(price: value)
+    else where("goods.#{field} LIKE ?", "%#{value}%") # Note: 这里不会有注入风险，在参数检查的时候已经校验其输入在合法范围内了
     end
   end
 
   scope :ordered, -> { order created_at: :desc }
-
-  scope :get, ->(association) { includes(association).map(&association.to_sym).flatten.compact }
 
   after_create do
     Inventory.create!(Store.all_from_cache.map { |store| { store: store, good: self } })
   end
 
   def change_onsale
-    self.on_sale = !on_sale
-    save
+    update! is_online: !is_online
   end
 end

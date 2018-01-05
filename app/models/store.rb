@@ -12,7 +12,7 @@ class Store < ApplicationRecord
   end
 
   after_create do
-    Inventory.create!(Good.all { |good| { store: self, good: good } })
+    Inventory.create!(Good.all.map { |good| { store: self, good: good } })
   end
 
   def self.all_from_cache

@@ -10,33 +10,33 @@ class Category < ApplicationRecord
   # builder_add :base_category, when: proc { is_smaller }
   builder_add :sub_categories_info, when: :get_nested_list
 
-  # TODO: clear caches admin op
   def self.all_from_cache
     Rails.cache.fetch('categories') { all.to_a }
   end
 
   scope :search_by_name, ->(name) { where 'name LIKE ?', "%#{name}%" }
 
-  scope :extend_search_by_name, ->(name) do
+  # `extend` means that: when search a base_cate, should return all of it's sub_cates.
+  # @retrun ids array
+  scope :extend_search_by_name, -> (name) do
     Rails.cache.fetch("extend_categories_#{name}") do
-      search_result = search_by_name(name).pluck(:id)
-      search_result.map do |id|
-        all_from_cache[id - 1].sub_categories&.map(&:id)
-      end.concat(search_result).flatten.uniq
+      searched = search_by_name(name)
+      (searched.ids + searched.map { |cate| cate.sub_categories.ids }).flatten.uniq
     end
   end
 
   scope :from_base_categories, -> { where base_category: nil }
 
-  # TODO: all scope and aft_cmt => concern
   after_commit do
     Rails.cache.delete_matched(/categories/)
   end
 
+  # @return [ base_cate_name, sub_cate_name ]
   def path
     base_category.nil? ? [ name, '' ] : [ Category.all_from_cache[base_category_id - 1].name, name ]
   end
 
+  # show the base cate when not getting nested list
   def json_addition
     proc do |json|
       # TODO HACK

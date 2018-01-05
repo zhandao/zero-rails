@@ -3,7 +3,7 @@ require 'open_api'
 # More Information: https://github.com/zhandao/zero-rails_openapi/blob/master/documentation/examples/open_api.rb
 OpenApi::Config.tap do |c|
   c.instance_eval do
-    open_api :zero_rails, root_controller: ApiDoc
+    open_api :zero_rails, base_doc_class: ApiDoc
     info version: '0.0.1', title: 'Zero Rails APIs', description: 'API documentation of Zero-Rails Application.'
     server 'http://localhost:3000', desc: 'Main (production) server'
     server 'http://localhost:3000', desc: 'Internal staging server for testing'
@@ -11,7 +11,7 @@ OpenApi::Config.tap do |c|
     global_auth :Token
 
 
-    open_api :homepage, root_controller: Api::V1::BaseController
+    open_api :homepage, base_doc_class: Api::V1::BaseController
     info version: '1.0.0', title: 'Zero Rails APIs', contact: {
              name: 'API Support', url: 'http://www.skippingcat.com', email: 'x@skippingcat.com'
          }, desc: 'API documentation of Zero-Rails Application. <br/>' \

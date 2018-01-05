@@ -88,7 +88,7 @@ module Generators::Rspec
       def inherited(base)
         super
         base.class_eval do
-          self.doc = apis[OpenApi.paths_index[ctrl_path]]['paths']
+          self.doc = apis[OpenApi.routes_index[ctrl_path]]['paths']
         end
       end
     end

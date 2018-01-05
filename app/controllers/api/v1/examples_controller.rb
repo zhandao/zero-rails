@@ -4,7 +4,7 @@ class ExamplesError < V1Error
 end
 
 class Api::V1::ExamplesController < Api::V1::BaseController
-  apis_tag name: 'Examples', desc: 'tag_desc'
+  doc_tag name: 'Examples', desc: 'tag_desc'
 
   components do
     schema :DogSchema => [ { id: Integer, name: String }, dft: { id: 1, name: 'pet' } ]

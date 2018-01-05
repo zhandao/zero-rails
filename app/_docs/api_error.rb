@@ -28,6 +28,7 @@ class ApiError
       mattr_reader :not_null,           'something should be not null'
       mattr_reader :value_too_long,     'data so large'
       mattr_reader :range_error,        'out of range'
+      unset_http
     end
   end
 

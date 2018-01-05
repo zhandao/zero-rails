@@ -1,5 +1,5 @@
 class Api::V1::UsersDoc < ApiDoc
-  # ctrl_path 'api/v1/users' # Note: auto_gen at lib/auto
+  # route_base 'api/v1/users' # Note: auto_gen at lib/auto
 
   components do
     # schema :UserResp => [ { id: Integer, name: String }, dft: { id: 1, name: 'pet' } ]
@@ -41,7 +41,7 @@ class Api::V1::UsersDoc < ApiDoc
   end
 
 
-  api :update, 'PATCH update the specified User.', builder: :success_or_not, use: id_and_token do
+  api :update, 'PATCH|PUT update the specified User.', builder: :success_or_not, use: id_and_token do
     form! data: {
                          name: String,
                      password: String,

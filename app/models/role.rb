@@ -11,4 +11,8 @@ class Role < ApplicationRecord
   belongs_to :base_role, class_name: 'Role', optional: true
 
   builder_support rmv: %i[ condition belongs_to_model ]
+
+  def add_permission(permission)
+    permissions << Permission.find_by(name: permission)
+  end
 end

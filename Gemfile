@@ -229,19 +229,23 @@ group :development do
   ### Security and Code Quality tools
   # an open source static analysis tool which checks Ruby on Rails applications for security vulnerabilities.
   # https://github.com/presidentbeef/brakeman
-  gem 'brakeman', require: false
+  gem 'brakeman', require: false # or just `gem install`
 
   # The raising security scanner for ruby web applications
   # https://github.com/thesp0nge/dawnscanner
-  # gem 'dawnscanner', :require=>false
+  # gem 'dawnscanner', require: false # or just `gem install`
 
   # https://github.com/bbatsov/rubocop
   gem 'rubocop', require: false # or just `gem install`
   # https://github.com/toshimaru/rubocop-rails
-  # gem "rubocop-rails", require: false
+  # gem "rubocop-rails", require: false # or just `gem install`
 
   # https://github.com/rubysec/bundler-audit
   gem 'bundler-audit', require: false # or just `gem install`
+
+  # A Ruby code quality reporter, https://github.com/whitesmith/rubycritic
+  # https://ruby-china.org/topics/30746
+  gem 'rubycritic', require: false # or just `gem install`
 end
 
 # console beautifying settings

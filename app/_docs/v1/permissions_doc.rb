@@ -13,7 +13,7 @@ class Api::V1::PermissionsDoc < ApiDoc
   end
 
 
-  api :update, 'PATCH update the specified permission.', builder: :success_or_not, use: id_and_token do
+  api :update, 'PATCH|PUT update the specified permission.', builder: :success_or_not, use: id_and_token do
     form! data: {
              :name => { type: String, desc: 'name of permission' },
         :condition => { type: String, dft: 'true', desc: '暂不必传' },

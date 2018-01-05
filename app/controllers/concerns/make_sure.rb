@@ -19,14 +19,14 @@ module MakeSure
     end
 
     def to_access_matched *actions, need_to_be: nil, should_can: nil
-      ctrl_actions = ::OpenApi::Generator.get_actions_by_ctrl_path(controller_path)
+      ctrl_actions = ::OpenApi::Generator.get_actions_by_route_base(controller_path)
       real_actions = [ ]
       actions.each { |pattern| real_actions += ctrl_actions.grep(/#{pattern}/) }
       to_access *real_actions, need_to_be, should_can
     end
 
     def if_can *permission_codes, allow: [ ], allow_matched: [ ]
-      allow = ::OpenApi::Generator.get_actions_by_ctrl_path(controller_path) if allow == :all
+      allow = ::OpenApi::Generator.get_actions_by_route_base(controller_path) if allow == :all
       if allow.present?
         to_access *allow, should_can: permission_codes
       else
@@ -58,8 +58,8 @@ module MakeSure
   # it must: %i[ not_alone be_happy ]
   # TODO: make_sure(a and b)
   def make_sure(obj = NoPass, action = nil, *args, &block)
+    @_make_sure_obj = obj if obj == :it
     @_make_sure_obj = current_user if obj == NoPass
-    @_make_sure_obj = obj unless obj == :it
     return self if action.nil?
 
     if action.is_a?(Symbol)

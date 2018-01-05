@@ -41,14 +41,14 @@ class Api::V1::GoodsDoc < ApiDoc
           examples: {
               :right_input => [ 'good1', 6, 'unit', 5.7 ],
               :wrong_input => [ 'good2', 0, 'unit', -1  ]
-          }, pmt: true
+          }
   end
 
 
   api :show, 'GET the specified good.', builder: :show, use: token + id
 
 
-  api :update, 'PATCH update the specified Good.', builder: :success_or_not, use: token + id do
+  api :update, 'PATCH|PUT update the specified Good.', builder: :success_or_not, use: token + id do
     form! data: {
                :name => { type: String,  desc: '名字' },
         :category_id => { type: Integer, desc: '子类 id', npmt: true, range: { ge: 1 }, as: :cate },
@@ -57,7 +57,7 @@ class Api::V1::GoodsDoc < ApiDoc
             :remarks => { type: String,  desc: '其他说明' },
            :pic_path => { type: String,  desc: '图片路径', is: :url },
             :on_sale => { type: Boolean, desc: '是否上线' }
-    }, pmt: true
+    }
   end
 
 

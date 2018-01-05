@@ -1,9 +1,11 @@
 module OutPut
   private
 
+  # TODO: refactor
   def ren(json = { })
     json  = ren_processed json
-    return render json: json[:output], status: json[:http] if json[:output].present?
+    status = json.delete(:http_status)
+    return render json: json[:output], status: status if json[:output].present?
 
     total = json[:total]
     data  = json[:data]
@@ -19,8 +21,9 @@ module OutPut
         timestamp: Time.current.to_i,
         language:  'Ruby',
         data:      data.nil? ? '' : data
-    }, :status => json[:http_status] || 200
+    }, :status => status || 200
   end
+
   alias out ren
   alias output ren
   alias response_ok ren
