@@ -66,9 +66,10 @@ module BuilderSupport
       settings.each do |field_name, alias_key|
         builder_rmv field_name
         builder_add alias_key
-        define_method alias_key do
-          send field_name
-        end
+        # define_method alias_key do
+        #   send field_name
+        # end
+        alias_method alias_key, field_name
       end
     end
 

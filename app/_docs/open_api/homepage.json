@@ -88,7 +88,7 @@
             "description": "user_email_addr's desc",
             "schema": {
               "type": "string",
-              "maxLength": 3,
+              "minLength": 3,
               "default": "zero@zero-rails.org"
             }
           },

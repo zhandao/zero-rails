@@ -1,4 +1,5 @@
 ParamsProcessor::Config.tap do |it|
+  # it.actions                 = %i[ validate! convert set_instance_var set_permitted ]
   # it.strict_check            = true
   # it.prefix                  = ''
   # it.not_passed              = ''

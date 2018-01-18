@@ -4,7 +4,7 @@ class Api::V1::CategoriesController < Api::V1::BaseController
   skip_token only: %i[ index nested_list ]
 
   def index
-    @data = Category.all_from_cache
+    @data = Category.all
   end
 
 

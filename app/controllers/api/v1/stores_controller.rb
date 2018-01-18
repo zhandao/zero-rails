@@ -4,7 +4,7 @@ class Api::V1::StoresController < Api::V1::BaseController
   skip_token only: %i[ index show ]
 
   def index
-    @data = Store.all_from_cache
+    @data = Store.all
   end
 
 
@@ -14,7 +14,7 @@ class Api::V1::StoresController < Api::V1::BaseController
 
 
   def show
-    @datum = Store.all_from_cache[@id - 2]
+    @datum = @store
   end
 
 

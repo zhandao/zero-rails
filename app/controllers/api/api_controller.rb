@@ -1,5 +1,4 @@
 require 'params_processor' # TODO
-require './lib/monkey_patches/array' # TODO
 
 class Api::ApiController < ActionController::API
   include ActionController::Caching

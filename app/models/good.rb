@@ -35,7 +35,7 @@ class Good < ApplicationRecord
   scope :ordered, -> { order created_at: :desc }
 
   after_create do
-    Inventory.create!(Store.all_from_cache.map { |store| { store: store, good: self } })
+    Inventory.create!(Store.all.map { |store| { store: store, good: self } })
   end
 
   def change_onsale

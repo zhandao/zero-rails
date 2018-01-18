@@ -2655,7 +2655,7 @@
                       "type": "integer",
                       "minimum": 1
                     },
-                    "maxItems": 1
+                    "minItems": 1
                   }
                 },
                 "required": [
@@ -4124,7 +4124,7 @@
                       "type": "integer",
                       "minimum": 1
                     },
-                    "maxItems": 1
+                    "minItems": 1
                   }
                 },
                 "required": [

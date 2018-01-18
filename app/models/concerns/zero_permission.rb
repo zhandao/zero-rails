@@ -1,13 +1,4 @@
 module ZeroPermission
-  # TODO: private
-
-  def self.included(base)
-    # # TODO: 这里应该可选择性配置：如果不需要 AOP check，那么应该在第一次调 can? 和 in_the_group? 时调用配置
-    # base.after_initialize :roles_setting
-    # base.after_initialize :permissions_setting
-    # base.after_initialize :enable_check_permission_before_calling_method
-  end
-
   def current_permissions
     @_current_permissions ||= { }
   end
@@ -107,6 +98,7 @@ module ZeroPermission
     self.class.prepend Checker.with(methods_under_permission_check.uniq)
   end
 
+  #  TODO: Model instance method 应该跟权限是无关的，考虑移除
   module Checker
     def self.with(methods)
       methods.each do |method|

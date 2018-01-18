@@ -6,6 +6,10 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+Dir[Pathname.new(File.dirname(__FILE__)).realpath.parent.join("lib", "monkey_patches", "*.rb")].map do |file|
+  require file
+end
+
 module RailsApi
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -18,7 +22,7 @@ module RailsApi
 
     config.load_defaults 5.1
     # config.eager_load_paths << Rails.root.join('app') # TODO
-    Dir["#{Rails.root}/app/_docs/**/*"].each { |p| config.eager_load_paths << p }
+    Dir["#{Rails.root}/app/_docs/**/*"].each { |p| config.eager_load_paths << p } # TODO ENV
     # config.eager_load_paths << "#{Rails.root}/app/_docs/rspec_docs/"
     # config.eager_load_paths << "#{Rails.root}/app/_docs/model_docs/"
     config.eager_load_paths << Rails.root.join('lib')

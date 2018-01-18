@@ -1,21 +1,23 @@
 class Store < ApplicationRecord
+  acts_as_paranoid
+
   has_many :inventories, dependent: :destroy
 
   has_many :goods, through: :inventories
 
-  acts_as_paranoid
-
   builder_support rmv: %i[ deleted_at ]
 
-  after_commit do
-    Rails.cache.delete_matched(/stores/)
-  end
+  validates *%i[ code addr ], presence: true
 
-  after_create do
-    Inventory.create!(Good.all.map { |good| { store: self, good: good } })
-  end
+  after_create :create_inventory_records
 
-  def self.all_from_cache
-    Rails.cache.fetch('stores') { all.to_a }
+  def create_inventory_records
+    Inventory.create!(Good.all.map { |good| { floor: self, good: good } })
   end
 end
+
+__END__
+
+t.string   :code,       null: false
+t.string   :addr,       null: false
+t.datetime :deleted_at

@@ -276,7 +276,12 @@ group :development, :test do
   # https://github.com/rspec/rspec-expectations
   gem 'rspec-rails' # TODO
   # http://www.rubydoc.info/gems/factory_bot/file/GETTING_STARTED.md
+  # https://github.com/thoughtbot/factory_bot_rails
   gem 'factory_bot_rails'
+
+  # https://github.com/grosser/parallel_tests
+  # https://makandracards.com/makandra/1241-how-to-employ-and-run-your-tests-with-parallel_tests-to-speed-up-test-execution
+  gem 'parallel_tests'
 end
 
 group :test do

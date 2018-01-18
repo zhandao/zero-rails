@@ -5,7 +5,7 @@ module Generators::Rspec
         require 'params_processor/doc_converter'
 
         cattr_reader :apis do
-          ::ParamsProcessor::DocConverter.new OpenApi.docs
+          ::ParamsProcessor::DocConverter.docs ||= ::ParamsProcessor::DocConverter.new OpenApi.docs
         end
       end
       base.extend ClassMethods
