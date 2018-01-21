@@ -10,7 +10,7 @@ class Api::V1::GoodsDoc < ApiDoc
     }, dft: 'all'
 
     do_query by: {
-        :search_type => { type: String, enum: %w[ name creator category_name unit price ], as: :field },
+        :search_type => { type: String, enum: %w[ name category_name unit price ], as: :field },
              :export => { type: Boolean, desc: '是否将查询结果导出 Excel 文件', examples: {
                  :right_input => true,
                  :wrong_input => 'wrong input'
@@ -35,7 +35,7 @@ class Api::V1::GoodsDoc < ApiDoc
         # -- optional
              :on_sale => { type: Boolean, desc: '是否上线?' },
              :remarks => { type: String,  desc: '其他说明' },
-            :pic_path => { type: String,  desc: '图片路径', is: :url }
+             :picture => { type: String,  desc: '图片路径', is: :url }
     },
           exp_by:       %i[ name category_id unit price ],
           examples: {
@@ -55,7 +55,7 @@ class Api::V1::GoodsDoc < ApiDoc
                :unit => { type: String,  desc: '单位' },
               :price => { type: Float,   desc: '单价', range: { ge: 0 } },
             :remarks => { type: String,  desc: '其他说明' },
-           :pic_path => { type: String,  desc: '图片路径', is: :url },
+            :picture => { type: String,  desc: '图片路径', is: :url },
             :on_sale => { type: Boolean, desc: '是否上线' }
     }
   end

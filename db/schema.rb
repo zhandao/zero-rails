@@ -29,7 +29,6 @@ ActiveRecord::Schema.define(version: 20171203092123) do
   create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC" do |t|
     t.string "name", null: false
     t.bigint "base_category_id"
-    t.string "icon_name"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -41,7 +40,6 @@ ActiveRecord::Schema.define(version: 20171203092123) do
     t.string "entity_type"
     t.bigint "entity_id"
     t.bigint "permission_id"
-    t.boolean "skip_condition", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["entity_id", "entity_type", "permission_id"], name: "entity_permission_unique_index", unique: true
@@ -53,7 +51,6 @@ ActiveRecord::Schema.define(version: 20171203092123) do
     t.string "entity_type"
     t.bigint "entity_id"
     t.bigint "role_id"
-    t.boolean "skip_condition", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["entity_id", "entity_type", "role_id"], name: "entity_roles_unique_index", unique: true
@@ -67,8 +64,7 @@ ActiveRecord::Schema.define(version: 20171203092123) do
     t.string "unit", null: false
     t.float "price", limit: 24, null: false
     t.string "remarks"
-    t.string "pic_path"
-    t.string "creator", null: false
+    t.string "picture"
     t.boolean "on_sale", default: true
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
@@ -90,20 +86,16 @@ ActiveRecord::Schema.define(version: 20171203092123) do
 
   create_table "permissions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC" do |t|
     t.string "name", null: false
-    t.boolean "for_method", default: false
     t.string "source"
-    t.string "condition", default: "true", null: false
-    t.string "belongs_to_model", default: "User"
     t.string "remarks"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name", "belongs_to_model"], name: "index_permissions_on_name_and_belongs_to_model", unique: true
+    t.string "model"
   end
 
   create_table "role_permissions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC" do |t|
     t.bigint "role_id"
     t.bigint "permission_id"
-    t.boolean "skip_condition", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["permission_id"], name: "index_role_permissions_on_permission_id"
@@ -113,22 +105,20 @@ ActiveRecord::Schema.define(version: 20171203092123) do
 
   create_table "roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC" do |t|
     t.string "name", null: false
-    t.string "condition", default: "true", null: false
-    t.string "belongs_to_model", default: "User"
     t.string "remarks"
     t.bigint "base_role_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "model"
     t.index ["base_role_id"], name: "index_roles_on_base_role_id"
-    t.index ["name", "belongs_to_model"], name: "index_roles_on_name_and_belongs_to_model", unique: true
   end
 
   create_table "stores", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC" do |t|
-    t.string "code", null: false
-    t.string "addr", null: false
+    t.string "name", null: false
+    t.string "address", null: false
     t.datetime "deleted_at"
-    t.index ["addr"], name: "index_stores_on_addr", unique: true
-    t.index ["code"], name: "index_stores_on_code", unique: true
+    t.index ["address"], name: "index_stores_on_address", unique: true
+    t.index ["name"], name: "index_stores_on_name", unique: true
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC" do |t|

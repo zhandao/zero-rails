@@ -3,9 +3,12 @@ class EntityPermission < ApplicationRecord
 
   belongs_to :permission
 
-  before_create  :check_belongs
-  def check_belongs
-    throw :abort unless entity_type == permission.belongs_to_model
+  before_create  :check_model
+
+  def check_model
+    if permission.model.present?
+      throw :abort unless entity_type.in?(permission.model.split)
+    end
   end
 
   after_commit :delete_entity_cache

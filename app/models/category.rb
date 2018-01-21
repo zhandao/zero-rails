@@ -1,14 +1,13 @@
 class Category < ApplicationRecord
-  acts_as_paranoid
-
   has_many   :sub_categories, class_name: 'Category', foreign_key: 'base_category_id'
   belongs_to :base_category,  class_name: 'Category', optional: true
 
   has_many :goods#, dependent: :nullify
 
-  builder_support rmv: %i[ updated_at created_at delete_at ]
-  # builder_add :base_category, when: proc { is_smaller }
+  builder_support rmv: %i[ updated_at created_at ]
   builder_add :sub_categories_info, when: :get_nested_list
+
+  soft_destroy
 
   validates :name, presence: true
 
@@ -50,7 +49,6 @@ end
 
 __END__
 
-t.references :sub_category, index: true
 t.string     :name,          null: false
 t.integer    :base_category
 t.datetime   :deleted_at

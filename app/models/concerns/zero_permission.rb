@@ -3,10 +3,6 @@ module ZeroPermission
     @_current_permissions ||= { }
   end
 
-  def methods_under_permission_check
-    @_methods_under_permission_check ||= [ ]
-  end
-
   # TODO: 高消耗操作?
   # TODO:父子形式输出
   def all_permissions
@@ -18,13 +14,9 @@ module ZeroPermission
     end.compact
   end
 
-  def role *roles, options, &block
-    if options.key? :can_call
-      can_call options.fetch(:can_call), options[:model], options.merge!(role: roles), &block
-    else
-      roles = roles.first if roles.first.is_a?(Array)
-      can options.fetch(:can), options[:model], options.merge!(role: roles), &block
-    end
+  def role *roles, can:, model: nil, when: true, &block
+    roles = roles.first if roles.first.is_a?(Array)
+    can can, model, role: roles, when: binding.local_variable_get(:when), &block
   end
 
   def role_group group, options, &block
@@ -33,12 +25,12 @@ module ZeroPermission
     end
   end
 
-  def can actions, source = nil, options, &block
-    [options[:role]].flatten.each do |given_role|
+  def can actions, source = nil, when: true, role: nil, &block
+    [role].flatten.each do |given_role|
       Array(actions).each do |action|
         key = source ? "#{action}_#{source.name.downcase}" : action
         # TODO: 怎么延迟做 when
-        current_permissions[key] ||= is?(given_role) && (options[:when].nil? || options[:when])
+        current_permissions[key] ||= is?(given_role) && binding.local_variable_get(:when)
         # TODO: block 不要放到 c_p
         (current_permissions["#{key}_block"] ||= [ ]) << block if block_given?
       end
@@ -47,11 +39,6 @@ module ZeroPermission
 
   def add_permission *actions
     self.permissions << Permission.where(name: actions)
-  end
-
-  def can_call methods, source = nil, options, &block
-    methods_under_permission_check.concat Array(methods)
-    can methods, source, options, &block
   end
 
   def if_case
@@ -91,27 +78,6 @@ module ZeroPermission
     actions.each { |action| can! action }
   end
 
-  # TODO: 支持对 source model 的方法调用进行切面处理
-  # TODO: 支持对控制器方法进行切面处理
-  def enable_check_permission_before_calling_method
-    # Ruby AOP easy way: https://stackoverflow.com/a/24559474
-    self.class.prepend Checker.with(methods_under_permission_check.uniq)
-  end
-
-  #  TODO: Model instance method 应该跟权限是无关的，考虑移除
-  module Checker
-    def self.with(methods)
-      methods.each do |method|
-        define_method method do |*args|
-          can! method
-          super(*args)
-        end
-      end
-
-      self
-    end
-  end
-
   # TODO: 支持 group 和 family 的持久化
   # TODO: cache key configure
   # TODO: 父子权限：如果父权限无效，则子孙无效，逻辑同 role family
@@ -126,15 +92,14 @@ module ZeroPermission
       relations = [ *role_permissions, *base_role_permissions, *entity_permissions ]
 
       relations.map do |relation|
-        pmi = permission = relation.permission
-        options = { when: relation.skip_condition || instance_eval(pmi.condition || 'true') }
-        [ (pmi.for_method ? :can_call : :can), pmi.name.to_sym, pmi.source, options ]
+        pmi = relation.permission
+        [ :can, pmi.name.to_sym, pmi.source, { when: true } ]
       end
     end.each { |args| send(*args) }
   end
 
   def permissions_setting
-    @_current_permissions, @_methods_under_permission_check = { }, [ ]
+    @_current_permissions = { }
     load_permissions_from_database
   end
 

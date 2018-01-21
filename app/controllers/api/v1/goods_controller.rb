@@ -13,7 +13,7 @@ class Api::V1::GoodsController < Api::V1::BaseController
 
 
   def create
-    permitted.merge! category: Category.find(@cate), creator: current_user.name
+    permitted[:category] = Category.find(@cate)
     Good.create! permitted
   end
 

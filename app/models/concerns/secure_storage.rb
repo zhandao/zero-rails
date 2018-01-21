@@ -7,7 +7,7 @@ module SecureStorage
 
   module ClassMethods
     # secure_storage :name
-    def secure_storage *fields
+    def has_secure *fields
       @secure_storage = fields
 
       class_exec(fields) do |fields|

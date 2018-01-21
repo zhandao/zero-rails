@@ -8,8 +8,8 @@ class Api::V1::StoresDoc < ApiDoc
   api :create, 'POST create a store.',
            builder: :success_or_not, use: token do
     form! data: {
-        :code! => { type: String, desc: '商店代号' },
-        :addr! => { type: String, desc: '对应的商店地址' }
+           :name! => { type: String, desc: '商店名' },
+        :address! => { type: String, desc: '商店地址' }
     }, pmt: true
   end
 
@@ -19,8 +19,8 @@ class Api::V1::StoresDoc < ApiDoc
 
   api :update, 'POST update the specified store.', builder: :success_or_not, use: token + id do
     form! data: {
-        :code  => { type: String, desc: '商店代号' },
-        :addr  => { type: String, desc: '对应的商店地址' }
+           :name  => { type: String, desc: '商店名' },
+        :address  => { type: String, desc: '商店地址' }
     }, pmt: true
   end
 

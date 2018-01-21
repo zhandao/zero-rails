@@ -60,7 +60,7 @@ RSpec.describe Good, type: :model do
     it { called get: [Good.find_by(name: 'newer'), good, Good.find_by(name: 'older')] }
   end
 
-  desc :change_online, focus_on: :is_online do
+  desc :change_onsale, focus_on: :is_online do
     it do
       called get: true
       expect_it.to be_falsey

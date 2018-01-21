@@ -8,8 +8,6 @@ class Api::V1::CategoriesDoc < ApiDoc
   api :create, 'POST create a category.', builder: :success_or_not, use: token do
     form! data: {
               :name! => { type: String,  desc: '名字' },
-        :is_smaller! => { type: Boolean, desc: 'icon name' },
-          :icon_name => { type: String,  desc: '是否二级分类?' },
             :base_id => { type: Integer, desc: '一级分类的 id' }
     }, pmt: true
   end
@@ -18,8 +16,6 @@ class Api::V1::CategoriesDoc < ApiDoc
   api :update, 'PATCH|PUT update the specified category.', builder: :success_or_not, use: id_and_token do
     form! data: {
               :name  => { type: String,  desc: '名字' },
-        :is_smaller  => { type: Boolean, desc: 'icon name' },
-         :icon_name  => { type: String,  desc: '是否二级分类?' },
            :base_id  => { type: Integer, desc: '一级分类的 id' }
     }, pmt: true
   end

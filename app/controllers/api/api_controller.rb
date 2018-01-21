@@ -38,8 +38,4 @@ class Api::ApiController < ActionController::API
     # ren Rails.env.production? ? { code: 500, msg: 'something is wrong' } : e
     output e
   end
-
-  def input(key = nil)
-    key.present? ? params[key] : (@zpa ||= Zero::ParamsAgent.tap { |zpa| zpa.params = params })
-  end
 end

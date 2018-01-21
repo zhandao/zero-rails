@@ -19,7 +19,7 @@ class User < ApplicationRecord
     role.present? ? roles << Role.find_by(name: role) : permissions << Permission.find_by(name: permission)
   end
 
-  # def unconn TODO
+  # def rmv TODO
 
   def jwt_payload
     {
@@ -107,22 +107,6 @@ class User < ApplicationRecord
     role_group :ad, can: :read # => can `read`
     role :vip, can: :say_hi
     role :level1, can: :say_hello
-
-    # 无权限调用方法时会抛异常
-    role :admin, can_call: :hello
-    # can_call :hello, role: :other
-  end
-
-  def hello
-    puts 'hello'
-  end
-
-  def fight
-    'pong'
-  end
-
-  def fighting
-    puts 'fighting'
   end
 
   def relation_with?(user)

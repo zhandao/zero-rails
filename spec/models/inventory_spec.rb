@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'dssl/model'
 
 RSpec.describe Inventory, type: :model do
-  before { create(:floor) }
+  before { create(:store) }
   let(:good) { create(:good) }
   let(:inventory) { good.inventories.first } # has many thought
   subject { inventory }

@@ -157,22 +157,13 @@
                     "type": "string",
                     "description": "名字"
                   },
-                  "is_smaller": {
-                    "type": "boolean",
-                    "description": "icon name"
-                  },
-                  "icon_name": {
-                    "type": "string",
-                    "description": "是否二级分类?"
-                  },
                   "base_id": {
                     "type": "integer",
                     "description": "一级分类的 id"
                   }
                 },
                 "required": [
-                  "name",
-                  "is_smaller"
+                  "name"
                 ],
                 "permit": true
               }
@@ -326,14 +317,6 @@
                     "type": "string",
                     "description": "名字"
                   },
-                  "is_smaller": {
-                    "type": "boolean",
-                    "description": "icon name"
-                  },
-                  "icon_name": {
-                    "type": "string",
-                    "description": "是否二级分类?"
-                  },
                   "base_id": {
                     "type": "integer",
                     "description": "一级分类的 id"
@@ -432,14 +415,6 @@
                   "name": {
                     "type": "string",
                     "description": "名字"
-                  },
-                  "is_smaller": {
-                    "type": "boolean",
-                    "description": "icon name"
-                  },
-                  "icon_name": {
-                    "type": "string",
-                    "description": "是否二级分类?"
                   },
                   "base_id": {
                     "type": "integer",
@@ -617,12 +592,11 @@
             "name": "search_type",
             "in": "query",
             "required": false,
-            "description": "搜索的字段名，允许值：<br/>1/ name<br/>2/ creator<br/>3/ category_name<br/>4/ unit<br/>5/ price",
+            "description": "搜索的字段名，允许值：<br/>1/ name<br/>2/ category_name<br/>3/ unit<br/>4/ price",
             "schema": {
               "type": "string",
               "enum": [
                 "name",
-                "creator",
                 "category_name",
                 "unit",
                 "price"
@@ -752,10 +726,7 @@
                           "remarks": {
                             "type": "string"
                           },
-                          "pic_path": {
-                            "type": "string"
-                          },
-                          "creator": {
+                          "picture": {
                             "type": "string"
                           },
                           "on_sale": {
@@ -780,13 +751,6 @@
                               },
                               "base_category_id": {
                                 "type": "integer"
-                              },
-                              "icon_name": {
-                                "type": "string"
-                              },
-                              "deleted_at": {
-                                "type": "string",
-                                "format": "date-time"
                               }
                             }
                           }
@@ -898,7 +862,7 @@
                     "type": "string",
                     "description": "其他说明"
                   },
-                  "pic_path": {
+                  "picture": {
                     "type": "string",
                     "is": "url",
                     "format": "url",
@@ -1063,10 +1027,7 @@
                           "remarks": {
                             "type": "string"
                           },
-                          "pic_path": {
-                            "type": "string"
-                          },
-                          "creator": {
+                          "picture": {
                             "type": "string"
                           },
                           "on_sale": {
@@ -1091,13 +1052,6 @@
                               },
                               "base_category_id": {
                                 "type": "integer"
-                              },
-                              "icon_name": {
-                                "type": "string"
-                              },
-                              "deleted_at": {
-                                "type": "string",
-                                "format": "date-time"
                               }
                             }
                           }
@@ -1182,7 +1136,7 @@
                     "type": "string",
                     "description": "其他说明"
                   },
-                  "pic_path": {
+                  "picture": {
                     "type": "string",
                     "is": "url",
                     "format": "url",
@@ -1307,7 +1261,7 @@
                     "type": "string",
                     "description": "其他说明"
                   },
-                  "pic_path": {
+                  "picture": {
                     "type": "string",
                     "is": "url",
                     "format": "url",
@@ -1593,10 +1547,10 @@
             }
           },
           {
-            "name": "store_code",
+            "name": "store_name",
             "in": "query",
             "required": true,
-            "description": "商店代号",
+            "description": "商店名",
             "schema": {
               "type": "string"
             }
@@ -1605,12 +1559,11 @@
             "name": "search_type",
             "in": "query",
             "required": false,
-            "description": "搜索的字段名，允许值：<br/><br/>1/ name<br/>2/ creator<br/>3/ category_name<br/>4/ unit<br/>5/ price",
+            "description": "搜索的字段名，允许值：<br/><br/>1/ name<br/>2/ category_name<br/>3/ unit<br/>4/ price",
             "schema": {
               "type": "string",
               "enum": [
                 "name",
-                "creator",
                 "category_name",
                 "unit",
                 "price"
@@ -1743,6 +1696,9 @@
                             "type": "integer"
                           },
                           "name": {
+                            "type": "string"
+                          },
+                          "source": {
                             "type": "string"
                           },
                           "remarks": {
@@ -2291,11 +2247,6 @@
                     "type": "string",
                     "description": "name of role"
                   },
-                  "condition": {
-                    "type": "string",
-                    "default": "true",
-                    "description": "暂不必传"
-                  },
                   "remarks": {
                     "type": "string"
                   }
@@ -2777,10 +2728,10 @@
                           "id": {
                             "type": "integer"
                           },
-                          "code": {
+                          "name": {
                             "type": "string"
                           },
-                          "addr": {
+                          "address": {
                             "type": "string"
                           }
                         }
@@ -2830,18 +2781,18 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "code": {
+                  "name": {
                     "type": "string",
-                    "description": "商店代号"
+                    "description": "商店名"
                   },
-                  "addr": {
+                  "address": {
                     "type": "string",
-                    "description": "对应的商店地址"
+                    "description": "商店地址"
                   }
                 },
                 "required": [
-                  "code",
-                  "addr"
+                  "name",
+                  "address"
                 ],
                 "permit": true
               }
@@ -2952,10 +2903,10 @@
                           "id": {
                             "type": "integer"
                           },
-                          "code": {
+                          "name": {
                             "type": "string"
                           },
-                          "addr": {
+                          "address": {
                             "type": "string"
                           }
                         }
@@ -3014,13 +2965,13 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "code": {
+                  "name": {
                     "type": "string",
-                    "description": "商店代号"
+                    "description": "商店名"
                   },
-                  "addr": {
+                  "address": {
                     "type": "string",
-                    "description": "对应的商店地址"
+                    "description": "商店地址"
                   }
                 },
                 "permit": true
@@ -3113,13 +3064,13 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "code": {
+                  "name": {
                     "type": "string",
-                    "description": "商店代号"
+                    "description": "商店名"
                   },
-                  "addr": {
+                  "address": {
                     "type": "string",
-                    "description": "对应的商店地址"
+                    "description": "商店地址"
                   }
                 },
                 "permit": true

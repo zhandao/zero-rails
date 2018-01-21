@@ -41,12 +41,12 @@ module ZeroRole
     false
   end
 
-  def is role, options = { }, &block
+  def is role, when: true, children: nil, parent: nil, &block
     (roles_relations[role] ||= { }).tap do |it|
-      it[:children] ||= Array(options[:children])
-      it[:parent]   ||= options[:parent]
+      it[:children] ||= Array(children)
+      it[:parent]   ||= parent
     end.delete_if { |_, v| v.blank? }
-    current_roles[role] ||= options[:when] || block # TODO
+    current_roles[role] ||= binding.local_variable_get(:when) || block # TODO
   end
   alias add_role is
 
@@ -91,9 +91,8 @@ module ZeroRole
       roles_include_parent = [ *assoc_roles, *assoc_roles.map(&:base_role).compact ] # TODO: 优化
       roles_include_parent.map do |role|
         options = {
-            when: instance_eval(role.condition || 'true') || role.entity_role&.skip_condition?,
             parent: role.base_role&.name,
-            children: role.sub_roles&.pluck(:name)
+            children: (children = role.sub_roles.pluck(:name)).present? ? children : nil
         }.delete_if { |_, v| v.blank? }
         [ role.name.to_sym, options ]
       end

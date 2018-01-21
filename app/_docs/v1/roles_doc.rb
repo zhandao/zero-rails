@@ -10,7 +10,6 @@ class Api::V1::RolesDoc < ApiDoc
   api :create, 'POST create a role', builder: :success_or_not, use: token do
     form! data: {
             :name! => { type: String, desc: 'name of role' },
-        :condition => { type: String, dft: 'true', desc: '暂不必传' },
           :remarks => String
     }, pmt: true
   end

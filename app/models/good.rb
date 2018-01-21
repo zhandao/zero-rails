@@ -5,9 +5,9 @@ class Good < ApplicationRecord
 
   belongs_to :category
 
-  acts_as_paranoid
+  builder_support rmv: %i[ ], add: %i[ unscoped: category_info ]
 
-  builder_support rmv: %i[ deleted_at ], add: %i[ unscoped: category_info ]
+  soft_destroy
 
   default_scope { includes :category }
   scope :all_view, -> { all }

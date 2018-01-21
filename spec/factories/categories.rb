@@ -1,16 +1,13 @@
 FactoryBot.define do
   factory :category do
-    name         'sub_cate'
-    is_smaller   true
-    bigger_id    1
-    # icon_name    'string'
-    # deleted_at   { DateTime.now }
+    name             'sub_cate'
+    base_category_id 1
+    # deleted_at       { DateTime.now }
   end
 
   factory :base_category, class: Category do
-    name      'base'
-    is_smaller false
-    bigger_id  0
+    name             'base'
+    base_category_id nil
   end
 end
 

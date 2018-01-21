@@ -1,10 +1,8 @@
 FactoryBot.define do
-  factory :role do
-    name              'role'
-    condition         'true'
-    # belongs_to_model  Admin
-    # remarks           'string'
-    # belongs_to_system 'string'
+  factory :store do
+    name       'store'
+    address    'some where'
+    # deleted_at { DateTime.now }
   end
 end
 

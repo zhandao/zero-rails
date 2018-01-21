@@ -1,9 +1,8 @@
 class CreateEntityRoles < ActiveRecord::Migration[5.1]
   def change
     create_table :entity_roles, options: 'ROW_FORMAT=DYNAMIC DEFAULT CHARSET=utf8' do |t|
-      t.belongs_to :entity,         polymorphic: true
-      t.belongs_to :role,           foreign_key: true
-      t.boolean    :skip_condition, default: true
+      t.belongs_to :entity, polymorphic: true
+      t.belongs_to :role,   foreign_key: true
 
       t.timestamps
     end

@@ -6,9 +6,9 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 User.create name: 'zhandao', password: 'zhandao', phone_number: '13912345678'
-Role.create name: 'man', condition: '!admin?'
-Permission.create name: 'fight', method: false, condition: "self.fight == 'pong'"
-Permission.create name: 'fighting', method: true, condition: 'false'
+Role.create name: 'man'
+Permission.create name: 'fight'
+Permission.create name: 'fighting'
 RolePermission.create role: Role.first, permission: Permission.first
 Role.create name: 'test_role'
 EntityRole.create entity: User.take, role: Role.last # is `test_role`

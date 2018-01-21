@@ -4,7 +4,7 @@ class Api::V1::PermissionsController < Api::V1::BaseController
   if_can :manage_role_permission, allow: :all
 
   def index
-    @data = Permission.where belongs_to_model: @model
+    @data = Permission.where model: @model
   end
 
 

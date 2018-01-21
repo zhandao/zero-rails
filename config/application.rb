@@ -1,12 +1,12 @@
 require_relative 'boot'
 
-require "rails/all"
+require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-Dir[Pathname.new(File.dirname(__FILE__)).realpath.parent.join("lib", "monkey_patches", "*.rb")].map do |file|
+Dir[Pathname.new(File.dirname(__FILE__)).realpath.parent.join('lib', 'monkey_patches', '*.rb')].map do |file|
   require file
 end
 
@@ -21,10 +21,10 @@ module RailsApi
     end
 
     config.load_defaults 5.1
-    # config.eager_load_paths << Rails.root.join('app') # TODO
-    Dir["#{Rails.root}/app/_docs/**/*"].each { |p| config.eager_load_paths << p } # TODO ENV
-    # config.eager_load_paths << "#{Rails.root}/app/_docs/rspec_docs/"
-    # config.eager_load_paths << "#{Rails.root}/app/_docs/model_docs/"
+
+    if Rails.env.development?
+      Dir["#{Rails.root}/app/_docs/**/*"].each { |p| config.eager_load_paths << p }
+    end
     config.eager_load_paths << Rails.root.join('lib')
     # config.autoload_paths << Rails.root.join('lib')
 
@@ -32,14 +32,7 @@ module RailsApi
     config.cache_store = :redis_store, Keys.redis.cache_url, { expires_in: 1.day }
 
     config.generators do |g|
-      g.test_framework :rspec,
-                       fixtures: true,
-                       view_specs: false,
-                       helper_specs: false,
-                       routing_specs: false,
-                       controller_specs: true,
-                       request_specs: false
-
+      g.test_framework :rspec
       g.fixture_replacement :factory_bot, dir: 'spec/factories'
       g.orm :active_record
     end

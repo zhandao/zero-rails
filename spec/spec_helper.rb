@@ -94,3 +94,51 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 end
+
+# ActiveRecord::Base.logger = Logger.new(STDOUT) if defined?(ActiveRecord::Base)
+
+RSpec::Matchers.define :have_keys do |*expected|
+  match do |actual|
+    expected.flatten! if expected.is_a?(Array)
+    expected_have_keys?(actual, expected)
+  end
+
+  failure_message do |actual|
+    expected.flatten! if expected.is_a?(Array)
+    " expected: #{actual}\nhave keys: #{expected}"
+  end
+
+  def expected_have_keys?(actual, expected)
+    actual = actual.is_a?(Array) ? actual : [actual]
+    actual.map do |act|
+      expected.each do |exp|
+        if exp.is_a?(Hash)
+          exp_key = exp.keys.first
+          break false if act[exp_key].nil? || !expected_have_keys?(act[exp_key], exp.values.first)
+        else
+          break false if act[exp].nil?
+        end
+      end
+    end.all?(&:present?)
+  end
+end
+
+RSpec::Matchers.alias_matcher :have_key, :have_keys
+
+RSpec::Matchers.define :have_size do |expected|
+  match do |actual|
+    actual.size == expected
+  end
+
+  failure_message { |actual| " expected: #{actual} (size: #{actual.size})\nhave size: #{expected}" }
+  description { "have #{expected} items" }
+end
+
+# RSpec::Matchers.define :have_size do |expected|
+#   match do |actual|
+#     actual.size == expected
+#   end
+#
+#   failure_message { |actual| " expected: #{actual}\nhave size: #{expected}" }
+#   description { "have #{expected} items" }
+# end

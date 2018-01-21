@@ -10,7 +10,7 @@ class Role < ApplicationRecord
   has_many   :sub_roles, class_name: 'Role', foreign_key: 'base_role_id'
   belongs_to :base_role, class_name: 'Role', optional: true
 
-  builder_support rmv: %i[ condition belongs_to_model ]
+  builder_support rmv: %i[ model ]
 
   def add_permission(permission)
     permissions << Permission.find_by(name: permission)

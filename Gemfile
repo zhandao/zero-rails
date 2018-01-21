@@ -136,12 +136,13 @@ gem 'logstasher'
 # *** Administration Framework ***
 
 # https://activeadmin.info/documentation.html
-gem 'activeadmin', github: 'activeadmin/activeadmin', branch: '1-1-stable'
+# https://github.com/activeadmin/activeadmin
+gem 'activeadmin', github: 'activeadmin/activeadmin'#, branch: '1-1-stable'
 # UI for ActiveAdmin, https://github.com/cle61/arctic_admin
-# TODO: github: 'cle61/arctic_admin', branch: '2-0-alpha' # Wait cle61 for fix in 2.0 branch
-gem 'arctic_admin', github: 'rtymchyk/arctic_admin', branch: 'patch-1'
+gem 'arctic_admin', github: 'cle61/arctic_admin', branch: '2-0-alpha'
 # UI for ActiveAdmin, https://github.com/vigetlabs/active_material
 # gem "active_material", github: "vigetlabs/active_material"
+gem 'coffee-rails'
 
 # https://github.com/sferik/rails_admin
 # gem 'rails_admin', '~> 1.2'
@@ -197,6 +198,10 @@ gem 'arctic_admin', github: 'rtymchyk/arctic_admin', branch: 'patch-1'
 # gem 'wisper', '2.0.0'
 
 group :development do
+  # https://github.com/ikkiuchi/generators
+  # gem 'generators', github: 'ikkiuchi/generators'
+  gem 'generators', path: '~/ws/generators'
+
   # http://nadarei.co/mina/
   gem 'mina', require: false
   # https://github.com/untitledkingdom/mina-puma
@@ -274,14 +279,14 @@ group :development, :test do
   # https://relishapp.com/rspec/rspec-rails/v/3-7
   # https://ruby-china.org/topics/9271
   # https://github.com/rspec/rspec-expectations
-  gem 'rspec-rails' # TODO
+  gem 'rspec-rails'
   # http://www.rubydoc.info/gems/factory_bot/file/GETTING_STARTED.md
   # https://github.com/thoughtbot/factory_bot_rails
   gem 'factory_bot_rails'
 
   # https://github.com/grosser/parallel_tests
   # https://makandracards.com/makandra/1241-how-to-employ-and-run-your-tests-with-parallel_tests-to-speed-up-test-execution
-  gem 'parallel_tests'
+  gem 'parallel_tests' # TODO
 end
 
 group :test do

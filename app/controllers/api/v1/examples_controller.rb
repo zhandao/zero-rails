@@ -44,18 +44,13 @@ class Api::V1::ExamplesController < Api::V1::BaseController
     ### Exception
     # Tip: the param type is automatically transformed by SwgdParamsValidator
     #      here is: ps.id(.to_i) or p[:id](.to_i)
-    ExamplesError.name_not_found! if input.id.eql? 1
+    ExamplesError.name_not_found! if @id.eql? 1
     # this error is defined in super class ApiError
-    ExamplesError.invalid_param!  if input.id.eql? 2
-    ApiError.invalid_param!       if input.id.eql? 3
+    ExamplesError.invalid_param!  if @id.eql? 2
+    ApiError.invalid_param!       if @id.eql? 3
 
     ### Render
-    # ren_ok data: params[:id] # general usage
-    # ren_ok data: input.id       # [pa] is the agent of params, see: lib/zero/params_agent.rb
-    # ren data: input.id          # code defaults to 200
-    # ren input.done              # key defaults to :data
-    out input.done             # ren()'s alias, but it would be weird to write with return: return out data
-    # out input.user_email_addr   # it will be setting by default value if the param is set a default value
+    output
   end
 
 

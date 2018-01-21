@@ -10,12 +10,12 @@
 #     allow_any_instance_of(Api::V1::RecordsController).to receive(:info_from_sec_depart).and_return(
 #         app_name: 'tom', dep: 'internet'
 #     )
-#     create(:floor)
-#     create(:floor, code: '2', addr: '2F')
+#     create(:store)
+#     create(:store, name: 'store2')
 #   end
 #
-#   let(:create_params) { { floor_code: '2', fingerprint: 'string', app_type: 'get', data: [{ good_id: 1, app_count: 2, total_prices: 2 }] } }
-#   let(:inventory) { Inventory.find_by(floor_id: 2, good_id: 1) }
+#   let(:create_params) { { store_name: 'store2', fingerprint: 'string', app_type: 'get', data: [{ good_id: 1, app_count: 2, total_prices: 2 }] } }
+#   let(:inventory) { Inventory.find_by(store_id: 2, good_id: 1) }
 #
 #   desc :create, :post, '/api/v1/records', '创建一条记录，当人们提交领用需求清单时请求该接口' do
 #     let(:params) { create_params }
@@ -23,7 +23,7 @@
 #
 #     it 'works' do
 #       called get: 200
-#       expect(Record.last).to have_attributes(floor_id: 2, good_id: 1, app_type: 'get', app_id: 1000, app_name: 'tom')
+#       expect(Record.last).to have_attributes(store_id: 2, good_id: 1, app_type: 'get', app_id: 1000, app_name: 'tom')
 #       expect(inventory.amount).to eq 8
 #     end
 #
@@ -38,7 +38,7 @@
 #   end
 #
 #   desc :index, :get, '/api/v1/records', 'get list of records (员工领借记录)' do
-#     let(:params) { { floor_code: '2', search_type: 'name', value: 'string', export: false } }
+#     let(:params) { { store_name: 'store2', search_type: 'name', value: 'string', export: false } }
 #     before do
 #       prepare_goods name: ('aaa'..'aae').to_a
 #       callto :create, with: { data: [{ good_id: 1 }, { good_id: 2 }, { good_id: 5 }].map { |h| h.merge!(app_count: 1, total_prices: 1) } }

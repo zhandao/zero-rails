@@ -1,7 +1,12 @@
 FactoryBot.define do
-  factory :store do
-    code       '1'
-    addr       '1F'
+  factory :good do
+    category   { Category.last || association(:category) }
+    name       'good'
+    unit       'string'
+    price      1.0
+    # remarks    'string'
+    # picture    'string'
+    # on_sale    true
     # deleted_at { DateTime.now }
   end
 end

@@ -1,8 +1,8 @@
 module BuilderSupport
   def self.included(base)
-    base.include AssocUnscope
     base.class_eval do
       def self.builder_support rmv: [ ], add: [ ]
+        include AssocUnscope
         extend ClassMethods
         delegate :show_attrs, :flatten_attrs, to: self
         include InstanceMethods
@@ -19,11 +19,14 @@ module BuilderSupport
   end
 
   module InstanceMethods
-    def to_builder(rmv: [ ], add: [ ], merge: { })
+    def to_builder(rmv: [ ], add: [ ], merge: { }, flt_add: [ ], flt_rmv: [ ])
       Jbuilder.new do |json|
+        dynamic_attrs = self.class.instance_variable_get(:@builder_add_dynamically)
+        dynamic_attrs&.each { |attr, proc| add << attr if instance_exec(&proc) }
         json.(self, *self.show_attrs(rmv: rmv, add: add))
-        self.flatten_attrs(rmv: rmv, add: add).each do |flatten_attr|
-          json.merge! self.send(flatten_attr)
+
+        self.flatten_attrs(rmv: flt_rmv, add: flt_add).each do |flatten_attr|
+          json.merge! flatten_attr => self.send(flatten_attr)
         end
         instance_exec(json, &json_addition)
         json.merge! merge
@@ -45,13 +48,13 @@ module BuilderSupport
       (@builder_rmv ||= [ ]).concat attrs
     end
 
-    def builder_add *attrs, &block
+    def builder_add *attrs, when: nil, &block
       define_method attrs.first do
         instance_eval(&block)
       end if block_given?
 
-      if attrs[1].is_a?(Hash)
-        builder_add_with_when attrs
+      if (w = binding.local_variable_get(:when))
+        builder_add_with_when attrs[0], when: w
       elsif attrs.delete(:flatten)
         (@flatten_attrs ||= [ ]).concat attrs
       else
@@ -77,16 +80,6 @@ module BuilderSupport
       show_attrs = self.column_names.map(&:to_sym) \
                        - (@builder_rmv || [ ]) \
                        + (@builder_add || [ ])
-
-      @builder_add_later&.each do |attr, status_or_block|
-        if status_or_block.is_a? Symbol
-          show_attrs << attr if instance_variable_get("@#{status_or_block}")
-          # instance_variable_set("@#{status_or_block}", false)
-        elsif instance_eval &status_or_block
-          show_attrs << attr
-        end
-      end
-
       show_attrs - rmv + add
     end
 
@@ -94,17 +87,19 @@ module BuilderSupport
       (@flatten_attrs ||= [ ]) - rmv + add
     end
 
-    def builder_add_with_when(args)
-      (@builder_add_later ||= { })[args.first] = args[1][:when]
+    def builder_add_with_when(attr, when:)
+      w = binding.local_variable_get(:when)
       # 生成 when 设置的同名函数
       # 用以设置状态
-      define_singleton_method args[1][:when] do
-        # TODO: 想一个不用在视图层重新置非的方案
-        instance_variable_set("@#{args[1][:when]}", true)
-        all
-      end if args[1][:when].is_a?(Symbol)
+      if w.is_a? Symbol
+        define_singleton_method w do
+          all.to_a.to_builder(add: [attr])
+        end
+      else # is proc
+        (@builder_add_dynamically ||= { })[attr] = w
+      end
 
-      generate_assoc_info_method args.first, false
+      generate_assoc_info_method attr, false
     end
 
     def generate_assoc_info_method(attrs, is_unscoped)

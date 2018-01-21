@@ -6,9 +6,6 @@ class CategoryMdoc < ModelDoc
   has_many :goods
 
   str! :name, :not_blank
-  bool! :is_smaller # TODO: remove
-  int! :bigger_id # TODO: rename to `base_id`, and allow nil
-  str :icon_name
   attrs!
 
   sc :search_by_name

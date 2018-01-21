@@ -1,6 +1,6 @@
 # FactoryBot.define do
 #   factory :inventory do
-#     floor
+#     store
 #     good
 #     amount 0
 #   end
