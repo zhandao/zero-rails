@@ -41,14 +41,14 @@ RSpec.describe 'API V1', 'users', type: :request do
     it_checks_permission
   end
 
-  desc :login, :post, '/api/v1/user/login', 'post user login' do
+  desc :login, :post, '/api/v1/users/login', 'post user login' do
     let(:params) { { email: user.email, id: user.id } }
 
     it('works') { called has_key: :token }
     it('raises not found') { called with: { email: 'xx' }, get: UsersError.not_found.code }
   end
 
-  desc :logout, :post, '/api/v1/user/logout', 'post user log out', :token_needed do
+  desc :logout, :post, '/api/v1/users/logout', 'post user log out', :token_needed do
     it 'works' do
       old_version = user.token_version
       called get: 200
@@ -66,7 +66,7 @@ RSpec.describe 'API V1', 'users', type: :request do
 
   let(:roles_modify_params) { { role_ids: [1] } }
 
-  desc :roles_modify, :post, '/api/v1/user/{id}/roles/modify', 'post set roles of the specified user', :token_needed do
+  desc :roles_modify, :post, '/api/v1/users/{id}/roles/modify', 'post set roles of the specified user', :token_needed do
     let(:params) { roles_modify_params }
 
     it_checks_permission
@@ -82,7 +82,7 @@ RSpec.describe 'API V1', 'users', type: :request do
     end
   end
 
-  desc :roles, :get, '/api/v1/user/{id}/roles', 'get roles of the specified user', :token_needed do
+  desc :roles, :get, '/api/v1/users/{id}/roles', 'get roles of the specified user', :token_needed do
     it 'works', :with_rp do
       expect(user.roles).to eq [ ]
       callto! :roles_modify
@@ -90,7 +90,7 @@ RSpec.describe 'API V1', 'users', type: :request do
     end
   end
 
-  desc :permissions, :get, '/api/v1/user/{id}/permissions', 'get permissions of the specified user', :token_needed do
+  desc :permissions, :get, '/api/v1/users/{id}/permissions', 'get permissions of the specified user', :token_needed do
     it 'works', :with_rp do
       expect(user.roles).to eq [ ]
       callto! :roles_modify

@@ -19,23 +19,13 @@ RSpec.describe Good, type: :model do
   end
 
   desc '.online_view', '[scope]' do
-    before { create(:good, is_online: false) }
-    it { called all_attrs: { is_online: true } }
+    before { create(:good, on_sale: false) }
+    it { called all_attrs: { on_sale: true } }
   end
 
   desc '.offline_view', '[scope]' do
-    before { create(:good, is_online: false) }
-    it { called all_attrs: { is_online: false } }
-  end
-
-  desc '.get_view', '[scope]' do
-    before { create(:good, need_return: true) }
-    it { called all_attrs: { need_return: false } }
-  end
-
-  desc '.borrow_view', '[scope]' do
-    before { create(:good, need_return: true) }
-    it { called has_size: :all }
+    before { create(:good, on_sale: false) }
+    it { called all_attrs: { on_sale: false } }
   end
 
   desc '.created_between', '[scope]' do
@@ -60,7 +50,7 @@ RSpec.describe Good, type: :model do
     it { called get: [Good.find_by(name: 'newer'), good, Good.find_by(name: 'older')] }
   end
 
-  desc :change_onsale, focus_on: :is_online do
+  desc :change_onsale, focus_on: :on_sale do
     it do
       called get: true
       expect_it.to be_falsey

@@ -30,7 +30,7 @@ RSpec.describe 'API V1', 'goods', type: :request do
   end
 
   desc :update, :patch, '/api/v1/goods/{id}', 'update the specified good', :token_needed do
-    let(:params) { { need_approve: 'integer', need_return: 'boolean', is_online: 'boolean', part_number: 'boolean', brand: 'string', specifications: 'string', remarks: 'string', pic_path: 'string', name: 'string', bigger_cate_id: 'string', smaller_cate_id: 'integer', unit: 'integer', price: 'string' } }
+    let(:params) { { need_approve: 'integer', need_return: 'boolean', on_sale: 'boolean', part_number: 'boolean', brand: 'string', specifications: 'string', remarks: 'string', pic_path: 'string', name: 'string', bigger_cate_id: 'string', smaller_cate_id: 'integer', unit: 'integer', price: 'string' } }
 
     it_checks_permission
   end

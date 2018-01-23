@@ -198,10 +198,6 @@ gem 'coffee-rails'
 # gem 'wisper', '2.0.0'
 
 group :development do
-  # https://github.com/ikkiuchi/generators
-  # gem 'generators', github: 'ikkiuchi/generators'
-  gem 'generators', path: '~/ws/generators'
-
   # http://nadarei.co/mina/
   gem 'mina', require: false
   # https://github.com/untitledkingdom/mina-puma
@@ -272,6 +268,10 @@ group :development, :test do
   # https://github.com/pry/pry-stack_explorer
   gem 'pry-stack_explorer'
   # -- awesome_rails_console
+
+  # https://github.com/ikkiuchi/generators
+  # gem 'generators', github: 'ikkiuchi/generators'
+  gem 'generators', path: '~/ws/generators'
 
   # https://github.com/rspec/rspec-rails
   # http://www.betterspecs.org/

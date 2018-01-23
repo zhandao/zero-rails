@@ -11,7 +11,7 @@ class Good < ApplicationRecord
 
   default_scope { includes :category }
   scope :all_view, -> { all }
-  scope :online_view, -> { where on_sale: true }
+  scope :online_view, -> { where on_sale: true } # TODO rename
   scope :offline_view, -> { where on_sale: false }
 
   scope :created_between, ->(start_at, end_at) do
@@ -39,6 +39,6 @@ class Good < ApplicationRecord
   end
 
   def change_onsale
-    update! onsale: !onsale
+    update! on_sale: !on_sale
   end
 end
