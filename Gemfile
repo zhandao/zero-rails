@@ -17,7 +17,7 @@ gem 'mysql2', '>= 0.3.18', '< 0.5'
 # Use postgresql as the database for Active Record
 # gem 'pg', '~> 0.18'
 # Use Redis adapter to run Action Cable in production
-gem 'redis', '~> 3.0'
+gem 'redis', '~> 4.0'
 # https://github.com/redis-store/redis-rails
 gem 'redis-rails'
 
