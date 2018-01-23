@@ -7,6 +7,9 @@ class Api::V1::PermissionsController < Api::V1::BaseController
     @data = Permission.where model: @model
   end
 
+  def create
+    Permission.create! permitted
+  end
 
   def update
     @permission.update! permitted

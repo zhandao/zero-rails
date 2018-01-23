@@ -6,6 +6,8 @@ class Category < ApplicationRecord
 
   builder_support rmv: %i[ updated_at created_at ]
   builder_add :sub_categories_info, when: :get_nested_list
+  builder_add :base_category_info, when: -> { base_category.present? } # TODO: 思考：为什么 get_nested_list 时不会有该 info？
+  builder_map :base_category_info => :base_category
 
   soft_destroy
 
@@ -35,14 +37,9 @@ class Category < ApplicationRecord
     base_category.nil? ? [ name, '' ] : [ Category.all[base_category_id - 1].name, name ]
   end
 
-  # show the base cate when not getting nested list
-  def json_addition
-    proc do |json|
-      # TODO HACK
-      if base_category.present? && !Category.instance_variable_get('@get_nested_list')
-        json.base_category Category.find(base_category_id).to_builder
-      end
-    end
+  # FIXME
+  def sub_categories_info
+    Category.unscoped.where(bigger_id: id).to_builder
   end
 end
 

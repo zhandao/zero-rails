@@ -13,7 +13,8 @@ module MakeSure
 
     def to_access *actions, need_to_be: nil, should_can: nil
       actions += %i[ index show create update destroy ] if actions.delete(:CRUDI)
-      before_action only: actions do
+      prepend_before_action only: actions do
+        user_token_verify!
         make_sure.can!(should_can)
       end
     end

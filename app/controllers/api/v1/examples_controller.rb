@@ -1,7 +1,7 @@
-class ExamplesError < V1Error
-  set_for :index
-  mattr_reader :name_not_found, 'can not find the name', 404
-end
+# class ExamplesError < V1Error
+#   set_for :index
+#   mattr_reader :name_not_found, 'can not find the name', 404
+# end
 
 class Api::V1::ExamplesController < Api::V1::BaseController
   doc_tag name: 'Examples', desc: 'tag_desc'
@@ -44,10 +44,10 @@ class Api::V1::ExamplesController < Api::V1::BaseController
     ### Exception
     # Tip: the param type is automatically transformed by SwgdParamsValidator
     #      here is: ps.id(.to_i) or p[:id](.to_i)
-    ExamplesError.name_not_found! if @id.eql? 1
+    # ExamplesError.name_not_found! if @id.eql? 1
     # this error is defined in super class ApiError
-    ExamplesError.invalid_param!  if @id.eql? 2
-    ApiError.invalid_param!       if @id.eql? 3
+    # ExamplesError.invalid_param!  if @id.eql? 2
+    # ApiError.invalid_param!       if @id.eql? 3
 
     ### Render
     output

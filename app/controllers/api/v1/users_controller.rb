@@ -9,7 +9,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 
 
   def index
-    out 'pong'
+    @data = User.all
   end
 
 
@@ -29,12 +29,12 @@ class Api::V1::UsersController < Api::V1::BaseController
 
 
   def update
-    #
+    @user.update! permitted
   end
 
 
   def destroy
-    #
+    @user.destroy
   end
 
 

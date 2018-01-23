@@ -20,7 +20,7 @@ module BuilderSupport
 
   module InstanceMethods
     def to_builder(rmv: [ ], add: [ ], merge: { }, flt_add: [ ], flt_rmv: [ ])
-      Jbuilder.new do |json|
+      res = Jbuilder.new do |json|
         dynamic_attrs = self.class.instance_variable_get(:@builder_add_dynamically)
         dynamic_attrs&.each { |attr, proc| add << attr if instance_exec(&proc) }
         json.(self, *self.show_attrs(rmv: rmv, add: add))
@@ -31,6 +31,9 @@ module BuilderSupport
         instance_exec(json, &json_addition)
         json.merge! merge
       end.attributes!
+
+      mapping = self.class.instance_variable_get(:@builder_map) || { }
+      res.transform_keys! { |key| (mapping[key.to_sym] || key).to_s }
     end
 
     def json_addition
@@ -66,21 +69,13 @@ module BuilderSupport
     end
 
     def builder_map settings = { }
-      settings.each do |field_name, alias_key|
-        builder_rmv field_name
-        builder_add alias_key
-        # define_method alias_key do
-        #   send field_name
-        # end
-        alias_method alias_key, field_name
-      end
+      (@builder_map ||= { }).merge! settings
     end
 
     def show_attrs(rmv: [ ], add: [ ])
-      show_attrs = self.column_names.map(&:to_sym) \
-                       - (@builder_rmv || [ ]) \
-                       + (@builder_add || [ ])
-      show_attrs - rmv + add
+      self.column_names.map(&:to_sym) \
+          - (@builder_rmv || [ ]) - rmv \
+          + (@builder_add || [ ]) + add
     end
 
     def flatten_attrs(rmv: [ ], add: [ ])

@@ -2,8 +2,7 @@
 # require 'dssl/request'
 #
 # RSpec.describe 'API V1', 'records', type: :request do
-#   let(:resp) { MultiJson.load(response.body, symbolize_keys: true) }
-#   subject { resp }
+#   subject { MultiJson.load(response.body, symbolize_keys: true) }
 #
 #   before do
 #     allow_any_instance_of(Api::V1::RecordsController).to receive(:info_from_fingerprint).and_return(1000)

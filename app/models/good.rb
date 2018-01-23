@@ -39,6 +39,6 @@ class Good < ApplicationRecord
   end
 
   def change_onsale
-    update! is_online: !is_online
+    update! onsale: !onsale
   end
 end

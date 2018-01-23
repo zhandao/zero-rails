@@ -54,6 +54,7 @@ module ZeroRole
     return true if role.nil?
     roles_setting # TODO: 优化
 
+    role = role.to_sym
     result = current_roles[role]
     block_result, result = result.is_a?(Proc) ? [ instance_eval(&result), false ] : [ false, result ]
     parent_role = roles_relations[role]&.[](:parent)

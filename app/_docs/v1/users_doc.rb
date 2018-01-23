@@ -67,7 +67,7 @@ class Api::V1::UsersDoc < ApiDoc
   end
 
 
-  # /admin/:id/roles/modify
+  # /user/:id/roles/modify
   api :roles_modify, 'POST modify roles to the specified user', builder: :success_or_not, use: token do
     path! :id, Integer, desc: 'user id'
     form! data: {

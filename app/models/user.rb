@@ -1,11 +1,11 @@
 class User < ApplicationRecord
   has_many :entity_roles, as: :entity
-
   has_many :roles, through: :entity_roles
 
   has_many :entity_permissions, as: :entity
-
   has_many :permissions, through: :entity_permissions
+
+  builder_support
 
   include ZeroRole
   include ZeroPermission
@@ -14,6 +14,10 @@ class User < ApplicationRecord
   # enum status: { active: 0, archived: 1 }
 
   has_secure_password
+
+  def self.roles
+    Role.where(model: 'User')
+  end
 
   def add(role: nil, permission: nil)
     role.present? ? roles << Role.find_by(name: role) : permissions << Permission.find_by(name: permission)

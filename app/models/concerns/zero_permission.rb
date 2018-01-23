@@ -50,7 +50,7 @@ module ZeroPermission
     permissions_setting # TODO: 优化
 
     module_source = source.is_a?(Module) ? source : source.class if source
-    key = module_source ? "#{action}_#{module_source.name.downcase}".to_sym : action
+    key = module_source ? "#{action}_#{module_source.name.downcase}".to_sym : action.to_sym
     current_permissions[key] && permission_blocks_result(source, key) || false
   end
   alias has_permission? can?

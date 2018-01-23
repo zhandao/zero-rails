@@ -15,5 +15,4 @@ class CategoryMdoc < ModelDoc
   after_commit :clear_cache
 
   im :path, '@return [ base_cate_name, sub_cate_name ]'
-  im :json_addition, 'show the base cate when not getting nested list'
 end

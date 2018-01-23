@@ -182,8 +182,14 @@
               }
             }
           },
-          "404": {
-            "description": "can not find the name"
+          "-1": {
+            "description": "invalid token"
+          },
+          "-2": {
+            "description": "role verification failed"
+          },
+          "-3": {
+            "description": "insufficient permission"
           },
           "400": {
             "description": "parameter validation failed"
@@ -280,6 +286,15 @@
                 }
               }
             }
+          },
+          "-1": {
+            "description": "invalid token"
+          },
+          "-2": {
+            "description": "role verification failed"
+          },
+          "-3": {
+            "description": "insufficient permission"
           },
           "400": {
             "description": "parameter validation failed"

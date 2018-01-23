@@ -748,9 +748,6 @@
                               },
                               "name": {
                                 "type": "string"
-                              },
-                              "base_category_id": {
-                                "type": "integer"
                               }
                             }
                           }
@@ -1049,9 +1046,6 @@
                               },
                               "name": {
                                 "type": "string"
-                              },
-                              "base_category_id": {
-                                "type": "integer"
                               }
                             }
                           }
@@ -1763,11 +1757,6 @@
                     "type": "string",
                     "description": "name of permission"
                   },
-                  "condition": {
-                    "type": "string",
-                    "default": "true",
-                    "description": "暂不必传"
-                  },
                   "remarks": {
                     "type": "string"
                   }
@@ -1871,11 +1860,6 @@
                     "type": "string",
                     "description": "name of permission"
                   },
-                  "condition": {
-                    "type": "string",
-                    "default": "true",
-                    "description": "暂不必传"
-                  },
                   "remarks": {
                     "type": "string"
                   }
@@ -1973,11 +1957,6 @@
                   "name": {
                     "type": "string",
                     "description": "name of permission"
-                  },
-                  "condition": {
-                    "type": "string",
-                    "default": "true",
-                    "description": "暂不必传"
                   },
                   "remarks": {
                     "type": "string"

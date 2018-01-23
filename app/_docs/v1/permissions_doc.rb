@@ -7,7 +7,6 @@ class Api::V1::PermissionsDoc < ApiDoc
   api :create, 'POST create a permission.', builder: :success_or_not, use: token do
     form! data: {
             :name! => { type: String, desc: 'name of permission' },
-        :condition => { type: String, dft: 'true', desc: '暂不必传' },
           :remarks => String
     }, pmt: true
   end
@@ -16,7 +15,6 @@ class Api::V1::PermissionsDoc < ApiDoc
   api :update, 'PATCH|PUT update the specified permission.', builder: :success_or_not, use: id_and_token do
     form! data: {
              :name => { type: String, desc: 'name of permission' },
-        :condition => { type: String, dft: 'true', desc: '暂不必传' },
           :remarks => String
     }, pmt: true
   end
