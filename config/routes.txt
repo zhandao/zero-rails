@@ -14,13 +14,7 @@ batch_action_activeadmin_users POST   /activeadmin/users/batch_action(.:format) 
                                POST   /activeadmin/comments(.:format)                activeadmin/comments#create
            activeadmin_comment GET    /activeadmin/comments/:id(.:format)            activeadmin/comments#show
                                DELETE /activeadmin/comments/:id(.:format)            activeadmin/comments#destroy
-               api_v1_examples GET    /api/v1/examples(.:format)                     api/v1/examples#index
-                               POST   /api/v1/examples(.:format)                     api/v1/examples#create
-                api_v1_example GET    /api/v1/examples/:id(.:format)                 api/v1/examples#show
-                               PATCH  /api/v1/examples/:id(.:format)                 api/v1/examples#update
-                               PUT    /api/v1/examples/:id(.:format)                 api/v1/examples#update
-                               DELETE /api/v1/examples/:id(.:format)                 api/v1/examples#destroy
-     change_onsale_api_v1_good POST   /api/v1/goods/:id/change_onsale(.:format)      api/v1/goods#change_online
+     change_onsale_api_v1_good POST   /api/v1/goods/:id/change_onsale(.:format)      api/v1/goods#change_onsale
                   api_v1_goods GET    /api/v1/goods(.:format)                        api/v1/goods#index
                                POST   /api/v1/goods(.:format)                        api/v1/goods#create
                    api_v1_good GET    /api/v1/goods/:id(.:format)                    api/v1/goods#show

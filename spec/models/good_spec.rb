@@ -14,16 +14,12 @@ RSpec.describe Good, type: :model do
     it { expect { Good.where('categories.id = 1') }.not_to raise_error }
   end
 
-  desc '.all_view', '[scope]' do
-    it { called has_size: :all }
-  end
-
-  desc '.online_view', '[scope]' do
+  desc '.on_sale', '[scope]' do
     before { create(:good, on_sale: false) }
     it { called all_attrs: { on_sale: true } }
   end
 
-  desc '.offline_view', '[scope]' do
+  desc '.off_sale', '[scope]' do
     before { create(:good, on_sale: false) }
     it { called all_attrs: { on_sale: false } }
   end
@@ -32,16 +28,17 @@ RSpec.describe Good, type: :model do
     it { called by: [nil, nil], get: :all }
   end
 
-  desc '.search_by_category', '[scope]' do
+  desc '.search_category_name', '[scope]' do
     it { called by: 'sub', get: [good] }
   end
 
-  desc '.search_by', '[scope]' do
-    it { called by: [nil, nil], get: [good] }
-    it { called by: ['name', nil], get: [good] }
-    it { called by: [nil, 'name'], get: [good] }
-    it { called by: ['name', 'oo'], get: [good] }
-    it { called by: ['name', 'ooo'], get: [] }
+  desc '.search', '[scope]' do
+    it { called by: [nil, with: nil], get: [good] }
+    it { called by: ['name', with: nil], get: [good] }
+    it { called by: [nil, with: 'name'], get: [good] }
+    it { called by: ['name', with: 'oo'], get: [good] }
+    it { called by: ['name', with: 'ooo'], get: [] }
+    # TODO: cover all fields
   end
 
   desc '.ordered', '[scope]' do

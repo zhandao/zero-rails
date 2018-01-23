@@ -1,6 +1,6 @@
 class Api::V1::RolesDoc < ApiDoc
   api :index, 'GET roles list of the specified model', builder: :index, use: token do
-    query :model, String, dft: 'User', reg: /^[A-Z]/
+    query :model, String, dft: 'User', reg: /\A[A-Z][A-z]*\z/
   end
 
 
@@ -14,7 +14,9 @@ class Api::V1::RolesDoc < ApiDoc
     }, pmt: true
   end
 
+
   api :destroy, 'DELETE the specified role.', builder: :success_or_not, use: id_and_token
+
 
   # /roles/:id/permissions
   api :permissions, 'GET permissions of specified role', use: token do
@@ -27,7 +29,7 @@ class Api::V1::RolesDoc < ApiDoc
            builder: :success_or_not, use: token do
     path! :id, Integer, desc: 'role id'
     form! data: {
-        :permission_ids! => { type: Array[{ type: Integer, range: { ge: 1 } }], size: 'ge_1' }
+        :permission_ids! => { type: Array[{ type: Integer, range: { ge: 1 } }], size: 'ge_0' }
     }
   end
 end

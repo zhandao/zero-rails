@@ -9,16 +9,6 @@ OpenApi::Config.tap do |c|
     server 'http://localhost:3000', desc: 'Internal staging server for testing'
     bearer_auth :Token
     global_auth :Token
-
-
-    open_api :homepage, base_doc_class: Api::V1::BaseController
-    info version: '1.0.0', title: 'Zero Rails APIs', contact: {
-             name: 'API Support', url: 'http://www.skippingcat.com', email: 'x@skippingcat.com'
-         }, desc: 'API documentation of Zero-Rails Application. <br/>' \
-                  'Optional multiline or single-line Markdown-formatted description ' \
-                  'in [CommonMark](http://spec.commonmark.org/) or `HTML`.',
-         license: { name: 'Apache 2.0', url: 'http://www.apache.org/licenses/LICENSE-2.0.html' }
-    server 'http://localhost:3000', desc: 'Main (production) server'
   end
 
   c.file_output_path = 'app/_docs/open_api'

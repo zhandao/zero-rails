@@ -3,7 +3,6 @@ class Api::V1::RolesController < Api::V1::BaseController
 
   if_can :manage_role_permission, allow: :all
 
-
   def index
     @data = Role.where model: @model
   end

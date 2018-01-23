@@ -3,7 +3,6 @@ require 'params_processor' # TODO
 class Api::ApiController < ActionController::API
   include ActionController::Caching
   include Zero::Log, OutPut
-  include OpenApi::DSL, AutoGenDoc
   include Rescuer
   include ParamsProcessor
   include MakeSure

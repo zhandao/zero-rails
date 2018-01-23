@@ -6,23 +6,23 @@ class Api::V1::UsersDoc < ApiDoc
   end
 
 
-  api :index, 'GET list of users.', builder: :index, use: ['Token', :page, :rows] do
+  api :index, 'GET list of users', builder: :index, use: ['Token', :page, :rows] do
     # query! :id, Integer, enum: 0..5, length: [1, 2], pattern: /^[0-9]$/, range: { gt:0, le:5 }
     # dft_resp 'users', :json, data: :UserResp
   end
 
 
-  api :show, 'GET the specified user.', builder: :show, use: token do
+  api :show, 'GET the specified user', builder: :show, use: token do
     query! :id, Integer, range: { ge: 1 }
   end
 
 
-  api :show_via_name, 'GET the specified user by name.', builder: :show, use: token do
+  api :show_via_name, 'GET the specified user by name', builder: :show, use: token do
     path! :name, String, desc: 'user name'
   end
 
 
-  api :login, 'POST user login.', builder: :success_or_not, skip: token do
+  api :login, 'POST user login', builder: :success_or_not, skip: token do
     form! data: {
             :name! => { type: String, desc: 'user name' },
         :password! => String
@@ -41,7 +41,7 @@ class Api::V1::UsersDoc < ApiDoc
   end
 
 
-  api :update, 'PATCH|PUT update the specified User.', builder: :success_or_not, use: id_and_token do
+  api :update, 'PATCH|PUT update the specified user.', builder: :success_or_not, use: id_and_token do
     form! data: {
                          name: String,
                      password: String,
@@ -52,7 +52,7 @@ class Api::V1::UsersDoc < ApiDoc
   end
 
 
-  api :destroy, 'DELETE the specified User.', builder: :success_or_not, use: id_and_token
+  api :destroy, 'DELETE the specified user', builder: :success_or_not, use: id_and_token
 
 
   # /users/:id/roles
@@ -71,7 +71,7 @@ class Api::V1::UsersDoc < ApiDoc
   api :roles_modify, 'POST modify roles to the specified user', builder: :success_or_not, use: token do
     path! :id, Integer, desc: 'user id'
     form! data: {
-        :role_ids! => { type: Array[{ type: Integer, range: { ge: 1 } }], size: 'ge_1' }
+        :role_ids! => { type: Array[{ type: Integer, range: { ge: 1 } }], size: 'ge_0' }
     }
   end
 end

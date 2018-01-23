@@ -8,4 +8,8 @@ class Permission < ApplicationRecord
   has_many :roles, through: :role_permissions
 
   builder_support rmv: %i[ model ]
+
+  validates :name, uniqueness: { scope: [:source, :model] }
+
+  validates *%i[ model source ], format: { with: /\A[A-Z][A-z]*\z/ }, allow_blank: true
 end

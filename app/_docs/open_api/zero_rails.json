@@ -1629,7 +1629,7 @@
     },
     "/api/v1/permissions": {
       "get": {
-        "summary": "GET permissions list of the specified model.",
+        "summary": "GET permissions list of the specified model",
         "operationId": "index",
         "tags": [
           "Permissions"
@@ -1650,7 +1650,7 @@
             "required": false,
             "schema": {
               "type": "string",
-              "pattern": "^[A-Z]",
+              "pattern": "\\A[A-Z][A-z]*\\z",
               "default": "User"
             }
           }
@@ -1729,7 +1729,7 @@
         }
       },
       "post": {
-        "summary": "POST create a permission.",
+        "summary": "POST create a permission",
         "operationId": "create",
         "tags": [
           "Permissions"
@@ -1823,7 +1823,7 @@
     },
     "/api/v1/permissions/{id}": {
       "patch": {
-        "summary": "PATCH|PUT update the specified permission.",
+        "summary": "PATCH|PUT update the specified permission",
         "operationId": "update",
         "tags": [
           "Permissions"
@@ -1921,7 +1921,7 @@
         }
       },
       "put": {
-        "summary": "PATCH|PUT update the specified permission.",
+        "summary": "PATCH|PUT update the specified permission",
         "operationId": "update",
         "tags": [
           "Permissions"
@@ -2019,7 +2019,7 @@
         }
       },
       "delete": {
-        "summary": "DELETE the specified permission.",
+        "summary": "DELETE the specified permission",
         "operationId": "destroy",
         "tags": [
           "Permissions"
@@ -2119,7 +2119,7 @@
             "required": false,
             "schema": {
               "type": "string",
-              "pattern": "^[A-Z]",
+              "pattern": "\\A[A-Z][A-z]*\\z",
               "default": "User"
             }
           }
@@ -2585,7 +2585,7 @@
                       "type": "integer",
                       "minimum": 1
                     },
-                    "minItems": 1
+                    "minItems": 0
                   }
                 },
                 "required": [
@@ -3188,7 +3188,7 @@
     },
     "/api/v1/u/{name}": {
       "get": {
-        "summary": "GET the specified user by name.",
+        "summary": "GET the specified user by name",
         "operationId": "show_via_name",
         "tags": [
           "Users"
@@ -3255,7 +3255,7 @@
     },
     "/api/v1/users": {
       "get": {
-        "summary": "GET list of users.",
+        "summary": "GET list of users",
         "operationId": "index",
         "tags": [
           "Users"
@@ -3455,7 +3455,7 @@
     },
     "/api/v1/users/login": {
       "post": {
-        "summary": "POST user login.",
+        "summary": "POST user login",
         "operationId": "login",
         "tags": [
           "Users"
@@ -3529,7 +3529,7 @@
     },
     "/api/v1/users/{id}": {
       "get": {
-        "summary": "GET the specified user.",
+        "summary": "GET the specified user",
         "operationId": "show",
         "tags": [
           "Users"
@@ -3626,7 +3626,7 @@
         }
       },
       "patch": {
-        "summary": "PATCH|PUT update the specified User.",
+        "summary": "PATCH|PUT update the specified user.",
         "operationId": "update",
         "tags": [
           "Users"
@@ -3720,7 +3720,7 @@
         }
       },
       "put": {
-        "summary": "PATCH|PUT update the specified User.",
+        "summary": "PATCH|PUT update the specified user.",
         "operationId": "update",
         "tags": [
           "Users"
@@ -3814,7 +3814,7 @@
         }
       },
       "delete": {
-        "summary": "DELETE the specified User.",
+        "summary": "DELETE the specified user",
         "operationId": "destroy",
         "tags": [
           "Users"
@@ -4054,7 +4054,7 @@
                       "type": "integer",
                       "minimum": 1
                     },
-                    "minItems": 1
+                    "minItems": 0
                   }
                 },
                 "required": [

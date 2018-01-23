@@ -1,7 +1,7 @@
 class Store < ApplicationRecord
   has_many :inventories, dependent: :destroy
 
-  has_many :goods, through: :inventories
+  has_many :goods, -> { where('amount > 0') }, through: :inventories
 
   builder_support rmv: %i[ ]
 

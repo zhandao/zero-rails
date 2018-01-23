@@ -2,7 +2,7 @@ class Api::V1::GoodsController < Api::V1::BaseController
   include ActiveRecordErrorsRescuer
 
   def index
-    @data = Good.send("#{@view}_view").created_between(@start, @end).search_by(@field, @value).ordered
+    @data = Good.send(@view).created_between(@start, @end).search(@field, with: @value).ordered
     export_goods if @export
   end
 

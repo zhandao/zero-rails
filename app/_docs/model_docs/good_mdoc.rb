@@ -14,14 +14,10 @@ class GoodMdoc < ModelDoc
   bool :on_sale, default: true
   attrs!
 
-  sc :all_view
-  sc :online_view
-  sc :offline_view
-  sc :get_view
-  sc :borrow_view
+  sc :on_sale
+  sc :off_sale
   sc :created_between
-  sc :search_by_category
-  sc :search_by
+  sc :search_category_name
   sc :ordered
 
   after_create :create_inventory_records

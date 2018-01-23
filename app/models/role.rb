@@ -12,6 +12,10 @@ class Role < ApplicationRecord
 
   builder_support rmv: %i[ model ]
 
+  validates :name, uniqueness: { scope: :model }
+
+  validates :model, format: { with: /\A[A-Z][A-z]*\z/ }, allow_blank: true
+
   def add_permission(permission)
     permissions << Permission.find_by(name: permission)
   end

@@ -13,7 +13,6 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :examples
       # /api/v1/nested/:nested_id/routes/:id
       # resources :nested do
       #   resources :routes
