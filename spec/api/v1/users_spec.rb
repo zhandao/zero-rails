@@ -6,46 +6,37 @@ RSpec.describe 'API V1', 'users', type: :request do
   let(:data) { subject[:data] }
   path id: 1
 
-  let(:user) { create(:user) }
-  before { user }
-
   permission_mock can?: %i[ manage_user manage_role_permission ]
 
-  let(:create_params) { { email: 'tester@x.yz', phone_number: '13712345678' } }
+  let(:create_params) { { name: 'tester', password: 'test', password_confirmation: 'test' } }
 
   desc :create, :post, '/api/v1/users', 'post create a user' do
     let(:params) { create_params }
 
-    it_checks_permission
-
     it 'works' do
-      expect(User.count).to eq 1
+      expect(User.count).to eq 0
       called get: 200
-      expect(User.count).to eq 2
+      expect(User.count).to eq 1
     end
   end
 
-  desc :index, :get, '/api/v1/users', 'get list of users', :token_needed do
+  desc :index, :get, '/api/v1/users', 'get list of users' do
     let(:params) { { page: 'integer', rows: 'integer' } }
-
-    it_checks_permission
   end
 
-  desc :update, :patch, '/api/v1/users/{id}', 'update the specified user', :token_needed do
+  desc :update, :patch, '/api/v1/users/{id}', 'update the specified user' do
     let(:params) { { email: 'string', phone_number: 'string' } }
-
-    it_checks_permission
   end
 
-  desc :destroy, :delete, '/api/v1/users/{id}', 'delete the specified user', :token_needed do
-    it_checks_permission
+  desc :destroy, :delete, '/api/v1/users/{id}', 'delete the specified user' do
   end
 
   desc :login, :post, '/api/v1/users/login', 'post user login' do
-    let(:params) { { name: user.name, password: user.password } }
+    let(:params) { { name: 'tester', password: 'test' } }
+    before { callto! :create }
 
     it('works') { called has_key: :token }
-    it('raises not found') { called with: { email: 'xx' }, get: UsersError.not_found.code }
+    it('raises not found') { called with: { name: 'xx' }, get: UsersError.login_failed.code }
   end
 
   # desc :logout, :post, '/api/v1/users/logout', 'post user log out', :token_needed do
@@ -56,7 +47,10 @@ RSpec.describe 'API V1', 'users', type: :request do
   #   end
   # end
 
+  let(:user) { create(:user) }
+
   before_when :with_rp do
+    user
     role = create(:role)
     pmt  = create(:permission)
     role.add permission: pmt.name
@@ -82,18 +76,22 @@ RSpec.describe 'API V1', 'users', type: :request do
   end
 
   desc :roles, :get, '/api/v1/users/{id}/roles', 'get roles of the specified user', :token_needed do
+    it_checks_permission
+
     it 'works', :with_rp do
       expect(user.roles).to eq [ ]
       callto! :roles_modify
-      called data: [1]
+      called data: ['role']
     end
   end
 
-  desc :permissions, :get, '/api/v1/users/{id}/permissions', 'get permissions of the specified user', :token_needed do
-    it 'works', :with_rp do
-      expect(user.roles).to eq [ ]
-      callto! :roles_modify
-      called data: [2]
-    end
-  end
+  # desc :permissions, :get, '/api/v1/users/{id}/permissions', 'get permissions of the specified user', :token_needed do
+  #   it_checks_permission
+  #
+  #   it 'works', :with_rp do
+  #     expect(user.roles).to eq [ ]
+  #     callto! :roles_modify
+  #     called data: [2]
+  #   end
+  # end
 end

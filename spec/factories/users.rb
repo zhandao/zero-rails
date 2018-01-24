@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :user do
-    name            'string'
-    password_digest 'string'
+    name            'zhandao'
+    password_digest 'zhandao'
     # email           'string'
     # phone_number    'string'
     # deleted_at      { DateTime.now }

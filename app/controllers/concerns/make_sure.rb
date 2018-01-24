@@ -32,7 +32,7 @@ module MakeSure
       ctrl_actions = ::OpenApi::Generator.get_actions_by_route_base(controller_path)
       real_actions = [ ]
       actions.each { |pattern| real_actions += ctrl_actions.grep(/#{pattern}/) }
-      to_access *real_actions, need_to_be, should_can, source: source
+      to_access *real_actions, need_to_be: need_to_be, should_can: should_can, source: source
     end
 
     # Logic can't be equivalent to Service Object

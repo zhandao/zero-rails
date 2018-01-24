@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171203092123) do
+ActiveRecord::Schema.define(version: 20171020172654) do
 
   create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "namespace"
@@ -87,10 +87,10 @@ ActiveRecord::Schema.define(version: 20171203092123) do
   create_table "permissions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC" do |t|
     t.string "name", null: false
     t.string "source"
+    t.string "model", default: "", null: false
     t.string "remarks"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "model", default: "", null: false
     t.index ["name", "source", "model"], name: "permission_unique_index", unique: true
   end
 
@@ -106,11 +106,11 @@ ActiveRecord::Schema.define(version: 20171203092123) do
 
   create_table "roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC" do |t|
     t.string "name", null: false
+    t.string "model", default: "", null: false
     t.string "remarks"
     t.bigint "base_role_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "model", default: "", null: false
     t.index ["base_role_id"], name: "index_roles_on_base_role_id"
     t.index ["name", "model"], name: "role_unique_index", unique: true
   end

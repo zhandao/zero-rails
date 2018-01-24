@@ -103,7 +103,7 @@ module BuilderSupport
       Array(attrs).each do |attr|
         next unless attr.to_s.match?(/_info/)
         assoc_method = attr.to_s.gsub('_info', '')
-        next unless new.respond_to?(assoc_method)
+        next unless new.respond_to?(assoc_method) rescue next
 
         define_method attr do
           send(assoc_method)&.to_builder || nil

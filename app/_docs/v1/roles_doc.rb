@@ -41,6 +41,6 @@ class Api::V1::RolesDoc < ApiDoc
   # /roles/:id/permissions/modify
   api :permissions_modify, 'POST modify permissions to the specified roles', builder: :success_or_not, use: token do
     path! :id, Integer
-    data :permission_ids!, Array[{ type: Integer, range: { ge: 1 } }], size: 'ge_0'
+    data :permission_ids!, Array[{ type: Integer, lth: 'ge_1' }], size: 'ge_0'
   end
 end

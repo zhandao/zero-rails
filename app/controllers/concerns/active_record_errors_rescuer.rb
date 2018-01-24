@@ -3,7 +3,7 @@ module ActiveRecordErrorsRescuer
     base.class_eval do
       before_action do
         @status = true
-      end
+      end # TODO: status == nil || true is ok, and remove the filter
 
       # if const_defined? "#{controller_name.camelize}Error" FIXME
       if error_cls?
