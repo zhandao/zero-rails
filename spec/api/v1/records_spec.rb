@@ -37,7 +37,7 @@
 #   end
 #
 #   desc :index, :get, '/api/v1/records', 'get list of records (员工领借记录)' do
-#     let(:params) { { store_name: 'store2', search_type: 'name', value: 'string', export: false } }
+#     let(:params) { { store_name: 'store2', search_field: 'name', value: 'string', export: false } }
 #     before do
 #       prepare_goods name: ('aaa'..'aae').to_a
 #       callto :create, with: { data: [{ good_id: 1 }, { good_id: 2 }, { good_id: 5 }].map { |h| h.merge!(app_count: 1, total_prices: 1) } }
@@ -49,7 +49,7 @@
 #     end
 #
 #     context 'search by applicant info' do
-#       it { called with: { search_type: 'fingerprint' }, has_size: 3 }
+#       it { called with: { search_field: 'fingerprint' }, has_size: 3 }
 #     end
 #   end
 #

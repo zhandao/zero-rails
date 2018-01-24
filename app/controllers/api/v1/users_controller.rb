@@ -44,6 +44,10 @@ class Api::V1::UsersController < Api::V1::BaseController
     @data = { token: user.token }
   end
 
+  def logout
+    #
+  end
+
   def roles
     output @user.all_roles
   end

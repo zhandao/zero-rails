@@ -33,14 +33,14 @@ stores = %w[store1 store2 store3]
 stores.size.times { |i| Store.create code: i + 1, addr: stores[i] } # FIXME
 
 
-Good.create name: "文件收纳1", unit: "个",	price: 7.13,  category_id: 3, creator: 'zero'
-Good.create name: "文件收纳2", unit: "个",	price: 5.89,  category_id: 3, creator: 'zero'
-Good.create name: "文件收纳3", unit: "个",	price: 8.5,	  category_id: 3, creator: 'zero'
-Good.create name: "纸张用品1", unit: "个",	price: 12.1,  category_id: 4, creator: 'zero'
-Good.create name: "纸张用品2", unit: "个",	price: 2.85,  category_id: 4, creator: 'zero'
-Good.create name: "纸张用品3", unit: "个",	price: 1.9,	  category_id: 4, creator: 'zero'
-Good.create name: "纸张用品4", unit: "个",	price: 1.14,  category_id: 4, creator: 'zero'
-Good.create name: "纸张用品5", unit: "个",	price: 0.65,  category_id: 4, creator: 'zero'
-Good.create name: "清洁耗材1", unit: "个",	price: 12.35, category_id: 5, creator: 'zero'
-Good.create name: "清洁耗材2", unit: "个",	price: 1.68,  category_id: 5, creator: 'zero'
-Good.create name: "清洁耗材3", unit: "个",	price: 24.7,  category_id: 5, creator: 'zero'
+Good.create name: "文件收纳1", unit: "个",	price: 7.13,  category_id: 3
+Good.create name: "文件收纳2", unit: "个",	price: 5.89,  category_id: 3
+Good.create name: "文件收纳3", unit: "个",	price: 8.5,	  category_id: 3
+Good.create name: "纸张用品1", unit: "个",	price: 12.1,  category_id: 4
+Good.create name: "纸张用品2", unit: "个",	price: 2.85,  category_id: 4
+Good.create name: "纸张用品3", unit: "个",	price: 1.9,	  category_id: 4
+Good.create name: "纸张用品4", unit: "个",	price: 1.14,  category_id: 4
+Good.create name: "纸张用品5", unit: "个",	price: 0.65,  category_id: 4
+Good.create name: "清洁耗材1", unit: "个",	price: 12.35, category_id: 5
+Good.create name: "清洁耗材2", unit: "个",	price: 1.68,  category_id: 5
+Good.create name: "清洁耗材3", unit: "个",	price: 24.7,  category_id: 5

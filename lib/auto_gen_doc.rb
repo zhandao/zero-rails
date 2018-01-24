@@ -26,26 +26,26 @@ module AutoGenDoc
 
           # Common :index parameters
           if action == 'index'
-            query :created_start_at, DateTime, desc: '时间起点, YY-MM-DD (HH:MM:SS, 可选)', as: :start
-            query :created_end_at,   DateTime, desc: '时间终点, YY-MM-DD (HH:MM:SS, 可选)', as: :end
-            query :value, String, desc: '查询词'
-            query :page, Integer, desc: '页数，从 1 开始', range: { ge: 1 }, dft: 1
-            query :rows, Integer, desc: 'per page, 请求的数据条数', range: { ge: 1 }, dft: 10
+            query :created_from, DateTime, desc: 'YY-MM-DD (HH:MM:SS, optional)', as: :start
+            query :created_to,   DateTime, desc: 'YY-MM-DD (HH:MM:SS, optional)', as: :end
+            query :search_value, String
+            query :page, Integer, range: { ge: 1 }, dft: 1
+            query :rows, Integer, desc: 'per page, number of result', range: { ge: 1 }, dft: 10
           end
 
           # Common :show parameters
           if action == 'show'
-            path! :id, Integer, desc: '要查询的 id'
+            path! :id, Integer
           end
 
           # Common :destroy parameters
           if action == 'destroy'
-            path! :id, Integer, desc: '要删除的 id'
+            path! :id, Integer
           end
 
           # Common :update parameters
           if action == 'update'
-            path! :id, Integer, desc: '要更新的 id'
+            path! :id, Integer
           end
 
           ### Common responses

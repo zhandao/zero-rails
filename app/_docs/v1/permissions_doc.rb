@@ -1,21 +1,28 @@
 class Api::V1::PermissionsDoc < ApiDoc
   api :index, 'GET permissions list of the specified model', builder: :index, use: token do
-    query :model, String, dft: 'User', reg: /\A[A-Z][A-z]*\z/
+    query :model, String, dft: '', reg: /\A[A-Z][A-z]*\z/
+  end
+
+
+  api_dry %i[ create update ] do
+    form! data: {
+         :source => String,
+        :remarks => String,
+          :model => { type: String, dft: '', reg: /\A[A-Z][A-z]*\z/ }
+    }, pmt: true
   end
 
 
   api :create, 'POST create a permission', builder: :success_or_not, use: token do
     form! data: {
-            :name! => { type: String, desc: 'name of permission' },
-          :remarks => String
+        :name! => { type: String, desc: 'the sign of permission, it must be unique' },
     }, pmt: true
   end
 
 
   api :update, 'PATCH|PUT update the specified permission', builder: :success_or_not, use: id_and_token do
     form! data: {
-             :name => { type: String, desc: 'name of permission' },
-          :remarks => String
+        :name => String,
     }, pmt: true
   end
 

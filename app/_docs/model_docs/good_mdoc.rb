@@ -11,6 +11,7 @@ class GoodMdoc < ModelDoc
   str! :unit, :not_blank
   flt! :price, :not_blank, num: { gte: 0.0 }
   str  :picture
+  str  :remarks
   bool :on_sale, default: true
   attrs!
 
@@ -18,6 +19,7 @@ class GoodMdoc < ModelDoc
   sc :off_sale
   sc :created_between
   sc :search_category_name
+  sc :search
   sc :ordered
 
   after_create :create_inventory_records

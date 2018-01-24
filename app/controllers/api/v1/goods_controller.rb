@@ -1,6 +1,8 @@
 class Api::V1::GoodsController < Api::V1::BaseController
   include ActiveRecordErrorsRescuer
 
+  if_can :manage, source: Good, allow: :all
+
   def index
     @data = Good.send(@view).created_between(@start, @end).search(@field, with: @value).ordered
     export_goods if @export
@@ -13,13 +15,11 @@ class Api::V1::GoodsController < Api::V1::BaseController
 
 
   def create
-    permitted[:category] = Category.find(@cate)
     Good.create! permitted
   end
 
 
   def update
-    permitted[:category] = Category.find(@cate) if @cate
     @good.update! permitted
   end
 

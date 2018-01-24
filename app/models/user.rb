@@ -7,6 +7,8 @@ class User < ApplicationRecord
 
   builder_support
 
+  soft_destroy
+
   include ZeroRole
   include ZeroPermission
 

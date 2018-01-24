@@ -11,7 +11,7 @@ RSpec.describe 'API V1', 'permissions', type: :request do
 
   permission_mock can?: %i[ manage_role_permission ]
 
-  let(:create_params) { { remarks: 'string', path: 'string', icon: 'string', base_permission_id: 'integer', name: 'string', pm_type: 'string' } }
+  let(:create_params) { { name: 'permission', model: 'User', source: 'string' } }
 
   desc :create, :post, '/api/v1/permissions', 'post create a permission', :token_needed do
     let(:params) { create_params }
@@ -20,18 +20,18 @@ RSpec.describe 'API V1', 'permissions', type: :request do
   end
 
   desc :index, :get, '/api/v1/permissions', 'get list of permissions of the specified model', :token_needed do
-    let(:params) { { model: 'string', view: 'string' } }
+    let(:params) { { model: 'string' } }
 
     it_checks_permission
   end
 
   desc :update, :patch, '/api/v1/permissions/{id}', 'update the specified permission', :token_needed do
-    let(:params) { { remarks: 'integer', path: 'string', icon: 'string', base_permission_id: 'string', name: 'integer', pm_type: 'string' } }
+    let(:params) { { name: 'permission', model: 'User', source: 'string' } }
 
     it_checks_permission
   end
 
-  desc :destroy, :delete, '/api/v1/permissions/{id}', 'delete the specified permission.', :token_needed do
+  desc :destroy, :delete, '/api/v1/permissions/{id}', 'delete the specified permission', :token_needed do
     it_checks_permission
   end
 end

@@ -69,13 +69,13 @@ module ZeroPermission
   end
   alias has_permission! can!
 
-  def can_all_of? *actions
-    actions.each { |action| return false unless can? action }
+  def can_all_of? *actions, source: nil
+    actions.each { |action| return false unless can? action, source }
     true
   end
 
-  def can_all_of! *actions
-    actions.each { |action| can! action }
+  def can_all_of! *actions, source: nil
+    actions.each { |action| can! action, source }
   end
 
   # TODO: 支持 group 和 family 的持久化

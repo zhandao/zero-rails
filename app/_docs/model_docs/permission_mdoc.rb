@@ -9,13 +9,8 @@ class PermissionMdoc < ModelDoc
   self_joins :has_many
 
   str! :name, :not_blank
-  str :source # 权限对应的资源，如 Floor
-  str :model
-  str :remarks
+  str  :source # 权限对应的资源，如 Floor
+  str  :model
+  str  :remarks
   attrs!
-
-  sc :all_view
-  sc :page_view
-  sc :floor_view
-  sc :from_base_permissions
 end

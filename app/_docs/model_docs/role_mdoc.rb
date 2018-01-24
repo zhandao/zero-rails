@@ -9,7 +9,7 @@ class RoleMdoc < ModelDoc
   self_joins :has_many
 
   str! :name, :not_blank
-  str :model
+  str :model, format: /\A[A-Z][A-z]*\z/
   str :remarks
   attrs!
 

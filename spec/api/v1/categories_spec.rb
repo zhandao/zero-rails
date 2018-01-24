@@ -4,33 +4,29 @@ require 'dssl/request'
 RSpec.describe 'API V1', 'categories', type: :request do
   subject { MultiJson.load(response.body, symbolize_keys: true) }
   let(:data) { subject[:data] }
+  path id: 1
 
   let(:user) { create(:user) }
   before { user }
 
-  # permission_mock can?: %i[ 物品管理 ]
 
-  let(:create_params) { { name: 'sub', is_smaller: true, icon_name: 'string', bigger_id: 1 } }
+  let(:create_params) { { name: 'sub', base_category_id: 1 } }
 
   desc :create, :post, '/api/v1/categories', 'post create a category', :token_needed do
     let(:params) { create_params }
-
-    it_checks_permission
   end
 
-  desc :update, :patch, '/api/v1/categories/1', 'PATCH|PUT update the specified category', :token_needed do
-    let(:params) { { name: 'string', is_smaller: 'boolean', icon_name: 'string', bigger_id: 'integer' } }
-    it_checks_permission
+  desc :update, :patch, '/api/v1/categories/{id}', 'PATCH|PUT update the specified category', :token_needed do
+    let(:params) { { name: 'string', base_category_id: 'integer' } }
   end
 
-  desc :destroy, :delete, '/api/v1/categories/1', 'delete the specified category', :token_needed do
-    it_checks_permission
+  desc :destroy, :delete, '/api/v1/categories/{id}', 'delete the specified category', :token_needed do
   end
 
   describe 'index' do
     before_when :with_create do
-      callto! :create, with: { name: 'base1', bigger_id: 0, is_smaller: false }
-      callto! :create, with: { name: 'base2', bigger_id: 0, is_smaller: false }
+      callto! :create, with: { name: 'base1', base_category_id: nil }
+      callto! :create, with: { name: 'base2', base_category_id: nil }
       callto! :create, with: { name: 'sub11' }
       callto! :create, with: { name: 'sub12' }
     end

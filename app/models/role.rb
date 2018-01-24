@@ -12,11 +12,20 @@ class Role < ApplicationRecord
 
   builder_support rmv: %i[ model ]
 
-  validates :name, uniqueness: { scope: :model }
+  validates :name, uniqueness: { scope: :model }, presence: true
 
   validates :model, format: { with: /\A[A-Z][A-z]*\z/ }, allow_blank: true
 
-  def add_permission(permission)
+  def add(permission: nil)
     permissions << Permission.find_by(name: permission)
   end
 end
+
+__END__
+
+t.string     :name,      null: false
+t.string     :model,     null: false, default: ''
+t.string     :remarks
+t.references :base_role, index: true
+
+add_index :roles, [:name, :model], unique: true, name: 'role_unique_index'

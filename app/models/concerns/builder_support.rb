@@ -2,14 +2,16 @@ module BuilderSupport
   def self.included(base)
     base.class_eval do
       def self.builder_support rmv: [ ], add: [ ]
-        include AssocUnscope
         extend ClassMethods
         delegate :show_attrs, :flatten_attrs, to: self
         include InstanceMethods
 
         builder_rmv *rmv
         # %i[ a, b, c d ]
-        # %i[ unscoped: a b, flatten: c d ]
+        # %i[ flatten: a b, other_declare: c d ]
+        # 'a b and c'
+        # 'flatten: a and b, other_declare: c and d'
+        add = add.split(/ and | /) if add.is_a? String
         add.map { |item| item[','] ? [item.to_s.delete(','), ','] : item }
            .flatten.map(&:to_sym).split(:',').each do |attrs|
           builder_add *attrs
@@ -51,20 +53,17 @@ module BuilderSupport
       (@builder_rmv ||= [ ]).concat attrs
     end
 
-    def builder_add *attrs, when: nil, &block
-      define_method attrs.first do
-        instance_eval(&block)
-      end if block_given?
+    def builder_add *attrs, when: nil, name: nil, &block
+      define_method(attrs.first) { instance_eval(&block) } if block_given?
+      builder_map attrs[0] => name if name
 
       if (w = binding.local_variable_get(:when))
         builder_add_with_when attrs[0], when: w
       elsif attrs.delete(:flatten)
         (@flatten_attrs ||= [ ]).concat attrs
       else
-        # %i[ unscoped: a b ]
-        is_unscoped = attrs.delete(:unscoped) || attrs.delete(:'unscoped:')
         (@builder_add ||= [ ]).concat attrs
-        generate_assoc_info_method attrs, is_unscoped
+        generate_assoc_info_method attrs
       end
     end
 
@@ -94,10 +93,10 @@ module BuilderSupport
         (@builder_add_dynamically ||= { })[attr] = w
       end
 
-      generate_assoc_info_method attr, false
+      generate_assoc_info_method attr
     end
 
-    def generate_assoc_info_method(attrs, is_unscoped)
+    def generate_assoc_info_method(attrs)
       # 匹配关联模型 `name_info` 形式的 attr，并自动生成该方法
       # 方法调用模型的 to_builder 方法并取得最终渲染结果
       # unscoped 主要是为了支持去除软删除的默认 scope
@@ -110,7 +109,6 @@ module BuilderSupport
           send(assoc_method)&.to_builder || nil
         end
 
-        assoc_unscope assoc_method if is_unscoped
         assoc_model = assoc_method.to_s.singularize
         builder_rmv "#{assoc_model}_id".to_sym
       end

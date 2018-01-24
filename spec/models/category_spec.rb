@@ -7,10 +7,6 @@ RSpec.describe Category, type: :model do
 
   acts_as_paranoid
 
-  desc '.search_by_name', '[scope]' do
-    it { called by: 'cate', get: [category] }
-  end
-
   before { create(:base_category) } # base is created before subject, so it's id is 1.
   let(:base_category) { Category.find_by(name: 'base') }
 

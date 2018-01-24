@@ -13,7 +13,7 @@ RSpec.describe 'API V1', 'users', type: :request do
 
   let(:create_params) { { email: 'tester@x.yz', phone_number: '13712345678' } }
 
-  desc :create, :post, '/api/v1/users', 'post create a user', :token_needed do
+  desc :create, :post, '/api/v1/users', 'post create a user' do
     let(:params) { create_params }
 
     it_checks_permission
@@ -42,24 +42,23 @@ RSpec.describe 'API V1', 'users', type: :request do
   end
 
   desc :login, :post, '/api/v1/users/login', 'post user login' do
-    let(:params) { { email: user.email, id: user.id } }
+    let(:params) { { name: user.name, password: user.password } }
 
     it('works') { called has_key: :token }
     it('raises not found') { called with: { email: 'xx' }, get: UsersError.not_found.code }
   end
 
-  desc :logout, :post, '/api/v1/users/logout', 'post user log out', :token_needed do
-    it 'works' do
-      old_version = user.token_version
-      called get: 200
-      expect(user.reload.token_version).to eq old_version + 1
-    end
-  end
+  # desc :logout, :post, '/api/v1/users/logout', 'post user log out', :token_needed do
+  #   it 'works' do
+  #     old_version = user.token_version
+  #     called get: 200
+  #     expect(user.reload.token_version).to eq old_version + 1
+  #   end
+  # end
 
   before_when :with_rp do
-    create(:permission, name: 'base', base_permission_id: nil)
     role = create(:role)
-    pmt  = create(:permission) # id == 2
+    pmt  = create(:permission)
     role.add permission: pmt.name
     create(:role, name: 'test_role')
   end

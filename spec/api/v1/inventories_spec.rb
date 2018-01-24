@@ -7,17 +7,13 @@ RSpec.describe 'API V1', 'inventories', type: :request do
   path id: 1
 
   skippable_before do
-    create(:floor)
+    create(:store)
     prepare_goods
-    create_list(:record, 10, good_id: 1)
-    create_list(:record, 7, good_id: 2)
-    create_list(:record, 1, good_id: 4)
   end
 
-  desc :index, :get, '/api/v1/inventories', 'get list of inventories.', :token_needed do
-    let(:params) { { view: 'high_freq_get', floor_code: '1' } }
+  desc :index, :get, '/api/v1/inventories', 'get list of inventories' do
+    let(:params) { { store_name: 'store' } }
 
-    it { called has_size: 3 }
-    it { called with: { view: 'get' }, has_size: 5 }
+    it { called has_size: 5 }
   end
 end

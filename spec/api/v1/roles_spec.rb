@@ -11,7 +11,7 @@ RSpec.describe 'API V1', 'roles', type: :request do
 
   permission_mock can?: %i[ manage_role_permission ]
 
-  let(:create_params) { { name: 'string', remarks: 'string' } }
+  let(:create_params) { { name: 'string', model: 'User' } }
 
   desc :create, :post, '/api/v1/roles', 'post create a role', :token_needed do
     let(:params) { create_params }
@@ -30,7 +30,7 @@ RSpec.describe 'API V1', 'roles', type: :request do
   end
 
   desc :update, :patch, '/api/v1/roles/{id}', 'update the specified role', :token_needed do
-    let(:params) { { name: 'integer', remarks: 'string' } }
+    let(:params) { { name: 'integer', model: 'User' } }
 
     it_checks_permission
   end
@@ -40,13 +40,11 @@ RSpec.describe 'API V1', 'roles', type: :request do
   end
 
   desc :permissions, :get, '/api/v1/roles/{id}/permissions', 'get permissions of the specified role', :token_needed do
-    let(:params) { { view: 'integer' } }
-
     it_checks_permission
   end
 
   desc :permissions_modify, :post, '/api/v1/roles/{id}/permissions/modify', 'post set permissions of the specified role', :token_needed do
-    let(:params) { { permission_ids: 'integer' } }
+    let(:params) { { permission_ids: [1] } }
 
     it_checks_permission
   end

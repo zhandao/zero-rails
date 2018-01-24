@@ -8,7 +8,6 @@ class CategoryMdoc < ModelDoc
   str! :name, :not_blank
   attrs!
 
-  sc :search_by_name
   sc :extend_search_by_name, "`extend` means that: when search a base_cate, should return all of it's sub_cates."
   sc :from_base_categories
 
