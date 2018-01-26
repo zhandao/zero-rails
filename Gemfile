@@ -225,7 +225,7 @@ group :development do
   gem 'listen', '~> 3.0'
 
   # https://github.com/yuki24/did_you_mean
-  gem 'did_you_mean', require: false
+  gem 'did_you_mean', '~> 1.1', require: false
 
   # https://github.com/charliesome/better_errors
   gem 'better_errors'

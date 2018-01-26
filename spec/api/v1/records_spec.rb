@@ -29,7 +29,7 @@
 #     context 'when inv is not enough' do
 #       it 'transaction abort' do
 #         called with: { data: [{ good_id: 1, app_count: 2, total_prices: 2 }, { good_id: 1, app_count: 10, total_prices: 10 }] },
-#                get: ERROR_CUD
+#                get: 600
 #         expect(Record.count).to eq 0
 #         expect(inventory.amount).to eq 10
 #       end

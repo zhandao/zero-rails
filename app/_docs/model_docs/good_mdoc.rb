@@ -19,7 +19,7 @@ class GoodMdoc < ModelDoc
   sc :off_sale
   sc :created_between
   sc :search_category_name
-  sc :search
+  # sc :search
   sc :ordered
 
   after_create :create_inventory_records

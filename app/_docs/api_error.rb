@@ -1,23 +1,18 @@
-ERROR_BEGIN          = 700
-ERROR_CUD            = 600
 ERROR_SEVER_ERROR    = [ 0, 'server error' ].freeze
-ERROR_AUTH           = -1
-ERROR_ACTIVE_RECORD  = -100
-
 
 class ApiError
   extend BusinessError::DSL
 
   class << self
     def auth
-      code ERROR_AUTH, :dec
+      code -1, :dec
       mattr_reader :invalid_token,      'invalid token',            http: :unauthorized
       mattr_reader :role_error,         'role verification failed', http: :forbidden
       mattr_reader :permission_error,   'insufficient permission',  http: :forbidden
     end
 
     def active_record
-      set_for :are, ERROR_ACTIVE_RECORD, :dec # ar error 太多， 使之不生成 doc
+      set_for :are, -100, :dec # ar error 太多， 使之不生成 doc
       http :internal_server_error
       mattr_reader :record_invalid,     'data validation failed'
       mattr_reader :not_saved,          'failed to save the record'
