@@ -197,6 +197,11 @@ gem 'coffee-rails'
 # A micro library providing Ruby objects with Publish-Subscribe capabilities
 # gem 'wisper', '2.0.0'
 
+# FIXME: 职责分离，然后将其划分到 development
+# https://github.com/ikkiuchi/generators
+# gem 'generators', github: 'ikkiuchi/generators'
+gem 'generators', path: '~/ws/generators'
+
 group :development do
   # http://nadarei.co/mina/
   gem 'mina', require: false
@@ -268,10 +273,6 @@ group :development, :test do
   # https://github.com/pry/pry-stack_explorer
   gem 'pry-stack_explorer'
   # -- awesome_rails_console
-
-  # https://github.com/ikkiuchi/generators
-  # gem 'generators', github: 'ikkiuchi/generators'
-  gem 'generators', path: '~/ws/generators'
 
   # https://github.com/rspec/rspec-rails
   # http://www.betterspecs.org/

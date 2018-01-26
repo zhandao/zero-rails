@@ -52,7 +52,6 @@ class Api::V1::UsersController < Api::V1::BaseController
     output @user.roles.pluck(:name) # @user.all_roles
   end
 
-
   def permissions
     output @user.all_permissions
   end

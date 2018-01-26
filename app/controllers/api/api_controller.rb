@@ -10,17 +10,24 @@ class Api::ApiController < ActionController::API
 
   before_action :user_token_verify!
 
-  def self.skip_token options = { }
-    skip_before_action :user_token_verify!, options
-  end
-
   before_action :process_params!
+
+  rescue_from ::ParamsProcessor::ValidationFailed,
+              ::BusinessError::ZError,
+              ::ZeroRole::VerificationFailed,
+              ::ZeroPermission::InsufficientPermission do |e|
+    log_and_render e
+  end
 
   error_map(
          invalid_token: JWT::DecodeError,
             role_error: ZeroRole::VerificationFailed,
       permission_error: ZeroPermission::InsufficientPermission
   )
+
+  def self.skip_token options = { }
+    skip_before_action :user_token_verify!, options
+  end
 
   def self.error_cls(rt = nil)
     "#{controller_name.camelize}Error".constantize
@@ -29,6 +36,16 @@ class Api::ApiController < ActionController::API
   end
 
   def self.error_cls?; error_cls(false) end
+
+  helper_method :render_error
+
+  def render_error # from are rescuer
+    error_class  = "#{controller_name.camelize}Error".constantize rescue nil
+    if error_class.respond_to?(action_error = "#{action_name}_failed")
+      @error_info = error_class.send(action_error).info.values
+    end
+    @_code, @_msg = @error_info
+  end
 
   private
 

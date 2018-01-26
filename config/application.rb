@@ -22,11 +22,13 @@ module RailsApi
 
     config.load_defaults 5.1
 
-    if Rails.env.development? || Rails.env.test?
-      Dir["#{Rails.root}/app/_docs/**/*"].each { |p| config.eager_load_paths << p }
-    else
-      # FIXME
-    end
+    # if Rails.env.development? || Rails.env.test? FIXME
+    Dir['app/_docs/**/*'].each { |p| config.eager_load_paths << p }
+    # else
+    #   Dir['app/_docs/*.rb', 'app/_docs/v*/**'].each { |p| config.eager_load_paths << p }
+    # end
+
+
     config.eager_load_paths << Rails.root.join('lib')
     # config.autoload_paths << Rails.root.join('lib')
 

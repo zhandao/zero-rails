@@ -1,4 +1,4 @@
-unless @status
+if @status == false
   error_class = Object.const_get("#{controller_name.camelize}Error") rescue nil
   error_name  = "#{action_name}_failed"
   if error_class.respond_to? error_name

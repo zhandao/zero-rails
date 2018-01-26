@@ -23,7 +23,7 @@ module MakeSure
     def to_access *actions, need_to_be: nil, should_can: nil, source: nil
       actions += %i[ index show create update destroy ] if actions.delete(:CRUDI)
       prepend_before_action only: actions do
-        user_token_verify!
+        user_token_verify! if make_sure.nil?
         make_sure.can!(should_can, source: source)
       end
     end
@@ -154,3 +154,4 @@ end
 to_access :interface, need_to_be: :huge_man
 to_access :interface, should_can: :do_anything # scenario: focus on actions
 if_can :do_anything, allow: :interface         # scenario: focus on Strategy
+if_can :read, source: Good, allow: :show
