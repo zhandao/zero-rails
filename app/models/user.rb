@@ -49,7 +49,7 @@ class User < ApplicationRecord
   #   is :admin, never
   #   is :admin, always
   #   is :admin, never
-  #   is? :admin? => true
+  #   is? :admin => true
   def roles_setting
     super()
 

@@ -256,6 +256,8 @@ end
 
 # console beautifying settings
 # https://github.com/ascendbruce/awesome_rails_console
+# http://toyroom.bruceli.net/tw/2014/08/13/awesome-rails-console-customization-using-pry.html
+# http://toyroom.bruceli.net/tw/2014/06/14/using-irbrc-to-serve-frequent-used-commands-in-rails-console.html
 gem 'awesome_rails_console'
 # Please clean up duplicated gems if any.
 # Feel free to remove gems that you don't want to use or if they conflict with other gem dependencies. (you might need to update .pryrc also)
