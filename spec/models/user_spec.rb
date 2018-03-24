@@ -7,7 +7,7 @@ RSpec.describe User, type: :model do
 
   acts_as_paranoid
 
-  # desc :logout, focus_on: :token_version do
+  # func :logout, focus_on: :token_version do
   #   it 'will inc 1' do
   #     expect_it.to eq default = 1
   #     called get: true
@@ -15,7 +15,7 @@ RSpec.describe User, type: :model do
   #   end
   # end
 
-  desc :add, focus_on: :roles do
+  func :add, focus_on: :roles do
     context 'role' do
       it 'will add a role to the user' do
         expect_it.to eq [ ]

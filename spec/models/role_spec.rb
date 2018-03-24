@@ -5,7 +5,7 @@ RSpec.describe Role, type: :model do
   let(:role) { create(:role) }
   subject { role }
 
-  desc :add, focus_on: :permissions do
+  func :add, focus_on: :permissions do
     context 'permission' do
       it 'will add a permission to the role' do
         expect_it.to eq [ ]

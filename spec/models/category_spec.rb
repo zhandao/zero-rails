@@ -10,7 +10,7 @@ RSpec.describe Category, type: :model do
   before { create(:base_category) } # base is created before subject, so it's id is 1.
   let(:base_category) { Category.find_by(name: 'base') }
 
-  desc '.extend_search_by_name', "[scope] `extend` means that: when search a base_cate, should return all of it's sub_cates." do
+  func '.extend_search_by_name', "[scope] `extend` means that: when search a base_cate, should return all of it's sub_cates." do
     it { expect(subject.base_category).to eq base_category } # TODO: `to be` shows that the two base_cate obj is not the same one.
 
     it { called by: 'sub', get: [category.id] }
@@ -20,11 +20,11 @@ RSpec.describe Category, type: :model do
     end
   end
 
-  desc '.from_base_categories', '[scope]' do
+  func '.from_base_categories', '[scope]' do
     it { called get: [base_category] }
   end
 
-  desc :path, '@return [ base_cate_name, sub_cate_name ]' do
+  func :path, '@return [ base_cate_name, sub_cate_name ]' do
     it { called get: ['base', 'sub_cate'] }
   end
 

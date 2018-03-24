@@ -13,25 +13,25 @@ RSpec.describe 'API V1', 'permissions', type: :request do
 
   let(:create_params) { { name: 'permission', model: 'User', source: 'string' } }
 
-  desc :create, :post, '/api/v1/permissions', 'post create a permission', :token_needed do
+  api :create, :post, '/api/v1/permissions', 'post create a permission', :token_needed do
     let(:params) { create_params }
 
     it_checks_permission
   end
 
-  desc :index, :get, '/api/v1/permissions', 'get list of permissions of the specified model', :token_needed do
+  api :index, :get, '/api/v1/permissions', 'get list of permissions of the specified model', :token_needed do
     let(:params) { { model: 'string' } }
 
     it_checks_permission
   end
 
-  desc :update, :patch, '/api/v1/permissions/{id}', 'update the specified permission', :token_needed do
+  api :update, :patch, '/api/v1/permissions/{id}', 'update the specified permission', :token_needed do
     let(:params) { { name: 'permission', model: 'User', source: 'string' } }
 
     it_checks_permission
   end
 
-  desc :destroy, :delete, '/api/v1/permissions/{id}', 'delete the specified permission', :token_needed do
+  api :destroy, :delete, '/api/v1/permissions/{id}', 'delete the specified permission', :token_needed do
     it_checks_permission
   end
 end

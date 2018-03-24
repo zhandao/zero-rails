@@ -42,8 +42,9 @@ PATH
 PATH
   remote: ../zero-rails_openapi
   specs:
-    zero-rails_openapi (1.5.3)
+    zero-rails_openapi (1.5.6)
       activesupport (>= 3)
+      colorize
       rails (>= 3)
 
 GEM
@@ -131,6 +132,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
+    colorize (0.8.1)
     concurrent-ruby (1.0.5)
     config (1.6.1)
       activesupport (>= 3.0)
@@ -523,4 +525,4 @@ RUBY VERSION
    ruby 2.4.1p111
 
 BUNDLED WITH
-   1.16.0
+   1.16.1

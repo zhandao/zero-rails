@@ -1,4 +1,4 @@
-def desc action, description = nil, focus_on: nil, &block
+def func action, description = nil, focus_on: nil, &block
   _action = action.is_a?(Symbol) ? "##{action}" : action
   describe "#{_action}#{', ' + description if description}" do
     action.delete!('.') if action.is_a? String
@@ -12,10 +12,10 @@ def called by: [], to: nil, **expectation
   obj = to || subject
   obj = obj.class if !action.is_a?(Symbol) && obj.class != Class
   by = by.is_a?(Hash) ? [by] : Array(by)
-  expect(obj.send(action, *by)).to instance_exec(&_expectation_blks(**expectation))
+  expect(obj.send(action, *by)).to instance_exec(&_model_expectation_blks(**expectation))
 end
 
-def _expectation_blks get: nil, all_attrs: nil, has_size: nil
+def _model_expectation_blks get: nil, all_attrs: nil, has_size: nil
   if !all_attrs.nil?
     -> { all(have_attributes(all_attrs)) }
   elsif !has_size.nil?
@@ -35,7 +35,7 @@ def expect_it
 end
 
 def acts_as_paranoid
-  desc :destroy, focus_on: :deleted_at do
+  func :destroy, focus_on: :deleted_at do
     it 'is destroy softly' do
       expect_it.to be_nil
       subject.destroy

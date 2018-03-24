@@ -4,6 +4,9 @@ class Category < ApplicationRecord
   has_many   :sub_categories, class_name: 'Category', foreign_key: 'base_category_id'
   belongs_to :base_category,  class_name: 'Category', optional: true
 
+  include ToTree
+  as_tree by_key: 'base_category_id'
+
   has_many :goods#, dependent: :nullify
 
   builder_support rmv: %i[ updated_at created_at ]

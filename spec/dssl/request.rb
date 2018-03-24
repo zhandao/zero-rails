@@ -15,7 +15,7 @@ def path params
   Temp.path[self_name] = params
 end
 
-def desc action, http_method, path, description = nil, token_needed = false, focus_on: nil, &block
+def api action, http_method, path, description = nil, token_needed = false, focus_on: nil, &block
   (Temp.action_path[self_name] ||= { })[action] ||= [http_method, _process_path(path)]
   _action = action.is_a?(Symbol) ? "##{action}" : action
   describe [_action, ', ', http_method, ' ', path, ' - ', description].join do
@@ -28,12 +28,12 @@ def desc action, http_method, path, description = nil, token_needed = false, foc
     if token_needed
       it 'checks token', :skip_before do
         error_code = ApiError.invalid_token.code
-        called headers: { Token: nil }, get: error_code
-        # called get: ApiError.invalid_param.info[:code]
-        called headers: { Token: '123' }, get: error_code
+        request headers: { Token: nil }, get: error_code
+        # requested get: ApiError.invalid_param.info[:code]
+        request headers: { Token: '123' }, get: error_code
         invalid_user = 'eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFAYi5jIiwidWlkIjoidCIsInZlcnNpb24iOjEsImV4cCI6IjE1' \
                         'MTc1NzYxODkifQ.7CeA1P8iBK8rTaw1nt7wk6QqB2IQMcVvARTTrTdvPOE'
-        called headers: { Token: invalid_user }, get: error_code
+        request headers: { Token: invalid_user }, get: error_code
       end
     end
 
@@ -65,7 +65,7 @@ def prepare_goods name: nil, inv: 10
   goods
 end
 
-def called by: nil, p: nil, with: nil, headers: { }, to: nil, **expectation
+def req by: nil, p: nil, with: nil, headers: { }, to: nil, **expectation
   params = try(:params) || { }
   p = params.slice(params.keys.grep(p)) if p
   with = params.merge(with) if with
@@ -75,11 +75,15 @@ def called by: nil, p: nil, with: nil, headers: { }, to: nil, **expectation
 
   if expectation.present?
     obj = subject[:code] if expectation.key? :get
-    expect(obj || subject[:data]).to instance_exec(&_expectation_blks(**expectation))
+    expect(obj || subject[:data]).to instance_exec(&_req_expectation_blks(**expectation))
   end
 end
 
-def _expectation_blks get: nil, all_attrs: nil, has_size: nil, has_attr: nil, include: nil, has_key: nil, data: nil
+alias reqed req
+alias request req
+alias requested req
+
+def _req_expectation_blks get: nil, all_attrs: nil, has_size: nil, has_attr: nil, include: nil, has_key: nil, data: nil
   if !all_attrs.nil?
     -> { all(have_attributes(all_attrs)) }
   elsif !has_attr.nil?
@@ -97,19 +101,19 @@ def _expectation_blks get: nil, all_attrs: nil, has_size: nil, has_attr: nil, in
   end
 end
 
-def callto action, token_needed = false, with: { }
+def req_to action, token_needed = false, with: { }
   headers = { Token: user.token } if token_needed
   send(*Temp.action_path[self_name][action], params: send("#{action}_params").merge(with), headers: headers || { })
   expect(MultiJson.load(response.body, symbolize_keys: true)[:code]).to eq 200
 end
 
-def callto! action, with: { }
-  callto action, true, with: with
+def req_to! action, with: { }
+  req_to action, true, with: with
 end
 
 def it_checks_permission
   it 'checks permission', :without_permission_mock do
-    called get: ApiError.permission_error.code
+    requested get: ApiError.permission_error.code
   end
 end
 
