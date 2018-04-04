@@ -32,7 +32,7 @@ def api action, http_method, path, description = nil, token_needed = false, focu
         # requested get: ApiError.invalid_param.info[:code]
         request headers: { Token: '123' }, get: error_code
         invalid_user = 'eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFAYi5jIiwidWlkIjoidCIsInZlcnNpb24iOjEsImV4cCI6IjE1' \
-                        'MTc1NzYxODkifQ.7CeA1P8iBK8rTaw1nt7wk6QqB2IQMcVvARTTrTdvPOE'
+                       'MTc1NzYxODkifQ.7CeA1P8iBK8rTaw1nt7wk6QqB2IQMcVvARTTrTdvPOE'
         request headers: { Token: invalid_user }, get: error_code
       end
     end

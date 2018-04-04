@@ -1,7 +1,7 @@
 class Api::V1::GoodsController < Api::V1::BaseController
   include ActiveRecordErrorsRescuer
 
-  # if_can :manage, source: Good, allow: :all
+  if_can :manage, source: Good, allow: :all
 
   def index
     @data = Good.send(@view).created_between(@start, @end).search(@field, with: @value).ordered
