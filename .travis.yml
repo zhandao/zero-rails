@@ -11,7 +11,8 @@ matrix:
 before_install: gem install bundler -v 1.16.1
 
 addons:
-  postgresql: "10.0"
+#  postgresql: "10.0"
+  postgresql: "9.4"
 
 services:
   - postgresql
@@ -27,7 +28,7 @@ before_install:
   - sed -i "s/gems.ruby-china.org/rubygems.org/g" Gemfile.lock
 #  - psql -c "CREATE USER \"admin\" WITH CREATEDB PASSWORD 'admin';" -U postgres
 #  - psql -c "create database \"homeland-test\" WITH OWNER=\"admin\";" -U postgres
-  - psql -p5432 -c "create database zero_test;" -U postgres
+  - psql -c "create database zero_test;" -U postgres
   - cp config/database.yml.pg config/database.yml
   - cp config/secrets.yml.example config/secrets.yml
 #  - sed -i "s/SETUP_REDIS_HOST/127.0.0.1/g" config/redis.yml
