@@ -25,7 +25,7 @@ env:
     - CC_TEST_REPORTER_ID=cd49d26b5c1dd48d2110be841080f089796b77e242e887d9cf9628f791fab741
 
 before_install:
-  - sed -i "s/gems.ruby-china.org/rubygems.org/g" Gemfile.lock
+#  - sed -i "s/gems.ruby-china.org/rubygems.org/g" Gemfile.lock
 #  - psql -c "CREATE USER \"admin\" WITH CREATEDB PASSWORD 'admin';" -U postgres
 #  - psql -c "create database \"homeland-test\" WITH OWNER=\"admin\";" -U postgres
   - psql -c "create database zero_test;" -U postgres
