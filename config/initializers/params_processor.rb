@@ -1,4 +1,6 @@
 ParamsProcessor::Config.tap do |it|
+  # it.actions                 = %i[ validate! convert set_instance_var set_permitted ]
+  # it.strict_check            = true
   # it.prefix                  = ''
   # it.not_passed              = ''
   # it.is_blank                = ''
@@ -8,5 +10,6 @@ ParamsProcessor::Config.tap do |it|
   # it.not_in_allowable_values = ''
   # it.not_match_pattern       = ''
   # it.out_of_range            = ''
+  # it.wrong_combined_type     = ''
   it.production_msg          = ' validation failed' if Rails.env.production?
 end

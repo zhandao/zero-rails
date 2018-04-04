@@ -84,7 +84,12 @@ window.onload = function() {
     plugins: [
       SwaggerUIBundle.plugins.DownloadUrl
     ],
-    layout: "StandaloneLayout"
+    layout: "StandaloneLayout",
+    docExpansion: "none",
+    filter: true,
+    defaultModelRendering: "model",
+    displayRequestDuration: true,
+    deepLinking: true
   })
 
   window.ui = ui

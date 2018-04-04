@@ -1,30 +1,31 @@
-class PermissionsError < V1Error
-  include CUDFailed, AuthFailed
-end
-
 class Api::V1::PermissionsDoc < ApiDoc
-  api :index, 'GET permissions list of the specified model.', builder: :index, use: token do
-    query :model, String, dft: 'User', reg: /^[A-Z]/
+  api :index, 'GET permissions list of the specified model', builder: :index, use: token do
+    query :model, String, dft: '', reg: /\A[A-Z][A-z]*\z/
   end
 
 
-  api :create, 'POST create a permission.', builder: :success_or_not, use: token do
-    form! 'for creating the specified permission', data: {
-            :name! => { type: String, desc: 'name of permission' },
-        :condition => { type: String, dft: 'true', desc: '暂不必传' },
-          :remarks => String
-    }
+  api_dry %i[ create update ] do
+    form! data: {
+         :source => String,
+        :remarks => String,
+          :model => { type: String, dft: '', reg: /\A[A-Z][A-z]*\z/ }
+    }, pmt: true
   end
 
 
-  api :create, 'PATCH update the specified permission.', builder: :success_or_not, use: id_and_token do
-    form! 'for updating the specified permission', data: {
-             :name => { type: String, desc: 'name of permission' },
-        :condition => { type: String, dft: 'true', desc: '暂不必传' },
-          :remarks => String
-    }
+  api :create, 'POST create a permission', builder: :success_or_not, use: token do
+    form! data: {
+        :name! => { type: String, desc: 'the sign of permission, it must be unique' },
+    }, pmt: true
   end
 
 
-  api :destroy, 'DELETE the specified permission.', builder: :success_or_not, use: id_and_token
+  api :update, 'PATCH|PUT update the specified permission', builder: :success_or_not, use: id_and_token do
+    form! data: {
+        :name => String,
+    }, pmt: true
+  end
+
+
+  api :destroy, 'DELETE the specified permission', builder: :success_or_not, use: id_and_token
 end

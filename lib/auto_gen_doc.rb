@@ -9,8 +9,8 @@ module AutoGenDoc
     def inherited(subclass)
       super
       subclass.class_eval do
-        break unless self.name.match?(/Controller|Doc/)
-        ctrl_path self.name.sub('Doc', '').underscore.gsub('::', '/') if self.name.match?(/Doc/)
+        break unless name.match?(/Controller|Doc/)
+        route_base name.sub('Doc', '').underscore.gsub('::', '/') if name.match?(/Doc/)
         open_api_dry
       end
     end
@@ -18,34 +18,34 @@ module AutoGenDoc
     private
 
     def open_api_dry
-      ctrl_path = try(:controller_path) || instance_variable_get('@_ctrl_path')
-      ::OpenApi::Generator.get_actions_by_ctrl_path(ctrl_path)&.each do |action|
+      route_base = try(:controller_path) || instance_variable_get('@route_base')
+      ::OpenApi::Generator.get_actions_by_route_base(route_base)&.each do |action|
         api_dry action do
           # TODO: 自动 skip？
           header! 'Token', String, desc: 'user token'
 
           # Common :index parameters
           if action == 'index'
-            query :created_start_at, DateTime, desc: '时间起点, YY-MM-DD (HH:MM:SS, 可选)', as: :start
-            query :created_end_at,   DateTime, desc: '时间终点, YY-MM-DD (HH:MM:SS, 可选)', as: :end
-            query :value, String, desc: '查询词'
-            query :page, Integer, desc: '页数，从 1 开始', range: { ge: 1 }, dft: 1
-            query :rows, Integer, desc: 'per page, 请求的数据条数', range: { ge: 1 }, dft: 10
+            query :created_from, DateTime, desc: 'YY-MM-DD (HH:MM:SS, optional)', as: :start
+            query :created_to,   DateTime, desc: 'YY-MM-DD (HH:MM:SS, optional)', as: :end
+            query :search_value, String
+            query :page, Integer, range: { ge: 1 }, dft: 1
+            query :rows, Integer, desc: 'per page, number of result', range: { ge: 1 }, dft: 10
           end
 
           # Common :show parameters
           if action == 'show'
-            path! :id, Integer, desc: '要查询的 id'
+            path! :id, Integer
           end
 
           # Common :destroy parameters
           if action == 'destroy'
-            path! :id, Integer, desc: '要删除的 id'
+            path! :id, Integer
           end
 
           # Common :update parameters
           if action == 'update'
-            path! :id, Integer, desc: '要更新的 id'
+            path! :id, Integer
           end
 
           ### Common responses
@@ -53,7 +53,7 @@ module AutoGenDoc
           # default_response 'default response', :json
           model = Object.const_get(action_path.split('#').first.split('/').last[0..-2].camelize) rescue nil
           type = action.in?(%w[ index show ]) ? Array[load_schema(model)] : String
-          response 200, 'success', :json, type: {
+          response 200, 'success', :json, data: {
               code:      { type: Integer, dft: 200 },
               msg:       { type: String,  dft: 'success' },
               total:     { type: Integer },

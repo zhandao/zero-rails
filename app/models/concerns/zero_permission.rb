@@ -1,19 +1,6 @@
 module ZeroPermission
-  # TODO: private
-
-  def self.included(base)
-    # # TODO: 这里应该可选择性配置：如果不需要 AOP check，那么应该在第一次调 can? 和 in_the_group? 时调用配置
-    # base.after_initialize :roles_setting
-    # base.after_initialize :permissions_setting
-    # base.after_initialize :enable_check_permission_before_calling_method
-  end
-
   def current_permissions
     @_current_permissions ||= { }
-  end
-
-  def methods_under_permission_check
-    @_methods_under_permission_check ||= [ ]
   end
 
   # TODO: 高消耗操作?
@@ -27,13 +14,9 @@ module ZeroPermission
     end.compact
   end
 
-  def role *roles, options, &block
-    if options.key? :can_call
-      can_call options.fetch(:can_call), options[:model], options.merge!(role: roles), &block
-    else
-      roles = roles.first if roles.first.is_a?(Array)
-      can options.fetch(:can), options[:model], options.merge!(role: roles), &block
-    end
+  def role *roles, can:, model: nil, when: true, &block
+    roles = roles.first if roles.first.is_a?(Array)
+    can can, model, role: roles, when: binding.local_variable_get(:when), &block
   end
 
   def role_group group, options, &block
@@ -42,12 +25,12 @@ module ZeroPermission
     end
   end
 
-  def can actions, source = nil, options, &block
-    [options[:role]].flatten.each do |given_role|
+  def can actions, source = nil, when: true, role: nil, &block
+    [role].flatten.each do |given_role|
       Array(actions).each do |action|
         key = source ? "#{action}_#{source.name.downcase}" : action
         # TODO: 怎么延迟做 when
-        current_permissions[key] ||= is?(given_role) && (options[:when].nil? || options[:when])
+        current_permissions[key] ||= is?(given_role) && binding.local_variable_get(:when)
         # TODO: block 不要放到 c_p
         (current_permissions["#{key}_block"] ||= [ ]) << block if block_given?
       end
@@ -56,11 +39,6 @@ module ZeroPermission
 
   def add_permission *actions
     self.permissions << Permission.where(name: actions)
-  end
-
-  def can_call methods, source = nil, options, &block
-    methods_under_permission_check.concat Array(methods)
-    can methods, source, options, &block
   end
 
   def if_case
@@ -72,7 +50,7 @@ module ZeroPermission
     permissions_setting # TODO: 优化
 
     module_source = source.is_a?(Module) ? source : source.class if source
-    key = module_source ? "#{action}_#{module_source.name.downcase}".to_sym : action
+    key = module_source ? "#{action}_#{module_source.name.downcase}".to_sym : action.to_sym
     current_permissions[key] && permission_blocks_result(source, key) || false
   end
   alias has_permission? can?
@@ -91,33 +69,13 @@ module ZeroPermission
   end
   alias has_permission! can!
 
-  def can_all_of? *actions
-    actions.each { |action| return false unless can? action }
+  def can_all_of? *actions, source: nil
+    actions.each { |action| return false unless can? action, source }
     true
   end
 
-  def can_all_of! *actions
-    actions.each { |action| can! action }
-  end
-
-  # TODO: 支持对 source model 的方法调用进行切面处理
-  # TODO: 支持对控制器方法进行切面处理
-  def enable_check_permission_before_calling_method
-    # Ruby AOP easy way: https://stackoverflow.com/a/24559474
-    self.class.prepend Checker.with(methods_under_permission_check.uniq)
-  end
-
-  module Checker
-    def self.with(methods)
-      methods.each do |method|
-        define_method method do |*args|
-          can! method
-          super(*args)
-        end
-      end
-
-      self
-    end
+  def can_all_of! *actions, source: nil
+    actions.each { |action| can! action, source }
   end
 
   # TODO: 支持 group 和 family 的持久化
@@ -134,15 +92,14 @@ module ZeroPermission
       relations = [ *role_permissions, *base_role_permissions, *entity_permissions ]
 
       relations.map do |relation|
-        pmi = permission = relation.permission
-        options = { when: relation.skip_condition || instance_eval(pmi.condition || 'true') }
-        [ (pmi.for_method ? :can_call : :can), pmi.name.to_sym, pmi.source, options ]
+        pmi = relation.permission
+        [ :can, pmi.name.to_sym, pmi.source, { when: true } ]
       end
     end.each { |args| send(*args) }
   end
 
   def permissions_setting
-    @_current_permissions, @_methods_under_permission_check = { }, [ ]
+    @_current_permissions = { }
     load_permissions_from_database
   end
 

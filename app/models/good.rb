@@ -1,50 +1,54 @@
 class Good < ApplicationRecord
-  has_many :inventories, dependent: :destroy
-
-  has_many :stores, through: :inventories
-
-  belongs_to :category
-
-  acts_as_paranoid
-
-  builder_support rmv: %i[ deleted_at ], add: %i[ unscoped: category_info ]
+  include Search
 
   default_scope { includes :category }
-  scope :all_view, -> { all }
-  scope :online_view, -> { where on_sale: true }
-  scope :offline_view, -> { where on_sale: false }
+
+  has_many :inventories, dependent: :destroy
+
+  has_many :stores, -> { where('amount > 0') }, through: :inventories
+
+  belongs_to :category, -> { unscope(where: :deleted_at) }
+
+  builder_support rmv: %i[ ], add: [:category_info]
+
+  soft_destroy
+
+  validates *%i[ name unit ], presence: true
+
+  validates :price, presence: true, numericality: { greater_than_or_equal_to: 0.0 }
+
+  scope :on_sale, -> { where on_sale: true }
+  scope :off_sale, -> { where on_sale: false }
 
   scope :created_between, ->(start_at, end_at) do
     where created_at: start_at||0..end_at||Float::INFINITY unless start_at.nil? && end_at.nil?
   end
 
-  scope :search_by_category, ->(category_name) do
+  scope :search_category_name, ->(category_name) do
     category_ids = Category.extend_search_by_name(category_name)
     where 'categories.id': category_ids
   end
 
-  scope :search_by, ->(field, value) do
-    return if field.nil? || value.nil?
-    if field == 'category_name'
-      search_by_category name = value
-    elsif field == 'price'
-      where price: value
-    else
-      # Note: 这里不会有注入风险，在参数检查的时候已经校验其输入在合法范围内了
-      where "#{field} LIKE ?", "%#{value}%"
-    end
-  end
-
   scope :ordered, -> { order created_at: :desc }
 
-  scope :get, ->(association) { includes(association).map(&association.to_sym).flatten.compact }
+  after_create :create_inventory_records
 
-  after_create do
-    Inventory.create!(Store.all_from_cache.map { |store| { store: store, good: self } })
+  def create_inventory_records
+    Inventory.create!(Store.all.map { |floor| { store: floor, good: self } })
   end
 
   def change_onsale
-    self.on_sale = !on_sale
-    save
+    update! on_sale: !on_sale
   end
 end
+
+__END__
+
+t.string     :name,       null: false,       index: true
+t.belongs_to :category,   foreign_key: true, index: true
+t.string     :unit,       null: false
+t.float      :price,      null: false
+t.string     :remarks
+t.string     :picture
+t.boolean    :on_sale,                       default: true
+t.datetime   :deleted_at

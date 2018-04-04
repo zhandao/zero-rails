@@ -5,19 +5,19 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '2.4.1'
+ruby '2.5.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.2'
+gem 'rails', '~> 5.1.5'
 
 
 # *** Databases ***
 
 # Use mysql as the database for Active Record
-gem 'mysql2', '>= 0.3.18', '< 0.5'
+# gem 'mysql2', '>= 0.3.18', '< 0.5'
 # Use postgresql as the database for Active Record
-# gem 'pg', '~> 0.18'
+gem 'pg', '~> 1.0.0'
 # Use Redis adapter to run Action Cable in production
-gem 'redis', '~> 3.0'
+gem 'redis', '~> 4.0'
 # https://github.com/redis-store/redis-rails
 gem 'redis-rails'
 
@@ -78,6 +78,10 @@ gem 'multi_json'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # https://devblast.com/b/jbuilder
 gem 'jbuilder'
+# https://github.com/ikkiuchi/builder_support
+# Provide a very simple way to transform ActiveRecord data into JSON output based on JBuilder
+gem 'builder_support'
+
 # https://github.com/rails-api/active_model_serializers/
 # gem 'active_model_serializers'
 
@@ -136,12 +140,13 @@ gem 'logstasher'
 # *** Administration Framework ***
 
 # https://activeadmin.info/documentation.html
-gem 'activeadmin', github: 'activeadmin/activeadmin', branch: '1-1-stable'
+# https://github.com/activeadmin/activeadmin
+gem 'activeadmin', github: 'activeadmin/activeadmin'#, branch: '1-1-stable'
 # UI for ActiveAdmin, https://github.com/cle61/arctic_admin
-# TODO: github: 'cle61/arctic_admin', branch: '2-0-alpha' # Wait cle61 for fix in 2.0 branch
-gem 'arctic_admin', github: 'rtymchyk/arctic_admin', branch: 'patch-1'
+gem 'arctic_admin', github: 'cle61/arctic_admin', branch: '2-0-alpha'
 # UI for ActiveAdmin, https://github.com/vigetlabs/active_material
 # gem "active_material", github: "vigetlabs/active_material"
+gem 'coffee-rails'
 
 # https://github.com/sferik/rails_admin
 # gem 'rails_admin', '~> 1.2'
@@ -196,6 +201,11 @@ gem 'arctic_admin', github: 'rtymchyk/arctic_admin', branch: 'patch-1'
 # A micro library providing Ruby objects with Publish-Subscribe capabilities
 # gem 'wisper', '2.0.0'
 
+# FIXME: 职责分离，然后将其划分到 development
+# https://github.com/ikkiuchi/generators
+gem 'generators', github: 'ikkiuchi/generators'
+# gem 'generators', path: '~/ws/generators'
+
 group :development do
   # http://nadarei.co/mina/
   gem 'mina', require: false
@@ -219,7 +229,7 @@ group :development do
   gem 'listen', '~> 3.0'
 
   # https://github.com/yuki24/did_you_mean
-  gem 'did_you_mean', require: false
+  gem 'did_you_mean', '~> 1.1', require: false
 
   # https://github.com/charliesome/better_errors
   gem 'better_errors'
@@ -229,25 +239,29 @@ group :development do
   ### Security and Code Quality tools
   # an open source static analysis tool which checks Ruby on Rails applications for security vulnerabilities.
   # https://github.com/presidentbeef/brakeman
-  gem 'brakeman', :require => false
+  gem 'brakeman', require: false # or just `gem install`
 
   # The raising security scanner for ruby web applications
   # https://github.com/thesp0nge/dawnscanner
-  # gem 'dawnscanner', :require=>false
+  # gem 'dawnscanner', require: false # or just `gem install`
 
   # https://github.com/bbatsov/rubocop
   gem 'rubocop', require: false # or just `gem install`
   # https://github.com/toshimaru/rubocop-rails
-  # gem "rubocop-rails", require: false
+  # gem "rubocop-rails", require: false # or just `gem install`
 
   # https://github.com/rubysec/bundler-audit
-  gem 'bundler-audit', :require => false # or just `gem install`
-  # https://github.com/brigade/overcommit
-  gem 'overcommit', :require => false # or just `gem install`
+  gem 'bundler-audit', require: false # or just `gem install`
+
+  # A Ruby code quality reporter, https://github.com/whitesmith/rubycritic
+  # https://ruby-china.org/topics/30746
+  gem 'rubycritic', require: false # or just `gem install`
 end
 
 # console beautifying settings
 # https://github.com/ascendbruce/awesome_rails_console
+# http://toyroom.bruceli.net/tw/2014/08/13/awesome-rails-console-customization-using-pry.html
+# http://toyroom.bruceli.net/tw/2014/06/14/using-irbrc-to-serve-frequent-used-commands-in-rails-console.html
 gem 'awesome_rails_console'
 # Please clean up duplicated gems if any.
 # Feel free to remove gems that you don't want to use or if they conflict with other gem dependencies. (you might need to update .pryrc also)
@@ -272,9 +286,14 @@ group :development, :test do
   # https://relishapp.com/rspec/rspec-rails/v/3-7
   # https://ruby-china.org/topics/9271
   # https://github.com/rspec/rspec-expectations
-  gem 'rspec-rails' # TODO
+  gem 'rspec-rails'
   # http://www.rubydoc.info/gems/factory_bot/file/GETTING_STARTED.md
+  # https://github.com/thoughtbot/factory_bot_rails
   gem 'factory_bot_rails'
+
+  # https://github.com/grosser/parallel_tests
+  # https://makandracards.com/makandra/1241-how-to-employ-and-run-your-tests-with-parallel_tests-to-speed-up-test-execution
+  gem 'parallel_tests' # TODO
 end
 
 group :test do
@@ -290,7 +309,7 @@ group :test do
 
   # Code coverage for Ruby 1.9+ with a powerful configuration library and automatic merging of coverage across test suites
   # https://github.com/colszowka/simplecov
-  # gem 'simplecov', :require => false
+  gem 'simplecov', :require => false
 end
 
 group :production, :staging do

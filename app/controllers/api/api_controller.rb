@@ -1,10 +1,8 @@
 require 'params_processor' # TODO
-require './lib/monkey_patches/array' # TODO
 
 class Api::ApiController < ActionController::API
   include ActionController::Caching
   include Zero::Log, OutPut
-  include OpenApi::DSL, AutoGenDoc
   include Rescuer
   include ParamsProcessor
   include MakeSure
@@ -12,12 +10,14 @@ class Api::ApiController < ActionController::API
 
   before_action :user_token_verify!
 
-  def self.skip_token options = { }
-    skip_before_action :user_token_verify!, options
-  end
+  before_action :process_params!
 
-  before_action :validate_and_convert_params!
-  before_action :set_permitted
+  rescue_from ::ParamsProcessor::ValidationFailed,
+              ::BusinessError::ZError,
+              ::ZeroRole::VerificationFailed,
+              ::ZeroPermission::InsufficientPermission do |e|
+    log_and_render e
+  end
 
   error_map(
          invalid_token: JWT::DecodeError,
@@ -25,15 +25,33 @@ class Api::ApiController < ActionController::API
       permission_error: ZeroPermission::InsufficientPermission
   )
 
+  def self.skip_token options = { }
+    skip_before_action :user_token_verify!, options
+  end
+
+  def self.error_cls(rt = nil)
+    "#{controller_name.camelize}Error".constantize
+  rescue
+    rt || ApiError
+  end
+
+  def self.error_cls?; error_cls(false) end
+
+  helper_method :render_error
+
+  def render_error # from are rescuer
+    error_class  = "#{controller_name.camelize}Error".constantize rescue nil
+    if error_class.respond_to?(action_error = "#{action_name}_failed")
+      @error_info = error_class.send(action_error).info.values
+    end
+    @_code, @_msg = @error_info
+  end
+
   private
 
   def log_and_render(e)
     log_error e
     # ren Rails.env.production? ? { code: 500, msg: 'something is wrong' } : e
     output e
-  end
-
-  def input(key = nil)
-    key.present? ? params[key] : (@zpa ||= Zero::ParamsAgent.tap { |zpa| zpa.params = params })
   end
 end

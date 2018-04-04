@@ -48,7 +48,7 @@
   "paths": {
     "/api/v1/categories": {
       "get": {
-        "summary": "GET list of categories.",
+        "summary": "GET list of categories",
         "operationId": "index",
         "tags": [
           "Categories"
@@ -58,7 +58,6 @@
             "name": "page",
             "in": "query",
             "required": false,
-            "description": "页数，从 1 开始",
             "schema": {
               "type": "integer",
               "minimum": 1,
@@ -69,7 +68,7 @@
             "name": "rows",
             "in": "query",
             "required": false,
-            "description": "per page, 请求的数据条数",
+            "description": "per page, number of result",
             "schema": {
               "type": "integer",
               "minimum": 1,
@@ -97,9 +96,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -131,7 +128,7 @@
         }
       },
       "post": {
-        "summary": "POST create a category.",
+        "summary": "POST create a category",
         "operationId": "create",
         "tags": [
           "Categories"
@@ -149,7 +146,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for creating the specified category",
+          "description": "",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -157,25 +154,17 @@
                 "properties": {
                   "name": {
                     "type": "string",
-                    "description": "名字"
+                    "description": "category name."
                   },
-                  "is_smaller": {
-                    "type": "boolean",
-                    "description": "icon name"
-                  },
-                  "icon_name": {
-                    "type": "string",
-                    "description": "是否二级分类?"
-                  },
-                  "base_id": {
+                  "base_category_id": {
                     "type": "integer",
-                    "description": "一级分类的 id"
+                    "description": "id of the base category. if no pass, it will be a root."
                   }
                 },
                 "required": [
-                  "name",
-                  "is_smaller"
-                ]
+                  "name"
+                ],
+                "permit": true
               }
             }
           }
@@ -200,9 +189,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -236,7 +223,7 @@
     },
     "/api/v1/categories/list": {
       "get": {
-        "summary": "GET nested list of categories.",
+        "summary": "GET nested list of categories",
         "operationId": "nested_list",
         "tags": [
           "Categories"
@@ -261,9 +248,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -294,7 +279,7 @@
     },
     "/api/v1/categories/{id}": {
       "patch": {
-        "summary": "PATCH update the specified category.",
+        "summary": "PATCH|PUT update the specified category.",
         "operationId": "update",
         "tags": [
           "Categories"
@@ -313,7 +298,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "要更新的 id",
             "schema": {
               "type": "integer"
             }
@@ -321,7 +305,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for updating the specified category",
+          "description": "",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -329,21 +313,14 @@
                 "properties": {
                   "name": {
                     "type": "string",
-                    "description": "名字"
+                    "description": "category name."
                   },
-                  "is_smaller": {
-                    "type": "boolean",
-                    "description": "icon name"
-                  },
-                  "icon_name": {
-                    "type": "string",
-                    "description": "是否二级分类?"
-                  },
-                  "base_id": {
+                  "base_category_id": {
                     "type": "integer",
-                    "description": "一级分类的 id"
+                    "description": "id of the base category. if pass null, it will be a root."
                   }
-                }
+                },
+                "permit": true
               }
             }
           }
@@ -368,9 +345,105 @@
                       "type": "integer"
                     },
                     "timestamp": {
+                      "type": "integer"
+                    },
+                    "language": {
+                      "type": "string",
+                      "default": "Ruby"
+                    },
+                    "data": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "601": {
+            "description": "update failed"
+          },
+          "-1": {
+            "description": "invalid token"
+          },
+          "-2": {
+            "description": "role verification failed"
+          },
+          "-3": {
+            "description": "insufficient permission"
+          },
+          "400": {
+            "description": "parameter validation failed"
+          }
+        }
+      },
+      "put": {
+        "summary": "PATCH|PUT update the specified category.",
+        "operationId": "update",
+        "tags": [
+          "Categories"
+        ],
+        "parameters": [
+          {
+            "name": "Token",
+            "in": "header",
+            "required": true,
+            "description": "user token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "category name."
+                  },
+                  "base_category_id": {
+                    "type": "integer",
+                    "description": "id of the base category. if pass null, it will be a root."
+                  }
+                },
+                "permit": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
                       "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "default": 200
+                    },
+                    "msg": {
+                      "type": "string",
+                      "default": "success"
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "timestamp": {
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -402,7 +475,7 @@
         }
       },
       "delete": {
-        "summary": "DELETE the specified category.",
+        "summary": "DELETE the specified category",
         "operationId": "destroy",
         "tags": [
           "Categories"
@@ -421,7 +494,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "要删除的 id",
             "schema": {
               "type": "integer"
             }
@@ -447,9 +519,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -483,8 +553,8 @@
     },
     "/api/v1/goods": {
       "get": {
-        "description": "GET list of goods.",
-        "summary": "GET list of goods.",
+        "description": "GET list of goods",
+        "summary": "GET list of goods",
         "operationId": "index",
         "tags": [
           "Goods"
@@ -503,27 +573,26 @@
             "name": "view",
             "in": "query",
             "required": false,
-            "description": "请求来自的视图，允许值：<br/>1/ 所有物品 (default): all<br/>2/ 上线物品: online<br/>3/ 下线物品: offline",
+            "description": "allows:<br/><br/>1/ (default): all<br/>2/ on sale goods: on_sale<br/>3/ off sale goods: off_sale",
             "schema": {
               "type": "string",
               "enum": [
                 "all",
-                "online",
-                "offline"
+                "on_sale",
+                "off_sale"
               ],
               "default": "all"
             }
           },
           {
-            "name": "search_type",
+            "name": "search_field",
             "in": "query",
             "required": false,
-            "description": "搜索的字段名，允许值：<br/>1/ name<br/>2/ creator<br/>3/ category_name<br/>4/ unit<br/>5/ price",
+            "description": "allows:<br/><br/>1/ name<br/>2/ category_name<br/>3/ unit<br/>4/ price",
             "schema": {
               "type": "string",
               "enum": [
                 "name",
-                "creator",
                 "category_name",
                 "unit",
                 "price"
@@ -532,19 +601,18 @@
             }
           },
           {
-            "name": "value",
+            "name": "search_value",
             "in": "query",
             "required": false,
-            "description": "查询词",
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "created_start_at",
+            "name": "created_from",
             "in": "query",
             "required": false,
-            "description": "时间起点, YY-MM-DD (HH:MM:SS, 可选)",
+            "description": "YY-MM-DD (HH:MM:SS, optional)",
             "schema": {
               "type": "string",
               "format": "date-time",
@@ -552,10 +620,10 @@
             }
           },
           {
-            "name": "created_end_at",
+            "name": "created_to",
             "in": "query",
             "required": false,
-            "description": "时间终点, YY-MM-DD (HH:MM:SS, 可选)",
+            "description": "YY-MM-DD (HH:MM:SS, optional)",
             "schema": {
               "type": "string",
               "format": "date-time",
@@ -566,7 +634,6 @@
             "name": "page",
             "in": "query",
             "required": false,
-            "description": "页数，从 1 开始",
             "schema": {
               "type": "integer",
               "minimum": 1,
@@ -577,7 +644,7 @@
             "name": "rows",
             "in": "query",
             "required": false,
-            "description": "per page, 请求的数据条数",
+            "description": "per page, number of result",
             "schema": {
               "type": "integer",
               "minimum": 1,
@@ -588,21 +655,9 @@
             "name": "export",
             "in": "query",
             "required": false,
-            "description": "是否将查询结果导出 Excel 文件",
+            "description": "export result to a Excel",
             "schema": {
-              "type": "boolean",
-              "examples": [
-                {
-                  "right_input": {
-                    "value": true
-                  }
-                },
-                {
-                  "wrong_input": {
-                    "value": "wrong input"
-                  }
-                }
-              ]
+              "type": "boolean"
             }
           }
         ],
@@ -626,9 +681,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -655,10 +708,7 @@
                           "remarks": {
                             "type": "string"
                           },
-                          "pic_path": {
-                            "type": "string"
-                          },
-                          "creator": {
+                          "picture": {
                             "type": "string"
                           },
                           "on_sale": {
@@ -680,16 +730,6 @@
                               },
                               "name": {
                                 "type": "string"
-                              },
-                              "base_category_id": {
-                                "type": "integer"
-                              },
-                              "icon_name": {
-                                "type": "string"
-                              },
-                              "deleted_at": {
-                                "type": "string",
-                                "format": "date-time"
                               }
                             }
                           }
@@ -713,42 +753,10 @@
           "400": {
             "description": "parameter validation failed"
           }
-        },
-        "examples": [
-          {
-            "right_input": {
-              "value": {
-                "Token": "Token",
-                "view": "view",
-                "search_type": "search_type",
-                "value": "value",
-                "created_start_at": "created_start_at",
-                "created_end_at": "created_end_at",
-                "page": "page",
-                "rows": "rows",
-                "export": "export"
-              }
-            }
-          },
-          {
-            "wrong_input": {
-              "value": {
-                "Token": null,
-                "view": null,
-                "search_type": null,
-                "value": null,
-                "created_start_at": null,
-                "created_end_at": null,
-                "page": null,
-                "rows": null,
-                "export": null
-              }
-            }
-          }
-        ]
+        }
       },
       "post": {
-        "summary": "POST create a good.",
+        "summary": "POST create a good",
         "operationId": "create",
         "tags": [
           "Goods"
@@ -766,77 +774,47 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for creating the specified good",
+          "description": "",
           "content": {
             "multipart/form-data": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "name": {
+                  "on_sale": {
+                    "type": "boolean"
+                  },
+                  "remarks": {
+                    "type": "string"
+                  },
+                  "picture": {
                     "type": "string",
-                    "description": "名字"
+                    "is": "url",
+                    "format": "url"
+                  },
+                  "name": {
+                    "type": "string"
                   },
                   "category_id": {
                     "type": "integer",
-                    "minimum": 1,
-                    "as": "cate",
-                    "not_permit": true,
-                    "description": "子类 id"
+                    "minimum": 1
                   },
                   "unit": {
-                    "type": "string",
-                    "description": "单位"
+                    "type": "string"
                   },
                   "price": {
                     "type": "number",
                     "format": "float",
-                    "minimum": 0,
-                    "description": "单价"
-                  },
-                  "on_sale": {
-                    "type": "boolean",
-                    "description": "是否上线?"
-                  },
-                  "remarks": {
-                    "type": "string",
-                    "description": "其他说明"
-                  },
-                  "pic_path": {
-                    "type": "string",
-                    "format": "url",
-                    "is": "url",
-                    "description": "图片路径"
+                    "minimum": 0
                   }
                 },
+                "permit": true,
                 "required": [
                   "name",
                   "category_id",
                   "unit",
                   "price"
                 ]
-              },
-              "examples": [
-                {
-                  "right_input": {
-                    "value": {
-                      "name": "good1",
-                      "category_id": 6,
-                      "unit": "unit",
-                      "price": 5.7
-                    }
-                  }
-                },
-                {
-                  "wrong_input": {
-                    "value": {
-                      "name": "good2",
-                      "category_id": 0,
-                      "unit": "unit",
-                      "price": -1
-                    }
-                  }
-                }
-              ]
+              }
             }
           }
         },
@@ -860,9 +838,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -896,7 +872,7 @@
     },
     "/api/v1/goods/{id}": {
       "get": {
-        "summary": "GET the specified good.",
+        "summary": "GET the specified good",
         "operationId": "show",
         "tags": [
           "Goods"
@@ -915,7 +891,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "要查询的 id",
             "schema": {
               "type": "integer"
             }
@@ -941,9 +916,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -970,10 +943,7 @@
                           "remarks": {
                             "type": "string"
                           },
-                          "pic_path": {
-                            "type": "string"
-                          },
-                          "creator": {
+                          "picture": {
                             "type": "string"
                           },
                           "on_sale": {
@@ -995,16 +965,6 @@
                               },
                               "name": {
                                 "type": "string"
-                              },
-                              "base_category_id": {
-                                "type": "integer"
-                              },
-                              "icon_name": {
-                                "type": "string"
-                              },
-                              "deleted_at": {
-                                "type": "string",
-                                "format": "date-time"
                               }
                             }
                           }
@@ -1031,7 +991,7 @@
         }
       },
       "patch": {
-        "summary": "PATCH update the specified Good.",
+        "summary": "PATCH|PUT update the specified good",
         "operationId": "update",
         "tags": [
           "Goods"
@@ -1050,7 +1010,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "要更新的 id",
             "schema": {
               "type": "integer"
             }
@@ -1058,48 +1017,40 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for updating the specified good",
+          "description": "",
           "content": {
             "multipart/form-data": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "name": {
+                  "on_sale": {
+                    "type": "boolean"
+                  },
+                  "remarks": {
+                    "type": "string"
+                  },
+                  "picture": {
                     "type": "string",
-                    "description": "名字"
+                    "is": "url",
+                    "format": "url"
+                  },
+                  "name": {
+                    "type": "string"
                   },
                   "category_id": {
                     "type": "integer",
-                    "minimum": 1,
-                    "as": "cate",
-                    "not_permit": true,
-                    "description": "子类 id"
+                    "minimum": 1
                   },
                   "unit": {
-                    "type": "string",
-                    "description": "单位"
+                    "type": "string"
                   },
                   "price": {
                     "type": "number",
                     "format": "float",
-                    "minimum": 0,
-                    "description": "单价"
-                  },
-                  "remarks": {
-                    "type": "string",
-                    "description": "其他说明"
-                  },
-                  "pic_path": {
-                    "type": "string",
-                    "format": "url",
-                    "is": "url",
-                    "description": "图片路径"
-                  },
-                  "on_sale": {
-                    "type": "boolean",
-                    "description": "是否上线"
+                    "minimum": 0
                   }
-                }
+                },
+                "permit": true
               }
             }
           }
@@ -1124,9 +1075,123 @@
                       "type": "integer"
                     },
                     "timestamp": {
+                      "type": "integer"
+                    },
+                    "language": {
+                      "type": "string",
+                      "default": "Ruby"
+                    },
+                    "data": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "601": {
+            "description": "update failed"
+          },
+          "-1": {
+            "description": "invalid token"
+          },
+          "-2": {
+            "description": "role verification failed"
+          },
+          "-3": {
+            "description": "insufficient permission"
+          },
+          "400": {
+            "description": "parameter validation failed"
+          }
+        }
+      },
+      "put": {
+        "summary": "PATCH|PUT update the specified good",
+        "operationId": "update",
+        "tags": [
+          "Goods"
+        ],
+        "parameters": [
+          {
+            "name": "Token",
+            "in": "header",
+            "required": true,
+            "description": "user token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "on_sale": {
+                    "type": "boolean"
+                  },
+                  "remarks": {
+                    "type": "string"
+                  },
+                  "picture": {
+                    "type": "string",
+                    "is": "url",
+                    "format": "url"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "category_id": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "unit": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "number",
+                    "format": "float",
+                    "minimum": 0
+                  }
+                },
+                "permit": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
                       "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "default": 200
+                    },
+                    "msg": {
+                      "type": "string",
+                      "default": "success"
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "timestamp": {
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -1158,7 +1223,7 @@
         }
       },
       "delete": {
-        "summary": "DELETE the specified good.",
+        "summary": "DELETE the specified good",
         "operationId": "destroy",
         "tags": [
           "Goods"
@@ -1177,7 +1242,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "要删除的 id",
             "schema": {
               "type": "integer"
             }
@@ -1203,9 +1267,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -1239,7 +1301,7 @@
     },
     "/api/v1/goods/{id}/change_onsale": {
       "post": {
-        "summary": "POST change online status of the specified good.",
+        "summary": "POST change sale status of the specified good",
         "operationId": "change_onsale",
         "tags": [
           "Goods"
@@ -1258,7 +1320,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "要上/下线的物品 id",
             "schema": {
               "type": "integer"
             }
@@ -1284,9 +1345,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -1320,18 +1379,17 @@
     },
     "/api/v1/inventories": {
       "get": {
-        "description": "GET list of inventories.",
-        "summary": "GET list of inventories.",
+        "summary": "GET list of inventories",
         "operationId": "index",
         "tags": [
           "Inventories"
         ],
         "parameters": [
           {
-            "name": "created_start_at",
+            "name": "created_from",
             "in": "query",
             "required": false,
-            "description": "时间起点, YY-MM-DD (HH:MM:SS, 可选)",
+            "description": "YY-MM-DD (HH:MM:SS, optional)",
             "schema": {
               "type": "string",
               "format": "date-time",
@@ -1339,10 +1397,10 @@
             }
           },
           {
-            "name": "created_end_at",
+            "name": "created_to",
             "in": "query",
             "required": false,
-            "description": "时间终点, YY-MM-DD (HH:MM:SS, 可选)",
+            "description": "YY-MM-DD (HH:MM:SS, optional)",
             "schema": {
               "type": "string",
               "format": "date-time",
@@ -1350,10 +1408,9 @@
             }
           },
           {
-            "name": "value",
+            "name": "search_value",
             "in": "query",
             "required": false,
-            "description": "查询词",
             "schema": {
               "type": "string"
             }
@@ -1362,7 +1419,6 @@
             "name": "page",
             "in": "query",
             "required": false,
-            "description": "页数，从 1 开始",
             "schema": {
               "type": "integer",
               "minimum": 1,
@@ -1373,7 +1429,7 @@
             "name": "rows",
             "in": "query",
             "required": false,
-            "description": "per page, 请求的数据条数",
+            "description": "per page, number of result",
             "schema": {
               "type": "integer",
               "minimum": 1,
@@ -1381,38 +1437,27 @@
             }
           },
           {
-            "name": "store_code",
+            "name": "store_name",
             "in": "query",
             "required": true,
-            "description": "商店代号",
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "search_type",
+            "name": "search_field",
             "in": "query",
             "required": false,
-            "description": "搜索的字段名，允许值：<br/><br/>1/ name<br/>2/ creator<br/>3/ category_name<br/>4/ unit<br/>5/ price",
+            "description": "allows:<br/><br/>1/ name<br/>2/ category_name<br/>3/ unit<br/>4/ price",
             "schema": {
               "type": "string",
               "enum": [
                 "name",
-                "creator",
                 "category_name",
                 "unit",
                 "price"
               ],
               "as": "field"
-            }
-          },
-          {
-            "name": "export",
-            "in": "query",
-            "required": false,
-            "description": "是否将查询结果导出 Excel 文件",
-            "schema": {
-              "type": "boolean"
             }
           }
         ],
@@ -1436,9 +1481,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -1472,7 +1515,7 @@
     },
     "/api/v1/permissions": {
       "get": {
-        "summary": "GET permissions list of the specified model.",
+        "summary": "GET permissions list of the specified model",
         "operationId": "index",
         "tags": [
           "Permissions"
@@ -1493,8 +1536,7 @@
             "required": false,
             "schema": {
               "type": "string",
-              "pattern": "^[A-Z]",
-              "default": "User"
+              "pattern": "\\A[A-Z][A-z]*\\z"
             }
           }
         ],
@@ -1518,9 +1560,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -1535,6 +1575,9 @@
                             "type": "integer"
                           },
                           "name": {
+                            "type": "string"
+                          },
+                          "source": {
                             "type": "string"
                           },
                           "remarks": {
@@ -1571,7 +1614,7 @@
         }
       },
       "post": {
-        "summary": "PATCH update the specified permission.",
+        "summary": "POST create a permission",
         "operationId": "create",
         "tags": [
           "Permissions"
@@ -1589,25 +1632,31 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for updating the specified permission",
+          "description": "",
           "content": {
             "multipart/form-data": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "name": {
-                    "type": "string",
-                    "description": "name of permission"
-                  },
-                  "condition": {
-                    "type": "string",
-                    "default": "true",
-                    "description": "暂不必传"
+                  "source": {
+                    "type": "string"
                   },
                   "remarks": {
                     "type": "string"
+                  },
+                  "model": {
+                    "type": "string",
+                    "pattern": "\\A[A-Z][A-z]*\\z"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "the sign of permission, it must be unique"
                   }
-                }
+                },
+                "permit": true,
+                "required": [
+                  "name"
+                ]
               }
             }
           }
@@ -1632,9 +1681,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -1667,8 +1714,214 @@
       }
     },
     "/api/v1/permissions/{id}": {
+      "patch": {
+        "summary": "PATCH|PUT update the specified permission",
+        "operationId": "update",
+        "tags": [
+          "Permissions"
+        ],
+        "parameters": [
+          {
+            "name": "Token",
+            "in": "header",
+            "required": true,
+            "description": "user token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "source": {
+                    "type": "string"
+                  },
+                  "remarks": {
+                    "type": "string"
+                  },
+                  "model": {
+                    "type": "string",
+                    "pattern": "\\A[A-Z][A-z]*\\z"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "permit": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "default": 200
+                    },
+                    "msg": {
+                      "type": "string",
+                      "default": "success"
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "timestamp": {
+                      "type": "integer"
+                    },
+                    "language": {
+                      "type": "string",
+                      "default": "Ruby"
+                    },
+                    "data": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "601": {
+            "description": "update failed"
+          },
+          "-1": {
+            "description": "invalid token"
+          },
+          "-2": {
+            "description": "role verification failed"
+          },
+          "-3": {
+            "description": "insufficient permission"
+          },
+          "400": {
+            "description": "parameter validation failed"
+          }
+        }
+      },
+      "put": {
+        "summary": "PATCH|PUT update the specified permission",
+        "operationId": "update",
+        "tags": [
+          "Permissions"
+        ],
+        "parameters": [
+          {
+            "name": "Token",
+            "in": "header",
+            "required": true,
+            "description": "user token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "source": {
+                    "type": "string"
+                  },
+                  "remarks": {
+                    "type": "string"
+                  },
+                  "model": {
+                    "type": "string",
+                    "pattern": "\\A[A-Z][A-z]*\\z"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "permit": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "default": 200
+                    },
+                    "msg": {
+                      "type": "string",
+                      "default": "success"
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "timestamp": {
+                      "type": "integer"
+                    },
+                    "language": {
+                      "type": "string",
+                      "default": "Ruby"
+                    },
+                    "data": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "601": {
+            "description": "update failed"
+          },
+          "-1": {
+            "description": "invalid token"
+          },
+          "-2": {
+            "description": "role verification failed"
+          },
+          "-3": {
+            "description": "insufficient permission"
+          },
+          "400": {
+            "description": "parameter validation failed"
+          }
+        }
+      },
       "delete": {
-        "summary": "DELETE the specified permission.",
+        "summary": "DELETE the specified permission",
         "operationId": "destroy",
         "tags": [
           "Permissions"
@@ -1687,7 +1940,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "要删除的 id",
             "schema": {
               "type": "integer"
             }
@@ -1713,9 +1965,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -1770,8 +2020,7 @@
             "required": false,
             "schema": {
               "type": "string",
-              "pattern": "^[A-Z]",
-              "default": "User"
+              "pattern": "\\A[A-Z][A-z]*\\z"
             }
           }
         ],
@@ -1795,9 +2044,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -1869,25 +2116,25 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for creating the specified role",
+          "description": "",
           "content": {
             "multipart/form-data": {
               "schema": {
                 "type": "object",
                 "properties": {
+                  "remarks": {
+                    "type": "string"
+                  },
+                  "model": {
+                    "type": "string",
+                    "pattern": "\\A[A-Z][A-z]*\\z"
+                  },
                   "name": {
                     "type": "string",
                     "description": "name of role"
-                  },
-                  "condition": {
-                    "type": "string",
-                    "default": "true",
-                    "description": "暂不必传"
-                  },
-                  "remarks": {
-                    "type": "string"
                   }
                 },
+                "permit": true,
                 "required": [
                   "name"
                 ]
@@ -1915,9 +2162,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -1970,7 +2215,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "要查询的 id",
             "schema": {
               "type": "integer"
             }
@@ -1996,9 +2240,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -2051,8 +2293,208 @@
           }
         }
       },
+      "patch": {
+        "summary": "PATCH|PUT update the specified role",
+        "operationId": "update",
+        "tags": [
+          "Roles"
+        ],
+        "parameters": [
+          {
+            "name": "Token",
+            "in": "header",
+            "required": true,
+            "description": "user token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "remarks": {
+                    "type": "string"
+                  },
+                  "model": {
+                    "type": "string",
+                    "pattern": "\\A[A-Z][A-z]*\\z"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "permit": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "default": 200
+                    },
+                    "msg": {
+                      "type": "string",
+                      "default": "success"
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "timestamp": {
+                      "type": "integer"
+                    },
+                    "language": {
+                      "type": "string",
+                      "default": "Ruby"
+                    },
+                    "data": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "601": {
+            "description": "update failed"
+          },
+          "-1": {
+            "description": "invalid token"
+          },
+          "-2": {
+            "description": "role verification failed"
+          },
+          "-3": {
+            "description": "insufficient permission"
+          },
+          "400": {
+            "description": "parameter validation failed"
+          }
+        }
+      },
+      "put": {
+        "summary": "PATCH|PUT update the specified role",
+        "operationId": "update",
+        "tags": [
+          "Roles"
+        ],
+        "parameters": [
+          {
+            "name": "Token",
+            "in": "header",
+            "required": true,
+            "description": "user token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "remarks": {
+                    "type": "string"
+                  },
+                  "model": {
+                    "type": "string",
+                    "pattern": "\\A[A-Z][A-z]*\\z"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "permit": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "default": 200
+                    },
+                    "msg": {
+                      "type": "string",
+                      "default": "success"
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "timestamp": {
+                      "type": "integer"
+                    },
+                    "language": {
+                      "type": "string",
+                      "default": "Ruby"
+                    },
+                    "data": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "601": {
+            "description": "update failed"
+          },
+          "-1": {
+            "description": "invalid token"
+          },
+          "-2": {
+            "description": "role verification failed"
+          },
+          "-3": {
+            "description": "insufficient permission"
+          },
+          "400": {
+            "description": "parameter validation failed"
+          }
+        }
+      },
       "delete": {
-        "summary": "DELETE the specified role.",
+        "summary": "DELETE the specified role",
         "operationId": "destroy",
         "tags": [
           "Roles"
@@ -2071,7 +2513,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "要删除的 id",
             "schema": {
               "type": "integer"
             }
@@ -2097,9 +2538,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -2152,7 +2591,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "要查询的 role id",
             "schema": {
               "type": "integer"
             }
@@ -2178,9 +2616,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -2211,7 +2647,7 @@
     },
     "/api/v1/roles/{id}/permissions/modify": {
       "post": {
-        "summary": "POST modify permissions to the specified role and then save to db",
+        "summary": "POST modify permissions to the specified roles",
         "operationId": "permissions_modify",
         "tags": [
           "Roles"
@@ -2230,15 +2666,14 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "role id",
             "schema": {
               "type": "integer"
             }
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "for modifying permissions to the specified role",
+          "required": false,
+          "description": "",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -2248,9 +2683,9 @@
                     "type": "array",
                     "items": {
                       "type": "integer",
-                      "minimum": 1
+                      "minLength": 1
                     },
-                    "minItems": 1
+                    "minItems": 0
                   }
                 },
                 "required": [
@@ -2280,9 +2715,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -2313,7 +2746,7 @@
     },
     "/api/v1/stores": {
       "get": {
-        "summary": "GET list of stores.",
+        "summary": "GET list of stores",
         "operationId": "index",
         "tags": [
           "Stores"
@@ -2323,20 +2756,21 @@
             "name": "page",
             "in": "query",
             "required": false,
-            "description": "偏移量，从 0 开始",
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "default": 1
             }
           },
           {
             "name": "rows",
             "in": "query",
             "required": false,
-            "description": "per page, 请求的数据条数",
+            "description": "per page, number of result",
             "schema": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "default": 10
             }
           }
         ],
@@ -2360,9 +2794,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -2376,10 +2808,10 @@
                           "id": {
                             "type": "integer"
                           },
-                          "code": {
+                          "name": {
                             "type": "string"
                           },
-                          "addr": {
+                          "address": {
                             "type": "string"
                           }
                         }
@@ -2405,7 +2837,7 @@
         }
       },
       "post": {
-        "summary": "POST create a store.",
+        "summary": "POST create a store",
         "operationId": "create",
         "tags": [
           "Stores"
@@ -2423,25 +2855,24 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for creating the specified store",
+          "description": "",
           "content": {
             "multipart/form-data": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "code": {
-                    "type": "string",
-                    "description": "商店代号"
+                  "name": {
+                    "type": "string"
                   },
-                  "addr": {
-                    "type": "string",
-                    "description": "对应的商店地址"
+                  "address": {
+                    "type": "string"
                   }
                 },
                 "required": [
-                  "code",
-                  "addr"
-                ]
+                  "name",
+                  "address"
+                ],
+                "permit": true
               }
             }
           }
@@ -2466,9 +2897,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -2502,7 +2931,7 @@
     },
     "/api/v1/stores/{id}": {
       "get": {
-        "summary": "GET the specified store.",
+        "summary": "GET the specified store",
         "operationId": "show",
         "tags": [
           "Stores"
@@ -2512,7 +2941,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "要查询的 id",
             "schema": {
               "type": "integer"
             }
@@ -2538,9 +2966,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -2554,10 +2980,10 @@
                           "id": {
                             "type": "integer"
                           },
-                          "code": {
+                          "name": {
                             "type": "string"
                           },
-                          "addr": {
+                          "address": {
                             "type": "string"
                           }
                         }
@@ -2583,7 +3009,7 @@
         }
       },
       "patch": {
-        "summary": "POST update the specified store.",
+        "summary": "POST update the specified store",
         "operationId": "update",
         "tags": [
           "Stores"
@@ -2602,7 +3028,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "要更新的 id",
             "schema": {
               "type": "integer"
             }
@@ -2610,21 +3035,20 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for updating the specified store",
+          "description": "",
           "content": {
             "multipart/form-data": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "code": {
-                    "type": "string",
-                    "description": "商店代号"
+                  "name": {
+                    "type": "string"
                   },
-                  "addr": {
-                    "type": "string",
-                    "description": "对应的商店地址"
+                  "address": {
+                    "type": "string"
                   }
-                }
+                },
+                "permit": true
               }
             }
           }
@@ -2649,9 +3073,103 @@
                       "type": "integer"
                     },
                     "timestamp": {
+                      "type": "integer"
+                    },
+                    "language": {
+                      "type": "string",
+                      "default": "Ruby"
+                    },
+                    "data": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "601": {
+            "description": "update failed"
+          },
+          "-1": {
+            "description": "invalid token"
+          },
+          "-2": {
+            "description": "role verification failed"
+          },
+          "-3": {
+            "description": "insufficient permission"
+          },
+          "400": {
+            "description": "parameter validation failed"
+          }
+        }
+      },
+      "put": {
+        "summary": "POST update the specified store",
+        "operationId": "update",
+        "tags": [
+          "Stores"
+        ],
+        "parameters": [
+          {
+            "name": "Token",
+            "in": "header",
+            "required": true,
+            "description": "user token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "type": "string"
+                  }
+                },
+                "permit": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
                       "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "default": 200
+                    },
+                    "msg": {
+                      "type": "string",
+                      "default": "success"
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "timestamp": {
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -2683,7 +3201,7 @@
         }
       },
       "delete": {
-        "summary": "DELETE the specified store.",
+        "summary": "DELETE the specified store",
         "operationId": "destroy",
         "tags": [
           "Stores"
@@ -2702,7 +3220,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "要删除的 id",
             "schema": {
               "type": "integer"
             }
@@ -2728,9 +3245,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -2764,7 +3279,7 @@
     },
     "/api/v1/u/{name}": {
       "get": {
-        "summary": "GET the specified user by name.",
+        "summary": "GET the specified user by name",
         "operationId": "show_via_name",
         "tags": [
           "Users"
@@ -2809,9 +3324,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -2833,7 +3346,7 @@
     },
     "/api/v1/users": {
       "get": {
-        "summary": "GET list of users.",
+        "summary": "GET list of users",
         "operationId": "index",
         "tags": [
           "Users"
@@ -2852,7 +3365,6 @@
             "name": "page",
             "in": "query",
             "required": false,
-            "description": "页数，从 1 开始",
             "schema": {
               "type": "integer",
               "minimum": 1,
@@ -2863,7 +3375,7 @@
             "name": "rows",
             "in": "query",
             "required": false,
-            "description": "per page, 请求的数据条数",
+            "description": "per page, number of result",
             "schema": {
               "type": "integer",
               "minimum": 1,
@@ -2891,9 +3403,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -2918,10 +3428,6 @@
                           },
                           "phone_number": {
                             "type": "string"
-                          },
-                          "deleted_at": {
-                            "type": "string",
-                            "format": "date-time"
                           },
                           "created_at": {
                             "type": "string",
@@ -2952,7 +3458,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for registering user",
+          "description": "",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -2978,7 +3484,8 @@
                   "name",
                   "password",
                   "password_confirmation"
-                ]
+                ],
+                "permit": true
               }
             }
           }
@@ -3003,9 +3510,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -3036,22 +3541,21 @@
     },
     "/api/v1/users/login": {
       "post": {
-        "summary": "POST user login.",
+        "summary": "POST user login",
         "operationId": "login",
         "tags": [
           "Users"
         ],
         "requestBody": {
           "required": true,
-          "description": "for user login",
+          "description": "",
           "content": {
             "multipart/form-data": {
               "schema": {
                 "type": "object",
                 "properties": {
                   "name": {
-                    "type": "string",
-                    "description": "user name"
+                    "type": "string"
                   },
                   "password": {
                     "type": "string"
@@ -3085,9 +3589,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -3112,7 +3614,7 @@
     },
     "/api/v1/users/{id}": {
       "get": {
-        "summary": "GET the specified user.",
+        "summary": "GET the specified user",
         "operationId": "show",
         "tags": [
           "Users"
@@ -3129,11 +3631,10 @@
           },
           {
             "name": "id",
-            "in": "query",
+            "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "minimum": 1
+              "type": "integer"
             }
           }
         ],
@@ -3157,9 +3658,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -3185,10 +3684,6 @@
                           "phone_number": {
                             "type": "string"
                           },
-                          "deleted_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
                           "created_at": {
                             "type": "string",
                             "format": "date-time"
@@ -3211,7 +3706,7 @@
         }
       },
       "patch": {
-        "summary": "PATCH update the specified User.",
+        "summary": "PATCH|PUT update the specified user",
         "operationId": "update",
         "tags": [
           "Users"
@@ -3230,7 +3725,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "要更新的 id",
             "schema": {
               "type": "integer"
             }
@@ -3238,7 +3732,7 @@
         ],
         "requestBody": {
           "required": true,
-          "description": "for updating the specified user",
+          "description": "",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -3259,7 +3753,8 @@
                   "phone_number": {
                     "type": "string"
                   }
-                }
+                },
+                "permit": true
               }
             }
           }
@@ -3284,9 +3779,100 @@
                       "type": "integer"
                     },
                     "timestamp": {
+                      "type": "integer"
+                    },
+                    "language": {
+                      "type": "string",
+                      "default": "Ruby"
+                    },
+                    "data": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "parameter validation failed"
+          }
+        }
+      },
+      "put": {
+        "summary": "PATCH|PUT update the specified user",
+        "operationId": "update",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "Token",
+            "in": "header",
+            "required": true,
+            "description": "user token",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "password_confirmation": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "phone_number": {
+                    "type": "string"
+                  }
+                },
+                "permit": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
                       "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "default": 200
+                    },
+                    "msg": {
+                      "type": "string",
+                      "default": "success"
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "timestamp": {
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -3306,7 +3892,7 @@
         }
       },
       "delete": {
-        "summary": "DELETE the specified User.",
+        "summary": "DELETE the specified user",
         "operationId": "destroy",
         "tags": [
           "Users"
@@ -3325,7 +3911,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "要删除的 id",
             "schema": {
               "type": "integer"
             }
@@ -3351,9 +3936,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -3394,7 +3977,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "要查询的 user id",
             "schema": {
               "type": "integer"
             }
@@ -3420,9 +4002,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -3463,7 +4043,6 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "要查询的 user id",
             "schema": {
               "type": "integer"
             }
@@ -3489,9 +4068,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",
@@ -3532,15 +4109,14 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "description": "user id",
             "schema": {
               "type": "integer"
             }
           }
         ],
         "requestBody": {
-          "required": true,
-          "description": "for modifying roles to the specified user",
+          "required": false,
+          "description": "",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -3550,9 +4126,9 @@
                     "type": "array",
                     "items": {
                       "type": "integer",
-                      "minimum": 1
+                      "minLength": 1
                     },
-                    "minItems": 1
+                    "minItems": 0
                   }
                 },
                 "required": [
@@ -3582,9 +4158,7 @@
                       "type": "integer"
                     },
                     "timestamp": {
-                      "type": "integer",
-                      "format": "time",
-                      "is": "time"
+                      "type": "integer"
                     },
                     "language": {
                       "type": "string",

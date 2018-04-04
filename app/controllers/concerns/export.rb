@@ -16,12 +16,12 @@ module Export
     #   xlsx = File.new("#{Keys.export_path}/#{Time.current.to_i} goods_list.xlsx", 'w')
     #   Axlsx::Package.new do |p|
     #     p.workbook.add_worksheet(:name => 'Goods List') do |sheet|
-    #       sheet.add_row %w[name base_category sub_category unit price creator created_at remarks on_sale]
+    #       sheet.add_row %w[name base_category sub_category unit price created_at remarks on_sale]
     #       @data.page(@page).per(@rows).each do |good|
     #         sheet.add_row [
     #                           good.name,
     #                           *good.category.path,
-    #                           *good.serializable_hash.values_at(*%w[unit price creator remarks]),
+    #                           *good.serializable_hash.values_at(*%w[unit price remarks]),
     #                           good.created_at.to_s,
     #                           good.on_sale ? 'yes' : 'no'
     #                       ]

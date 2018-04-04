@@ -1,4 +1,4 @@
-unless @status
+if @status == false
   @_code, @_msg = @error_info.present? ? @error_info : CategoriesError.create_failed.info.values
 end
 

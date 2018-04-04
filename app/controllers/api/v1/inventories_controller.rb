@@ -1,11 +1,10 @@
 class Api::V1::InventoriesController < Api::V1::BaseController
-  # include ActiveRecordErrorsRescuer
-  include Export
+  include ActiveRecordErrorsRescuer
 
-  skip_token only: [:index]
+  skip_token only: :index
 
+  # TODO: view
   def index
-    @data = Inventory.where good: Good.search_by(@field, @value), store: Store.find_by!(code: @store_code)
-    export_inventories if @export
+    @data = Inventory.where good: Good.search(@field, with: @value), store: Store.find_by!(name: @store_name)
   end
 end

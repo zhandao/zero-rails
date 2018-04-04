@@ -1,48 +1,40 @@
 class Category < ApplicationRecord
+  include Search
+
   has_many   :sub_categories, class_name: 'Category', foreign_key: 'base_category_id'
   belongs_to :base_category,  class_name: 'Category', optional: true
 
+  include ToTree
+  as_tree by_key: 'base_category_id'
+
   has_many :goods#, dependent: :nullify
 
-  acts_as_paranoid
-
-  builder_support rmv: %i[ updated_at created_at delete_at ]
-  # builder_add :base_category, when: proc { is_smaller }
+  builder_support rmv: %i[ updated_at created_at ]
   builder_add :sub_categories_info, when: :get_nested_list
+  builder_add :base_category_info, name: :base_category, when: -> { base_category.present? } # TODO: 思考：为什么 get_nested_list 时不会有该 info？
 
-  # TODO: clear caches admin op
-  def self.all_from_cache
-    Rails.cache.fetch('categories') { all.to_a }
-  end
+  soft_destroy
 
-  scope :search_by_name, ->(name) { where 'name LIKE ?', "%#{name}%" }
+  validates :name, presence: true
 
-  scope :extend_search_by_name, ->(name) do
-    Rails.cache.fetch("extend_categories_#{name}") do
-      search_result = search_by_name(name).pluck(:id)
-      search_result.map do |id|
-        all_from_cache[id - 1].sub_categories&.map(&:id)
-      end.concat(search_result).flatten.uniq
-    end
+  # `extend` means that: when search a base_cate, should return all of it's sub_cates.
+  # @retrun ids array
+  scope :extend_search_by_name, -> (name) do
+    searched = search('name', with: name)
+    (searched.ids + searched.map { |c| c.sub_categories.ids }).flatten.uniq
   end
 
   scope :from_base_categories, -> { where base_category: nil }
 
-  # TODO: all scope and aft_cmt => concern
-  after_commit do
-    Rails.cache.delete_matched(/categories/)
-  end
-
+  # @return [ base_cate_name, sub_cate_name ]
   def path
-    base_category.nil? ? [ name, '' ] : [ Category.all_from_cache[base_category_id - 1].name, name ]
-  end
-
-  def json_addition
-    proc do |json|
-      # TODO HACK
-      if base_category.present? && !Category.instance_variable_get('@get_nested_list')
-        json.base_category Category.all_from_cache[base_category_id - 1].to_builder
-      end
-    end
+    base_category.nil? ? [ name, '' ] : [ base_category&.name, name ]
   end
 end
+
+
+__END__
+
+t.string   :name,          null: false
+t.integer  :base_category
+t.datetime :deleted_at

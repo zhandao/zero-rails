@@ -1,5 +1,7 @@
 require 'rails_helper'
+require 'dssl/model'
 
 RSpec.describe Permission, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:permission) { create(:permission) }
+  subject { permission }
 end

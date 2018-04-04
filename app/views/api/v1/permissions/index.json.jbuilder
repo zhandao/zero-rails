@@ -1,4 +1,4 @@
-json.partial! 'api/base', total: @data.size
+json.partial! 'api/base', total: @data.to_a.size
 
 json.data do
   # @data = @data.page(@page).per(@rows) if @page || @rows

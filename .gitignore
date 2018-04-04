@@ -12,6 +12,7 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+coverage
 
 config/settings.local.yml
 config/settings/*.local.yml

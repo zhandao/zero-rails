@@ -11,26 +11,28 @@ module MakeSure
       MakeSure.permission_mapper.merge! map_hash
     end
 
-    def to_access *actions, need_to_be: nil, should_can: nil
-      actions += %i[ index show create update destroy ] if actions.delete(:CRUDI)
-      before_action only: actions do
-        make_sure.can!(should_can)
+    def if_can *permission_codes, source: nil, allow: [ ], allow_matched: [ ]
+      allow = ::OpenApi::Generator.get_actions_by_route_base(controller_path) if allow == :all
+      if allow.present?
+        to_access *allow, should_can: permission_codes, source: source
+      else
+        to_access_matched *allow_matched, should_can: permission_codes, source: source
       end
     end
 
-    def to_access_matched *actions, need_to_be: nil, should_can: nil
-      ctrl_actions = ::OpenApi::Generator.get_actions_by_ctrl_path(controller_path)
+    def to_access *actions, need_to_be: nil, should_can: nil, source: nil
+      actions += %i[ index show create update destroy ] if actions.delete(:CRUDI)
+      prepend_before_action only: actions do
+        user_token_verify! unless make_sure.nil?
+        make_sure.can!(should_can, source: source)
+      end
+    end
+
+    def to_access_matched *actions, need_to_be: nil, should_can: nil, source: nil
+      ctrl_actions = ::OpenApi::Generator.get_actions_by_route_base(controller_path)
       real_actions = [ ]
       actions.each { |pattern| real_actions += ctrl_actions.grep(/#{pattern}/) }
-      to_access *real_actions, need_to_be, should_can
-    end
-
-    def if_can *permission_codes, allow: [ ], allow_matched: [ ]
-      if allow.present?
-        to_access *allow, should_can: permission_codes
-      else
-        to_access_matched *allow_matched, should_can: permission_codes
-      end
+      to_access *real_actions, need_to_be: need_to_be, should_can: should_can, source: source
     end
 
     # Logic can't be equivalent to Service Object
@@ -57,8 +59,8 @@ module MakeSure
   # it must: %i[ not_alone be_happy ]
   # TODO: make_sure(a and b)
   def make_sure(obj = NoPass, action = nil, *args, &block)
+    @_make_sure_obj = obj if obj == :it
     @_make_sure_obj = current_user if obj == NoPass
-    @_make_sure_obj = obj unless obj == :it
     return self if action.nil?
 
     if action.is_a?(Symbol)
@@ -78,12 +80,12 @@ module MakeSure
   # make_sure(obj).can :permission { }
   # make_sure(obj).can :permission, :then { }
   # make_sure(obj).can :permission, :else { }
-  def can? *permission_codes, &block
+  def can? *permission_codes, source: nil, &block
     block_condition = permission_codes.delete(:then) || permission_codes.delete(:else)
     permission_codes.flatten.each do |code|
       vp = vactual_permissions = [ *Array(MakeSure.permission_mapper[code] || code) ]
       # vp = [ *vp, *PermissionCode.where(code: code).map(&:permissions).flatten.compact.map(&:name).uniq ]
-      unless @_make_sure_obj.can_all_of? *vp
+      unless @_make_sure_obj.can_all_of? *vp, source: source
         instance_eval(&block) if block_condition == :else
         return false
       end
@@ -95,8 +97,8 @@ module MakeSure
 
   alias_method :can, :can?
 
-  def can! *permission_codes
-    raise ZeroPermission::InsufficientPermission unless can? *permission_codes
+  def can! *permission_codes, source: nil
+    raise ZeroPermission::InsufficientPermission unless can? *permission_codes, source: source
   end
 
   def must *logic_names
@@ -152,3 +154,4 @@ end
 to_access :interface, need_to_be: :huge_man
 to_access :interface, should_can: :do_anything # scenario: focus on actions
 if_can :do_anything, allow: :interface         # scenario: focus on Strategy
+if_can :read, source: Good, allow: :show

@@ -4,12 +4,12 @@ class Api::V1::CategoriesController < Api::V1::BaseController
   skip_token only: %i[ index nested_list ]
 
   def index
-    @data = Category.all_from_cache
+    @data = Category.all
   end
 
 
   def nested_list
-    @data = Category.from_base_categories.get_nested_list.to_a
+    @data = Category.from_base_categories.get_nested_list
   end
 
 

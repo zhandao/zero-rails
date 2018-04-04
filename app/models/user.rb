@@ -1,11 +1,13 @@
 class User < ApplicationRecord
   has_many :entity_roles, as: :entity
-
   has_many :roles, through: :entity_roles
 
   has_many :entity_permissions, as: :entity
-
   has_many :permissions, through: :entity_permissions
+
+  builder_support
+
+  soft_destroy
 
   include ZeroRole
   include ZeroPermission
@@ -15,11 +17,15 @@ class User < ApplicationRecord
 
   has_secure_password
 
-  def conn(role: nil, permission: nil)
-    role.present? ? entity_roles.create!(role: role) : entity_permissions.create!(permission: permission)
+  def self.roles
+    Role.where(model: 'User')
   end
 
-  # def unconn
+  def add(role: nil, permission: nil)
+    role.present? ? roles << Role.find_by(name: role) : permissions << Permission.find_by(name: permission)
+  end
+
+  # def rmv TODO
 
   def jwt_payload
     {
@@ -43,7 +49,7 @@ class User < ApplicationRecord
   #   is :admin, never
   #   is :admin, always
   #   is :admin, never
-  #   is? :admin? => true
+  #   is? :admin => true
   def roles_setting
     super()
 
@@ -107,22 +113,6 @@ class User < ApplicationRecord
     role_group :ad, can: :read # => can `read`
     role :vip, can: :say_hi
     role :level1, can: :say_hello
-
-    # 无权限调用方法时会抛异常
-    role :admin, can_call: :hello
-    # can_call :hello, role: :other
-  end
-
-  def hello
-    puts 'hello'
-  end
-
-  def fight
-    'pong'
-  end
-
-  def fighting
-    puts 'fighting'
   end
 
   def relation_with?(user)
