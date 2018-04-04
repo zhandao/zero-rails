@@ -25,13 +25,9 @@ GIT
       font-awesome-rails
       jquery-rails
 
-PATH
-  remote: ../generators
-  specs:
-    generators (0.1.0)
-
-PATH
-  remote: ../zero-params_processor
+GIT
+  remote: https://github.com/zhandao/zero-params_processor.git
+  revision: e2afc49f0c695cc57693adc45c6bc52128456aeb
   specs:
     zero-params_processor (0.3.0)
       activesupport (>= 3)
@@ -39,13 +35,19 @@ PATH
       rails (>= 3)
       zero-rails_openapi (>= 1.5.2)
 
-PATH
-  remote: ../zero-rails_openapi
+GIT
+  remote: https://github.com/zhandao/zero-rails_openapi.git
+  revision: 0ae6baf98c22ae97add3d6aee6b58e71c8b48969
   specs:
     zero-rails_openapi (1.5.6)
       activesupport (>= 3)
       colorize
       rails (>= 3)
+
+PATH
+  remote: ../generators
+  specs:
+    generators (0.1.0)
 
 GEM
   remote: https://gems.ruby-china.org/
@@ -276,7 +278,6 @@ GEM
     mini_portile2 (2.3.0)
     minitest (5.11.3)
     multi_json (1.13.1)
-    mysql2 (0.4.9)
     newrelic_rpm (4.5.0.337)
     nio4r (2.3.0)
     nokogiri (1.8.2)
@@ -290,6 +291,7 @@ GEM
     parser (2.4.0.2)
       ast (~> 2.3)
     path_expander (1.0.2)
+    pg (1.0.0)
     polyamorous (1.3.2)
       activerecord (>= 3.0)
     powerpack (0.1.1)
@@ -498,10 +500,10 @@ DEPENDENCIES
   mina-puma
   mina-sidekiq
   multi_json
-  mysql2 (>= 0.3.18, < 0.5)
   newrelic_rpm
   parallel_tests
   paranoia
+  pg (~> 1.0.0)
   pry
   pry-byebug
   pry-stack_explorer

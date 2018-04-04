@@ -12,21 +12,10 @@
 
 ActiveRecord::Schema.define(version: 20171020172654) do
 
-  create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "namespace"
-    t.text "body"
-    t.string "resource_type"
-    t.bigint "resource_id"
-    t.string "author_type"
-    t.bigint "author_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
-    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
-    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id"
-  end
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
-  create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC" do |t|
+  create_table "categories", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "base_category_id"
     t.datetime "deleted_at"
@@ -36,7 +25,7 @@ ActiveRecord::Schema.define(version: 20171020172654) do
     t.index ["name"], name: "index_categories_on_name", unique: true
   end
 
-  create_table "entity_permissions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC" do |t|
+  create_table "entity_permissions", force: :cascade do |t|
     t.string "entity_type"
     t.bigint "entity_id"
     t.bigint "permission_id"
@@ -47,7 +36,7 @@ ActiveRecord::Schema.define(version: 20171020172654) do
     t.index ["permission_id"], name: "index_entity_permissions_on_permission_id"
   end
 
-  create_table "entity_roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC" do |t|
+  create_table "entity_roles", force: :cascade do |t|
     t.string "entity_type"
     t.bigint "entity_id"
     t.bigint "role_id"
@@ -58,11 +47,11 @@ ActiveRecord::Schema.define(version: 20171020172654) do
     t.index ["role_id"], name: "index_entity_roles_on_role_id"
   end
 
-  create_table "goods", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC" do |t|
+  create_table "goods", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "category_id"
     t.string "unit", null: false
-    t.float "price", limit: 24, null: false
+    t.float "price", null: false
     t.string "remarks"
     t.string "picture"
     t.boolean "on_sale", default: true
@@ -73,7 +62,7 @@ ActiveRecord::Schema.define(version: 20171020172654) do
     t.index ["name"], name: "index_goods_on_name"
   end
 
-  create_table "inventories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC" do |t|
+  create_table "inventories", force: :cascade do |t|
     t.bigint "store_id"
     t.bigint "good_id"
     t.integer "amount", default: 0, null: false
@@ -84,7 +73,7 @@ ActiveRecord::Schema.define(version: 20171020172654) do
     t.index ["store_id"], name: "index_inventories_on_store_id"
   end
 
-  create_table "permissions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC" do |t|
+  create_table "permissions", force: :cascade do |t|
     t.string "name", null: false
     t.string "source"
     t.string "model", default: "", null: false
@@ -94,7 +83,7 @@ ActiveRecord::Schema.define(version: 20171020172654) do
     t.index ["name", "source", "model"], name: "permission_unique_index", unique: true
   end
 
-  create_table "role_permissions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC" do |t|
+  create_table "role_permissions", force: :cascade do |t|
     t.bigint "role_id"
     t.bigint "permission_id"
     t.datetime "created_at", null: false
@@ -104,7 +93,7 @@ ActiveRecord::Schema.define(version: 20171020172654) do
     t.index ["role_id"], name: "index_role_permissions_on_role_id"
   end
 
-  create_table "roles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC" do |t|
+  create_table "roles", force: :cascade do |t|
     t.string "name", null: false
     t.string "model", default: "", null: false
     t.string "remarks"
@@ -115,7 +104,7 @@ ActiveRecord::Schema.define(version: 20171020172654) do
     t.index ["name", "model"], name: "role_unique_index", unique: true
   end
 
-  create_table "stores", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC" do |t|
+  create_table "stores", force: :cascade do |t|
     t.string "name", null: false
     t.string "address", null: false
     t.datetime "deleted_at"
@@ -123,7 +112,7 @@ ActiveRecord::Schema.define(version: 20171020172654) do
     t.index ["name"], name: "index_stores_on_name", unique: true
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC" do |t|
+  create_table "users", force: :cascade do |t|
     t.string "name", null: false
     t.string "password_digest", null: false
     t.string "email"
@@ -136,7 +125,7 @@ ActiveRecord::Schema.define(version: 20171020172654) do
     t.index ["phone_number"], name: "index_users_on_phone_number", unique: true
   end
 
-  create_table "verifications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC" do |t|
+  create_table "verifications", force: :cascade do |t|
     t.bigint "user_id"
     t.string "code", null: false
     t.string "type", default: "phone"

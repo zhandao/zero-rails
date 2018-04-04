@@ -30,7 +30,7 @@ Category.create name:"清洁耗材类", base_category_id: 2
 
 
 stores = %w[store1 store2 store3]
-stores.size.times { |i| Store.create code: i + 1, addr: stores[i] } # FIXME
+stores.size.times { |i| Store.create address: i + 1, name: stores[i] } # FIXME
 
 
 Good.create name: "文件收纳1", unit: "个",	price: 7.13,  category_id: 3

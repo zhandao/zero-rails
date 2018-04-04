@@ -1,6 +1,6 @@
 class CreateCategories < ActiveRecord::Migration[5.1]
   def change
-    create_table :categories, options: 'ROW_FORMAT=DYNAMIC DEFAULT CHARSET=utf8' do |t|
+    create_table :categories, force: :cascade do |t|
       t.string     :name,          null: false
       t.references :base_category, index: true
       t.datetime   :deleted_at
@@ -8,6 +8,6 @@ class CreateCategories < ActiveRecord::Migration[5.1]
       t.timestamps
     end
 
-    add_index :categories, :name, unique: true
+    add_index :categories, :name, unique: true, using: :btree
   end
 end

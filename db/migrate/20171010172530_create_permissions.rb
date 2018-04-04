@@ -1,6 +1,6 @@
 class CreatePermissions < ActiveRecord::Migration[5.1]
   def change
-    create_table :permissions, options: 'ROW_FORMAT=DYNAMIC DEFAULT CHARSET=utf8' do |t|
+    create_table :permissions, force: :cascade do |t|
       t.string  :name,    null: false
       t.string  :source
       t.string  :model,   null: false, default: ''
@@ -9,6 +9,6 @@ class CreatePermissions < ActiveRecord::Migration[5.1]
       t.timestamps
     end
 
-    add_index :permissions, [:name, :source, :model], unique: true, name: 'permission_unique_index'
+    add_index :permissions, [:name, :source, :model], unique: true, name: 'permission_unique_index', using: :btree
   end
 end

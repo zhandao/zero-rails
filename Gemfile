@@ -13,9 +13,9 @@ gem 'rails', '~> 5.1.5'
 # *** Databases ***
 
 # Use mysql as the database for Active Record
-gem 'mysql2', '>= 0.3.18', '< 0.5'
+# gem 'mysql2', '>= 0.3.18', '< 0.5'
 # Use postgresql as the database for Active Record
-# gem 'pg', '~> 0.18'
+gem 'pg', '~> 1.0.0'
 # Use Redis adapter to run Action Cable in production
 gem 'redis', '~> 4.0'
 # https://github.com/redis-store/redis-rails
@@ -58,10 +58,10 @@ gem 'paranoia'
 
 # gem 'zero-rails_openapi'
 # gem 'zero-params_processor'
-# gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
-# gem 'zero-params_processor', github: 'zhandao/zero-params_processor'
-gem 'zero-rails_openapi', path: '~/ws/zero-rails_openapi'
-gem 'zero-params_processor', path: '~/ws/zero-params_processor'
+gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
+gem 'zero-params_processor', github: 'zhandao/zero-params_processor'
+# gem 'zero-rails_openapi', path: '~/ws/zero-rails_openapi'
+# gem 'zero-params_processor', path: '~/ws/zero-params_processor'
 
 
 # *** App Server ***
