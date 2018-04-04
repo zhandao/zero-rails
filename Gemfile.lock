@@ -26,6 +26,12 @@ GIT
       jquery-rails
 
 GIT
+  remote: https://github.com/ikkiuchi/generators.git
+  revision: ec7d6c40433922a0e64e6a2a2571faf589557fb9
+  specs:
+    generators (0.1.0)
+
+GIT
   remote: https://github.com/zhandao/zero-params_processor.git
   revision: e2afc49f0c695cc57693adc45c6bc52128456aeb
   specs:
@@ -43,11 +49,6 @@ GIT
       activesupport (>= 3)
       colorize
       rails (>= 3)
-
-PATH
-  remote: ../generators
-  specs:
-    generators (0.1.0)
 
 GEM
   remote: https://gems.ruby-china.org/

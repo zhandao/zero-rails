@@ -203,8 +203,8 @@ gem 'coffee-rails'
 
 # FIXME: 职责分离，然后将其划分到 development
 # https://github.com/ikkiuchi/generators
-# gem 'generators', github: 'ikkiuchi/generators'
-gem 'generators', path: '~/ws/generators'
+gem 'generators', github: 'ikkiuchi/generators'
+# gem 'generators', path: '~/ws/generators'
 
 group :development do
   # http://nadarei.co/mina/
