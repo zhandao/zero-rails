@@ -30,6 +30,7 @@ before_install:
 #  - psql -c "create database \"homeland-test\" WITH OWNER=\"admin\";" -U postgres
   - psql -c "create database zero_test;" -U postgres
   - cp config/database.yml.pg config/database.yml
+  - cp config/settings.local.yml.example config/settings.local.yml
   - cp config/secrets.yml.example config/secrets.yml
 #  - sed -i "s/SETUP_REDIS_HOST/127.0.0.1/g" config/redis.yml
 #  - sed -i "s/SETUP_REDIS_PORT/6379/g" config/redis.yml
