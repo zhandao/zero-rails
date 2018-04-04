@@ -2,7 +2,7 @@ Rails.application.configure do
 
   config.lograge.keep_original_rails_log = true
 
-  config.lograge.enabled = true
+  config.lograge.enabled = Rails.env.test? ? false : true
   config.lograge.logger = ActiveSupport::Logger.new "/data/logs/logstash_lograge_zero-rails_#{Rails.env}.log"
 
   config.lograge.base_controller_class = 'ActionController::API'
