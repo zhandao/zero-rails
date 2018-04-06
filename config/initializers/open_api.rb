@@ -8,7 +8,6 @@ OpenApi::Config.tap do |c|
     server 'http://localhost:3000', desc: 'Main (production) server'
     server 'http://localhost:3000', desc: 'Internal staging server for testing'
     bearer_auth :Token
-    global_auth :Token
   end
 
   c.file_output_path = 'app/_docs/open_api'

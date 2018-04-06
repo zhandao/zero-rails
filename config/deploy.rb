@@ -68,6 +68,7 @@ task setup: :common_env do
   invoke :'nginx:init'
   invoke :'puma:init'
   invoke :'logrotate:setup'
+  # https://tecadmin.net/install-postgresql-server-on-ubuntu/
 end
 
 desc "Deploys the current version to the server."

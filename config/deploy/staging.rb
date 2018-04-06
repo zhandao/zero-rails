@@ -32,8 +32,6 @@ set :db_rollback,    false
 set :db_seed,        false
 
 task :env do
-  command %[export TAOBAO_RUBY_SOURCE=1]
-
   # puma.erb
   # command %[export MAX_THREADS=2]
   # command %[export WEB_CONCURRENCY=1] # Works

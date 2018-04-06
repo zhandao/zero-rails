@@ -21,9 +21,6 @@ module AutoGenDoc
       route_base = try(:controller_path) || instance_variable_get('@route_base')
       ::OpenApi::Generator.get_actions_by_route_base(route_base)&.each do |action|
         api_dry action do
-          # TODO: 自动 skip？
-          header! 'Token', String, desc: 'user token'
-
           # Common :index parameters
           if action == 'index'
             query :created_from, DateTime, desc: 'YY-MM-DD (HH:MM:SS, optional)', as: :start

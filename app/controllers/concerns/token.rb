@@ -2,7 +2,9 @@ module Token
   attr_accessor :current_user, :payload
 
   def token
-    request.headers[jwt_field_name || 'Token'] || params[jwt_field_name || :token]
+    return unless auth_header = request.headers['Authorization']&.split
+    return unless auth_header.first == 'Bearer'
+    auth_header.last
   end
 
   def token_verify!
@@ -18,6 +20,4 @@ module Token
     right_hash = current_user.jwt_payload[:hash]
     raise JWT::VerificationError unless right_hash == payload[:hash]
   end
-
-  def jwt_field_name; 'Token'; end
 end

@@ -1,17 +1,21 @@
 class Api::V1::UsersDoc < ApiDoc
-  api :index, 'GET list of users', builder: :index, use: ['Token', :page, :rows] do
+  api_dry %i[ update destroy roles permissions roles_modify ] do
+    auth :Token
   end
 
 
-  api :show, 'GET the specified user', builder: :show, use: id_and_token
+  api :index, 'GET list of users', builder: :index, use: ['Token', :page, :rows]
 
 
-  api :show_via_name, 'GET the specified user by name', builder: :show, use: token do
+  api :show, 'GET the specified user', builder: :show, use: id
+
+
+  api :show_via_name, 'GET the specified user by name', builder: :show do
     path! :name, String, desc: 'user name'
   end
 
 
-  api :login, 'POST user login', builder: :success_or_not, skip: token do
+  api :login, 'POST user login', builder: :success_or_not do
     form! data: {
             :name! => String,
         :password! => String
@@ -19,7 +23,7 @@ class Api::V1::UsersDoc < ApiDoc
   end
 
 
-  api :create, 'POST user register', builder: :success_or_not, skip: token do
+  api :create, 'POST user register', builder: :success_or_not do
     form! data: {
                          name!: String,
                      password!: String,
@@ -30,7 +34,7 @@ class Api::V1::UsersDoc < ApiDoc
   end
 
 
-  api :update, 'PATCH|PUT update the specified user', builder: :success_or_not, use: id_and_token do
+  api :update, 'PATCH|PUT update the specified user', builder: :success_or_not, use: id do
     form! data: {
                          name: String,
                      password: String,
@@ -41,23 +45,23 @@ class Api::V1::UsersDoc < ApiDoc
   end
 
 
-  api :destroy, 'DELETE the specified user', builder: :success_or_not, use: id_and_token
+  api :destroy, 'DELETE the specified user', builder: :success_or_not, use: id
 
 
   # /users/:id/roles
-  api :roles, 'GET roles of the specified user', use: token do
+  api :roles, 'GET roles of the specified user' do
     path! :id, Integer
   end
 
 
   # /users/:id/permissions
-  api :permissions, 'GET permissions of the specified user', use: token do
+  api :permissions, 'GET permissions of the specified user' do
     path! :id, Integer
   end
 
 
   # /user/:id/roles/modify
-  api :roles_modify, 'POST modify roles to the specified user', builder: :success_or_not, use: token do
+  api :roles_modify, 'POST modify roles to the specified user', builder: :success_or_not do
     path! :id, Integer
     data  :role_ids!, Array[{ type: Integer, lth: 'ge_1' }], size: 'ge_0'
   end

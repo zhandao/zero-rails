@@ -28,12 +28,12 @@ def api action, http_method, path, description = nil, token_needed = false, focu
     if token_needed
       it 'checks token', :skip_before do
         error_code = ApiError.invalid_token.code
-        request headers: { Token: nil }, get: error_code
+        request headers: { Authorization: nil }, get: error_code
         # requested get: ApiError.invalid_param.info[:code]
-        request headers: { Token: '123' }, get: error_code
-        invalid_user = 'eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFAYi5jIiwidWlkIjoidCIsInZlcnNpb24iOjEsImV4cCI6IjE1' \
+        request headers: { Authorization: 'Bearer 123' }, get: error_code
+        invalid_user = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFAYi5jIiwidWlkIjoidCIsInZlcnNpb24iOjEsImV4cCI6IjE1' \
                        'MTc1NzYxODkifQ.7CeA1P8iBK8rTaw1nt7wk6QqB2IQMcVvARTTrTdvPOE'
-        request headers: { Token: invalid_user }, get: error_code
+        request headers: { Authorization: invalid_user }, get: error_code
       end
     end
 
@@ -70,7 +70,7 @@ def req by: nil, p: nil, with: nil, headers: { }, to: nil, **expectation
   p = params.slice(params.keys.grep(p)) if p
   with = params.merge(with) if with
   parameters = by || p || with || params
-  headers.merge!(Token: user.token) if token_needed && !headers.key?(:Token)
+  headers.merge!(Authorization: 'Bearer ' + user.token) if token_needed && !headers.key?(:Authorization)
   send(http_method, _process_path(path), params: parameters, headers: headers)
 
   if expectation.present?
@@ -102,7 +102,7 @@ def _req_expectation_blks get: nil, all_attrs: nil, has_size: nil, has_attr: nil
 end
 
 def req_to action, token_needed = false, with: { }
-  headers = { Token: user.token } if token_needed
+  headers = { Authorization: 'Bearer ' + user.token } if token_needed
   send(*Temp.action_path[self_name][action], params: send("#{action}_params").merge(with), headers: headers || { })
   expect(MultiJson.load(response.body, symbolize_keys: true)[:code]).to eq 200
 end

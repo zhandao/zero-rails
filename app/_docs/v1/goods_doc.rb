@@ -1,5 +1,10 @@
 class Api::V1::GoodsDoc < ApiDoc
-  api :index, 'GET list of goods', builder: :index, use: token + %i[ created_from created_to search_value page rows ] do
+  api_dry :all do
+    auth :Token
+  end
+
+
+  api :index, 'GET list of goods', builder: :index, use: %i[ created_from created_to search_value page rows ] do
     desc 'GET list of goods', view!: 'allows:<br/>', search_field!: 'allows:<br/>'
 
     query :view, String, enum!: {
@@ -12,8 +17,9 @@ class Api::V1::GoodsDoc < ApiDoc
 
     query :export, Boolean, desc: 'export result to a Excel'
 
-    order 'Token', :view, :search_field, :search_value, :created_from, :created_to, :page, :rows, :export
+    order :view, :search_field, :search_value, :created_from, :created_to, :page, :rows, :export
   end
+
 
   api_dry %i[ create update ] do
     form! data: {
@@ -24,7 +30,7 @@ class Api::V1::GoodsDoc < ApiDoc
   end
 
 
-  api :create, 'POST create a good', builder: :success_or_not, use: token do
+  api :create, 'POST create a good', builder: :success_or_not do
     form! data: {
                :name! => { type: String },
         :category_id! => { type: Integer, range: { ge: 1 } },
@@ -34,10 +40,10 @@ class Api::V1::GoodsDoc < ApiDoc
   end
 
 
-  api :show, 'GET the specified good', builder: :show, use: token + id
+  api :show, 'GET the specified good', builder: :show, use: id
 
 
-  api :update, 'PATCH|PUT update the specified good', builder: :success_or_not, use: token + id do
+  api :update, 'PATCH|PUT update the specified good', builder: :success_or_not, use: id do
     form! data: {
                :name => { type: String },
         :category_id => { type: Integer, range: { ge: 1 } },
@@ -47,11 +53,11 @@ class Api::V1::GoodsDoc < ApiDoc
   end
 
 
-  api :destroy, 'DELETE the specified good', builder: :success_or_not, use: token + id
+  api :destroy, 'DELETE the specified good', builder: :success_or_not, use: id
 
 
   # /goods/:id/change_onsale
-  api :change_onsale, 'POST change sale status of the specified good', builder: :success_or_not, use: token do
+  api :change_onsale, 'POST change sale status of the specified good', builder: :success_or_not do
     path! :id, Integer
   end
 end

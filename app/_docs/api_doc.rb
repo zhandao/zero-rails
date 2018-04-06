@@ -16,13 +16,5 @@ class ApiDoc < Object
     def none
       [ :none ]
     end
-
-    def token
-      [ 'Token' ]
-    end
-
-    def id_and_token
-      token.dup << :id
-    end
   end
 end
