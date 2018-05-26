@@ -17,7 +17,7 @@ namespace :ubuntu do
     command %[sudo apt-get install -y git]
     command %[sudo apt-get install -y libcurl4-openssl-dev]
     command %[sudo apt-get install -y libmysqld-pic]
-    #  command %[sudo apt-get install -y nodejs]
+     command %[sudo apt-get install -y nodejs]
     command %[sudo apt-get install -y nginx]
     command %[sudo apt-get install -y libgmp-dev]
     command %[sudo apt-get install -y imagemagick]

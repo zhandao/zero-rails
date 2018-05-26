@@ -63,6 +63,9 @@ gem 'zero-params_processor', github: 'zhandao/zero-params_processor'
 # gem 'zero-rails_openapi', path: '~/ws/zero-rails_openapi'
 # gem 'zero-params_processor', path: '~/ws/zero-params_processor'
 
+# gem 'i_am_i_can', git: 'git@git.coding.net:zhandao/i_am_i_can.git'
+gem 'i_am_i_can', path: '~/ws/ikkiuchi/i_am_i_can'
+
 
 # *** App Server ***
 # https://github.com/puma/puma

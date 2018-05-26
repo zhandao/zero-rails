@@ -14,15 +14,15 @@ class Api::ApiController < ActionController::API
 
   rescue_from ::ParamsProcessor::ValidationFailed,
               ::BusinessError::ZError,
-              ::ZeroRole::VerificationFailed,
-              ::ZeroPermission::InsufficientPermission do |e|
+              ::IAmICan::Role::VerificationFailed,
+              ::IAmICan::Permission::InsufficientPermission do |e|
     log_and_render e
   end
 
   error_map(
          invalid_token: JWT::DecodeError,
-            role_error: ZeroRole::VerificationFailed,
-      permission_error: ZeroPermission::InsufficientPermission
+            role_error: IAmICan::Role::VerificationFailed,
+      permission_error: IAmICan::Permission::InsufficientPermission
   )
 
   def self.skip_token options = { }
@@ -44,7 +44,7 @@ class Api::ApiController < ActionController::API
     if error_class.respond_to?(action_error = "#{action_name}_failed")
       @error_info = error_class.send(action_error).info.values
     end
-    @_code, @_msg = @error_info
+    @_code, @_msg, _ = @error_info
   end
 
   private

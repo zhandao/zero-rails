@@ -20,11 +20,22 @@ module MakeSure
       end
     end
 
+    def if_is logic_codes, allow: [ ], allow_matched: [ ]
+      allow = ::OpenApi::Generator.get_actions_by_route_base(controller_path) if allow == :all
+      if allow.present?
+        to_access *allow, need_to_be: logic_codes
+      else
+        to_access_matched *allow_matched, need_to_be: logic_codes
+      end
+    end
+
     def to_access *actions, need_to_be: nil, should_can: nil, source: nil
       actions += %i[ index show create update destroy ] if actions.delete(:CRUDI)
-      prepend_before_action only: actions do
-        user_token_verify! unless make_sure.nil?
-        make_sure.can!(should_can, source: source)
+      # prepend ?
+      before_action only: actions do
+        # user_token_verify! if make_sure.nil?
+        make_sure.can!(should_can, source: source) if should_can
+        make_sure :it, is: need_to_be if need_to_be
       end
     end
 
@@ -37,6 +48,7 @@ module MakeSure
 
     # Logic can't be equivalent to Service Object
     def logic name, lambda = nil, success: true, fail: false, &block
+      # TODO: 控制器划分
       MakeSure.logics[name] = { block: block, lambda: lambda, success: success, fail: fail }
     end
   end
@@ -58,6 +70,7 @@ module MakeSure
   # make_sure :it, must: :not_null
   # it must: %i[ not_alone be_happy ]
   # TODO: make_sure(a and b)
+  # TODO: make_sure :it, :can, read: book
   def make_sure(obj = NoPass, action = nil, *args, &block)
     @_make_sure_obj = obj if obj == :it
     @_make_sure_obj = current_user if obj == NoPass

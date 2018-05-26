@@ -3,6 +3,7 @@ class CreateUsers < ActiveRecord::Migration[5.1]
     create_table :users, force: :cascade do |t|
       t.string   :name,            null: false
       t.string   :password_digest, null: false
+      t.integer  :token_version,   default: 0
       t.string   :email
       t.string   :phone_number
       t.datetime :deleted_at

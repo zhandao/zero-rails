@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
-  namespace :api do
+  namespace :api, defaults: { format: :json } do
     namespace :v1 do
       # /api/v1/nested/:nested_id/routes/:id
       # resources :nested do

@@ -1586,8 +1586,11 @@
                           "name": {
                             "type": "string"
                           },
-                          "source": {
+                          "source_type": {
                             "type": "string"
+                          },
+                          "source_id": {
+                            "type": "integer"
                           },
                           "remarks": {
                             "type": "string"
@@ -3459,6 +3462,9 @@
                           "password_digest": {
                             "type": "string"
                           },
+                          "token_version": {
+                            "type": "integer"
+                          },
                           "email": {
                             "type": "string"
                           },
@@ -3704,6 +3710,9 @@
                           },
                           "password_digest": {
                             "type": "string"
+                          },
+                          "token_version": {
+                            "type": "integer"
                           },
                           "email": {
                             "type": "string"

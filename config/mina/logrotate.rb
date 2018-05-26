@@ -11,7 +11,7 @@ namespace :logrotate do
   task :setup_logstash do
     content = erb('config/logrotate_logstash.conf.erb')
     command %(echo '#{content}' | sudo tee /tmp/logrotate > /dev/null)
-    command echo_cmd "sudo mv /tmp/logrotate /etc/logrotate.d/#{application}_logstash_#{stage}"
+    command echo_cmd "sudo mv /tmp/logrotate /etc/logrotate.d/#{fetch(:application)}_logstash_#{fetch(:stage)}"
   end
 
   # after 'deploy:setup', 'logrotate:setup'

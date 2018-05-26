@@ -9,8 +9,7 @@ class User < ApplicationRecord
 
   soft_destroy
 
-  include ZeroRole
-  include ZeroPermission
+  include IAmICan
 
   # enum status: [ :active, :archived ]
   # enum status: { active: 0, archived: 1 }
@@ -30,8 +29,7 @@ class User < ApplicationRecord
   def jwt_payload
     {
         id: id,
-        # 使当用户重置密码，所有 token 失效
-        hash: Digest::MD5.hexdigest(password_digest).first(6)
+        token_version: token_version
     }
   end
 
@@ -88,7 +86,7 @@ class User < ApplicationRecord
 
   # (1) 判断逻辑：when_result && is? role && block_result
   #   某项为 nil 时视为 true
-  # (2) block 会延迟到调用 can? 时执行；其他的判断会在 model 初始化时执行 setting，立即产生结果
+  # (2) block 会延迟到调用 can? 时执行；其他的判断会在对象初始化时执行 setting，立即产生结果
   def permissions_setting
     super()
 
@@ -98,21 +96,22 @@ class User < ApplicationRecord
     can :login, role: :admin
     # can :login, when: proc { is? :admin }
 
-    role :admin, can: :update, model: User, when: id == 1
+    role :admin, can: :update, source: User.last, when: id == 1
     can :update, User, role: :admin, when: id == 1
 
-    # role :other, can: :talk_to, model: User, if_case: :id_eql
-    role :other, can: :talk_to, model: User do |dist|
+    # role :other, can: :talk_to, source: User.last, if_case: :id_eql
+    role :other, can: :talk_to, source: User.last do |dist|
       relation_with? dist
     end
     # 相同的 action_source，其 block 只要有一个为 true，且 when 也为 true，就表示 it can
-    can :talk_to, User, if_case do |dist| # TODO: only_case
+    can :talk_to, User.find(1), if_case do |dist| # TODO: only_case
       is?(:people) && relation_with?(dist)
     end # => cannot judge
 
     role_group :ad, can: :read # => can `read`
     role :vip, can: :say_hi
     role :level1, can: :say_hello
+    # role :vip, can: :use, source: FuncProduct.find(1)
   end
 
   def relation_with?(user)

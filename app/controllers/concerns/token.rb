@@ -15,9 +15,7 @@ module Token
     return if current_user.present?
 
     token_verify!
-    self.current_user = User.find_by id: payload&.[](:id)
+    self.current_user = User.find_by(id: payload&.[](:id), token_version: payload&.[](:token_version))
     raise JWT::VerificationError if current_user.nil?
-    right_hash = current_user.jwt_payload[:hash]
-    raise JWT::VerificationError unless right_hash == payload[:hash]
   end
 end

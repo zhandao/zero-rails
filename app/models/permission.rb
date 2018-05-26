@@ -1,4 +1,7 @@
 class Permission < ApplicationRecord
+  #CreatePermissions #PermissionsController #PermissionsError
+  belongs_to :source, polymorphic: true, optional: true
+
   has_many :entity_permissions, dependent: :destroy
 
   has_many :users, through: :entity_permissions, source: :entity, source_type: 'User'

@@ -5,15 +5,11 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/669751e0a8ae32269600/test_coverage)](https://codeclimate.com/github/zhandao/zero-rails/test_coverage)
 [![Dependency Status](https://gemnasium.com/badges/github.com/zhandao/zero-rails.svg)](https://gemnasium.com/github.com/zhandao/zero-rails)
 
+Rails API template, **NO available version yet**.
 
 ## Features
 
 ## Usage
-
-### ExamplesController
-
-### 
-
 
 
 

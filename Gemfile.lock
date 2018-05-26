@@ -50,6 +50,11 @@ GIT
       colorize
       rails (>= 3)
 
+PATH
+  remote: ../ikkiuchi/i_am_i_can
+  specs:
+    i_am_i_can (0.1.0)
+
 GEM
   remote: https://gems.ruby-china.org/
   specs:
@@ -490,6 +495,7 @@ DEPENDENCIES
   generators!
   hirb
   hirb-unicode-steakknife
+  i_am_i_can!
   jbuilder
   jwt
   kaminari

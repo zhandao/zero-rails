@@ -1,4 +1,4 @@
-@_code, @_msg = @error_info if @error_info
+@_code, @_msg, _ = @error_info if @error_info
 
 json.code      @_code || 200
 json.msg       @_msg  || ''
