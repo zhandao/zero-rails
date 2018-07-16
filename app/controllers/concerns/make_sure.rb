@@ -111,7 +111,7 @@ module MakeSure
   alias_method :can, :can?
 
   def can! *permission_codes, source: nil
-    raise ZeroPermission::InsufficientPermission unless can? *permission_codes, source: source
+    raise IAmICan::Permission::InsufficientPermission unless can? *permission_codes, source: source
   end
 
   def must *logic_names

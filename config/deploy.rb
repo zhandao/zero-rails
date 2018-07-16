@@ -92,6 +92,7 @@ task deploy: :remote_environment do
     invoke :'rails:db_migrate'     if fetch(:db_migrate)
     invoke :'rails:db_rollback'    if fetch(:db_rollback)
     command %[RAILS_ENV=#{fetch(:rails_env)} rails db:seed] if fetch(:db_seed)
+    # command %[RAILS_ENV=#{fetch(:rails_env)} bundle exec rake db:seed] if fetch(:db_seed)
 
     invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'

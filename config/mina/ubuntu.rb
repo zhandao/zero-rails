@@ -13,6 +13,7 @@ namespace :ubuntu do
     command %[sudo apt-get install -y libpq-dev]
     command %[sudo apt-get install -y redis-server]
 
+    # dpkg --configure -a
     command %[sudo apt-get install -y curl gnupg build-essential]
     command %[sudo apt-get install -y git]
     command %[sudo apt-get install -y libcurl4-openssl-dev]

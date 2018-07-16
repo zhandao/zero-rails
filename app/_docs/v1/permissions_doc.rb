@@ -5,8 +5,6 @@ class Api::V1::PermissionsDoc < ApiDoc
 
   api :index, 'GET permissions list of the specified model', builder: :index do
     query :model, String, dft: '', reg: /\A[A-Z][A-z]*\z/
-
-    auth :Token
   end
 
 
@@ -23,8 +21,6 @@ class Api::V1::PermissionsDoc < ApiDoc
     form! data: {
         :name! => { type: String, desc: 'the sign of permission, it must be unique' },
     }, pmt: true
-
-    auth :Token
   end
 
 
@@ -32,12 +28,9 @@ class Api::V1::PermissionsDoc < ApiDoc
     form! data: {
         :name => String,
     }, pmt: true
-
-    auth :Token
   end
 
 
   api :destroy, 'DELETE the specified permission', builder: :success_or_not, use: id do
-    auth :Token
   end
 end

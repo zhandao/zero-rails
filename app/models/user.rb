@@ -96,8 +96,8 @@ class User < ApplicationRecord
     can :login, role: :admin
     # can :login, when: proc { is? :admin }
 
-    role :admin, can: :update, source: User.last, when: id == 1
-    can :update, User, role: :admin, when: id == 1
+    # role :admin, can: :update, source: User.last, when: id == 1
+    # can :update, User, role: :admin, when: id == 1
 
     # role :other, can: :talk_to, source: User.last, if_case: :id_eql
     role :other, can: :talk_to, source: User.last do |dist|

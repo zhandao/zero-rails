@@ -20,10 +20,12 @@ class Api::V1::UsersDoc < ApiDoc
             :name! => String,
         :password! => String
     }
+
+    response 200, 'success', :json, data: { data: { token: 'jwt token' } }
   end
 
 
-  api :create, 'POST user register', builder: :success_or_not do
+  api :create, 'POST user register', builder: :show do
     form! data: {
                          name!: String,
                      password!: String,

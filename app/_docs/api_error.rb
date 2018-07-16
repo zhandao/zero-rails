@@ -7,6 +7,7 @@ class ApiError
     def auth
       code -1, :dec
       mattr_reader :invalid_token,      'invalid token',            http: :unauthorized
+      # mattr_reader :invalid_token,      'unauthorized',  http: :unauthorized
       mattr_reader :role_error,         'role verification failed', http: :forbidden
       mattr_reader :permission_error,   'insufficient permission',  http: :forbidden
     end

@@ -24,6 +24,7 @@ module RailsApi
 
     # if Rails.env.development? || Rails.env.test? FIXME
     Dir['app/_docs/**/*'].each { |p| config.eager_load_paths << p }
+    Dir['app/_docs/**/*'].each { |p| config.autoload_paths << p }
     # else
     #   Dir['app/_docs/*.rb', 'app/_docs/v*/**'].each { |p| config.eager_load_paths << p }
     # end

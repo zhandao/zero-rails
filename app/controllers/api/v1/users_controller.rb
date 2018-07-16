@@ -23,7 +23,8 @@ class Api::V1::UsersController < Api::V1::BaseController
 
 
   def create
-    User.create! permitted
+    user = User.create! permitted
+    @data = { token: user.token }
   end
 
 

@@ -120,7 +120,12 @@ end
 def permission_mock args
   skippable_before :without_permission_mock do
     args.each do |action, pmts|
-      pmts.each { |pmt| allow_any_instance_of(User).to receive(action).with(*(pmt.is_a?(Array) ? pmt : [pmt, nil])).and_return(true) }
+      pmts.each do |pmt|
+        allow_any_instance_of(User)
+            .to receive(action)
+                    .with(*(pmt.is_a?(Array) ? pmt : [pmt, nil]))
+                    .and_return(true)
+      end
     end
   end
 end

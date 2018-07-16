@@ -12,7 +12,7 @@ OpenApi::Config.tap do |c|
 
   c.file_output_path = 'app/_docs/open_api'
 
-  c.doc_location = ['./app/_docs/v*/v1*', './app/_docs/v*/*'] # FIXME: 为什么要在 app.rb 之后还需要 require？
+  # c.doc_location = ['./app/_docs/v*/v1*', './app/_docs/v*/*'] # FIXME: 为什么要在 app.rb 之后还需要 require？
 
   c.rails_routes_file = 'config/routes.txt'
 end

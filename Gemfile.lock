@@ -41,19 +41,18 @@ GIT
       rails (>= 3)
       zero-rails_openapi (>= 1.5.2)
 
-GIT
-  remote: https://github.com/zhandao/zero-rails_openapi.git
-  revision: db3b4e4d0793ffdf8277db31c024cacfc49c667c
-  specs:
-    zero-rails_openapi (1.5.7)
-      activesupport (>= 3)
-      colorize
-      rails (>= 3)
-
 PATH
   remote: ../ikkiuchi/i_am_i_can
   specs:
     i_am_i_can (0.1.0)
+
+PATH
+  remote: ../zero-rails_openapi
+  specs:
+    zero-rails_openapi (1.6.0)
+      activesupport (>= 3)
+      colorize
+      rails (>= 3)
 
 GEM
   remote: https://gems.ruby-china.org/

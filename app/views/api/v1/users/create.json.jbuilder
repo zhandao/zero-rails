@@ -6,4 +6,4 @@ if @status == false
 end
 
 json.partial! 'api/base', total: 0
-json.data @status || ''
+json.data @data
