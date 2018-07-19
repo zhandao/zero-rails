@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '2.5.0'
+ruby '2.6.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.0'
 
@@ -235,7 +235,7 @@ group :development do
   gem 'listen', '~> 3.0'
 
   # https://github.com/yuki24/did_you_mean
-  gem 'did_you_mean', '~> 1.1', require: false
+  gem 'did_you_mean', '~> 1.2', require: false
 
   # https://github.com/charliesome/better_errors
   gem 'better_errors'
