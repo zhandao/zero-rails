@@ -21,7 +21,7 @@ class User < ApplicationRecord
   end
 
   def add(role: nil, permission: nil)
-    role.present? ? roles << Role.find_by(name: role) : permissions << Permission.find_by(name: permission)
+    role.present? ? roles << ::Role.find_by(name: role) : permissions << ::Permission.find_by(name: permission)
   end
 
   # def rmv TODO

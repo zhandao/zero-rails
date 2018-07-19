@@ -7,10 +7,10 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins '*'
+    origins '*' # TODO
 
     resource '*',
-             headers: :any,
-             methods: [:get, :processed, :post, :put, :patch, :delete, :options]
+      headers: :any,
+      methods: [:get, :post, :put, :patch, :delete, :options, :head]
   end
 end

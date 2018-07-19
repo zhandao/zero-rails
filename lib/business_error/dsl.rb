@@ -14,7 +14,7 @@ module BusinessError
 
       define_singleton_method "#{name}!" do
         raise ZError.new(name, message, code, http)
-        # TODO: raise ZError, name, message, code
+        # raise ZError, name, message, code
       end
 
       ((BusinessError.errors[self.name] ||= { })[@for || :private] ||= [ ]) << {
@@ -72,5 +72,26 @@ module BusinessError
     def inherited(subclass)
       subclass.errors = errors.slice :_public
     end
+  end
+
+  cattr_accessor :errors do
+    { }
+  end
+
+  def self.all
+    errors.each do |class_name, scopes|
+      puts "#{class_name}:"
+      scopes.each do |scope, cur_errors|
+        next if scope == :are && class_name != 'ApiError'
+        puts "  #{scope}:"
+        cur_errors.each do |error|
+          puts "    #{error[:name]}:"
+          puts "      code: #{error[:code]}"
+          puts "      http: #{error[:http_verb]}"
+          puts "      message: #{error[:msg]}"
+        end
+      end
+    end
+    nil
   end
 end

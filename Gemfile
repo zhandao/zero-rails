@@ -7,7 +7,10 @@ end
 
 ruby '2.5.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.5'
+gem 'rails', '~> 5.2.0'
+
+# Reduces boot times through caching; required in config/boot.rb
+gem 'bootsnap', '>= 1.1.0', require: false
 
 
 # *** Databases ***
@@ -58,13 +61,13 @@ gem 'paranoia'
 
 # gem 'zero-rails_openapi'
 # gem 'zero-params_processor'
-# gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
+gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
 gem 'zero-params_processor', github: 'zhandao/zero-params_processor'
-gem 'zero-rails_openapi', path: '~/ws/zero-rails_openapi'
+# gem 'zero-rails_openapi', path: '~/ws/zero-rails_openapi'
 # gem 'zero-params_processor', path: '~/ws/zero-params_processor'
 
-# gem 'i_am_i_can', git: 'git@git.coding.net:zhandao/i_am_i_can.git'
-gem 'i_am_i_can', path: '~/ws/ikkiuchi/i_am_i_can'
+gem 'i_am_i_can', git: 'git@git.coding.net:zhandao/i_am_i_can.git'
+# gem 'i_am_i_can', path: '~/ws/ikkiuchi/i_am_i_can'
 
 
 # *** App Server ***
@@ -146,7 +149,7 @@ gem 'logstasher'
 # https://github.com/activeadmin/activeadmin
 gem 'activeadmin', github: 'activeadmin/activeadmin'#, branch: '1-1-stable'
 # UI for ActiveAdmin, https://github.com/cle61/arctic_admin
-gem 'arctic_admin', github: 'cle61/arctic_admin', branch: '2-0-alpha'
+gem 'arctic_admin', github: 'cle61/arctic_admin'#, branch: '2-0-alpha'
 # UI for ActiveAdmin, https://github.com/vigetlabs/active_material
 # gem "active_material", github: "vigetlabs/active_material"
 gem 'coffee-rails'
@@ -204,12 +207,12 @@ gem 'coffee-rails'
 # A micro library providing Ruby objects with Publish-Subscribe capabilities
 # gem 'wisper', '2.0.0'
 
-# FIXME: 职责分离，然后将其划分到 development
-# https://github.com/ikkiuchi/generators
-gem 'generators', github: 'ikkiuchi/generators'
-# gem 'generators', path: '~/ws/generators'
 
 group :development do
+  # https://github.com/ikkiuchi/generators
+  gem 'generators', github: 'ikkiuchi/generators'
+  # gem 'generators', path: '~/ws/generators'
+
   # http://nadarei.co/mina/
   gem 'mina', require: false
   # https://github.com/untitledkingdom/mina-puma

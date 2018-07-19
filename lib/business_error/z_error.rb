@@ -30,25 +30,4 @@ module BusinessError
 
     def message; info.to_s end
   end
-
-  cattr_accessor :errors do
-    { }
-  end
-
-  def self.all
-    errors.each do |class_name, scopes|
-      puts "#{class_name}:"
-      scopes.each do |scope, cur_errors|
-        next if scope == :are && class_name != 'ApiError'
-        puts "  #{scope}:"
-        cur_errors.each do |error|
-          puts "    #{error[:name]}:"
-          puts "      code: #{error[:code]}"
-          puts "      http: #{error[:http_verb]}"
-          puts "      message: #{error[:msg]}"
-        end
-      end
-    end
-    nil
-  end
 end

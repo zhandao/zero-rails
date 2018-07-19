@@ -36,7 +36,7 @@ end
 
 def acts_as_paranoid
   func :destroy, focus_on: :deleted_at do
-    it 'is destroy softly' do
+    it 'is destroyed softly' do
       expect_it.to be_nil
       subject.destroy
       expect_it.not_to be_nil

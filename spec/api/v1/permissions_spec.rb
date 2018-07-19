@@ -20,7 +20,7 @@ RSpec.describe 'API V1', 'permissions', type: :request do
   end
 
   api :index, :get, '/api/v1/permissions', 'get list of permissions of the specified model', :token_needed do
-    let(:params) { { model: 'string' } }
+    let(:params) { { model: 'User' } }
 
     it_checks_permission
   end
