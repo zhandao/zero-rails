@@ -48,7 +48,7 @@ GIT
 
 GIT
   remote: https://github.com/zhandao/zero-rails_openapi.git
-  revision: 798bcffc600e5c2e9d1936533f161af2053c58e2
+  revision: ce0e5adff6e3893430e5c3e1046ec1a0611c2031
   specs:
     zero-rails_openapi (1.6.0)
       activesupport (>= 3)

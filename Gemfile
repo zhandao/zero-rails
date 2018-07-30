@@ -19,6 +19,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # gem 'mysql2', '>= 0.3.18', '< 0.5'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 1.0.0'
+# https://github.com/devmynd/jsonb_accessor
+# gem 'jsonb_accessor', '~> 1.0.0'
 # Use Redis adapter to run Action Cable in production
 gem 'redis', '~> 4.0'
 # https://github.com/redis-store/redis-rails

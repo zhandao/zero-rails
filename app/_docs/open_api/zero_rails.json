@@ -42,7 +42,7 @@
     "/api/v1/categories": {
       "get": {
         "summary": "GET list of categories",
-        "operationId": "Categories_index",
+        "operationId": "CategoriesIndex",
         "tags": [
           "Categories"
         ],
@@ -119,7 +119,7 @@
       },
       "post": {
         "summary": "POST create a category",
-        "operationId": "Categories_create",
+        "operationId": "CategoriesCreate",
         "tags": [
           "Categories"
         ],
@@ -210,7 +210,7 @@
     "/api/v1/categories/list": {
       "get": {
         "summary": "GET nested list of categories",
-        "operationId": "Categories_nested_list",
+        "operationId": "CategoriesNested_list",
         "tags": [
           "Categories"
         ],
@@ -266,7 +266,7 @@
     "/api/v1/categories/{id}": {
       "patch": {
         "summary": "PATCH|PUT update the specified category.",
-        "operationId": "Categories_update",
+        "operationId": "CategoriesUpdate",
         "tags": [
           "Categories"
         ],
@@ -362,7 +362,7 @@
       },
       "put": {
         "summary": "PATCH|PUT update the specified category.",
-        "operationId": "Categories_update",
+        "operationId": "CategoriesUpdate",
         "tags": [
           "Categories"
         ],
@@ -458,7 +458,7 @@
       },
       "delete": {
         "summary": "DELETE the specified category",
-        "operationId": "Categories_destroy",
+        "operationId": "CategoriesDestroy",
         "tags": [
           "Categories"
         ],
@@ -535,7 +535,7 @@
       "get": {
         "description": "GET list of goods",
         "summary": "GET list of goods",
-        "operationId": "Goods_index",
+        "operationId": "GoodsIndex",
         "tags": [
           "Goods"
         ],
@@ -732,7 +732,7 @@
       },
       "post": {
         "summary": "POST create a good",
-        "operationId": "Goods_create",
+        "operationId": "GoodsCreate",
         "tags": [
           "Goods"
         ],
@@ -887,7 +887,7 @@
     "/api/v1/goods/{id}": {
       "get": {
         "summary": "GET the specified good",
-        "operationId": "Goods_show",
+        "operationId": "GoodsShow",
         "tags": [
           "Goods"
         ],
@@ -1001,7 +1001,7 @@
       },
       "patch": {
         "summary": "PATCH|PUT update the specified good",
-        "operationId": "Goods_update",
+        "operationId": "GoodsUpdate",
         "tags": [
           "Goods"
         ],
@@ -1115,7 +1115,7 @@
       },
       "put": {
         "summary": "PATCH|PUT update the specified good",
-        "operationId": "Goods_update",
+        "operationId": "GoodsUpdate",
         "tags": [
           "Goods"
         ],
@@ -1229,7 +1229,7 @@
       },
       "delete": {
         "summary": "DELETE the specified good",
-        "operationId": "Goods_destroy",
+        "operationId": "GoodsDestroy",
         "tags": [
           "Goods"
         ],
@@ -1305,7 +1305,7 @@
     "/api/v1/goods/{id}/change_onsale": {
       "post": {
         "summary": "POST change sale status of the specified good",
-        "operationId": "Goods_change_onsale",
+        "operationId": "GoodsChange_onsale",
         "tags": [
           "Goods"
         ],
@@ -1381,7 +1381,7 @@
     "/api/v1/inventories": {
       "get": {
         "summary": "GET list of inventories",
-        "operationId": "Inventories_index",
+        "operationId": "InventoriesIndex",
         "tags": [
           "Inventories"
         ],
@@ -1514,7 +1514,7 @@
     "/api/v1/permissions": {
       "get": {
         "summary": "GET permissions list of the specified model",
-        "operationId": "Permissions_index",
+        "operationId": "PermissionsIndex",
         "tags": [
           "Permissions"
         ],
@@ -1662,7 +1662,7 @@
       },
       "post": {
         "summary": "POST create a permission",
-        "operationId": "Permissions_create",
+        "operationId": "PermissionsCreate",
         "tags": [
           "Permissions"
         ],
@@ -1784,7 +1784,7 @@
     "/api/v1/permissions/{id}": {
       "patch": {
         "summary": "PATCH|PUT update the specified permission",
-        "operationId": "Permissions_update",
+        "operationId": "PermissionsUpdate",
         "tags": [
           "Permissions"
         ],
@@ -1885,7 +1885,7 @@
       },
       "put": {
         "summary": "PATCH|PUT update the specified permission",
-        "operationId": "Permissions_update",
+        "operationId": "PermissionsUpdate",
         "tags": [
           "Permissions"
         ],
@@ -1986,7 +1986,7 @@
       },
       "delete": {
         "summary": "DELETE the specified permission",
-        "operationId": "Permissions_destroy",
+        "operationId": "PermissionsDestroy",
         "tags": [
           "Permissions"
         ],
@@ -2062,7 +2062,7 @@
     "/api/v1/roles": {
       "get": {
         "summary": "GET roles list of the specified model",
-        "operationId": "Roles_index",
+        "operationId": "RolesIndex",
         "tags": [
           "Roles"
         ],
@@ -2207,7 +2207,7 @@
       },
       "post": {
         "summary": "POST create a role",
-        "operationId": "Roles_create",
+        "operationId": "RolesCreate",
         "tags": [
           "Roles"
         ],
@@ -2323,7 +2323,7 @@
     "/api/v1/roles/{id}": {
       "get": {
         "summary": "GET the specified role.",
-        "operationId": "Roles_show",
+        "operationId": "RolesShow",
         "tags": [
           "Roles"
         ],
@@ -2416,7 +2416,7 @@
       },
       "patch": {
         "summary": "PATCH|PUT update the specified role",
-        "operationId": "Roles_update",
+        "operationId": "RolesUpdate",
         "tags": [
           "Roles"
         ],
@@ -2514,7 +2514,7 @@
       },
       "put": {
         "summary": "PATCH|PUT update the specified role",
-        "operationId": "Roles_update",
+        "operationId": "RolesUpdate",
         "tags": [
           "Roles"
         ],
@@ -2612,7 +2612,7 @@
       },
       "delete": {
         "summary": "DELETE the specified role",
-        "operationId": "Roles_destroy",
+        "operationId": "RolesDestroy",
         "tags": [
           "Roles"
         ],
@@ -2688,7 +2688,7 @@
     "/api/v1/roles/{id}/permissions": {
       "get": {
         "summary": "GET permissions of specified role",
-        "operationId": "Roles_permissions",
+        "operationId": "RolesPermissions",
         "tags": [
           "Roles"
         ],
@@ -2761,7 +2761,7 @@
     "/api/v1/roles/{id}/permissions/modify": {
       "post": {
         "summary": "POST modify permissions to the specified roles",
-        "operationId": "Roles_permissions_modify",
+        "operationId": "RolesPermissions_modify",
         "tags": [
           "Roles"
         ],
@@ -2858,7 +2858,7 @@
     "/api/v1/stores": {
       "get": {
         "summary": "GET list of stores",
-        "operationId": "Stores_index",
+        "operationId": "StoresIndex",
         "tags": [
           "Stores"
         ],
@@ -2946,7 +2946,7 @@
       },
       "post": {
         "summary": "POST create a store",
-        "operationId": "Stores_create",
+        "operationId": "StoresCreate",
         "tags": [
           "Stores"
         ],
@@ -3047,7 +3047,7 @@
     "/api/v1/stores/{id}": {
       "get": {
         "summary": "GET the specified store",
-        "operationId": "Stores_show",
+        "operationId": "StoresShow",
         "tags": [
           "Stores"
         ],
@@ -3122,7 +3122,7 @@
       },
       "patch": {
         "summary": "POST update the specified store",
-        "operationId": "Stores_update",
+        "operationId": "StoresUpdate",
         "tags": [
           "Stores"
         ],
@@ -3216,7 +3216,7 @@
       },
       "put": {
         "summary": "POST update the specified store",
-        "operationId": "Stores_update",
+        "operationId": "StoresUpdate",
         "tags": [
           "Stores"
         ],
@@ -3310,7 +3310,7 @@
       },
       "delete": {
         "summary": "DELETE the specified store",
-        "operationId": "Stores_destroy",
+        "operationId": "StoresDestroy",
         "tags": [
           "Stores"
         ],
@@ -3386,7 +3386,7 @@
     "/api/v1/u/{name}": {
       "get": {
         "summary": "GET the specified user by name",
-        "operationId": "Users_show_via_name",
+        "operationId": "UsersShow_via_name",
         "tags": [
           "Users"
         ],
@@ -3444,7 +3444,7 @@
     "/api/v1/users": {
       "get": {
         "summary": "GET list of users",
-        "operationId": "Users_index",
+        "operationId": "UsersIndex",
         "tags": [
           "Users"
         ],
@@ -3540,7 +3540,7 @@
       },
       "post": {
         "summary": "POST user register",
-        "operationId": "Users_create",
+        "operationId": "UsersCreate",
         "tags": [
           "Users"
         ],
@@ -3658,7 +3658,7 @@
     "/api/v1/users/login": {
       "post": {
         "summary": "POST user login",
-        "operationId": "Users_login",
+        "operationId": "UsersLogin",
         "tags": [
           "Users"
         ],
@@ -3736,7 +3736,7 @@
     "/api/v1/users/{id}": {
       "get": {
         "summary": "GET the specified user",
-        "operationId": "Users_show",
+        "operationId": "UsersShow",
         "tags": [
           "Users"
         ],
@@ -3819,7 +3819,7 @@
       },
       "patch": {
         "summary": "PATCH|PUT update the specified user",
-        "operationId": "Users_update",
+        "operationId": "UsersUpdate",
         "tags": [
           "Users"
         ],
@@ -3910,7 +3910,7 @@
       },
       "put": {
         "summary": "PATCH|PUT update the specified user",
-        "operationId": "Users_update",
+        "operationId": "UsersUpdate",
         "tags": [
           "Users"
         ],
@@ -4001,7 +4001,7 @@
       },
       "delete": {
         "summary": "DELETE the specified user",
-        "operationId": "Users_destroy",
+        "operationId": "UsersDestroy",
         "tags": [
           "Users"
         ],
@@ -4065,7 +4065,7 @@
     "/api/v1/users/{id}/permissions": {
       "get": {
         "summary": "GET permissions of the specified user",
-        "operationId": "Users_permissions",
+        "operationId": "UsersPermissions",
         "tags": [
           "Users"
         ],
@@ -4129,7 +4129,7 @@
     "/api/v1/users/{id}/roles": {
       "get": {
         "summary": "GET roles of the specified user",
-        "operationId": "Users_roles",
+        "operationId": "UsersRoles",
         "tags": [
           "Users"
         ],
@@ -4193,7 +4193,7 @@
     "/api/v1/users/{id}/roles/modify": {
       "post": {
         "summary": "POST modify roles to the specified user",
-        "operationId": "Users_roles_modify",
+        "operationId": "UsersRoles_modify",
         "tags": [
           "Users"
         ],
