@@ -33,15 +33,13 @@ module RailsApi
 
     config.load_defaults 5.1
 
-    # if Rails.env.development? || Rails.env.test? FIXME
-    Dir['app/_docs/**/*'].each { |p| config.eager_load_paths << p }
-    Dir['app/_docs/**/*'].each { |p| config.autoload_paths << p }
-    # else
-    #   Dir['app/_docs/*.rb', 'app/_docs/v*/**'].each { |p| config.eager_load_paths << p }
-    # end
+    if Rails.env.development?
+      Dir['app/_docs/**/*'].each { |p| config.eager_load_paths << p }
+    else
+      Dir['app/_docs/*.rb', 'app/_docs/v*/**'].each { |p| config.eager_load_paths << p }
+    end
 
     config.eager_load_paths << Rails.root.join('lib')
-    # config.autoload_paths << Rails.root.join('lib')
 
     # config.cache_store = :redis_store, Settings.redis.cache_url, { expires_in: 30.days, multithread: true }
     config.cache_store = :redis_store, Keys.redis.cache_url, { expires_in: 1.day }
