@@ -1,4 +1,4 @@
-class CreateInventories < ActiveRecord::Migration[5.1]
+class CreateInventories < ActiveRecord::Migration::Current
   def change
     create_table :inventories, force: :cascade do |t|
       t.belongs_to :store,  foreign_key: true

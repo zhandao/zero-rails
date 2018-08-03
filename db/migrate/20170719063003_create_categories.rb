@@ -1,4 +1,4 @@
-class CreateCategories < ActiveRecord::Migration[5.1]
+class CreateCategories < ActiveRecord::Migration::Current
   def change
     create_table :categories, force: :cascade do |t|
       t.string     :name,          null: false

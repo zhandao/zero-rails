@@ -31,13 +31,13 @@ module RailsApi
       YAML.load(File.open(env_file)).each { |key, value| ENV[key.to_s] = value }
     end
 
-    config.load_defaults 5.1
+    config.load_defaults 5.2
 
-    if Rails.env.development?
-      Dir['app/_docs/**/*'].each { |p| config.eager_load_paths << p }
-    else
-      Dir['app/_docs/*.rb', 'app/_docs/v*/**'].each { |p| config.eager_load_paths << p }
-    end
+    # if Rails.env.development?
+    Dir['app/_docs/**/*'].each { |p| config.eager_load_paths << p }
+    # else
+    #   Dir['app/_docs/*.rb', 'app/_docs/v*/**'].each { |p| config.eager_load_paths << p }
+    # end
 
     config.eager_load_paths << Rails.root.join('lib')
 

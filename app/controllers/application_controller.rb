@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   include Zero::Log
 
-  # Authentication for ActiveAdmin
+  # Authentication not only for ActiveAdmin
   def authenticate_admin_user!
     authenticate_or_request_with_http_basic do |user_name, password|
       user_name == Keys.admin.user_name && password == Keys.admin.password

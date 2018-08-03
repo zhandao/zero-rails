@@ -1,4 +1,4 @@
-class CreateRoles < ActiveRecord::Migration[5.1]
+class CreateRoles < ActiveRecord::Migration::Current
   def change
     create_table :roles, force: :cascade do |t|
       t.string     :name,      null: false

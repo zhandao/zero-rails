@@ -1,4 +1,4 @@
-class CreatePermissions < ActiveRecord::Migration[5.1]
+class CreatePermissions < ActiveRecord::Migration::Current
   def change
     create_table :permissions, force: :cascade do |t|
       t.string     :name,   null: false

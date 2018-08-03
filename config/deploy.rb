@@ -36,7 +36,7 @@ end
 task remote_environment: :common_env do
   # For those using RVM, use this to load an RVM version@gemset.
   set :rvm_use_path, '/etc/profile.d/rvm.sh' # set the path of rvm if default setting wrong.
-  invoke :'rvm:use', 'ruby-2.5.0@default'
+  invoke :'rvm:use', 'ruby-2.6.0@default'
 end
 
 # Doc: usage: `mina staging c`

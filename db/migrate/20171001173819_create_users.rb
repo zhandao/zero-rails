@@ -1,4 +1,4 @@
-class CreateUsers < ActiveRecord::Migration[5.1]
+class CreateUsers < ActiveRecord::Migration::Current
   def change
     create_table :users, force: :cascade do |t|
       t.string   :name,            null: false
