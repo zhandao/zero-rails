@@ -1,10 +1,4 @@
 GIT
-  remote: git@git.coding.net:zhandao/i_am_i_can.git
-  revision: cd13a76b6c44e9326716cf4b32a83bb175c4fadf
-  specs:
-    i_am_i_can (0.1.0)
-
-GIT
   remote: https://github.com/activeadmin/activeadmin.git
   revision: 0fe85d7ad941e98462725c25cc8a0ebacb4467b1
   specs:
@@ -54,6 +48,12 @@ GIT
       activesupport (>= 3)
       colorize
       rails (>= 3)
+
+GIT
+  remote: https://zhandao:250f34a301f788a85fd2b004836d73f6e6988752@git.coding.net/zhandao/i_am_i_can.git
+  revision: cd13a76b6c44e9326716cf4b32a83bb175c4fadf
+  specs:
+    i_am_i_can (0.1.0)
 
 GEM
   remote: https://gems.ruby-china.org/

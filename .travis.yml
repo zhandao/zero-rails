@@ -1,21 +1,21 @@
 language: ruby
 
 rvm:
-  - 2.5.0
+  - 2.6.0-preview2
 
 matrix:
   fast_finish: true
   allow_failures:
     - rvm: ruby-head
 
-before_install: gem install bundler -v 1.16.1
+before_install: gem install bundler
 
 addons:
-  postgresql: "10.4"
+  postgres: "10.4"
 #  postgresql: "9.4"
 
 services:
-  - postgresql
+  - postgres
 #  - memcached
   - redis-server
 #  - elasticsearch
@@ -36,14 +36,14 @@ before_install:
 #  - sed -i "s/SETUP_REDIS_PORT/6379/g" config/redis.yml
 
 before_script:
-  - RAILS_ENV=test bundle exec rake db:migrate
+  - RAILS_ENV=test bundle exec rake db:schema:load
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 
 script:
 #  - bundle exec rubocop .
-  - RAILS_ENV=test bundle exec rake
+  - RAILS_ENV=test bundle exec rspec
 
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
