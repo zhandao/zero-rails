@@ -21,10 +21,10 @@ Dir[Pathname.new(File.dirname(__FILE__)).realpath.parent.join('lib', 'monkey_pat
   require file
 end
 
-module RailsApi
-  class Application < Rails::Application
-    # Initialize configuration defaults for originally generated Rails version.
+module ZeroRails
+  $app_name = name.underscore
 
+  class Application < Rails::Application
     config.before_configuration do
       env_file = File.join(Rails.root, 'config', 'local_env.yml')
       break unless File.exist?(env_file)
@@ -43,12 +43,6 @@ module RailsApi
 
     # config.cache_store = :redis_store, Settings.redis.cache_url, { expires_in: 30.days, multithread: true }
     config.cache_store = :redis_store, Keys.redis.cache_url, { expires_in: 1.day }
-
-    config.generators do |g|
-      g.test_framework :rspec
-      g.fixture_replacement :factory_bot, dir: 'spec/factories'
-      g.orm :active_record
-    end
 
     config.encoding = 'utf-8'
 

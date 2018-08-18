@@ -1,6 +1,6 @@
 class Api::V1::PermissionsDoc < ApiDoc
   api_dry :all do
-    auth :Token
+    auth :Authorization
   end
 
   api :index, 'GET permissions list of the specified model', builder: :index do

@@ -29,17 +29,17 @@ def api action, http_method, path, description = nil, token_needed = false, focu
     let(:token_needed) { token_needed }
     let(:focus_on) { focus_on }
 
-    # if token_needed
-    #   it 'checks token', :skip_before do
-    #     error_code = ApiError.invalid_token.code
-    #     request headers: { Authorization: nil }, get: error_code
-    #     # requested get: ApiError.invalid_param.info[:code]
-    #     request headers: { Authorization: 'Bearer 123' }, get: error_code
-    #     invalid_user = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFAYi5jIiwidWlkIjoidCIsInZlcnNpb24iOjEsImV4cCI6IjE1' \
-    #                    'MTc1NzYxODkifQ.7CeA1P8iBK8rTaw1nt7wk6QqB2IQMcVvARTTrTdvPOE'
-    #     request headers: { Authorization: invalid_user }, get: error_code
-    #   end
-    # end
+    if token_needed
+      it 'checks token', :skip_before do
+        error_code = ApiError.invalid_token.code
+        request headers: { Authorization: nil }, get: error_code
+        # requests get: ApiError.invalid_param.info[:code]
+        request headers: { Authorization: 'Bearer 123' }, get: error_code
+        invalid_user = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFAYi5jIiwidWlkIjoidCIsInZlcnNpb24iOjEsImV4cCI6IjE1' \
+                       'MTc1NzYxODkifQ.7CeA1P8iBK8rTaw1nt7wk6QqB2IQMcVvARTTrTdvPOE'
+        request headers: { Authorization: invalid_user }, get: error_code
+      end
+    end
 
     instance_eval(&block)
   end
@@ -69,7 +69,7 @@ def prepare_goods name: nil, inv: 10
   goods
 end
 
-def req by: nil, p: nil, with: nil, headers: { }, to: nil, **expectation
+def req by: nil, p: nil, with: nil, headers: { }, to: nil, **expectations
   params = try(:params) || { }
   p = params.slice(params.keys.grep(p)) if p
   with = params.merge(with) if with
@@ -77,16 +77,17 @@ def req by: nil, p: nil, with: nil, headers: { }, to: nil, **expectation
   headers.merge!(Authorization: 'Bearer ' + user.token) if token_needed && !headers.key?(:Authorization)
   send(http_method, _process_path(path), params: parameters, headers: headers)
 
-  if expectation.present?
-    # pp subject
-    obj = subject[:status] if expectation.key? :get
-    expect(obj || subject[:data]).to instance_exec(&_req_expectation_blks(**expectation))
+  subj = MultiJson.load(response.body, symbolize_keys: true) # for fixing subject cannot reload
+  # pp subj
+  expectations&.each do |(key, val)|
+    obj = subj[:code] if key == :get
+    expect(obj || subj[:data]).to instance_exec(&_req_expectation_blks(key => val))
   end
 end
 
 alias reqed req
 alias request req
-alias requested req
+alias requests req
 
 def _req_expectation_blks get: nil, all_attrs: nil, has_size: nil, has_attr: nil, include: nil, has_key: nil, data: nil
   if !all_attrs.nil?
@@ -102,6 +103,7 @@ def _req_expectation_blks get: nil, all_attrs: nil, has_size: nil, has_attr: nil
   elsif !data.nil?
     -> { eq data }
   else
+    get = 0 if get == :success # TODO
     get = error_cls.send(get).code if get.is_a?(Symbol)
     -> { eq get }
   end
@@ -110,28 +112,30 @@ end
 def req_to action, token_needed = false, with: { }
   headers = { Authorization: 'Bearer ' + user.token } if token_needed
   send(*Temp.action_path[self_name][action], params: send("#{action}_params").merge(with), headers: headers || { })
-  expect(MultiJson.load(response.body, symbolize_keys: true)[:code]).to eq 200
+  MultiJson.load(response.body, symbolize_keys: true).tap do |result|
+    expect(result[:code]).to eq 200
+  end
 end
 
 def req_to! action, with: { }
   req_to action, true, with: with
 end
 
-# def it_checks_permission
-#   it 'checks permission', :without_permission_mock do
-#     requested get: ApiError.permission_error.code
-#   end
-# end
+def it_checks_permission
+  it 'checks permission', :without_permission_mock do
+    requests get: ApiError.permission_error.code
+  end
+end
 
-# def permission_mock args
-#   skippable_before :without_permission_mock do
-#     args.each do |action, pmts|
-#       pmts.each do |pmt|
-#         allow_any_instance_of(User)
-#             .to receive(action)
-#                     .with(*(pmt.is_a?(Array) ? pmt : [pmt, nil]))
-#                     .and_return(true)
-#       end
-#     end
-#   end
-# end
+def permission_mock args
+  skippable_before :without_permission_mock do
+    args.each do |action, pmts|
+      pmts.each do |pmt|
+        allow_any_instance_of(User)
+            .to receive(action)
+                    .with(*(pmt.is_a?(Array) ? pmt : [pmt, nil]))
+                    .and_return(true)
+      end
+    end
+  end
+end

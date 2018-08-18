@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  include Zero::Log
+  include Zero::Log, OutPut
 
   # Authentication not only for ActiveAdmin
   def authenticate_admin_user!

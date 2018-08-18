@@ -1,2 +1,2 @@
-Rack::Timeout.service_timeout = 5  # seconds
+Rails.application.config.middleware.insert_before Rack::Runtime, Rack::Timeout, service_timeout: 5 # seconds
 Rack::Timeout::Logger.disable

@@ -37,7 +37,7 @@ RSpec.describe 'API V1', 'categories', type: :request do
 
     api :nested_list, :get, '/api/v1/categories/list', 'get nested list of categories.' do
       it 'works', :with_create do
-        requested has_size: 2
+        requests has_size: 2
         expect(data[0][:sub_categories_info]).to have_size 2
         expect(data[1][:sub_categories_info]).to have_size 0
       end

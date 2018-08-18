@@ -7,7 +7,7 @@ OpenApi::Config.tap do |c|
     info version: '0.0.1', title: 'Zero Rails APIs', description: 'API documentation of Zero-Rails Application.'
     server 'http://localhost:3000', desc: 'Main (production) server'
     server 'http://localhost:3000', desc: 'Internal staging server for testing'
-    bearer_auth :Token
+    bearer_auth :Authorization
   end
 
   c.file_output_path = 'app/_docs/open_api'

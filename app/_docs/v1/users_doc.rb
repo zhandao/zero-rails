@@ -1,10 +1,10 @@
 class Api::V1::UsersDoc < ApiDoc
-  api_dry %i[ update destroy roles permissions roles_modify ] do
-    auth :Token
+  api_dry %i[ index update destroy roles permissions roles_modify ] do
+    auth :Authorization
   end
 
 
-  api :index, 'GET list of users', builder: :index, use: ['Token', :page, :rows]
+  api :index, 'GET list of users', builder: :index, use: [:page, :rows]
 
 
   api :show, 'GET the specified user', builder: :show, use: id

@@ -21,7 +21,7 @@
 #     before { prepare_goods inv: 10 }
 #
 #     it 'works' do
-#       requested get: 200
+#       requests get: 200
 #       expect(Record.last).to have_attributes(store_id: 2, good_id: 1, app_type: 'get', app_id: 1000, app_name: 'tom')
 #       expect(inventory.amount).to eq 8
 #     end
@@ -64,7 +64,7 @@
 #     it 'works' do
 #       req_to :create, with: { app_type: 'borrow' }
 #       expect(inventory.amount).to eq 8
-#       requested get: 200
+#       requests get: 200
 #       expect(inventory.reload.amount).to eq 10
 #       expect(Record.last.return_at).not_to be_nil
 #     end
@@ -74,7 +74,7 @@
 #         req_to :create, with: { app_type: 'borrow' }
 #         request
 #         expect(inventory.reload.amount).to eq 10
-#         requested get: 200
+#         requests get: 200
 #         expect(inventory.reload.amount).to eq 10
 #       end
 #     end
@@ -85,7 +85,7 @@
 #         expect(inventory.reload.amount).to eq 8
 #         request
 #         expect(inventory.reload.amount).to eq 10
-#         requested get: 200
+#         requests get: 200
 #         expect(inventory.reload.amount).to eq 10
 #       end
 #     end

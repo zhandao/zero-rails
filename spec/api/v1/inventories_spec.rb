@@ -14,6 +14,6 @@ RSpec.describe 'API V1', 'inventories', type: :request do
   api :index, :get, '/api/v1/inventories', 'get list of inventories' do
     let(:params) { { store_name: 'store' } }
 
-    it { requested has_size: 5 }
+    it { requests has_size: 5 }
   end
 end

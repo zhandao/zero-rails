@@ -1,11 +1,10 @@
 Rails.application.configure do
-
   config.lograge.keep_original_rails_log = true
 
   config.lograge.enabled = Rails.env.test? ? false : true
 
   config.lograge.logger =
-      ActiveSupport::Logger.new "/data/logs/logstash_lograge_zero-rails_#{Rails.env}.log" unless Rails.env.test?
+      ActiveSupport::Logger.new "/data/logs/logstash_#{$app_name}_#{Rails.env}.log" unless Rails.env.test?
 
   config.lograge.base_controller_class = 'ActionController::API'
 
@@ -15,19 +14,16 @@ Rails.application.configure do
         host: controller.request.host,
         ip: controller.request.remote_ip,
         user: controller.try(:current_admin)&.id || '',
-        jwt: controller.try(:token) || ''
+        jwt: controller.try(:token) || '',
+        response_code: controller.response.code,
+        response_body: (MultiJson.load(controller.response.body).except('language', 'timestamp') rescue {})
     }
   end
 
   config.lograge.custom_options = lambda do |event|
     {
-        ip: event.payload[:ip],
-        host: event.payload[:host],
         time: event.time.to_s(:standard),
-        params: event.payload[:params],
-        user: event.payload[:user],
-        jwt: event.payload[:jwt]
-
+        **event.payload.slice(:ip, :host, :params, :user, :jwt, :response_code, :response_body)
     }
   end
 

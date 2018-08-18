@@ -1,6 +1,6 @@
 class Api::V1::RolesDoc < ApiDoc
   api_dry :all do
-    auth :Token
+    auth :Authorization
   end
 
 

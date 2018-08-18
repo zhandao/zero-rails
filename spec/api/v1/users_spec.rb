@@ -15,7 +15,7 @@ RSpec.describe 'API V1', 'users', type: :request do
 
     it 'works' do
       expect(User.count).to eq 0
-      requested get: 200
+      requests get: 200
       expect(User.count).to eq 1
     end
   end
@@ -35,14 +35,14 @@ RSpec.describe 'API V1', 'users', type: :request do
     let(:params) { { name: 'tester', password: 'test' } }
     before { req_to! :create }
 
-    it('works') { requested has_key: :token }
-    it('raises not found') { requested with: { name: 'xx' }, get: UsersError.login_failed.code }
+    it('works') { requests has_key: :token }
+    it('raises not found') { requests with: { name: 'xx' }, get: UsersError.login_failed.code }
   end
 
   # api :logout, :post, '/api/v1/users/logout', 'post user log out', :token_needed do
   #   it 'works' do
   #     old_version = user.token_version
-  #     requested get: 200
+  #     requests get: 200
   #     expect(user.reload.token_version).to eq old_version + 1
   #   end
   # end
@@ -66,7 +66,7 @@ RSpec.describe 'API V1', 'users', type: :request do
 
     it 'works', :with_rp do
       expect(user.roles).to eq [ ]
-      requested get: 200
+      requests get: 200
       expect(user.reload.roles).to have_size 1
       request by: { role_ids: Role.all.ids << 999 }
       expect(user.reload.roles).to have_size Role.count
@@ -91,7 +91,7 @@ RSpec.describe 'API V1', 'users', type: :request do
   #   it 'works', :with_rp do
   #     expect(user.roles).to eq [ ]
   #     req_to! :roles_modify
-  #     requested data: [2]
+  #     requests data: [2]
   #   end
   # end
 end

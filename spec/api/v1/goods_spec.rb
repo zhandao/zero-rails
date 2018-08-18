@@ -49,7 +49,7 @@ RSpec.describe 'API V1', 'goods', type: :request do
 
     it 'works' do
       expect_any_instance_of(Good).to receive(:change_onsale).and_return(true)
-      requested get: 200
+      requests get: 200
     end
   end
 end

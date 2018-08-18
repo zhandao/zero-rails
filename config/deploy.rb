@@ -26,7 +26,7 @@ set :shared_files, fetch(:shared_files, [ ]).push(
     'config/puma.rb'
 )
 
-set :lograte_file, "/data/logs/logstash_lograge_zero-rails_#{fetch(:rails_env)}.log"
+set :lograte_file, "/data/logs/logstash_#{$app_name}_#{fetch(:rails_env)}.log"
 
 task common_env: :env do
 end
