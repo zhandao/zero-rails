@@ -1,3 +1,6 @@
+directory "<%= "#{ fetch(:current_path)}" %>"
+
+
 # Puma can serve each request in a thread from an internal thread pool.
 # The `threads` method setting takes two numbers: a minimum and maximum.
 # Any libraries that use thread pools should be configured to match
@@ -5,7 +8,7 @@
 # and maximum; this matches the default thread size of Active Record.
 #
 min_threads = ENV.fetch("RAILS_MIN_THREADS") { 5 }
-max_threads = ENV.fetch("RAILS_MAX_THREADS") { 5 }
+max_threads = ENV.fetch("RAILS_MAX_THREADS") { 20 }
 threads min_threads, max_threads
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
@@ -23,7 +26,7 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 # processes).
 # Typically this is set to the number of available cores.
 #
-# workers ENV.fetch("WEB_CONCURRENCY") { 2 }
+workers ENV.fetch("WEB_CONCURRENCY") { 2 }
 
 # Use the `preload_app!` method when specifying a `workers` number.
 # This directive tells Puma to first boot the application and load code
@@ -31,30 +34,33 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 # process behavior so workers use less memory.
 # this conflicts with phased restart feature. (off by default)
 #
-# preload_app!
+preload_app!
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
 
 # Store the pid of the server in the file at "path".
 #
-pidfile 'tmp/pids/puma.pid'
+# pidfile 'tmp/pids/puma.pid'
+pidfile "<%= fetch(:puma_pid) %>"
 
 # Daemonize the server into the background. Highly suggest that
 # this be combined with "pidfile" and "stdout_redirect".
 #
-# daemonize
+daemonize
 
 # Use "path" as the file to store the server info state. This is
 # used by "pumactl" to query and control the server.
 #
-state_path 'tmp/pids/puma.state'
+# state_path 'tmp/pids/puma.state'
+state_path "<%= fetch(:puma_state) %>"
 
 # Redirect STDOUT and STDERR to files specified. The 3rd parameter
 # ("append") specifies whether the output is appended, the default is
 # "false".
 #
-stdout_redirect 'log/puma_access.log', 'log/puma_error.log', true
+# stdout_redirect 'log/puma_access.log', 'log/puma_error.log', true
+stdout_redirect "<%= "#{ fetch(:shared_path)}/log" %>/puma_access.log", "<%= "#{ fetch(:shared_path)}/log" %>/puma_error.log", true
 
 # Bind the server to "url". "tcp://", "unix://" and "ssl://" are the only
 # accepted protocols.
@@ -63,6 +69,7 @@ stdout_redirect 'log/puma_access.log', 'log/puma_error.log', true
 #
 # bind 'tcp://0.0.0.0:9292'
 # bind 'unix:///tmp/sockets/puma.sock'
+bind "unix://<%= fetch(:puma_socket) %>"
 # bind 'unix:///var/run/puma.sock?umask=0111'
 # bind 'ssl://127.0.0.1:9292?key=path_to_key&cert=path_to_cert'
 
@@ -133,7 +140,7 @@ stdout_redirect 'log/puma_access.log', 'log/puma_error.log', true
 # is preserved across a phased-restart. (incompatible with preload_app)
 # (off by default)
 
-# prune_bundler
+prune_bundler
 
 # === Puma control rack application ===
 
@@ -149,3 +156,4 @@ stdout_redirect 'log/puma_access.log', 'log/puma_error.log', true
 # activate_control_app 'unix:///var/run/pumactl.sock'
 # activate_control_app 'unix:///var/run/pumactl.sock', { auth_token: '12345' }
 # activate_control_app 'unix:///var/run/pumactl.sock', { no_token: true }
+activate_control_app "unix://<%= fetch(:pumactl_socket) %>"

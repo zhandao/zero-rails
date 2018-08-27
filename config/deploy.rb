@@ -23,7 +23,6 @@ set :shared_files, fetch(:shared_files, [ ]).push(
     'config/settings.local.yml',
     'config/secrets.yml',
     'config/newrelic.yml',
-    'config/puma.rb'
 )
 
 set :lograte_file, "/data/logs/logstash_#{$app_name}_#{fetch(:rails_env)}.log"
@@ -84,6 +83,7 @@ task deploy: :remote_environment do
     # invoke :'sidekiq:quiet'
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
+    command %[mv config/puma.deploy.rb config/puma.rb]
     # command %[RAILS_ENV=#{fetch(:rails_env)} bundle install --without development]
     invoke :'bundle:install'
 

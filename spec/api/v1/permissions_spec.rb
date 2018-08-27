@@ -2,8 +2,7 @@ require 'rails_helper'
 require 'dssl/request'
 
 RSpec.describe 'API V1', 'permissions', type: :request do
-  subject { MultiJson.load(response.body, symbolize_keys: true) }
-  let(:data) { subject[:data] }
+  happy_spec
   path id: 1
 
   let(:user) { create(:user) }

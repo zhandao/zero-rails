@@ -44,12 +44,12 @@
 #     end
 #
 #     context 'search by good name' do
-#       it { request with: { value: 'aa' }, has_size: 3 }
-#       it { request with: { value: 'ac' }, has_size: 0 }
+#       it { request with: { value: 'aa' }, have_size: 3 }
+#       it { request with: { value: 'ac' }, have_size: 0 }
 #     end
 #
 #     context 'search by applicant info' do
-#       it { request with: { search_field: 'fingerprint' }, has_size: 3 }
+#       it { request with: { search_field: 'fingerprint' }, have_size: 3 }
 #     end
 #   end
 #

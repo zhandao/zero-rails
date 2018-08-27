@@ -2,8 +2,7 @@ require 'rails_helper'
 require 'dssl/request'
 
 RSpec.describe 'API V1', 'categories', type: :request do
-  subject { MultiJson.load(response.body, symbolize_keys: true) }
-  let(:data) { subject[:data] }
+  happy_spec
   path id: 1
 
   let(:user) { create(:user) }
@@ -37,7 +36,7 @@ RSpec.describe 'API V1', 'categories', type: :request do
 
     api :nested_list, :get, '/api/v1/categories/list', 'get nested list of categories.' do
       it 'works', :with_create do
-        requests has_size: 2
+        requests have_size: 2
         expect(data[0][:sub_categories_info]).to have_size 2
         expect(data[1][:sub_categories_info]).to have_size 0
       end

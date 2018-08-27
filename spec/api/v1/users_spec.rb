@@ -2,8 +2,7 @@ require 'rails_helper'
 require 'dssl/request'
 
 RSpec.describe 'API V1', 'users', type: :request do
-  subject { MultiJson.load(response.body, symbolize_keys: true) }
-  let(:data) { subject[:data] }
+  happy_spec
   path id: 1
 
   permission_mock can?: %i[ manage_user manage_role_permission ]
@@ -35,7 +34,7 @@ RSpec.describe 'API V1', 'users', type: :request do
     let(:params) { { name: 'tester', password: 'test' } }
     before { req_to! :create }
 
-    it('works') { requests has_key: :token }
+    it('works') { requests have_key: :token }
     it('raises not found') { requests with: { name: 'xx' }, get: UsersError.login_failed.code }
   end
 
@@ -81,7 +80,7 @@ RSpec.describe 'API V1', 'users', type: :request do
     it 'works', :with_rp do
       expect(user.roles).to eq [ ]
       req_to! :roles_modify
-      request data: ['role']
+      request data_eq: ['role']
     end
   end
 
@@ -91,7 +90,7 @@ RSpec.describe 'API V1', 'users', type: :request do
   #   it 'works', :with_rp do
   #     expect(user.roles).to eq [ ]
   #     req_to! :roles_modify
-  #     requests data: [2]
+  #     requests data_eq: [2]
   #   end
   # end
 end

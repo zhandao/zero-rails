@@ -9,32 +9,32 @@ RSpec.describe Inventory, type: :model do
 
   func :increase, focus_on: :amount do
     it do
-      called by: 3, get: true
+      calls by: 3, get: true
       expect_it.to eq 3
-      called by: 7, get: true
+      calls by: 7, get: true
       expect_it.to eq 10
     end
 
     it 'rejects negative number' do
-      called by: -1, get: nil
+      calls by: -1, get: nil
     end
   end
 
   func :decrease, focus_on: :amount do
     context 'when amount is not enough' do
-      it('will not save') { called by: 1, get: false }
+      it('will not save') { calls by: 1, get: false }
     end
 
     it do
       inventory.increase(10)
-      called by: 3, get: true
+      calls by: 3, get: true
       expect_it.to eq 7
-      called by: 7, get: true
+      calls by: 7, get: true
       expect_it.to eq 0
     end
 
     it 'rejects negative number' do
-      called by: -1, get: nil
+      calls by: -1, get: nil
     end
   end
 end

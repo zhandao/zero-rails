@@ -18,8 +18,8 @@ module BusinessError
     alias out    output
     alias render output
 
-    def and(addtion_content)
-      @info = info.merge output: info.merge(addtion_content).except(:http_status)
+    def and(addition_content)
+      @info = info.merge output: info.merge(addition_content).except(:http_status)
       raise self
     end
 

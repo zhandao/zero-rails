@@ -17,6 +17,9 @@ require "rails/test_unit/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+require 'config'
+Config.load_and_set_settings('./config/settings.local.yml', './config/settings.yml')
+
 Dir[Pathname.new(File.dirname(__FILE__)).realpath.parent.join('lib', 'monkey_patches', '*.rb')].map do |file|
   require file
 end

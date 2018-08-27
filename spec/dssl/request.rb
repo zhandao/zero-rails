@@ -4,7 +4,19 @@ module Temp
 end
 
 def self_name
-  self.to_s.delete('#<').split('::').first(3).join('::')
+  self.to_s.delete('#<').split('::').first(3).last[3..-1]
+end
+
+def happy_spec
+  api_ver, entity_name = self_name[/V[1-9]?/], self_name.sub(/V[1-9]?/, '')
+
+  let(:error_cls) { (entity_name + 'Error').constantize }
+  ns = api_ver ? "Api::#{api_ver}::" : 'Api::'
+  let(:controller) { (ns + entity_name + 'Controller').constantize }
+
+  # Set subject to be the hashed response
+  subject { MultiJson.load(response.body, symbolize_keys: true) }
+  let(:response_status) { subject[:status] }
 end
 
 def _process_path path
@@ -15,8 +27,12 @@ def path params
   Temp.path[self_name] = params
 end
 
-def error_cls name
-  let(:error_cls) { name }
+def mock_ins receive, rt: nil
+  allow_any_instance_of(controller).to receive(receive).and_return(rt)
+end
+
+def mock_ins! receive, rt: nil
+  expect_any_instance_of(controller).to receive(receive).and_return(rt)
 end
 
 def api action, http_method, path, description = nil, token_needed = false, focus_on: nil, &block
@@ -85,23 +101,21 @@ def req by: nil, p: nil, with: nil, headers: { }, to: nil, **expectations
   end
 end
 
-alias reqed req
+alias reqs req
 alias request req
 alias requests req
 
-def _req_expectation_blks get: nil, all_attrs: nil, has_size: nil, has_attr: nil, include: nil, has_key: nil, data: nil
-  if !all_attrs.nil?
-    -> { all(have_attributes(all_attrs)) }
-  elsif !has_attr.nil?
-    -> { have_attributes(has_attr) }
+def _req_expectation_blks get: nil, all_have_attrs: nil, have_size: nil, include: nil, have_key: nil, data_eq: nil
+  if !all_have_attrs.nil?
+    -> { all(have_attributes(all_have_attrs)) }
   elsif !include.nil?
     -> { include(include) }
-  elsif !has_key.nil?
-    -> { have_key has_key }
-  elsif !has_size.nil?
-    -> { have_size has_size }
-  elsif !data.nil?
-    -> { eq data }
+  elsif !have_key.nil?
+    -> { have_key have_key }
+  elsif !have_size.nil?
+    -> { have_size have_size }
+  elsif !data_eq.nil?
+    -> { eq data_eq }
   else
     get = 0 if get == :success # TODO
     get = error_cls.send(get).code if get.is_a?(Symbol)

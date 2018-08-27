@@ -2,21 +2,21 @@ module OutPut
   private
 
   # TODO: refactor
-  def ren(json = { })
-    json  = ren_processed json
-    status = json.delete(:http_status)
-    return render json: json[:output], status: status if json[:output].present?
+  def output(data = { })
+    data  = for_output data
+    status = data.delete(:http_status)
+    return render json: data[:output], status: status if data[:output].present?
 
-    total = json[:total]
-    data  = json[:data]
-    total = if    json[:msg].present?; 0
+    total = data[:total]
+    data  = data[:data]
+    total = if    data[:msg].present?; 0
             elsif data.is_a?(Array);   data.size
             elsif data.present?;       1
             end if total.nil?
 
     render :json => {
-        code:      json[:code]  || 200,
-        msg:       json[:msg]   || 'success',
+        code:      data[:code]  || 200,
+        msg:       data[:msg]   || 'success',
         total:     total        || 0,
         timestamp: Time.current.to_i,
         language:  'Ruby',
@@ -24,13 +24,11 @@ module OutPut
     }, :status => status || 200
   end
 
-  alias out ren
-  alias output ren
-  alias response_ok ren
+  alias response_ok output
 
-  def ren_processed(json)
-    return json.info if json.is_a? StandardError
-    json.is_a?(Hash) && (json.keys & %i[ data msg ]).any? ? json : { data: json }
+  def for_output(data)
+    return data.info if data.is_a? StandardError
+    data.is_a?(Hash) && (data.keys & %i[ data msg ]).any? ? data : { data: data }
   end
 end
 

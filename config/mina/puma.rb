@@ -4,7 +4,7 @@ namespace :puma do
   end
 
   task update_config: :environment do
-    content = erb('config/puma.rb.erb')
+    content = erb('config/puma.deploy.rb.erb')
      command %(echo 'update puma config file')
      command %(echo '#{content}' > #{ fetch(:shared_path)}/config/puma.rb)
   end

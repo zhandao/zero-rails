@@ -10,7 +10,7 @@ RSpec.describe Role, type: :model do
       it 'will add a permission to the role' do
         expect_it.to eq [ ]
         permission = create(:permission)
-        called by: { permission: permission.name }, get: [permission]
+        calls by: { permission: permission.name }, get: [permission]
       end
     end
   end
