@@ -19,10 +19,7 @@ set :shared_dirs, fetch(:shared_dirs, [ ]).push(
     'tmp/sockets'
 )
 set :shared_files, fetch(:shared_files, [ ]).push(
-    'config/database.yml',
     'config/settings.local.yml',
-    'config/secrets.yml',
-    'config/newrelic.yml',
 )
 
 set :lograte_file, "/data/logs/logstash_#{$app_name}_#{fetch(:rails_env)}.log"

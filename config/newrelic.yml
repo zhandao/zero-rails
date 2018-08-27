@@ -12,11 +12,11 @@
 
 common: &default_settings
   # Required license key associated with your New Relic account.
-  license_key: ** TODO **
+  license_key: <%= Keys.newrelic_license_key %>
 
   # Your application name. Renaming here affects where data displays in New
   # Relic.  For more details, see https://docs.newrelic.com/docs/apm/new-relic-apm/maintenance/renaming-applications
-  app_name: Zero Rails
+  app_name: <%= Keys.app_name.camelize %>
 
   # To disable the agent regardless of other settings, uncomment the following:
   # agent_enabled: false
@@ -26,7 +26,7 @@ common: &default_settings
 
   # Error ignore
   error_collector:
-    ignore_errors: 'BizError'
+    ignore_errors: 'BusinessError::ZError'
 
 
 # Environment-specific settings are in this section.
@@ -34,7 +34,7 @@ common: &default_settings
 # If your application has other named environments, configure them here.
 development:
   <<: *default_settings
-  app_name: Zero Rails (Development)
+  app_name: <%= Keys.app_name.camelize %> (Development)
 
 test:
   <<: *default_settings
@@ -43,7 +43,7 @@ test:
 
 staging:
   <<: *default_settings
-  app_name: Zero Rails (Staging)
+  app_name: <%= Keys.app_name.camelize %> (Staging)
 
 production:
   <<: *default_settings

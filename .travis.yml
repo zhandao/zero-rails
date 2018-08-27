@@ -8,41 +8,34 @@ matrix:
   allow_failures:
     - rvm: ruby-head
 
-before_install: gem install bundler
+before_install:
+  - gem install bundler
+  - cp config/settings.local.example.yml config/settings.local.yml
 
 addons:
   postgres: "10.4"
-#  postgresql: "9.4"
 
 services:
   - postgres
-#  - memcached
-  - redis-server
-#  - elasticsearch
+  - redis
 
 env:
   global:
+    - CI=runner
+    - RAILS_ENV=test
     - CC_TEST_REPORTER_ID=cd49d26b5c1dd48d2110be841080f089796b77e242e887d9cf9628f791fab741
-
-before_install:
-#  - sed -i "s/gems.ruby-china.org/rubygems.org/g" Gemfile.lock
-#  - psql -c "CREATE USER \"admin\" WITH CREATEDB PASSWORD 'admin';" -U postgres
-#  - psql -c "create database \"homeland-test\" WITH OWNER=\"admin\";" -U postgres
-  - psql -c "create database zero_test;" -U postgres
-  - cp config/database.yml.pg config/database.yml
-  - cp config/settings.local.yml.example config/settings.local.yml
-  - cp config/secrets.yml.example config/secrets.yml
-#  - sed -i "s/SETUP_REDIS_HOST/127.0.0.1/g" config/redis.yml
-#  - sed -i "s/SETUP_REDIS_PORT/6379/g" config/redis.yml
+    - POSTGRES_USER=runner
+    - POSTGRES_PASSWORD=runner
 
 before_script:
-  - RAILS_ENV=test bundle exec rake db:schema:load
+  - rails db:setup
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 
 script:
 #  - bundle exec rubocop .
+  - bundle exec brakeman
   - RAILS_ENV=test bundle exec rspec
 
 after_script:

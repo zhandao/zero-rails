@@ -1,0 +1,13 @@
+app_name: zero_rails
+secret_key_base: dec71463b33fae6c9a0a8f9efc356511e04cf5f44dac466b1a2945e1d2cc7210a56a5539880a83ed5133cbd2d5c42c6aec53ec9e09cce14dc9e64b91cd1fba7d
+jwt_key: dec71463b33fae6c9a0a8f9efc356511e04cf5f44dac466b1a2945e1d2cc7210a56a5539880a83ed5133cbd2d5c42c6aec53ec9e09cce14dc9e64b91cd1fba7d
+newrelic_license_key: 533c1f8706a74560a72153f13be34faf4671352f
+
+admin:
+  user_name: admin
+  password: zero-rails-admin
+secure_storage:
+  default: zero-rails
+redis:
+  cache_url: redis://localhost:6379/0
+  sidekiq_url: redis://localhost:6379/1
