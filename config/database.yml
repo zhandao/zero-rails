@@ -13,8 +13,8 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   host: localhost
   port: 5432
-  username: <%= ENV["CI"] ? 'runner' : `whoami`.strip %>
-  password: <%= ENV["CI"] ? 'runner' : nil %>
+  username: <%= `whoami`.strip %>
+  password:
 
 development:
   <<: *default

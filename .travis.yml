@@ -21,11 +21,8 @@ services:
 
 env:
   global:
-    - CI=runner
     - RAILS_ENV=test
     - CC_TEST_REPORTER_ID=cd49d26b5c1dd48d2110be841080f089796b77e242e887d9cf9628f791fab741
-    - POSTGRES_USER=runner
-    - POSTGRES_PASSWORD=runner
 
 before_script:
   - bundle exec rails db:setup
