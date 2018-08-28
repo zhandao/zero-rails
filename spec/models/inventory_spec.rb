@@ -21,7 +21,7 @@ RSpec.describe Inventory, type: :model do
   end
 
   func :decrease, focus_on: :amount do
-    context 'when amount is not enough' do
+    context 'when amount was not enough' do
       it('will not save') { calls by: 1, get: false }
     end
 

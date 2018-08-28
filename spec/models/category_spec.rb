@@ -15,7 +15,7 @@ RSpec.describe Category, type: :model do
 
     it { calls by: 'sub', get: [category.id] }
 
-    context 'when pass a base category name' do
+    context 'when passed a base category name' do
       it('also returns all ids of the sub categories') { calls by: 'base', get: [base_category.id, category.id] }
     end
   end

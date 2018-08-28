@@ -54,7 +54,7 @@ state_path 'tmp/pids/puma.state'
 # ("append") specifies whether the output is appended, the default is
 # "false".
 #
-stdout_redirect 'log/puma_access.log', 'log/puma_error.log', true
+# stdout_redirect 'log/puma_access.log', 'log/puma_error.log', true
 
 # Bind the server to "url". "tcp://", "unix://" and "ssl://" are the only
 # accepted protocols.
