@@ -256,7 +256,7 @@ group :development do
   # https://github.com/bbatsov/rubocop
   gem 'rubocop', require: false # or just `gem install`
   # https://github.com/toshimaru/rubocop-rails
-  # gem "rubocop-rails", require: false # or just `gem install`
+  # gem "rubocop-rails_config", require: false # or just `gem install`
 
   # https://github.com/rubysec/bundler-audit
   gem 'bundler-audit', require: false # or just `gem install`

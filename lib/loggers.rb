@@ -4,6 +4,7 @@ class Loggers
   class << self
     def register(name, path = nil, format: :normal)
       name = name.to_sym
+      path = nil if Rails.env.test? && path&.match?('/data/logs') # for ci
       return puts "Logger named #{name} has exists".red if loggers&.key?(name.to_sym)
 
       (self.loggers ||= { })[name] = ::Logger.new(path || "log/#{name}.log")
