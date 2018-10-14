@@ -35,7 +35,7 @@ RSpec.describe 'API V1', 'users', type: :request do
     before { req_to! :create }
 
     it('works') { requests have_key: :token }
-    it('raises not found') { requests with: { name: 'xx' }, get: UsersError.login_failed.code }
+    it('raises not found') { requests with: { name: 'xx' }, get: Error::Users.login_failed.code }
   end
 
   # api :logout, :post, '/api/v1/users/logout', 'post user log out', :token_needed do
