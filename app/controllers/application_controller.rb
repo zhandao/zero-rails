@@ -19,6 +19,6 @@ class ApplicationController < ActionController::Base
   def log_and_render(e)
     log_error e
     # ren Rails.env.production? ? { code: 500, msg: 'something is wrong' } : e
-    output code: 500, msg: 'Internal Server Error'
+    output 500, 'Internal Server Error'
   end
 end

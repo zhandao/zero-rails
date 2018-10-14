@@ -33,15 +33,18 @@ module ZeroRails
 
     config.load_defaults 5.2
 
-    # if Rails.env.development?
-    Dir['app/_docs/**/*'].each { |p| config.eager_load_paths << p }
+    if Rails.env.development?
+      # Dir['app/_docs/others/**/*.rb'].each { |p| config.eager_load_paths << p }
+      config.eager_load_paths << "#{Rails.root}/app/_docs/others"
+    end
+    config.eager_load_paths << "#{Rails.root}/app/_docs"
     # else
     #   Dir['app/_docs/*.rb', 'app/_docs/v*/**'].each { |p| config.eager_load_paths << p }
     # end
 
     config.eager_load_paths << Rails.root.join('lib')
 
-    # config.cache_store = :redis_store, Settings.redis.cache_url, { expires_in: 30.days, multithread: true }
+    # config.cache_store = :redis_store, Keys.redis.cache_url, { expires_in: 30.days, multithread: true }
     config.cache_store = :redis_store, Keys.redis.cache_url, { expires_in: 1.day }
 
     config.encoding = 'utf-8'

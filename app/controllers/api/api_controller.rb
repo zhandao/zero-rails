@@ -30,19 +30,20 @@ class Api::ApiController < ActionController::API
   end
 
   def self.error_cls(rt = nil)
-    "#{controller_name.camelize}Error".constantize
+    "Error#{controller_name.camelize}".constantize
   rescue
-    rt || ApiError
+    rt || Error::Api
   end
+
+  delegate :error_cls, to: self
 
   def self.error_cls?; error_cls(false) end
 
   helper_method :render_error
 
   def render_error # from are rescuer
-    error_class  = "#{controller_name.camelize}Error".constantize rescue nil
-    if error_class.respond_to?(action_error = "#{action_name}_failed")
-      @error_info = error_class.send(action_error).info.values
+    if error_cls.respond_to?(action_error = "#{action_name}_failed")
+      @error_info = error_cls.send(action_error).info.values
     end
     @_code, @_msg, _ = @error_info
   end

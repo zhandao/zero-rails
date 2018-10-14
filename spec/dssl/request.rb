@@ -10,13 +10,13 @@ end
 def happy_spec
   api_ver, entity_name = self_name[/V[1-9]?/], self_name.sub(/V[1-9]?/, '')
 
-  let(:error_cls) { (entity_name + 'Error').constantize }
+  let(:error_cls) { ('Error::' + entity_name).constantize }
   ns = api_ver ? "Api::#{api_ver}::" : 'Api::'
   let(:controller) { (ns + entity_name + 'Controller').constantize }
 
   # Set subject to be the hashed response
   subject { MultiJson.load(response.body, symbolize_keys: true) }
-  let(:response_status) { subject[:status] }
+  let(:response_status) { subject[:result][:code] }
 end
 
 def _process_path path
@@ -47,9 +47,9 @@ def api action, http_method, path, description = nil, token_needed = false, focu
 
     if token_needed
       it 'checks token', :skip_before do
-        error_code = ApiError.invalid_token.code
+        error_code = Error::Api.invalid_token.code
         request headers: { Authorization: nil }, get: error_code
-        # requests get: ApiError.invalid_param.info[:code]
+        # requests get: Error::Api.invalid_param.info[:code]
         request headers: { Authorization: 'Bearer 123' }, get: error_code
         invalid_user = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImFAYi5jIiwidWlkIjoidCIsInZlcnNpb24iOjEsImV4cCI6IjE1' \
                        'MTc1NzYxODkifQ.7CeA1P8iBK8rTaw1nt7wk6QqB2IQMcVvARTTrTdvPOE'
@@ -93,10 +93,10 @@ def req by: nil, p: nil, with: nil, headers: { }, to: nil, **expectations
   headers.merge!(Authorization: 'Bearer ' + user.token) if token_needed && !headers.key?(:Authorization)
   send(http_method, _process_path(path), params: parameters, headers: headers)
 
-  subj = MultiJson.load(response.body, symbolize_keys: true) # for fixing subject cannot reload
+  subj = MultiJson.load(response.body, symbolize_keys: true) # TODO HACK for fixing subject cannot reload
   # pp subj
   expectations&.each do |(key, val)|
-    obj = subj[:code] if key == :get
+    obj =  key == :get ? subj[:result][:code] : subject[:data] # TODO HACK as above, refactoring by reading OutPut::Config
     expect(obj || subj[:data]).to instance_exec(&_req_expectation_blks(key => val))
   end
 end
@@ -127,7 +127,7 @@ def req_to action, token_needed = false, with: { }
   headers = { Authorization: 'Bearer ' + user.token } if token_needed
   send(*Temp.action_path[self_name][action], params: send("#{action}_params").merge(with), headers: headers || { })
   MultiJson.load(response.body, symbolize_keys: true).tap do |result|
-    expect(result[:code]).to eq 200
+    expect(result[:result][:code]).to eq 200
   end
 end
 
@@ -137,7 +137,7 @@ end
 
 def it_checks_permission
   it 'checks permission', :without_permission_mock do
-    requests get: ApiError.permission_error.code
+    requests get: Error::Api.permission_error.code
   end
 end
 

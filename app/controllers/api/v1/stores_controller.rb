@@ -7,21 +7,17 @@ class Api::V1::StoresController < Api::V1::BaseController
     @data = Store.all
   end
 
-
   def create
     Store.create! permitted
   end
-
 
   def show
     @datum = @store
   end
 
-
   def update
     @store.update! permitted
   end
-
 
   def destroy
     @status = @store.destroy

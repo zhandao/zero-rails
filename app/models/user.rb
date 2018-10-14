@@ -9,7 +9,7 @@ class User < ApplicationRecord
 
   soft_destroy
 
-  include IAmICan
+  act_as_i_am_i_can
 
   # enum status: [ :active, :archived ]
   # enum status: { active: 0, archived: 1 }
@@ -64,7 +64,7 @@ class User < ApplicationRecord
     # vip can => level can -- why?
     #   `can :do, role: :vip`, and `level is vip`(is? :vip => true), so `can? :do` is true
     #   when from db, base_role will be load and get it's permissions
-    family :vip, when: false do # when: vip?
+    org_role :vip, when: false do # when: vip?
       is :level1, always # is not level1 cause is not vip
       is :level2, never
     end
@@ -77,7 +77,6 @@ class User < ApplicationRecord
     is :people do
       !admin? # => is `people`
     end
-    # is :people { admin? }
   end
 
   def admin?

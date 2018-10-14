@@ -11,32 +11,26 @@ class Api::V1::UsersController < Api::V1::BaseController
     @data = User.all
   end
 
-
   def show
     #
   end
 
-
   def show_via_name
     #
   end
-
 
   def create
     user = User.create! permitted
     @data = { token: user.token }
   end
 
-
   def update
     @user.update! permitted
   end
 
-
   def destroy
     @user.destroy
   end
-
 
   # FIXME: fix find_by! => NotF but not rescue
   def login
@@ -56,7 +50,6 @@ class Api::V1::UsersController < Api::V1::BaseController
   def permissions
     output @user.all_permissions
   end
-
 
   def roles_modify
     @user.roles = Role.where(id: @role_ids)

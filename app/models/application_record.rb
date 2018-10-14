@@ -3,7 +3,6 @@ class ApplicationRecord < ActiveRecord::Base
 
   include TokenForModel
   include BuilderSupport
-  include SecureStorage
 
   def self.soft_destroy # TODO rename -> soft_destroy_support
     acts_as_paranoid

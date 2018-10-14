@@ -27,5 +27,10 @@ Rails.application.configure do
     }
   end
 
+  config.lograge.ignore_custom = lambda do |event|
+    # return true here if you want to ignore based on the event
+    event.payload[:controller].in? %w[HomeController]
+  end
+
   config.lograge.formatter = Lograge::Formatters::Logstash.new
 end

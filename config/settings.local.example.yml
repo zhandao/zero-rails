@@ -2,6 +2,8 @@ app_name: zero_rails
 secret_key_base: TODO
 jwt_key: TODO
 newrelic_license_key: TODO
+sentry:
+  dsn: TODO
 
 database:
   url: postgres://myuser:mypass@localhost/somedatabase

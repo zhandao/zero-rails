@@ -48,23 +48,24 @@ module AutoGenDoc
           ### Common responses
           # OAS require at least one response on each api.
           # default_response 'default response', :json
-          model = Object.const_get(action_path.split('#').first.split('/').last[0..-2].camelize) rescue nil
-          type = action.in?(%w[ index show create ]) ? load_schema(model) : String
+          # model = Object.const_get(action_path.split('#').first.split('/').last[0..-2].camelize) rescue nil
+          # type = action.in?(%w[ index show create ]) ? load_schema(model) : String
+          # TODO: automatically gets `to_builder` format
           response 200, 'success', :json, data: {
-              code:      { type: Integer, dft: 200 },
-              msg:       { type: String,  dft: 'success' },
-              total:     { type: Integer },
-              timestamp: { type: Integer },
-              language:  { type: String, dft: 'Ruby' },
-              data:      { type: type }
+              result: {
+                  code: { type: Integer, default: 0 },
+                  message: { type: String,  default: 'success' }
+              }
           }
 
           # automatically generate responses based on the agreed error class.
-          # api/v1/examples#index => ExamplesError
-          error_class_name = action_path.split('#').first.split('/').last.camelize.concat('Error')
-          error_class = Object.const_get(error_class_name) rescue ApiError
-          cur_api_errs = error_class.errors.values_at(action.to_sym, :private, :_public).flatten.compact.uniq
-          cur_api_errs.each do |error|
+          # api/v1/examples#index => Error::Examples
+          error_class_name = 'Error::' + action_path.split('#').first.split('/').last.camelize
+          error_class = Object.const_get(error_class_name) rescue Error::Api
+          # TODO
+          public_errs = error_class.defs_tree[error_class_name]&.[](:public)&.map { |e| e[:name] } || [ ]
+          cur_api_errs = (error_class.defs&.values_at(action.to_sym, :private) || [ ]).flatten.compact.uniq
+          (public_errs + cur_api_errs).each do |error|
             info = error_class.send(error).info
             response info[:code], info[:msg]
           end

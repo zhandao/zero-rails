@@ -123,7 +123,7 @@ module MakeSure
       if result
         success ||= logic[:success] # Returns the success of the final judgment
       elsif logic[:fail].is_a?(Symbol)
-        ApiError.send("#{logic[:fail]}!")
+        Error::Api.send("#{logic[:fail]}!")
       else
         return logic[:fail] || false
       end

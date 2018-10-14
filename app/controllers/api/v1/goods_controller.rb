@@ -8,26 +8,21 @@ class Api::V1::GoodsController < Api::V1::BaseController
     export_goods if @export
   end
 
-
   def show
     @datum = @good
   end
-
 
   def create
     Good.create! permitted
   end
 
-
   def update
     @good.update! permitted
   end
 
-
   def destroy
     @status = @good.destroy
   end
-
 
   def change_onsale
     @status = @good.change_onsale

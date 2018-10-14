@@ -4,5 +4,5 @@ OpenApi.write_docs generate_files: Rails.env.development?
 
 if Rails.env.development?
   require './config/initializers/generators'
-  [ NormalSpdoc, RequestSpdoc, ModelDoc ].each(&:run)
+  # [ NormalSpdoc, RequestSpdoc, ModelDoc ].each(&:run)
 end

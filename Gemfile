@@ -13,7 +13,7 @@ gem 'rails', '~> 5.2.0'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 
-# *** Databases ***
+# === Databases ===
 
 # Use mysql as the database for Active Record
 # gem 'mysql2', '>= 0.3.18', '< 0.5'
@@ -27,7 +27,7 @@ gem 'redis', '~> 4.0'
 gem 'redis-rails'
 
 
-# *** Query Extension ***
+# === Query Extension ===
 
 # Pagination, https://github.com/kaminari/kaminari
 gem 'kaminari'
@@ -59,30 +59,45 @@ gem 'paranoia'
 # gem 'acts_as_tree', '~> 2.7'
 
 
-# *** Zero ***
+# === Zero ===
 
 # gem 'zero-rails_openapi'
-# gem 'zero-params_processor'
 gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
 # gem 'zero-rails_openapi', path: '~/ws/zero-rails_openapi'
+# gem 'zero-params_processor'
 gem 'zero-params_processor', github: 'zhandao/zero-params_processor'
 # gem 'zero-params_processor', path: '~/ws/zero-params_processor'
 
 gem 'i_am_i_can', git: 'https://zhandao:250f34a301f788a85fd2b004836d73f6e6988752@git.coding.net/zhandao/i_am_i_can.git'
 # gem 'i_am_i_can', path: '~/ws/ikkiuchi/i_am_i_can'
 
+# Business Error Management by using OOP
+# https://github.com/zhandao/business_error
+gem 'business_error'
+# gem 'business_error', path: '~/ws/business_error'
 
-# *** App Server ***
+# Render JSON response in a unified format
+# https://github.com/zhandao/out_put
+gem 'out_put'
+# gem 'out_put', path: '~/ws/out_put'
+
+# === App Server ===
 # https://github.com/puma/puma
-gem 'puma', '~> 3.7'
+gem 'puma'
 
 
-# *** Ruby Extension ***
+# === Ruby Extension ===
 # https://github.com/intridea/multi_json/
 gem 'multi_json'
 
 
-# *** View ***
+# === Monitor ===
+
+# Ruby Client for Sentry, https://github.com/getsentry/raven-ruby
+gem 'sentry-raven'
+
+
+# === View ===
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # https://devblast.com/b/jbuilder
 gem 'jbuilder'
@@ -94,10 +109,19 @@ gem 'builder_support'
 # gem 'active_model_serializers'
 
 
-# *** Auth & Security ***
+# === Auth & Security ===
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
+
+# simple encryption storage
+# https://github.com/zhandao/secure_storage
+# gem 'secure_storage', path: '~/ws/secure_storage'
+gem 'secure_storage', github: 'zhandao/secure_storage'
+
+# Generates attr_accessors that encrypt and decrypt attributes
+# https://github.com/attr-encrypted/attr_encrypted
+# gem 'attr_encrypted', '~> 3.1.0'
 
 # ruby-JWT, https://github.com/jwt/ruby-jwt
 gem 'jwt'
@@ -124,7 +148,7 @@ gem 'rack-timeout'
 # gem 'exception_notification'
 
 
-# *** Asynchronous Task ***
+# === Asynchronous Task ===
 
 # https://github.com/mperham/sidekiq
 # https://github.com/mperham/sidekiq/wiki/Active-Job
@@ -134,7 +158,7 @@ gem 'sidekiq'
 gem 'whenever', require: false
 
 
-# *** Log ***
+# === Log ===
 
 # An attempt to tame Rails' default policy to log everything.
 # https://github.com/roidrage/lograge
@@ -145,7 +169,7 @@ gem 'logstasher'
 # gem 'logstash-logger'
 
 
-# *** Administration Framework ***
+# === Administration Framework ===
 
 # https://activeadmin.info/documentation.html
 # https://github.com/activeadmin/activeadmin
@@ -164,15 +188,17 @@ gem 'coffee-rails'
 # gem 'rails_db', group: :development
 
 
-# *** Application ***
+# === Application ===
 
 # Office Open XML Spreadsheet Generation, https://github.com/randym/axlsx
 # gem 'axlsx'
 # gem 'axlsx_rails'
 
-# Classier solution for file uploads for Rails
-# https://github.com/carrierwaveuploader/carrierwave
-# gem 'carrierwave'
+# ActiveStorage services' adapters
+# https://github.com/aws/aws-sdk-ruby
+# gem 'aws-sdk-s3', require: false
+# https://github.com/huacnlee/activestorage-aliyun
+# gem 'activestorage-aliyun'
 
 # https://github.com/zhandao/sms
 # gem 'smart_sms', path: '~/ws/sms'
@@ -188,7 +214,8 @@ gem 'coffee-rails'
 # gem 'rails-settings-ui'
 
 
-# *** Abstract ***
+# === Abstract ===
+
 # https://github.com/AaronLasseigne/active_interaction
 # Manage application specific business logic.
 # gem 'active_interaction', '~> 3.5'
@@ -275,7 +302,7 @@ gem 'awesome_rails_console'
 # Feel free to remove gems that you don't want to use or if they conflict with other gem dependencies. (you might need to update .pryrc also)
 group :development, :test do
   # -- awesome_rails_console
-  # https://github.com/cldwalker/hirb TODO 3 years ago
+  # https://github.com/cldwalker/hirb TODO 3 years ago # https://github.com/janlelis/irbtools
   gem 'hirb'
   # Unused, see: https://github.com/miaout17/hirb-unicode/pull/5
   ## gem 'hirb-unicode'
