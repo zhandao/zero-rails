@@ -5,26 +5,26 @@ class Api::V1::GoodsController < Api::V1::BaseController
 
   def index
     @data = Good.send(@view).created_between(@start, @end).search(@field, with: @value).ordered
-    export_goods if @export
+    @export ? export_goods : build_with(data: @data)
   end
 
   def show
-    @datum = @good
+    build_with datum: @good
   end
 
   def create
-    Good.create! permitted
+    check Good.create! permitted
   end
 
   def update
-    @good.update! permitted
+    check @good.update! permitted
   end
 
   def destroy
-    @status = @good.destroy
+    check @status = @good.destroy
   end
 
   def change_onsale
-    @status = @good.change_onsale
+    check @good.change_onsale
   end
 end

@@ -68,8 +68,7 @@ gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
 gem 'zero-params_processor', github: 'zhandao/zero-params_processor'
 # gem 'zero-params_processor', path: '~/ws/zero-params_processor'
 
-gem 'i_am_i_can', git: 'https://zhandao:250f34a301f788a85fd2b004836d73f6e6988752@git.coding.net/zhandao/i_am_i_can.git'
-# gem 'i_am_i_can', path: '~/ws/ikkiuchi/i_am_i_can'
+gem 'i_am_i_can', path: '~/ws/ikkiuchi/i_am_i_can'
 
 # Business Error Management by using OOP
 # https://github.com/zhandao/business_error

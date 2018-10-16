@@ -3,7 +3,6 @@ class Api::V1::GoodsDoc < ApiDoc
     auth :Authorization
   end
 
-
   api :index, 'GET list of goods', builder: :index, use: %i[ created_from created_to search_value page rows ] do
     desc 'GET list of goods', view!: 'allows:<br/>', search_field!: 'allows:<br/>'
 
@@ -20,7 +19,6 @@ class Api::V1::GoodsDoc < ApiDoc
     order :view, :search_field, :search_value, :created_from, :created_to, :page, :rows, :export
   end
 
-
   api_dry %i[ create update ] do
     form! data: {
         :on_sale => { type: Boolean },
@@ -29,8 +27,7 @@ class Api::V1::GoodsDoc < ApiDoc
     }, pmt: true
   end
 
-
-  api :create, 'POST create a good', builder: :success_or_not do
+  api :create, 'POST create a good' do
     form! data: {
                :name! => { type: String },
         :category_id! => { type: Integer, range: { ge: 1 } },
@@ -39,11 +36,9 @@ class Api::V1::GoodsDoc < ApiDoc
     }, pmt: true
   end
 
-
   api :show, 'GET the specified good', builder: :show, use: id
 
-
-  api :update, 'PATCH|PUT update the specified good', builder: :success_or_not, use: id do
+  api :update, 'PATCH|PUT update the specified good', use: id do
     form! data: {
                :name => { type: String },
         :category_id => { type: Integer, range: { ge: 1 } },
@@ -52,12 +47,10 @@ class Api::V1::GoodsDoc < ApiDoc
     }, pmt: true
   end
 
-
-  api :destroy, 'DELETE the specified good', builder: :success_or_not, use: id
-
+  api :destroy, 'DELETE the specified good', use: id
 
   # /goods/:id/change_onsale
-  api :change_onsale, 'POST change sale status of the specified good', builder: :success_or_not do
+  api :change_onsale, 'POST change sale status of the specified good' do
     path! :id, Integer
   end
 end

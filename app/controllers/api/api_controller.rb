@@ -13,16 +13,16 @@ class Api::ApiController < ActionController::API
   before_action :process_params!
 
   rescue_from ::ParamsProcessor::ValidationFailed,
-              ::BusinessError::ZError,
-              ::IAmICan::Role::VerificationFailed,
-              ::IAmICan::Permission::InsufficientPermission do |e|
+              ::BusinessError::Error,
+              ::IAmICan::VerificationFailed,
+              ::IAmICan::InsufficientPermission do |e|
     log_and_render e
   end
 
   error_map(
          invalid_token: JWT::DecodeError,
-            role_error: IAmICan::Role::VerificationFailed,
-      permission_error: IAmICan::Permission::InsufficientPermission
+            role_error: IAmICan::VerificationFailed,
+      permission_error: IAmICan::InsufficientPermission
   )
 
   def self.skip_token options = { }
@@ -39,13 +39,12 @@ class Api::ApiController < ActionController::API
 
   def self.error_cls?; error_cls(false) end
 
-  helper_method :render_error
+  def self.error_cls?; error_cls(false) end
 
-  def render_error # from are rescuer
-    if error_cls.respond_to?(action_error = "#{action_name}_failed")
-      @error_info = error_cls.send(action_error).info.values
-    end
-    @_code, @_msg, _ = @error_info
+  # check api status
+  def check result
+    return ok if result
+    error_cls.send("#{action_name}_failed!")
   end
 
   private

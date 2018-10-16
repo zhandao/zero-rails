@@ -1,5 +1,8 @@
-json.partial! 'api/base', total: @data.to_a.size
+json.partial! 'api/base'
 
 json.cache! ['nested_categories'] do
-  json.data @data
+  json.data do
+    json.total @view[:data].to_a.size
+    json.list  @view[:data]
+  end
 end

@@ -51,7 +51,7 @@ module AutoGenDoc
           # model = Object.const_get(action_path.split('#').first.split('/').last[0..-2].camelize) rescue nil
           # type = action.in?(%w[ index show create ]) ? load_schema(model) : String
           # TODO: automatically gets `to_builder` format
-          response 200, 'success', :json, data: {
+          response 0, 'success', :json, data: {
               result: {
                   code: { type: Integer, default: 0 },
                   message: { type: String,  default: 'success' }
@@ -63,9 +63,8 @@ module AutoGenDoc
           error_class_name = 'Error::' + action_path.split('#').first.split('/').last.camelize
           error_class = Object.const_get(error_class_name) rescue Error::Api
           # TODO
-          public_errs = error_class.defs_tree[error_class_name]&.[](:public)&.map { |e| e[:name] } || [ ]
-          cur_api_errs = (error_class.defs&.values_at(action.to_sym, :private) || [ ]).flatten.compact.uniq
-          (public_errs + cur_api_errs).each do |error|
+          cur_api_errs = (error_class.defs&.values_at(action.to_sym, :private, :public) || [ ]).flatten.compact.uniq
+          cur_api_errs.each do |error|
             info = error_class.send(error).info
             response info[:code], info[:msg]
           end

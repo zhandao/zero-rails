@@ -55,11 +55,13 @@ GIT
       colorize
       rails (>= 3)
 
-GIT
-  remote: https://zhandao:250f34a301f788a85fd2b004836d73f6e6988752@git.coding.net/zhandao/i_am_i_can.git
-  revision: cd13a76b6c44e9326716cf4b32a83bb175c4fadf
+PATH
+  remote: ../ikkiuchi/i_am_i_can
   specs:
-    i_am_i_can (0.1.0)
+    i_am_i_can (2.1.0)
+      activerecord
+      activesupport
+      railties
 
 GEM
   remote: https://gems.ruby-china.com/
@@ -309,7 +311,7 @@ GEM
     nokogiri (1.8.4)
       mini_portile2 (~> 2.3.0)
     open4 (1.3.4)
-    out_put (2.1.0)
+    out_put (2.1.2)
     parallel (1.12.1)
     parallel_tests (2.22.0)
       parallel

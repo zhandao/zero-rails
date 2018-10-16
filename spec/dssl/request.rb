@@ -1,3 +1,22 @@
+def main_logic(&block)
+  describe 'tests for main logic', &block
+end
+
+def params_combination(&block)
+  describe 'tests for params combination', &block
+end
+
+def let_params(**hash, &block)
+  context "when passing params #{hash}" do
+    before { params.merge!(hash) }
+    instance_eval(&block)
+  end
+end
+
+def biz_error(&block)
+  describe 'tests for param & business errors', &block
+end
+
 module Temp
   cattr_accessor(:action_path) { { } }
   cattr_accessor(:path) { { } }

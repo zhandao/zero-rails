@@ -2,11 +2,11 @@ class Error::Api
   extend BusinessError
 
   # this error definition could be inherited
-  mattr_reader :invalid_param, 'parameter validation failed', 400, http: :bad_request
+  mattr_reader :invalid_param, 'parameter validation failed', 0, http: :bad_request
 
   class << self
     def auth
-      code_start_at -1
+      code_start_at 10
       # mattr_reader :invalid_token,    'invalid token',            http: :unauthorized
       # mattr_reader :invalid_token,    'unauthorized',  http: :unauthorized
       # mattr_reader :role_error,       'role verification failed', http: :forbidden
@@ -14,7 +14,7 @@ class Error::Api
     end
 
     def active_record
-      group :active_record_errors, -100, http: :internal_server_error do
+      group :active_record_errors, 20, http: :internal_server_error do
         mattr_reader :record_invalid,     'data validation failed'
         mattr_reader :not_saved,          'failed to save the record'
         mattr_reader :not_found,          ''

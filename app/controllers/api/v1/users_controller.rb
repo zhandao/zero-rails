@@ -8,7 +8,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   if_can :manage_role_permission, allow_matched: %i[ role permission ]
 
   def index
-    @data = User.all
+    build_with data: User.all
   end
 
   def show
@@ -21,38 +21,25 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def create
     user = User.create! permitted
-    @data = { token: user.token }
+    ok_with token: user.token
   end
 
   def update
-    @user.update! permitted
+    check @user.update! permitted
   end
 
   def destroy
-    @user.destroy
+    check @user.destroy
   end
 
   # FIXME: fix find_by! => NotF but not rescue
   def login
     user = User.find_by(name: @name).try(:authenticate, @password)
     UsersError.login_failed! unless user
-    @data = { token: user.token }
+    ok_with token: user.token
   end
 
   def logout
     #
   end
-
-  def roles
-    output @user.roles.pluck(:name) # @user.all_roles
-  end
-
-  def permissions
-    output @user.all_permissions
-  end
-
-  def roles_modify
-    @user.roles = Role.where(id: @role_ids)
-  end
 end
-

@@ -1,8 +1,6 @@
-json.partial! 'api/base', total: @data.to_a.size
+json.partial! 'api/base'
 
 json.data do
-  @data = @data.page(@page).per(@rows) if @page || @rows
-  json.array! @data do |datum|
-    json.(datum, *datum.show_attrs) if datum.present?
-  end
+  json.total @view[:data].to_a.size
+  json.list @view[:data].page(@page).per(@rows)
 end

@@ -1,4 +1,6 @@
 class Error::Inventroies < Error::Api
+  code_start_at 600
+
   include Error::Concerns::Failed
 
   # group :create do
