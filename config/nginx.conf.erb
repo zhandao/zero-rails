@@ -8,6 +8,9 @@ server {
 
   listen <%=  fetch(:http_port) || 80 %>;
 
+  access_log <%= fetch(:deploy_to) %>/shared/log/access.log;
+  error_log <%= fetch(:deploy_to) %>/shared/log/error.log;
+
   location / {
     proxy_set_header   Host             $host;
     proxy_set_header   X-Real-IP        $remote_addr;

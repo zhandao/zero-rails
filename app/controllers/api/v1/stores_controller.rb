@@ -4,26 +4,22 @@ class Api::V1::StoresController < Api::V1::BaseController
   skip_token only: %i[ index show ]
 
   def index
-    @data = Store.all
+    build_with data: Store.all
   end
-
 
   def create
-    Store.create! permitted
+    check Store.create! permitted
   end
-
 
   def show
-    @datum = @store
+    build_with datum: @store
   end
-
 
   def update
-    @store.update! permitted
+    check @store.update! permitted
   end
 
-
   def destroy
-    @status = @store.destroy
+    check @store.destroy
   end
 end

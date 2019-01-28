@@ -2,8 +2,7 @@ require 'rails_helper'
 require 'dssl/request'
 
 RSpec.describe 'API V1', 'permissions', type: :request do
-  subject { MultiJson.load(response.body, symbolize_keys: true) }
-  let(:data) { subject[:data] }
+  happy_spec
   path id: 1
 
   let(:user) { create(:user) }
@@ -20,7 +19,7 @@ RSpec.describe 'API V1', 'permissions', type: :request do
   end
 
   api :index, :get, '/api/v1/permissions', 'get list of permissions of the specified model', :token_needed do
-    let(:params) { { model: 'string' } }
+    let(:params) { { model: 'User' } }
 
     it_checks_permission
   end

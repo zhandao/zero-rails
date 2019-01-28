@@ -26,12 +26,6 @@
       "name": "Inventories"
     },
     {
-      "name": "Permissions"
-    },
-    {
-      "name": "Roles"
-    },
-    {
       "name": "Stores"
     },
     {
@@ -42,7 +36,7 @@
     "/api/v1/categories": {
       "get": {
         "summary": "GET list of categories",
-        "operationId": "index",
+        "operationId": "CategoriesIndex",
         "tags": [
           "Categories"
         ],
@@ -70,59 +64,36 @@
           }
         ],
         "responses": {
-          "200": {
+          "0": {
             "description": "success",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": ""
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "success"
+                        }
                       }
                     }
                   }
                 }
               }
             }
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
           }
         }
       },
       "post": {
         "summary": "POST create a category",
-        "operationId": "create",
+        "operationId": "CategoriesCreate",
         "tags": [
           "Categories"
         ],
@@ -152,58 +123,38 @@
           }
         },
         "responses": {
-          "200": {
+          "0": {
             "description": "success",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "success"
+                        }
+                      }
                     }
                   }
                 }
               }
             }
           },
-          "600": {
-            "description": "create failed"
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
+          "300": {
+            "description": "Create failed"
           }
         },
         "security": [
           {
-            "Token": [
+            "Authorization": [
 
             ]
           }
@@ -213,55 +164,35 @@
     "/api/v1/categories/list": {
       "get": {
         "summary": "GET nested list of categories",
-        "operationId": "nested_list",
+        "operationId": "CategoriesNested_list",
         "tags": [
           "Categories"
         ],
         "responses": {
-          "200": {
+          "0": {
             "description": "success",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "success"
+                        }
+                      }
                     }
                   }
                 }
               }
             }
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
           }
         }
       }
@@ -269,7 +200,7 @@
     "/api/v1/categories/{id}": {
       "patch": {
         "summary": "PATCH|PUT update the specified category.",
-        "operationId": "update",
+        "operationId": "CategoriesUpdate",
         "tags": [
           "Categories"
         ],
@@ -306,58 +237,38 @@
           }
         },
         "responses": {
-          "200": {
+          "0": {
             "description": "success",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "success"
+                        }
+                      }
                     }
                   }
                 }
               }
             }
           },
-          "601": {
-            "description": "update failed"
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
+          "301": {
+            "description": "Update failed"
           }
         },
         "security": [
           {
-            "Token": [
+            "Authorization": [
 
             ]
           }
@@ -365,7 +276,7 @@
       },
       "put": {
         "summary": "PATCH|PUT update the specified category.",
-        "operationId": "update",
+        "operationId": "CategoriesUpdate",
         "tags": [
           "Categories"
         ],
@@ -402,58 +313,38 @@
           }
         },
         "responses": {
-          "200": {
+          "0": {
             "description": "success",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "success"
+                        }
+                      }
                     }
                   }
                 }
               }
             }
           },
-          "601": {
-            "description": "update failed"
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
+          "301": {
+            "description": "Update failed"
           }
         },
         "security": [
           {
-            "Token": [
+            "Authorization": [
 
             ]
           }
@@ -461,7 +352,7 @@
       },
       "delete": {
         "summary": "DELETE the specified category",
-        "operationId": "destroy",
+        "operationId": "CategoriesDestroy",
         "tags": [
           "Categories"
         ],
@@ -476,58 +367,38 @@
           }
         ],
         "responses": {
-          "200": {
+          "0": {
             "description": "success",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "success"
+                        }
+                      }
                     }
                   }
                 }
               }
             }
           },
-          "602": {
-            "description": "destroy failed"
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
+          "302": {
+            "description": "Destroy failed"
           }
         },
         "security": [
           {
-            "Token": [
+            "Authorization": [
 
             ]
           }
@@ -538,7 +409,7 @@
       "get": {
         "description": "GET list of goods",
         "summary": "GET list of goods",
-        "operationId": "index",
+        "operationId": "GoodsIndex",
         "tags": [
           "Goods"
         ],
@@ -636,77 +507,23 @@
           }
         ],
         "responses": {
-          "200": {
+          "0": {
             "description": "success",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "integer"
-                          },
-                          "name": {
-                            "type": "string"
-                          },
-                          "unit": {
-                            "type": "string"
-                          },
-                          "price": {
-                            "type": "number",
-                            "format": "float"
-                          },
-                          "remarks": {
-                            "type": "string"
-                          },
-                          "picture": {
-                            "type": "string"
-                          },
-                          "on_sale": {
-                            "type": "boolean"
-                          },
-                          "created_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "updated_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "category_info": {
-                            "type": "object",
-                            "properties": {
-                              "id": {
-                                "type": "integer"
-                              },
-                              "name": {
-                                "type": "string"
-                              }
-                            }
-                          }
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "success"
                         }
                       }
                     }
@@ -714,23 +531,11 @@
                 }
               }
             }
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
           }
         },
         "security": [
           {
-            "Token": [
+            "Authorization": [
 
             ]
           }
@@ -738,7 +543,7 @@
       },
       "post": {
         "summary": "POST create a good",
-        "operationId": "create",
+        "operationId": "GoodsCreate",
         "tags": [
           "Goods"
         ],
@@ -789,58 +594,38 @@
           }
         },
         "responses": {
-          "200": {
+          "0": {
             "description": "success",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "success"
+                        }
+                      }
                     }
                   }
                 }
               }
             }
           },
-          "600": {
-            "description": "create failed"
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
           "400": {
-            "description": "parameter validation failed"
+            "description": "Create failed"
           }
         },
         "security": [
           {
-            "Token": [
+            "Authorization": [
 
             ]
           }
@@ -850,7 +635,7 @@
     "/api/v1/goods/{id}": {
       "get": {
         "summary": "GET the specified good",
-        "operationId": "show",
+        "operationId": "GoodsShow",
         "tags": [
           "Goods"
         ],
@@ -865,77 +650,114 @@
           }
         ],
         "responses": {
-          "200": {
+          "0": {
             "description": "success",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "integer"
-                          },
-                          "name": {
-                            "type": "string"
-                          },
-                          "unit": {
-                            "type": "string"
-                          },
-                          "price": {
-                            "type": "number",
-                            "format": "float"
-                          },
-                          "remarks": {
-                            "type": "string"
-                          },
-                          "picture": {
-                            "type": "string"
-                          },
-                          "on_sale": {
-                            "type": "boolean"
-                          },
-                          "created_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "updated_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "category_info": {
-                            "type": "object",
-                            "properties": {
-                              "id": {
-                                "type": "integer"
-                              },
-                              "name": {
-                                "type": "string"
-                              }
-                            }
-                          }
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "success"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": [
+
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "summary": "PATCH|PUT update the specified good",
+        "operationId": "GoodsUpdate",
+        "tags": [
+          "Goods"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "on_sale": {
+                    "type": "boolean"
+                  },
+                  "remarks": {
+                    "type": "string"
+                  },
+                  "picture": {
+                    "type": "string",
+                    "is": "url",
+                    "format": "url"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "category_id": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "unit": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "number",
+                    "format": "float",
+                    "minimum": 0
+                  }
+                },
+                "permit": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "0": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "success"
                         }
                       }
                     }
@@ -944,136 +766,13 @@
               }
             }
           },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
+          "401": {
+            "description": "Update failed"
           }
         },
         "security": [
           {
-            "Token": [
-
-            ]
-          }
-        ]
-      },
-      "patch": {
-        "summary": "PATCH|PUT update the specified good",
-        "operationId": "update",
-        "tags": [
-          "Goods"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "on_sale": {
-                    "type": "boolean"
-                  },
-                  "remarks": {
-                    "type": "string"
-                  },
-                  "picture": {
-                    "type": "string",
-                    "is": "url",
-                    "format": "url"
-                  },
-                  "name": {
-                    "type": "string"
-                  },
-                  "category_id": {
-                    "type": "integer",
-                    "minimum": 1
-                  },
-                  "unit": {
-                    "type": "string"
-                  },
-                  "price": {
-                    "type": "number",
-                    "format": "float",
-                    "minimum": 0
-                  }
-                },
-                "permit": true
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "601": {
-            "description": "update failed"
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
-          }
-        },
-        "security": [
-          {
-            "Token": [
+            "Authorization": [
 
             ]
           }
@@ -1081,7 +780,7 @@
       },
       "put": {
         "summary": "PATCH|PUT update the specified good",
-        "operationId": "update",
+        "operationId": "GoodsUpdate",
         "tags": [
           "Goods"
         ],
@@ -1136,58 +835,38 @@
           }
         },
         "responses": {
-          "200": {
+          "0": {
             "description": "success",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "success"
+                        }
+                      }
                     }
                   }
                 }
               }
             }
           },
-          "601": {
-            "description": "update failed"
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
+          "401": {
+            "description": "Update failed"
           }
         },
         "security": [
           {
-            "Token": [
+            "Authorization": [
 
             ]
           }
@@ -1195,7 +874,7 @@
       },
       "delete": {
         "summary": "DELETE the specified good",
-        "operationId": "destroy",
+        "operationId": "GoodsDestroy",
         "tags": [
           "Goods"
         ],
@@ -1210,58 +889,38 @@
           }
         ],
         "responses": {
-          "200": {
+          "0": {
             "description": "success",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "success"
+                        }
+                      }
                     }
                   }
                 }
               }
             }
           },
-          "602": {
-            "description": "destroy failed"
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
+          "402": {
+            "description": "Destroy failed"
           }
         },
         "security": [
           {
-            "Token": [
+            "Authorization": [
 
             ]
           }
@@ -1271,7 +930,7 @@
     "/api/v1/goods/{id}/change_onsale": {
       "post": {
         "summary": "POST change sale status of the specified good",
-        "operationId": "change_onsale",
+        "operationId": "GoodsChange_onsale",
         "tags": [
           "Goods"
         ],
@@ -1286,58 +945,38 @@
           }
         ],
         "responses": {
-          "200": {
+          "0": {
             "description": "success",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "success"
+                        }
+                      }
                     }
                   }
                 }
               }
             }
           },
-          "700": {
-            "description": "change onsale failed"
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
+          "403": {
+            "description": "Change onsale failed"
           }
         },
         "security": [
           {
-            "Token": [
+            "Authorization": [
 
             ]
           }
@@ -1347,7 +986,7 @@
     "/api/v1/inventories": {
       "get": {
         "summary": "GET list of inventories",
-        "operationId": "index",
+        "operationId": "InventoriesIndex",
         "tags": [
           "Inventories"
         ],
@@ -1429,35 +1068,24 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "success",
+          "0": {
+            "description": "parameter validation failed",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": ""
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "success"
+                        }
                       }
                     }
                   }
@@ -1465,1353 +1093,16 @@
               }
             }
           },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
+          "10": {
             "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
           }
         }
-      }
-    },
-    "/api/v1/permissions": {
-      "get": {
-        "summary": "GET permissions list of the specified model",
-        "operationId": "index",
-        "tags": [
-          "Permissions"
-        ],
-        "parameters": [
-          {
-            "name": "created_from",
-            "in": "query",
-            "required": false,
-            "description": "YY-MM-DD (HH:MM:SS, optional)",
-            "schema": {
-              "type": "string",
-              "format": "date-time",
-              "as": "start"
-            }
-          },
-          {
-            "name": "created_to",
-            "in": "query",
-            "required": false,
-            "description": "YY-MM-DD (HH:MM:SS, optional)",
-            "schema": {
-              "type": "string",
-              "format": "date-time",
-              "as": "end"
-            }
-          },
-          {
-            "name": "search_value",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "default": 1
-            }
-          },
-          {
-            "name": "rows",
-            "in": "query",
-            "required": false,
-            "description": "per page, number of result",
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "default": 10
-            }
-          },
-          {
-            "name": "model",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "pattern": "\\A[A-Z][A-z]*\\z"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "integer"
-                          },
-                          "name": {
-                            "type": "string"
-                          },
-                          "source": {
-                            "type": "string"
-                          },
-                          "remarks": {
-                            "type": "string"
-                          },
-                          "created_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "updated_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
-          }
-        },
-        "security": [
-          {
-            "Token": [
-
-            ]
-          },
-          {
-            "Token": [
-
-            ]
-          }
-        ]
-      },
-      "post": {
-        "summary": "POST create a permission",
-        "operationId": "create",
-        "tags": [
-          "Permissions"
-        ],
-        "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "source": {
-                    "type": "string"
-                  },
-                  "remarks": {
-                    "type": "string"
-                  },
-                  "model": {
-                    "type": "string",
-                    "pattern": "\\A[A-Z][A-z]*\\z"
-                  },
-                  "name": {
-                    "type": "string",
-                    "description": "the sign of permission, it must be unique"
-                  }
-                },
-                "permit": true,
-                "required": [
-                  "name"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "600": {
-            "description": "create failed"
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
-          }
-        },
-        "security": [
-          {
-            "Token": [
-
-            ]
-          },
-          {
-            "Token": [
-
-            ]
-          }
-        ]
-      }
-    },
-    "/api/v1/permissions/{id}": {
-      "patch": {
-        "summary": "PATCH|PUT update the specified permission",
-        "operationId": "update",
-        "tags": [
-          "Permissions"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "source": {
-                    "type": "string"
-                  },
-                  "remarks": {
-                    "type": "string"
-                  },
-                  "model": {
-                    "type": "string",
-                    "pattern": "\\A[A-Z][A-z]*\\z"
-                  },
-                  "name": {
-                    "type": "string"
-                  }
-                },
-                "permit": true
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "601": {
-            "description": "update failed"
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
-          }
-        },
-        "security": [
-          {
-            "Token": [
-
-            ]
-          },
-          {
-            "Token": [
-
-            ]
-          }
-        ]
-      },
-      "put": {
-        "summary": "PATCH|PUT update the specified permission",
-        "operationId": "update",
-        "tags": [
-          "Permissions"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "source": {
-                    "type": "string"
-                  },
-                  "remarks": {
-                    "type": "string"
-                  },
-                  "model": {
-                    "type": "string",
-                    "pattern": "\\A[A-Z][A-z]*\\z"
-                  },
-                  "name": {
-                    "type": "string"
-                  }
-                },
-                "permit": true
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "601": {
-            "description": "update failed"
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
-          }
-        },
-        "security": [
-          {
-            "Token": [
-
-            ]
-          },
-          {
-            "Token": [
-
-            ]
-          }
-        ]
-      },
-      "delete": {
-        "summary": "DELETE the specified permission",
-        "operationId": "destroy",
-        "tags": [
-          "Permissions"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "602": {
-            "description": "destroy failed"
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
-          }
-        },
-        "security": [
-          {
-            "Token": [
-
-            ]
-          },
-          {
-            "Token": [
-
-            ]
-          }
-        ]
-      }
-    },
-    "/api/v1/roles": {
-      "get": {
-        "summary": "GET roles list of the specified model",
-        "operationId": "index",
-        "tags": [
-          "Roles"
-        ],
-        "parameters": [
-          {
-            "name": "created_from",
-            "in": "query",
-            "required": false,
-            "description": "YY-MM-DD (HH:MM:SS, optional)",
-            "schema": {
-              "type": "string",
-              "format": "date-time",
-              "as": "start"
-            }
-          },
-          {
-            "name": "created_to",
-            "in": "query",
-            "required": false,
-            "description": "YY-MM-DD (HH:MM:SS, optional)",
-            "schema": {
-              "type": "string",
-              "format": "date-time",
-              "as": "end"
-            }
-          },
-          {
-            "name": "search_value",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "default": 1
-            }
-          },
-          {
-            "name": "rows",
-            "in": "query",
-            "required": false,
-            "description": "per page, number of result",
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "default": 10
-            }
-          },
-          {
-            "name": "model",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "pattern": "\\A[A-Z][A-z]*\\z"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "integer"
-                          },
-                          "name": {
-                            "type": "string"
-                          },
-                          "remarks": {
-                            "type": "string"
-                          },
-                          "base_role_id": {
-                            "type": "integer"
-                          },
-                          "created_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "updated_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
-          }
-        },
-        "security": [
-          {
-            "Token": [
-
-            ]
-          }
-        ]
-      },
-      "post": {
-        "summary": "POST create a role",
-        "operationId": "create",
-        "tags": [
-          "Roles"
-        ],
-        "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "remarks": {
-                    "type": "string"
-                  },
-                  "model": {
-                    "type": "string",
-                    "pattern": "\\A[A-Z][A-z]*\\z"
-                  },
-                  "name": {
-                    "type": "string",
-                    "description": "name of role"
-                  }
-                },
-                "permit": true,
-                "required": [
-                  "name"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "600": {
-            "description": "create failed"
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
-          }
-        },
-        "security": [
-          {
-            "Token": [
-
-            ]
-          }
-        ]
-      }
-    },
-    "/api/v1/roles/{id}": {
-      "get": {
-        "summary": "GET the specified role.",
-        "operationId": "show",
-        "tags": [
-          "Roles"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "integer"
-                          },
-                          "name": {
-                            "type": "string"
-                          },
-                          "remarks": {
-                            "type": "string"
-                          },
-                          "base_role_id": {
-                            "type": "integer"
-                          },
-                          "created_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "updated_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
-          }
-        },
-        "security": [
-          {
-            "Token": [
-
-            ]
-          }
-        ]
-      },
-      "patch": {
-        "summary": "PATCH|PUT update the specified role",
-        "operationId": "update",
-        "tags": [
-          "Roles"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "remarks": {
-                    "type": "string"
-                  },
-                  "model": {
-                    "type": "string",
-                    "pattern": "\\A[A-Z][A-z]*\\z"
-                  },
-                  "name": {
-                    "type": "string"
-                  }
-                },
-                "permit": true
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "601": {
-            "description": "update failed"
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
-          }
-        },
-        "security": [
-          {
-            "Token": [
-
-            ]
-          }
-        ]
-      },
-      "put": {
-        "summary": "PATCH|PUT update the specified role",
-        "operationId": "update",
-        "tags": [
-          "Roles"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "remarks": {
-                    "type": "string"
-                  },
-                  "model": {
-                    "type": "string",
-                    "pattern": "\\A[A-Z][A-z]*\\z"
-                  },
-                  "name": {
-                    "type": "string"
-                  }
-                },
-                "permit": true
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "601": {
-            "description": "update failed"
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
-          }
-        },
-        "security": [
-          {
-            "Token": [
-
-            ]
-          }
-        ]
-      },
-      "delete": {
-        "summary": "DELETE the specified role",
-        "operationId": "destroy",
-        "tags": [
-          "Roles"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "602": {
-            "description": "destroy failed"
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
-          }
-        },
-        "security": [
-          {
-            "Token": [
-
-            ]
-          }
-        ]
-      }
-    },
-    "/api/v1/roles/{id}/permissions": {
-      "get": {
-        "summary": "GET permissions of specified role",
-        "operationId": "permissions",
-        "tags": [
-          "Roles"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
-          }
-        },
-        "security": [
-          {
-            "Token": [
-
-            ]
-          }
-        ]
-      }
-    },
-    "/api/v1/roles/{id}/permissions/modify": {
-      "post": {
-        "summary": "POST modify permissions to the specified roles",
-        "operationId": "permissions_modify",
-        "tags": [
-          "Roles"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": false,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "permission_ids": {
-                    "type": "array",
-                    "items": {
-                      "type": "integer",
-                      "minLength": 1
-                    },
-                    "minItems": 0
-                  }
-                },
-                "required": [
-                  "permission_ids"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
-          }
-        },
-        "security": [
-          {
-            "Token": [
-
-            ]
-          }
-        ]
       }
     },
     "/api/v1/stores": {
       "get": {
         "summary": "GET list of stores",
-        "operationId": "index",
+        "operationId": "StoresIndex",
         "tags": [
           "Stores"
         ],
@@ -2839,45 +1130,23 @@
           }
         ],
         "responses": {
-          "200": {
+          "0": {
             "description": "success",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "integer"
-                          },
-                          "name": {
-                            "type": "string"
-                          },
-                          "address": {
-                            "type": "string"
-                          }
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "success"
                         }
                       }
                     }
@@ -2885,24 +1154,12 @@
                 }
               }
             }
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
           }
         }
       },
       "post": {
         "summary": "POST create a store",
-        "operationId": "create",
+        "operationId": "StoresCreate",
         "tags": [
           "Stores"
         ],
@@ -2931,58 +1188,38 @@
           }
         },
         "responses": {
-          "200": {
+          "0": {
             "description": "success",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "success"
+                        }
+                      }
                     }
                   }
                 }
               }
             }
           },
-          "600": {
-            "description": "create failed"
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
+          "500": {
+            "description": "Create failed"
           }
         },
         "security": [
           {
-            "Token": [
+            "Authorization": [
 
             ]
           }
@@ -2992,7 +1229,7 @@
     "/api/v1/stores/{id}": {
       "get": {
         "summary": "GET the specified store",
-        "operationId": "show",
+        "operationId": "StoresShow",
         "tags": [
           "Stores"
         ],
@@ -3007,45 +1244,87 @@
           }
         ],
         "responses": {
-          "200": {
+          "0": {
             "description": "success",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "integer"
-                          },
-                          "name": {
-                            "type": "string"
-                          },
-                          "address": {
-                            "type": "string"
-                          }
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "success"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "POST update the specified store",
+        "operationId": "StoresUpdate",
+        "tags": [
+          "Stores"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "type": "string"
+                  }
+                },
+                "permit": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "0": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "success"
                         }
                       }
                     }
@@ -3054,109 +1333,13 @@
               }
             }
           },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
-          }
-        }
-      },
-      "patch": {
-        "summary": "POST update the specified store",
-        "operationId": "update",
-        "tags": [
-          "Stores"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "address": {
-                    "type": "string"
-                  }
-                },
-                "permit": true
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "601": {
-            "description": "update failed"
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
+          "501": {
+            "description": "Update failed"
           }
         },
         "security": [
           {
-            "Token": [
+            "Authorization": [
 
             ]
           }
@@ -3164,7 +1347,7 @@
       },
       "put": {
         "summary": "POST update the specified store",
-        "operationId": "update",
+        "operationId": "StoresUpdate",
         "tags": [
           "Stores"
         ],
@@ -3199,58 +1382,38 @@
           }
         },
         "responses": {
-          "200": {
+          "0": {
             "description": "success",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "success"
+                        }
+                      }
                     }
                   }
                 }
               }
             }
           },
-          "601": {
-            "description": "update failed"
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
+          "501": {
+            "description": "Update failed"
           }
         },
         "security": [
           {
-            "Token": [
+            "Authorization": [
 
             ]
           }
@@ -3258,7 +1421,7 @@
       },
       "delete": {
         "summary": "DELETE the specified store",
-        "operationId": "destroy",
+        "operationId": "StoresDestroy",
         "tags": [
           "Stores"
         ],
@@ -3273,58 +1436,38 @@
           }
         ],
         "responses": {
-          "200": {
+          "0": {
             "description": "success",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "success"
+                        }
+                      }
                     }
                   }
                 }
               }
             }
           },
-          "602": {
-            "description": "destroy failed"
-          },
-          "-1": {
-            "description": "invalid token"
-          },
-          "-2": {
-            "description": "role verification failed"
-          },
-          "-3": {
-            "description": "insufficient permission"
-          },
-          "400": {
-            "description": "parameter validation failed"
+          "502": {
+            "description": "Destroy failed"
           }
         },
         "security": [
           {
-            "Token": [
+            "Authorization": [
 
             ]
           }
@@ -3334,7 +1477,7 @@
     "/api/v1/u/{name}": {
       "get": {
         "summary": "GET the specified user by name",
-        "operationId": "show_via_name",
+        "operationId": "UsersShow_via_name",
         "tags": [
           "Users"
         ],
@@ -3350,41 +1493,30 @@
           }
         ],
         "responses": {
-          "200": {
+          "0": {
             "description": "success",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "success"
+                        }
+                      }
                     }
                   }
                 }
               }
             }
-          },
-          "400": {
-            "description": "parameter validation failed"
           }
         }
       }
@@ -3392,7 +1524,7 @@
     "/api/v1/users": {
       "get": {
         "summary": "GET list of users",
-        "operationId": "index",
+        "operationId": "UsersIndex",
         "tags": [
           "Users"
         ],
@@ -3420,59 +1552,23 @@
           }
         ],
         "responses": {
-          "200": {
+          "0": {
             "description": "success",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "integer"
-                          },
-                          "name": {
-                            "type": "string"
-                          },
-                          "password_digest": {
-                            "type": "string"
-                          },
-                          "email": {
-                            "type": "string"
-                          },
-                          "phone_number": {
-                            "type": "string"
-                          },
-                          "created_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "updated_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          }
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "success"
                         }
                       }
                     }
@@ -3480,15 +1576,19 @@
                 }
               }
             }
-          },
-          "400": {
-            "description": "parameter validation failed"
           }
-        }
+        },
+        "security": [
+          {
+            "Authorization": [
+
+            ]
+          }
+        ]
       },
       "post": {
         "summary": "POST user register",
-        "operationId": "create",
+        "operationId": "UsersCreate",
         "tags": [
           "Users"
         ],
@@ -3527,50 +1627,42 @@
           }
         },
         "responses": {
-          "200": {
+          "0": {
             "description": "success",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "success"
+                        }
+                      }
                     }
                   }
                 }
               }
             }
           },
-          "700": {
+          "200": {
+            "description": "Create failed"
+          },
+          "203": {
             "description": "invalid info"
           },
-          "701": {
+          "204": {
             "description": "invalid info"
           },
-          "702": {
+          "205": {
             "description": "repeated info"
-          },
-          "400": {
-            "description": "parameter validation failed"
           }
         }
       }
@@ -3578,7 +1670,7 @@
     "/api/v1/users/login": {
       "post": {
         "summary": "POST user login",
-        "operationId": "login",
+        "operationId": "UsersLogin",
         "tags": [
           "Users"
         ],
@@ -3606,119 +1698,31 @@
           }
         },
         "responses": {
-          "200": {
+          "0": {
             "description": "success",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "success"
+                        }
+                      }
                     },
                     "data": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "800": {
-            "description": "login failed"
-          },
-          "400": {
-            "description": "parameter validation failed"
-          }
-        }
-      }
-    },
-    "/api/v1/users/{id}": {
-      "get": {
-        "summary": "GET the specified user",
-        "operationId": "show",
-        "tags": [
-          "Users"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "integer"
-                          },
-                          "name": {
-                            "type": "string"
-                          },
-                          "password_digest": {
-                            "type": "string"
-                          },
-                          "email": {
-                            "type": "string"
-                          },
-                          "phone_number": {
-                            "type": "string"
-                          },
-                          "created_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          },
-                          "updated_at": {
-                            "type": "string",
-                            "format": "date-time"
-                          }
+                      "type": "object",
+                      "properties": {
+                        "token": {
+                          "type": "jwt token"
                         }
                       }
                     }
@@ -3727,14 +1731,60 @@
               }
             }
           },
-          "400": {
-            "description": "parameter validation failed"
+          "203": {
+            "description": "Login failed"
+          }
+        }
+      }
+    },
+    "/api/v1/users/{id}": {
+      "get": {
+        "summary": "GET the specified user",
+        "operationId": "UsersShow",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "0": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "success"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
       "patch": {
         "summary": "PATCH|PUT update the specified user",
-        "operationId": "update",
+        "operationId": "UsersUpdate",
         "tags": [
           "Users"
         ],
@@ -3778,46 +1828,38 @@
           }
         },
         "responses": {
-          "200": {
+          "0": {
             "description": "success",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "success"
+                        }
+                      }
                     }
                   }
                 }
               }
             }
           },
-          "400": {
-            "description": "parameter validation failed"
+          "201": {
+            "description": "Update failed"
           }
         },
         "security": [
           {
-            "Token": [
+            "Authorization": [
 
             ]
           }
@@ -3825,7 +1867,7 @@
       },
       "put": {
         "summary": "PATCH|PUT update the specified user",
-        "operationId": "update",
+        "operationId": "UsersUpdate",
         "tags": [
           "Users"
         ],
@@ -3869,46 +1911,38 @@
           }
         },
         "responses": {
-          "200": {
+          "0": {
             "description": "success",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "success"
+                        }
+                      }
                     }
                   }
                 }
               }
             }
           },
-          "400": {
-            "description": "parameter validation failed"
+          "201": {
+            "description": "Update failed"
           }
         },
         "security": [
           {
-            "Token": [
+            "Authorization": [
 
             ]
           }
@@ -3916,7 +1950,7 @@
       },
       "delete": {
         "summary": "DELETE the specified user",
-        "operationId": "destroy",
+        "operationId": "UsersDestroy",
         "tags": [
           "Users"
         ],
@@ -3931,262 +1965,38 @@
           }
         ],
         "responses": {
-          "200": {
+          "0": {
             "description": "success",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "integer",
+                          "default": 0
+                        },
+                        "message": {
+                          "type": "string",
+                          "default": "success"
+                        }
+                      }
                     }
                   }
                 }
               }
             }
           },
-          "400": {
-            "description": "parameter validation failed"
+          "202": {
+            "description": "Destroy failed"
           }
         },
         "security": [
           {
-            "Token": [
-
-            ]
-          }
-        ]
-      }
-    },
-    "/api/v1/users/{id}/permissions": {
-      "get": {
-        "summary": "GET permissions of the specified user",
-        "operationId": "permissions",
-        "tags": [
-          "Users"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "parameter validation failed"
-          }
-        },
-        "security": [
-          {
-            "Token": [
-
-            ]
-          }
-        ]
-      }
-    },
-    "/api/v1/users/{id}/roles": {
-      "get": {
-        "summary": "GET roles of the specified user",
-        "operationId": "roles",
-        "tags": [
-          "Users"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "parameter validation failed"
-          }
-        },
-        "security": [
-          {
-            "Token": [
-
-            ]
-          }
-        ]
-      }
-    },
-    "/api/v1/users/{id}/roles/modify": {
-      "post": {
-        "summary": "POST modify roles to the specified user",
-        "operationId": "roles_modify",
-        "tags": [
-          "Users"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": false,
-          "description": "",
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "role_ids": {
-                    "type": "array",
-                    "items": {
-                      "type": "integer",
-                      "minLength": 1
-                    },
-                    "minItems": 0
-                  }
-                },
-                "required": [
-                  "role_ids"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "integer",
-                      "default": 200
-                    },
-                    "msg": {
-                      "type": "string",
-                      "default": "success"
-                    },
-                    "total": {
-                      "type": "integer"
-                    },
-                    "timestamp": {
-                      "type": "integer"
-                    },
-                    "language": {
-                      "type": "string",
-                      "default": "Ruby"
-                    },
-                    "data": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "parameter validation failed"
-          }
-        },
-        "security": [
-          {
-            "Token": [
+            "Authorization": [
 
             ]
           }
@@ -4196,7 +2006,7 @@
   },
   "components": {
     "securitySchemes": {
-      "Token": {
+      "Authorization": {
         "type": "http",
         "scheme": "bearer",
         "bearerFormat": "JWT"

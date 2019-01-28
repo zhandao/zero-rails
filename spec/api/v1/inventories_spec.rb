@@ -2,8 +2,7 @@ require 'rails_helper'
 require 'dssl/request'
 
 RSpec.describe 'API V1', 'inventories', type: :request do
-  subject { MultiJson.load(response.body, symbolize_keys: true) }
-  let(:data) { subject[:data] }
+  happy_spec
   path id: 1
 
   skippable_before do
@@ -14,6 +13,6 @@ RSpec.describe 'API V1', 'inventories', type: :request do
   api :index, :get, '/api/v1/inventories', 'get list of inventories' do
     let(:params) { { store_name: 'store' } }
 
-    it { requested has_size: 5 }
+    it { requests have_size: 5 }
   end
 end

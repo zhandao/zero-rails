@@ -10,7 +10,7 @@ RSpec.describe User, type: :model do
   # func :logout, focus_on: :token_version do
   #   it 'will inc 1' do
   #     expect_it.to eq default = 1
-  #     called get: true
+  #     calls get: true
   #     expect_it.to eq default + 1
   #   end
   # end
@@ -20,7 +20,7 @@ RSpec.describe User, type: :model do
       it 'will add a role to the user' do
         expect_it.to eq [ ]
         role = create(:role)
-        called by: { role: role.name }, get: [role]
+        calls by: { role: role.name }, get: [role]
       end
     end
   end

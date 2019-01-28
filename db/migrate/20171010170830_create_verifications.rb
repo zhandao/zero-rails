@@ -1,4 +1,4 @@
-class CreateVerifications < ActiveRecord::Migration[5.1]
+class CreateVerifications < ActiveRecord::Migration::Current
   def change
     create_table :verifications, force: :cascade do |t|
       t.belongs_to :user,      foreign_key: true

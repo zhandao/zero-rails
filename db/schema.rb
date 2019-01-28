@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171020172654) do
+ActiveRecord::Schema.define(version: 2017_10_20_172654) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,12 +75,14 @@ ActiveRecord::Schema.define(version: 20171020172654) do
 
   create_table "permissions", force: :cascade do |t|
     t.string "name", null: false
-    t.string "source"
-    t.string "model", default: "", null: false
+    t.string "source_type"
+    t.bigint "source_id"
+    t.string "model", default: "User", null: false
     t.string "remarks"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name", "source", "model"], name: "permission_unique_index", unique: true
+    t.index ["name", "source_type", "source_id", "model"], name: "permission_unique_index", unique: true
+    t.index ["source_type", "source_id"], name: "index_permissions_on_source_type_and_source_id"
   end
 
   create_table "role_permissions", force: :cascade do |t|
@@ -95,7 +97,7 @@ ActiveRecord::Schema.define(version: 20171020172654) do
 
   create_table "roles", force: :cascade do |t|
     t.string "name", null: false
-    t.string "model", default: "", null: false
+    t.string "model", default: "User", null: false
     t.string "remarks"
     t.bigint "base_role_id"
     t.datetime "created_at", null: false
@@ -115,6 +117,7 @@ ActiveRecord::Schema.define(version: 20171020172654) do
   create_table "users", force: :cascade do |t|
     t.string "name", null: false
     t.string "password_digest", null: false
+    t.integer "token_version", default: 0
     t.string "email"
     t.string "phone_number"
     t.datetime "deleted_at"

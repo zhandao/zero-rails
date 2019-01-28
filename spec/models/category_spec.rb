@@ -13,19 +13,19 @@ RSpec.describe Category, type: :model do
   func '.extend_search_by_name', "[scope] `extend` means that: when search a base_cate, should return all of it's sub_cates." do
     it { expect(subject.base_category).to eq base_category } # TODO: `to be` shows that the two base_cate obj is not the same one.
 
-    it { called by: 'sub', get: [category.id] }
+    it { calls by: 'sub', get: [category.id] }
 
-    context 'when pass a base category name' do
-      it('also returns all ids of the sub categories') { called by: 'base', get: [base_category.id, category.id] }
+    context 'when passed a base category name' do
+      it('also returns all ids of the sub categories') { calls by: 'base', get: [base_category.id, category.id] }
     end
   end
 
   func '.from_base_categories', '[scope]' do
-    it { called get: [base_category] }
+    it { calls get: [base_category] }
   end
 
   func :path, '@return [ base_cate_name, sub_cate_name ]' do
-    it { called get: ['base', 'sub_cate'] }
+    it { calls get: ['base', 'sub_cate'] }
   end
 
   # describe '#json_addition, show the base cate when not getting nested list' do

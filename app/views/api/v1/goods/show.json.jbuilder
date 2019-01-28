@@ -1,3 +1,3 @@
-json.partial! 'api/base', total: 1
+json.partial! 'api/base'
 
-json.data @datum&.to_builder
+json.data @view[:datum]&.to_builder

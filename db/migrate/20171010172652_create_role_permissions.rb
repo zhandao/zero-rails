@@ -1,4 +1,4 @@
-class CreateRolePermissions < ActiveRecord::Migration[5.1]
+class CreateRolePermissions < ActiveRecord::Migration::Current
   def change
     create_table :role_permissions, force: :cascade do |t|
       t.belongs_to :role,       foreign_key: true

@@ -13,7 +13,7 @@
 set :domain,     ''
 set :deploy_to,  ''
 set :repository, ''
-set :branch,     ''
+set :branch,     'staging'
 set :user,       ''
 # set :identity_file, '~/zhandao.pem'
 set :rails_env,  'staging'
@@ -22,14 +22,16 @@ set :rails_env,  'staging'
 set :server_name,   ''
 set :nginx_etc_dir, '/etc/nginx/'
 # set :https, false
-# set :http_port, 3000
+set :http_port, 3000
 
 # remember to set database.yml.
-set :db_migrate,     true
-set :db_create,      false
-set :db_schema_load, false
+# set :db_migrate,     false
+set :db_create,      true
+set :db_schema_load, true
 set :db_rollback,    false
-set :db_seed,        false
+set :db_seed,        true
+
+set :first_start_puma, true
 
 task :env do
   # puma.erb

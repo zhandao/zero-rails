@@ -10,9 +10,9 @@ namespace :rvm do
      command %[export PATH="$PATH:$HOME/.rvm/bin"]
      command %{[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"}
      command %{
-      rvm install 2.5.0
-      rvm alias create default 2.5.0
-      rvm use 2.5.0 --default --ignore-gemsets
+      rvm install 2.6.0
+      rvm alias create default 2.6.0
+      rvm use 2.6.0 --default --ignore-gemsets
     }
     if fetch(:ruby_china_ruby_source)
        command %[gem sources --add https://gems.ruby-china.org --remove https://rubygems.org/]

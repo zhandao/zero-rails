@@ -19,14 +19,10 @@ set :shared_dirs, fetch(:shared_dirs, [ ]).push(
     'tmp/sockets'
 )
 set :shared_files, fetch(:shared_files, [ ]).push(
-    'config/database.yml',
     'config/settings.local.yml',
-    'config/secrets.yml',
-    'config/newrelic.yml',
-    'config/puma.rb'
 )
 
-set :lograte_file, "/data/logs/logstash_lograge_zero-rails_#{fetch(:rails_env)}.log"
+set :lograte_file, "/data/logs/logstash_#{$app_name}_#{fetch(:rails_env)}.log"
 
 task common_env: :env do
 end
@@ -36,7 +32,7 @@ end
 task remote_environment: :common_env do
   # For those using RVM, use this to load an RVM version@gemset.
   set :rvm_use_path, '/etc/profile.d/rvm.sh' # set the path of rvm if default setting wrong.
-  invoke :'rvm:use', 'ruby-2.4.1@default'
+  invoke :'rvm:use', 'ruby-2.6.0@default'
 end
 
 # Doc: usage: `mina staging c`
@@ -64,6 +60,7 @@ end
 task setup: :common_env do
   invoke :'ubuntu:init'
   invoke :'rvm:init' # TODO: something maybe wrong at the task
+  invoke :'ruby:init'
   invoke :'share:init'
   invoke :'nginx:init'
   invoke :'puma:init'
@@ -80,9 +77,10 @@ task deploy: :remote_environment do
   # invoke :'git:ensure_pushed'
   deploy do
     # Put things that will set up an empty directory into a fully set-up instance of your project.
-    invoke :'sidekiq:quiet'
+    # invoke :'sidekiq:quiet'
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
+    command %[mv config/puma.deploy.rb config/puma.rb]
     # command %[RAILS_ENV=#{fetch(:rails_env)} bundle install --without development]
     invoke :'bundle:install'
 
@@ -91,6 +89,7 @@ task deploy: :remote_environment do
     invoke :'rails:db_migrate'     if fetch(:db_migrate)
     invoke :'rails:db_rollback'    if fetch(:db_rollback)
     command %[RAILS_ENV=#{fetch(:rails_env)} rails db:seed] if fetch(:db_seed)
+    # command %[RAILS_ENV=#{fetch(:rails_env)} bundle exec rake db:seed] if fetch(:db_seed)
 
     invoke :'rails:assets_precompile'
     invoke :'deploy:cleanup'
@@ -104,7 +103,7 @@ task deploy: :remote_environment do
       invoke :'puma:start'          if fetch(:first_start_puma)
       invoke :'puma:phased_restart' unless fetch(:first_start_puma)
       # invoke :'puma:hard_restart'
-      invoke :'sidekiq:restart'
+      # invoke :'sidekiq:restart'
     end
   end
 

@@ -1,4 +1,4 @@
-class CreateEntityRoles < ActiveRecord::Migration[5.1]
+class CreateEntityRoles < ActiveRecord::Migration::Current
   def change
     create_table :entity_roles, force: :cascade do |t|
       t.belongs_to :entity, polymorphic: true

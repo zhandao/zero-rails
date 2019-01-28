@@ -1,6 +1,10 @@
-json.partial! 'api/base', total: @data.to_a.size
+json.partial! 'api/base'
 
-@data = @data.page(@page).per(@rows) if @page || @rows
-json.cache! ['index_stores'] do
-  json.data @data.to_builder
+json.cache! ['index_categories'] do
+  json.data do
+    json.total @view[:data].to_a.size
+
+    data = @view[:data].page(@page).per(@rows) if @page || @rows
+    json.list data.to_builder
+  end
 end

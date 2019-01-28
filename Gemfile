@@ -1,28 +1,33 @@
-source 'https://gems.ruby-china.org'
+source 'https://gems.ruby-china.com'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '2.5.0'
+ruby '2.6.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.1.5'
+gem 'rails', '~> 5.2.0'
+
+# Reduces boot times through caching; required in config/boot.rb
+gem 'bootsnap', '>= 1.1.0', require: false
 
 
-# *** Databases ***
+# === Databases ===
 
 # Use mysql as the database for Active Record
 # gem 'mysql2', '>= 0.3.18', '< 0.5'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 1.0.0'
+# https://github.com/devmynd/jsonb_accessor
+# gem 'jsonb_accessor', '~> 1.0.0'
 # Use Redis adapter to run Action Cable in production
 gem 'redis', '~> 4.0'
 # https://github.com/redis-store/redis-rails
 gem 'redis-rails'
 
 
-# *** Query Extension ***
+# === Query Extension ===
 
 # Pagination, https://github.com/kaminari/kaminari
 gem 'kaminari'
@@ -54,27 +59,44 @@ gem 'paranoia'
 # gem 'acts_as_tree', '~> 2.7'
 
 
-# *** Zero ***
+# === Zero ===
 
 # gem 'zero-rails_openapi'
-# gem 'zero-params_processor'
 gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
-gem 'zero-params_processor', github: 'zhandao/zero-params_processor'
 # gem 'zero-rails_openapi', path: '~/ws/zero-rails_openapi'
+# gem 'zero-params_processor'
+gem 'zero-params_processor', github: 'zhandao/zero-params_processor'
 # gem 'zero-params_processor', path: '~/ws/zero-params_processor'
 
+gem 'i_am_i_can', path: '~/ws/ikkiuchi/i_am_i_can'
 
-# *** App Server ***
+# Business Error Management by using OOP
+# https://github.com/zhandao/business_error
+gem 'business_error'
+# gem 'business_error', path: '~/ws/business_error'
+
+# Render JSON response in a unified format
+# https://github.com/zhandao/out_put
+gem 'out_put'
+# gem 'out_put', path: '~/ws/out_put'
+
+# === App Server ===
 # https://github.com/puma/puma
-gem 'puma', '~> 3.7'
+gem 'puma'
 
 
-# *** Ruby Extension ***
+# === Ruby Extension ===
 # https://github.com/intridea/multi_json/
 gem 'multi_json'
 
 
-# *** View ***
+# === Monitor ===
+
+# Ruby Client for Sentry, https://github.com/getsentry/raven-ruby
+gem 'sentry-raven'
+
+
+# === View ===
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # https://devblast.com/b/jbuilder
 gem 'jbuilder'
@@ -86,10 +108,19 @@ gem 'builder_support'
 # gem 'active_model_serializers'
 
 
-# *** Auth & Security ***
+# === Auth & Security ===
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
+
+# simple encryption storage
+# https://github.com/zhandao/secure_storage
+# gem 'secure_storage', path: '~/ws/secure_storage'
+gem 'secure_storage', github: 'zhandao/secure_storage'
+
+# Generates attr_accessors that encrypt and decrypt attributes
+# https://github.com/attr-encrypted/attr_encrypted
+# gem 'attr_encrypted', '~> 3.1.0'
 
 # ruby-JWT, https://github.com/jwt/ruby-jwt
 gem 'jwt'
@@ -116,7 +147,7 @@ gem 'rack-timeout'
 # gem 'exception_notification'
 
 
-# *** Asynchronous Task ***
+# === Asynchronous Task ===
 
 # https://github.com/mperham/sidekiq
 # https://github.com/mperham/sidekiq/wiki/Active-Job
@@ -126,7 +157,7 @@ gem 'sidekiq'
 gem 'whenever', require: false
 
 
-# *** Log ***
+# === Log ===
 
 # An attempt to tame Rails' default policy to log everything.
 # https://github.com/roidrage/lograge
@@ -137,13 +168,13 @@ gem 'logstasher'
 # gem 'logstash-logger'
 
 
-# *** Administration Framework ***
+# === Administration Framework ===
 
 # https://activeadmin.info/documentation.html
 # https://github.com/activeadmin/activeadmin
 gem 'activeadmin', github: 'activeadmin/activeadmin'#, branch: '1-1-stable'
 # UI for ActiveAdmin, https://github.com/cle61/arctic_admin
-gem 'arctic_admin', github: 'cle61/arctic_admin', branch: '2-0-alpha'
+gem 'arctic_admin', github: 'cle61/arctic_admin'#, branch: '2-0-alpha'
 # UI for ActiveAdmin, https://github.com/vigetlabs/active_material
 # gem "active_material", github: "vigetlabs/active_material"
 gem 'coffee-rails'
@@ -156,15 +187,17 @@ gem 'coffee-rails'
 # gem 'rails_db', group: :development
 
 
-# *** Application ***
+# === Application ===
 
 # Office Open XML Spreadsheet Generation, https://github.com/randym/axlsx
 # gem 'axlsx'
 # gem 'axlsx_rails'
 
-# Classier solution for file uploads for Rails
-# https://github.com/carrierwaveuploader/carrierwave
-# gem 'carrierwave'
+# ActiveStorage services' adapters
+# https://github.com/aws/aws-sdk-ruby
+# gem 'aws-sdk-s3', require: false
+# https://github.com/huacnlee/activestorage-aliyun
+# gem 'activestorage-aliyun'
 
 # https://github.com/zhandao/sms
 # gem 'smart_sms', path: '~/ws/sms'
@@ -180,7 +213,8 @@ gem 'coffee-rails'
 # gem 'rails-settings-ui'
 
 
-# *** Abstract ***
+# === Abstract ===
+
 # https://github.com/AaronLasseigne/active_interaction
 # Manage application specific business logic.
 # gem 'active_interaction', '~> 3.5'
@@ -201,12 +235,12 @@ gem 'coffee-rails'
 # A micro library providing Ruby objects with Publish-Subscribe capabilities
 # gem 'wisper', '2.0.0'
 
-# FIXME: 职责分离，然后将其划分到 development
-# https://github.com/ikkiuchi/generators
-gem 'generators', github: 'ikkiuchi/generators'
-# gem 'generators', path: '~/ws/generators'
 
 group :development do
+  # https://github.com/ikkiuchi/generators
+  gem 'generators', github: 'ikkiuchi/generators'
+  # gem 'generators', path: '~/ws/generators'
+
   # http://nadarei.co/mina/
   gem 'mina', require: false
   # https://github.com/untitledkingdom/mina-puma
@@ -229,7 +263,7 @@ group :development do
   gem 'listen', '~> 3.0'
 
   # https://github.com/yuki24/did_you_mean
-  gem 'did_you_mean', '~> 1.1', require: false
+  gem 'did_you_mean', '~> 1.2', require: false
 
   # https://github.com/charliesome/better_errors
   gem 'better_errors'
@@ -248,7 +282,7 @@ group :development do
   # https://github.com/bbatsov/rubocop
   gem 'rubocop', require: false # or just `gem install`
   # https://github.com/toshimaru/rubocop-rails
-  # gem "rubocop-rails", require: false # or just `gem install`
+  # gem "rubocop-rails_config", require: false # or just `gem install`
 
   # https://github.com/rubysec/bundler-audit
   gem 'bundler-audit', require: false # or just `gem install`
@@ -267,7 +301,7 @@ gem 'awesome_rails_console'
 # Feel free to remove gems that you don't want to use or if they conflict with other gem dependencies. (you might need to update .pryrc also)
 group :development, :test do
   # -- awesome_rails_console
-  # https://github.com/cldwalker/hirb TODO 3 years ago
+  # https://github.com/cldwalker/hirb TODO 3 years ago # https://github.com/janlelis/irbtools
   gem 'hirb'
   # Unused, see: https://github.com/miaout17/hirb-unicode/pull/5
   ## gem 'hirb-unicode'

@@ -1,4 +1,4 @@
-class CreateStores < ActiveRecord::Migration[5.1]
+class CreateStores < ActiveRecord::Migration::Current
   def change
     create_table :stores, force: :cascade do |t|
       t.string   :name,      null: false

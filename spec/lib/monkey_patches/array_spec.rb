@@ -8,7 +8,7 @@ RSpec.describe Array do
       it { expect(subject.page(2).per(5)).to eq (6..10).to_a }
       it { expect(subject.page(3).per(5)).to eq [11] }
 
-      context 'when overflowing' do
+      context 'when overflow' do
         it { expect(subject.page(2).per(11)).to eq [ ] }
         it { expect(subject.page(1).per(100)).to eq subject }
       end
@@ -33,12 +33,12 @@ RSpec.describe Array do
         end
       end
 
-      context 'when doing multiple calling' do
+      context 'when executed multiple calling' do
         it('supports re-calling #page') { expect(subject.page(1).page(2).per(3)).to eq (4..6).to_a }
         it('does not support re-calling #per') { expect(subject.page(2).per(3).per(5)).to eq (4..6).to_a }
       end
 
-      context 'when pass abnormal args' do
+      context 'when passed abnormal args' do
         it { expect(subject.page(0).per(0)).to eq subject.page.per }
         # not number
         # string number

@@ -74,3 +74,11 @@ RSpec.configure do |config|
     Rails.cache.clear
   end
 end
+
+RSpec::Sidekiq.configure do |config|
+  config.warn_when_jobs_not_processed_by_sidekiq = false
+end
+
+def enable_sidekiq
+  before { Sidekiq::Testing.inline! }; after { Sidekiq::Testing.disable! }
+end

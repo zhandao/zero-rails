@@ -15,10 +15,7 @@ namespace :share do
       command %[chmod g+rx,u+rwx "#{ fetch(:shared_path)}/#{dir}"]
     end
 
-    %w[database.yml
-       settings.local.yml
-       secrets.yml
-       newrelic.yml].each do |config|
+    %w[settings.local.yml].each do |config|
       command %[touch "#{ fetch(:shared_path)}/config/#{config}"]
       command %[echo "-----> Be sure to edit '#{ fetch(:shared_path)}/config/#{config}'."]
     end

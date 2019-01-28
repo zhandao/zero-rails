@@ -6,7 +6,7 @@ class HomeController < ApplicationController
   end
 
   def open_api
-    return unless (doc = params[:doc]).to_sym.in?(OpenApi.docs.keys)
+    return error_404 unless (doc = params[:doc]).to_sym.in?(OpenApi.docs.keys)
     render file: "#{Rails.root}/#{OpenApi::Config.file_output_path}/#{doc}.json", status: :ok, layout: false
   end
 

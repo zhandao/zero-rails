@@ -1,4 +1,4 @@
-class CreateEntityPermissions < ActiveRecord::Migration[5.1]
+class CreateEntityPermissions < ActiveRecord::Migration::Current
   def change
     create_table :entity_permissions, force: :cascade do |t|
       t.belongs_to :entity,     polymorphic: true

@@ -13,16 +13,16 @@ class Api::ApiController < ActionController::API
   before_action :process_params!
 
   rescue_from ::ParamsProcessor::ValidationFailed,
-              ::BusinessError::ZError,
-              ::ZeroRole::VerificationFailed,
-              ::ZeroPermission::InsufficientPermission do |e|
+              ::BusinessError::Error,
+              ::IAmICan::VerificationFailed,
+              ::IAmICan::InsufficientPermission do |e|
     log_and_render e
   end
 
   error_map(
          invalid_token: JWT::DecodeError,
-            role_error: ZeroRole::VerificationFailed,
-      permission_error: ZeroPermission::InsufficientPermission
+            role_error: IAmICan::VerificationFailed,
+      permission_error: IAmICan::InsufficientPermission
   )
 
   def self.skip_token options = { }
@@ -30,21 +30,21 @@ class Api::ApiController < ActionController::API
   end
 
   def self.error_cls(rt = nil)
-    "#{controller_name.camelize}Error".constantize
+    "Error#{controller_name.camelize}".constantize
   rescue
-    rt || ApiError
+    rt || Error::Api
   end
+
+  delegate :error_cls, to: self
 
   def self.error_cls?; error_cls(false) end
 
-  helper_method :render_error
+  def self.error_cls?; error_cls(false) end
 
-  def render_error # from are rescuer
-    error_class  = "#{controller_name.camelize}Error".constantize rescue nil
-    if error_class.respond_to?(action_error = "#{action_name}_failed")
-      @error_info = error_class.send(action_error).info.values
-    end
-    @_code, @_msg = @error_info
+  # check api status
+  def check result
+    return ok if result
+    error_cls.send("#{action_name}_failed!")
   end
 
   private

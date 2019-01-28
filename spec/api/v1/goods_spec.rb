@@ -2,8 +2,7 @@ require 'rails_helper'
 require 'dssl/request'
 
 RSpec.describe 'API V1', 'goods', type: :request do
-  subject { MultiJson.load(response.body, symbolize_keys: true) }
-  let(:data) { subject[:data] }
+  happy_spec
   path id: 1
 
   let(:user) { create(:user) }
@@ -26,27 +25,30 @@ RSpec.describe 'API V1', 'goods', type: :request do
   end
 
   api :show, :get, '/api/v1/goods/{id}', 'get the specified good', :token_needed do
+    before { create(:good) }
     it_checks_permission
   end
 
   api :update, :patch, '/api/v1/goods/{id}', 'update the specified good', :token_needed do
     let(:params) { { on_sale: 'integer', remarks: 'boolean', picture: 'string', name: 'string', category_id: 'string', unit: 'integer', price: 'string' } }
+    before { create(:good) }
 
     it_checks_permission
   end
 
   api :destroy, :delete, '/api/v1/goods/{id}', 'delete the specified good', :token_needed do
+    before { create(:good) }
     it_checks_permission
   end
 
   api :change_onsale, :post, '/api/v1/goods/{id}/change_onsale', 'post change sale status of the specified good', :token_needed do
+    before { create(:good) }
+
     it_checks_permission
 
-    before_when(:with_create) { req_to! :create }
-
-    it 'works', :with_create do
+    it 'works' do
       expect_any_instance_of(Good).to receive(:change_onsale).and_return(true)
-      requested get: 200
+      requests get: 200
     end
   end
 end

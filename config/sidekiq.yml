@@ -1,9 +1,9 @@
 ---
-:concurrency: 1
 :logfile: ./log/sidekiq.log
-#staging:
-#  :concurrency: 5
-#production:
-#  :concurrency: 50
+:concurrency: 5
+staging:
+  :concurrency: 10
+production:
+  :concurrency: 20
 :queues:
   - default
