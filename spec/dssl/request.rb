@@ -109,14 +109,19 @@ def req by: nil, p: nil, with: nil, headers: { }, to: nil, **expectations
   p = params.slice(params.keys.grep(p)) if p
   with = params.merge(with) if with
   parameters = by || p || with || params
-  headers.merge!(Authorization: 'Bearer ' + user.token) if token_needed && !headers.key?(:Authorization)
+  headers.merge!(token) if token_needed && !headers.key?(:Authorization)
   send(http_method, _process_path(path), params: parameters, headers: headers)
 
   subj = MultiJson.load(response.body, symbolize_keys: true) # TODO HACK for fixing subject cannot reload
   # pp subj
   expectations&.each do |(key, val)|
-    obj =  key == :get ? subj[:result][:code] : subject[:data] # TODO HACK as above, refactoring by reading OutPut::Config
-    expect(obj || subj[:data]).to instance_exec(&_req_expectation_blks(key => val))
+    if key == :get
+      # TODO HACK as above, refactoring by reading OutPut::Config
+      obj = subj[:result][:code]
+      val = 0 if val == :success
+      val = OutPut::Config.project_code + (error_cls.send(val) rescue Error::Api.send(val)).code if val.is_a?(Symbol)
+    end
+    expect(obj || (subj[:data] rescue nil) || subj).to instance_exec(&_req_expectation_blks(key => val))
   end
 end
 
@@ -136,8 +141,6 @@ def _req_expectation_blks get: nil, all_have_attrs: nil, have_size: nil, include
   elsif !data_eq.nil?
     -> { eq data_eq }
   else
-    get = 0 if get == :success # TODO
-    get = error_cls.send(get).code if get.is_a?(Symbol)
     -> { eq get }
   end
 end

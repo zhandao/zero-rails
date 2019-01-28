@@ -1,4 +1,4 @@
-# class Api::V1::GoodsSpdoc < RequestSpdoc
+# class SpecDoc::Api::V1::Goods < RequestSpecDoc
 #   describe :index do
 #     biz 'business scenario x' do
 #       context 'when case y' do

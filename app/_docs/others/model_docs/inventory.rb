@@ -1,4 +1,4 @@
-# class InventoryMdoc < ModelDoc
+# class ModelDocs::Inventory < ModelDoc
 #   # v 0
 #
 #   belongs_to :store

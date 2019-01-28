@@ -1,4 +1,4 @@
-# class ArraySpdoc < NormalSpdoc
+# class SpecDocs::Lib::MonkeyPatches::Array < NormalSpecDoc
 #   set_path 'lib/monkey_patches' # TODO
 #
 #   describe :per do

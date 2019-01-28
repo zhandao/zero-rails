@@ -18,11 +18,11 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # Use mysql as the database for Active Record
 # gem 'mysql2', '>= 0.3.18', '< 0.5'
 # Use postgresql as the database for Active Record
-gem 'pg', '~> 1.0.0'
+gem 'pg', '~> 1.1.0'
 # https://github.com/devmynd/jsonb_accessor
 # gem 'jsonb_accessor', '~> 1.0.0'
 # Use Redis adapter to run Action Cable in production
-gem 'redis', '~> 4.0'
+gem 'redis', '~> 4.1'
 # https://github.com/redis-store/redis-rails
 gem 'redis-rails'
 
@@ -48,9 +48,8 @@ gem 'kaminari'
 # https://github.com/norman/friendly_id
 # gem 'friendly_id', '~> 5.1.0'
 
-# Soft Delete, https://github.com/rubysherpas/paranoia
-# gem "paranoia", github: "rubysherpas/paranoia", branch: "rails5" # will bundle install error
-gem 'paranoia'
+# Soft Delete, https://github.com/ActsAsParanoid/acts_as_paranoid
+gem 'acts_as_paranoid', '~> 0.6.0'
 
 # https://github.com/ClosureTree/closure_tree
 # Easily and efficiently make your ActiveRecord models support hierarchies
@@ -141,7 +140,7 @@ gem 'config'
 gem 'rack-attack'
 
 # Abort requests that are taking too long, https://github.com/heroku/rack-timeout
-gem 'rack-timeout'
+gem 'rack-timeout', require: 'rack/timeout/base'
 
 # Exception Notifier, https://github.com/smartinez87/exception_notification
 # gem 'exception_notification'
@@ -215,6 +214,10 @@ gem 'coffee-rails'
 
 # === Abstract ===
 
+# https://github.com/aasm/aasm
+# AASM - State machines for Ruby classes (plain Ruby, ActiveRecord, Mongoid)
+# gem 'aasm'
+
 # https://github.com/AaronLasseigne/active_interaction
 # Manage application specific business logic.
 # gem 'active_interaction', '~> 3.5'
@@ -263,7 +266,7 @@ group :development do
   gem 'listen', '~> 3.0'
 
   # https://github.com/yuki24/did_you_mean
-  gem 'did_you_mean', '~> 1.2', require: false
+  gem 'did_you_mean', require: false
 
   # https://github.com/charliesome/better_errors
   gem 'better_errors'
@@ -306,7 +309,7 @@ group :development, :test do
   # Unused, see: https://github.com/miaout17/hirb-unicode/pull/5
   ## gem 'hirb-unicode'
   # Instead of steakknife/hirb-unicode: https://github.com/steakknife/hirb-unicode
-  gem 'hirb-unicode-steakknife'
+  gem 'hirb-unicode-steakknife', require: 'hirb-unicode'
   gem 'pry'
   # https://github.com/deivid-rodriguez/pry-byebug
   gem 'pry-byebug'

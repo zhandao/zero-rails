@@ -1,4 +1,4 @@
-# class UserMdoc < ModelDoc
+# class ModelDocs::User < ModelDoc
 #   # v 0
 #   soft_destroy
 #

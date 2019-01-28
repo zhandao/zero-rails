@@ -30,7 +30,7 @@ class Api::ApiController < ActionController::API
   end
 
   def self.error_cls(rt = nil)
-    "Error#{controller_name.camelize}".constantize
+    "Error::#{controller_name.camelize}".constantize
   rescue
     rt || Error::Api
   end

@@ -23,3 +23,13 @@ class ApiDoc < Object
     end
   end
 end
+
+module OpenApi
+  module DSL
+    class Api
+      def response_data(schema)
+        response 0, 'success', :json, data: { data: schema }
+      end
+    end
+  end
+end

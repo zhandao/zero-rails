@@ -1,4 +1,4 @@
-# class CategoryMdoc < ModelDoc
+# class ModelDocs::Category < ModelDoc
 #   # v 0
 #   soft_destroy
 #

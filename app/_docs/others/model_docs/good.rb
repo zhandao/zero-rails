@@ -1,4 +1,4 @@
-# class GoodMdoc < ModelDoc
+# class ModelDocs::Good < ModelDoc
 #   # v 0
 #   dsc
 #   soft_destroy

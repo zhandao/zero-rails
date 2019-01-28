@@ -1,4 +1,4 @@
-# class FooMdoc < ModelDoc
+# class ModelDocs::Foo < ModelDoc
 #   soft_destroy
 #
 #   belongs_to :user, polymorphic: true

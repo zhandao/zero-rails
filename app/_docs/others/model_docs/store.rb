@@ -1,4 +1,4 @@
-# class StoreMdoc < ModelDoc
+# class ModelDocs::Store < ModelDoc
 #   # v 0
 #   soft_destroy
 #
