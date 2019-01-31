@@ -23,7 +23,7 @@
 #     #
 #   end
 #
-#   describe :to_builder do
+#   describe :to_ha do
 #     #
 #   end
 # end

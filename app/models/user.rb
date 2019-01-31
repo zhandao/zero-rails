@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
-  builder_support
+  active_serialize
 
   soft_destroy
 

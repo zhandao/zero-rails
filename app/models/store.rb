@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class Store < ApplicationRecord
   has_many :inventories, dependent: :destroy
 
   has_many :goods, -> { where('amount > 0') }, through: :inventories
 
-  builder_support rmv: %i[ ]
+  active_serialize rmv: %i[ ]
 
   soft_destroy
 

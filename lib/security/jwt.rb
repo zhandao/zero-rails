@@ -1,5 +1,6 @@
-# https://github.com/jwt/ruby-jwt
+# frozen_string_literal: true
 
+# https://github.com/jwt/ruby-jwt
 module Security::JWT
   # JWT key at config/secret.rb
   @key = Rails.application.secrets.jwt

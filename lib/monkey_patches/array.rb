@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Array
   def page(page = 1)
     @page = page&.zero? ? 1 : (page || 1)
@@ -11,9 +13,9 @@ class Array
     self[ page * per..(page + 1) * per - 1 ]
   end
 
-  def to_builder(rmv: [ ], add: [ ], merge: { })
+  def to_ha(rmv: [ ], add: [ ], merge: { })
     self.map do |datum|
-      datum.to_builder(rmv: rmv, add: add, merge: merge) if datum.respond_to? :to_builder
+      datum.to_h(rmv: rmv, add: add, merge: merge) if datum.respond_to? :_active_serialize
     end.compact
   end
 end

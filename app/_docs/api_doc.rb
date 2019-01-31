@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApiDoc < Object
   include OpenApi::DSL
   include AutoGenDoc

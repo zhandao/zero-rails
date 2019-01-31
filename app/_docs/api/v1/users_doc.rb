@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::V1::UsersDoc < ApiDoc
   api_dry %i[ index update destroy roles permissions roles_modify ] do
     auth :Authorization

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Error::Concerns::Failed
   def self.included(base)
     base.class_eval do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::Schemas
   class << self
     def get(key)

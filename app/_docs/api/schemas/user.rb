@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::Schemas::User < Api::Schemas
   def self.normal
     {

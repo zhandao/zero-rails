@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Good < ApplicationRecord
   include Search
 
@@ -9,7 +11,7 @@ class Good < ApplicationRecord
 
   belongs_to :category, -> { unscope(where: :deleted_at) }
 
-  builder_support rmv: %i[ ], add: [:category_info]
+  active_serialize rmv: %i[ ], recursive: [:category]
 
   soft_destroy
 

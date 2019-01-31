@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::V1::StoresDoc < ApiDoc
   api_dry %i[ create update destroy ] do
     auth :Authorization

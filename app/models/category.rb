@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Category < ApplicationRecord
   include Search
 
@@ -9,9 +11,9 @@ class Category < ApplicationRecord
 
   has_many :goods#, dependent: :nullify
 
-  builder_support rmv: %i[ updated_at created_at ]
-  builder_add :sub_categories_info, when: :get_nested_list
-  builder_add :base_category_info, name: :base_category, when: -> { base_category.present? } # TODO: 思考：为什么 get_nested_list 时不会有该 info？
+  active_serialize rmv: %i[ updated_at created_at ]
+  # builder_add :sub_categories_info, when: :get_nested_list TODO !!!
+  # builder_add :base_category_info, name: :base_category, when: -> { base_category.present? } # TODO: 思考：为什么 get_nested_list 时不会有该 info？
 
   soft_destroy
 

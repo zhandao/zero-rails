@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::V1::GoodsDoc < ApiDoc
   api_dry :all do
     auth :Authorization

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HomeController < ApplicationController
   before_action :authenticate_admin_user!, only: %i[ apidoc open_api ]
 

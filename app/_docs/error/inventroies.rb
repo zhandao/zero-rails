@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Error::Inventroies < Error::Api
   code_start_at 600
 

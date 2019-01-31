@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class Inventory < ApplicationRecord
   belongs_to :store
 
   belongs_to :good
 
-  builder_support add: 'good_info and store_info'
+  active_serialize recursive: %i[ good store ]
 
   validates :amount, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 

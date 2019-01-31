@@ -99,9 +99,9 @@ gem 'sentry-raven'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # https://devblast.com/b/jbuilder
 gem 'jbuilder'
-# https://github.com/ikkiuchi/builder_support
-# Provide a very simple way to transform ActiveRecord data into JSON output based on JBuilder
-gem 'builder_support'
+# https://github.com/ikkiuchi/active_serialize
+# Provide a very simple way to transform ActiveRecord data into Hash
+gem 'active_serialize'
 
 # https://github.com/rails-api/active_model_serializers/
 # gem 'active_model_serializers'
