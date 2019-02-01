@@ -18,7 +18,7 @@ class Api::V1::GoodsDoc < ApiDoc
 
     query :export, Boolean, desc: 'export result to a Excel'
 
-    order :view, :search_field, :search_value, :created_from, :created_to, :page, :rows, :export
+    # order :view, :search_field, :search_value, :created_from, :created_to, :page, :rows, :export
   end
 
   api_dry %i[ create update ] do

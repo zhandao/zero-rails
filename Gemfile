@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '2.6.0'
+ruby '2.6.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.0'
 
@@ -316,21 +316,6 @@ group :development, :test do
   # https://github.com/pry/pry-stack_explorer
   gem 'pry-stack_explorer'
   # -- awesome_rails_console
-
-  # https://github.com/rspec/rspec-rails
-  # http://www.betterspecs.org/
-  # https://relishapp.com/rspec/rspec-core/v/3-7
-  # https://relishapp.com/rspec/rspec-rails/v/3-7
-  # https://ruby-china.org/topics/9271
-  # https://github.com/rspec/rspec-expectations
-  gem 'rspec-rails'
-  # http://www.rubydoc.info/gems/factory_bot/file/GETTING_STARTED.md
-  # https://github.com/thoughtbot/factory_bot_rails
-  gem 'factory_bot_rails'
-
-  # https://github.com/grosser/parallel_tests
-  # https://makandracards.com/makandra/1241-how-to-employ-and-run-your-tests-with-parallel_tests-to-speed-up-test-execution
-  gem 'parallel_tests' # TODO
 end
 
 group :test do
@@ -347,6 +332,21 @@ group :test do
   # Code coverage for Ruby 1.9+ with a powerful configuration library and automatic merging of coverage across test suites
   # https://github.com/colszowka/simplecov
   gem 'simplecov', :require => false
+
+  # https://github.com/rspec/rspec-rails
+  # http://www.betterspecs.org/
+  # https://relishapp.com/rspec/rspec-core/v/3-7
+  # https://relishapp.com/rspec/rspec-rails/v/3-7
+  # https://ruby-china.org/topics/9271
+  # https://github.com/rspec/rspec-expectations
+  gem 'rspec-rails'
+  # http://www.rubydoc.info/gems/factory_bot/file/GETTING_STARTED.md
+  # https://github.com/thoughtbot/factory_bot_rails
+  gem 'factory_bot_rails'
+
+  # https://github.com/grosser/parallel_tests
+  # https://makandracards.com/makandra/1241-how-to-employ-and-run-your-tests-with-parallel_tests-to-speed-up-test-execution
+  gem 'parallel_tests' # TODO
 end
 
 group :production, :staging do
