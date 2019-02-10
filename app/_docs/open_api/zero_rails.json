@@ -416,6 +416,57 @@
         ],
         "parameters": [
           {
+            "name": "created_from",
+            "in": "query",
+            "required": false,
+            "description": "YY-MM-DD (HH:MM:SS, optional)",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "as": "start"
+            }
+          },
+          {
+            "name": "created_to",
+            "in": "query",
+            "required": false,
+            "description": "YY-MM-DD (HH:MM:SS, optional)",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "as": "end"
+            }
+          },
+          {
+            "name": "search_value",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1
+            }
+          },
+          {
+            "name": "rows",
+            "in": "query",
+            "required": false,
+            "description": "per page, number of result",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 10
+            }
+          },
+          {
             "name": "view",
             "in": "query",
             "required": false,
@@ -444,57 +495,6 @@
                 "price"
               ],
               "as": "field"
-            }
-          },
-          {
-            "name": "search_value",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "created_from",
-            "in": "query",
-            "required": false,
-            "description": "YY-MM-DD (HH:MM:SS, optional)",
-            "schema": {
-              "type": "string",
-              "format": "date-time",
-              "as": "start"
-            }
-          },
-          {
-            "name": "created_to",
-            "in": "query",
-            "required": false,
-            "description": "YY-MM-DD (HH:MM:SS, optional)",
-            "schema": {
-              "type": "string",
-              "format": "date-time",
-              "as": "end"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "default": 1
-            }
-          },
-          {
-            "name": "rows",
-            "in": "query",
-            "required": false,
-            "description": "per page, number of result",
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "default": 10
             }
           },
           {
