@@ -5,23 +5,28 @@ class Api::V1::CategoriesDoc < ApiDoc
     auth :Authorization
   end
 
-  api :index, 'GET list of categories', builder: :cache_index, use: %i[ page rows ]
+  api :index, 'GET list of categories', builder: :cache_index do
+    dry only: %i[ page rows ]
+  end
 
   api :nested_list, 'GET nested list of categories', builder: :cache_index
 
   api :create, 'POST create a category' do
     form! data: {
-                   :name! => { type: String,  desc: 'category name.' },
-        :base_category_id => { type: Integer, desc: 'id of the base category. if no pass, it will be a root.' }
-    }, pmt: true
+                   :name! => { type: String,  desc: 'category name.', permit: true },
+        :base_category_id => { type: Integer, desc: 'id of the base category. if no pass, it will be a root.', permit: true }
+    }
   end
 
-  api :update, 'PATCH|PUT update the specified category.', use: id do
+  api :update, 'PATCH|PUT update the specified category.' do
+    dry only: :id
     form! data: {
-                    :name  => { type: String,  desc: 'category name.' },
-        :base_category_id  => { type: Integer, desc: 'id of the base category. if pass null, it will be a root.' }
-    }, pmt: true
+                    :name  => { type: String,  desc: 'category name.', permit: true },
+        :base_category_id  => { type: Integer, desc: 'id of the base category. if pass null, it will be a root.', permit: true }
+    }
   end
 
-  api :destroy, 'DELETE the specified category', use: id
+  api :destroy, 'DELETE the specified category' do
+    dry only: :id
+  end
 end

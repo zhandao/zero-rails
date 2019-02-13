@@ -5,23 +5,30 @@ class Api::V1::StoresDoc < ApiDoc
     auth :Authorization
   end
 
-  api :index, 'GET list of stores', builder: :cache_index, use: %i[ page rows ]
+  api :index, 'GET list of stores', builder: :cache_index do
+    dry only: %i[ page rows ]
+  end
 
   api :create, 'POST create a store' do
     form! data: {
-           :name! => String,
-        :address! => String
-    }, pmt: true
+           :name! => { type: String, permit: true },
+        :address! => { type: String, permit: true }
+    }
   end
 
-  api :show, 'GET the specified store', builder: :show, use: id
+  api :show, 'GET the specified store', builder: :show do
+    dry only: :id
+  end
 
-  api :update, 'POST update the specified store', use: id do
+  api :update, 'POST update the specified store' do
+    dry only: :id
     form! data: {
-           :name  => String,
-        :address  => String
-    }, pmt: true
+           :name  => { type: String, permit: true },
+        :address  => { type: String, permit: true }
+    }
   end
 
-  api :destroy, 'DELETE the specified store', use: id
+  api :destroy, 'DELETE the specified store' do
+    dry only: :id
+  end
 end

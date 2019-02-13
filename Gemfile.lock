@@ -26,7 +26,7 @@ GIT
 
 GIT
   remote: https://github.com/ikkiuchi/generators.git
-  revision: 3546627782255030cc78eaa80d3d2ff5a5a1eeab
+  revision: 4a116f0532ea2e8d681529956c2567674743e5ed
   specs:
     generators (0.1.0)
 
@@ -38,7 +38,7 @@ GIT
 
 GIT
   remote: https://github.com/zhandao/zero-params_processor.git
-  revision: 671760a6e92019a0ff37279a7b21b50e58b77869
+  revision: c6387eda84f51c78f6350ccf33c5be22491af743
   specs:
     zero-params_processor (0.4.2)
       activesupport (>= 3)
@@ -48,9 +48,9 @@ GIT
 
 GIT
   remote: https://github.com/zhandao/zero-rails_openapi.git
-  revision: fea981b21c89f4f69561e3a068f070ebad6ee51b
+  revision: 1bc5603cbd879b179e73c407f2cf0c6dd68cfe3f
   specs:
-    zero-rails_openapi (1.7.0)
+    zero-rails_openapi (2.0.3)
       activesupport (>= 4.1)
       colorize
       rails (>= 4.1)

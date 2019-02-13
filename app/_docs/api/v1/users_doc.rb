@@ -5,9 +5,13 @@ class Api::V1::UsersDoc < ApiDoc
     auth :Authorization
   end
 
-  api :index, 'GET list of users', builder: :index, use: [:page, :rows]
+  api :index, 'GET list of users', builder: :index do
+    dry only: [:page, :rows]
+  end
 
-  api :show, 'GET the specified user', builder: :show, use: id
+  api :show, 'GET the specified user', builder: :show do
+    dry only: :id
+  end
 
   api :show_via_name, 'GET the specified user by name', builder: :show do
     path! :name, String, desc: 'user name'
@@ -24,23 +28,26 @@ class Api::V1::UsersDoc < ApiDoc
 
   api :create, 'POST user register' do
     form! data: {
-                         name!: String,
-                     password!: String,
-        password_confirmation!: String,
-                         email: String,
-                  phone_number: String
-    }, pmt: true
+                         name!: { type: String, permit: true },
+                     password!: { type: String, permit: true },
+        password_confirmation!: { type: String, permit: true },
+                         email: { type: String, permit: true },
+                  phone_number: { type: String, permit: true }
+    }
   end
 
-  api :update, 'PATCH|PUT update the specified user', use: id do
+  api :update, 'PATCH|PUT update the specified user' do
+    dry only: :id
     form! data: {
-                         name: String,
-                     password: String,
-        password_confirmation: String,
-                        email: String,
-                 phone_number: String
-    }, pmt: true
+                         name: { type: String, permit: true },
+                     password: { type: String, permit: true },
+        password_confirmation: { type: String, permit: true },
+                        email: { type: String, permit: true },
+                 phone_number: { type: String, permit: true }
+    }
   end
 
-  api :destroy, 'DELETE the specified user', use: id
+  api :destroy, 'DELETE the specified user' do
+    dry only: :id
+  end
 end

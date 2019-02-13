@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'open_api/generator'
+require 'open_api/router'
 
 module MakeSure
   def self.included(base)
@@ -14,7 +14,7 @@ module MakeSure
     end
 
     def if_can *permission_codes, source: nil, allow: [ ], allow_matched: [ ]
-      allow = ::OpenApi::Generator.get_actions_by_route_base(controller_path) if allow == :all
+      allow = ::OpenApi::Router.get_actions_by_route_base(controller_path) if allow == :all
       if allow.present?
         to_access *allow, should_can: permission_codes, source: source
       else
@@ -23,7 +23,7 @@ module MakeSure
     end
 
     def if_is logic_codes, allow: [ ], allow_matched: [ ]
-      allow = ::OpenApi::Generator.get_actions_by_route_base(controller_path) if allow == :all
+      allow = ::OpenApi::Router.get_actions_by_route_base(controller_path) if allow == :all
       if allow.present?
         to_access *allow, need_to_be: logic_codes
       else
@@ -42,7 +42,7 @@ module MakeSure
     end
 
     def to_access_matched *actions, need_to_be: nil, should_can: nil, source: nil
-      ctrl_actions = ::OpenApi::Generator.get_actions_by_route_base(controller_path)
+      ctrl_actions = ::OpenApi::Router.get_actions_by_route_base(controller_path)
       real_actions = [ ]
       actions.each { |pattern| real_actions += ctrl_actions.grep(/#{pattern}/) }
       to_access *real_actions, need_to_be: need_to_be, should_can: should_can, source: source

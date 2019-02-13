@@ -48,20 +48,21 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "minimum": 1,
-              "default": 1
+              "default": 1,
+              "minimum": 1
             }
           },
           {
             "name": "rows",
             "in": "query",
             "required": false,
-            "description": "per page, number of result",
             "schema": {
               "type": "integer",
+              "default": 10,
               "minimum": 1,
-              "default": 10
-            }
+              "description": "per page, number of result"
+            },
+            "description": "per page, number of result"
           }
         ],
         "responses": {
@@ -108,17 +109,18 @@
                 "properties": {
                   "name": {
                     "type": "string",
+                    "permit": true,
                     "description": "category name."
                   },
                   "base_category_id": {
                     "type": "integer",
+                    "permit": true,
                     "description": "id of the base category. if no pass, it will be a root."
                   }
                 },
                 "required": [
                   "name"
-                ],
-                "permit": true
+                ]
               }
             }
           }
@@ -225,14 +227,15 @@
                 "properties": {
                   "name": {
                     "type": "string",
+                    "permit": true,
                     "description": "category name."
                   },
                   "base_category_id": {
                     "type": "integer",
+                    "permit": true,
                     "description": "id of the base category. if pass null, it will be a root."
                   }
-                },
-                "permit": true
+                }
               }
             }
           }
@@ -301,14 +304,15 @@
                 "properties": {
                   "name": {
                     "type": "string",
+                    "permit": true,
                     "description": "category name."
                   },
                   "base_category_id": {
                     "type": "integer",
+                    "permit": true,
                     "description": "id of the base category. if pass null, it will be a root."
                   }
-                },
-                "permit": true
+                }
               }
             }
           }
@@ -408,7 +412,6 @@
     },
     "/api/v1/goods": {
       "get": {
-        "description": "GET list of goods",
         "summary": "GET list of goods",
         "operationId": "Goods_Index",
         "tags": [
@@ -419,23 +422,25 @@
             "name": "created_from",
             "in": "query",
             "required": false,
-            "description": "YY-MM-DD (HH:MM:SS, optional)",
             "schema": {
               "type": "string",
               "format": "date-time",
-              "as": "start"
-            }
+              "as": "start",
+              "description": "YY-MM-DD (HH:MM:SS, optional)"
+            },
+            "description": "YY-MM-DD (HH:MM:SS, optional)"
           },
           {
             "name": "created_to",
             "in": "query",
             "required": false,
-            "description": "YY-MM-DD (HH:MM:SS, optional)",
             "schema": {
               "type": "string",
               "format": "date-time",
-              "as": "end"
-            }
+              "as": "end",
+              "description": "YY-MM-DD (HH:MM:SS, optional)"
+            },
+            "description": "YY-MM-DD (HH:MM:SS, optional)"
           },
           {
             "name": "search_value",
@@ -451,60 +456,64 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "minimum": 1,
-              "default": 1
+              "default": 1,
+              "minimum": 1
             }
           },
           {
             "name": "rows",
             "in": "query",
             "required": false,
-            "description": "per page, number of result",
             "schema": {
               "type": "integer",
+              "default": 10,
               "minimum": 1,
-              "default": 10
-            }
+              "description": "per page, number of result"
+            },
+            "description": "per page, number of result"
           },
           {
             "name": "view",
             "in": "query",
             "required": false,
-            "description": "allows:<br/>",
             "schema": {
               "type": "string",
+              "default": "all",
               "enum": [
                 "all",
                 "on_sale",
                 "off_sale"
               ],
-              "default": "all"
-            }
+              "description": "allows:<br/><br/>1/ (default): all<br/>2/ on sale goods: on_sale<br/>3/ off sale goods: off_sale"
+            },
+            "description": "allows:<br/><br/>1/ (default): all<br/>2/ on sale goods: on_sale<br/>3/ off sale goods: off_sale"
           },
           {
             "name": "search_field",
             "in": "query",
             "required": false,
-            "description": "allows:<br/>",
             "schema": {
               "type": "string",
+              "as": "field",
               "enum": [
                 "name",
                 "category_name",
                 "unit",
                 "price"
               ],
-              "as": "field"
-            }
+              "description": "allows:<br/>"
+            },
+            "description": "allows:<br/>"
           },
           {
             "name": "export",
             "in": "query",
             "required": false,
-            "description": "export result to a Excel",
             "schema": {
-              "type": "boolean"
-            }
+              "type": "boolean",
+              "description": "export result to a Excel"
+            },
+            "description": "export result to a Excel"
           }
         ],
         "responses": {
@@ -556,34 +565,40 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "on_sale": {
-                    "type": "boolean"
-                  },
-                  "remarks": {
-                    "type": "string"
-                  },
-                  "picture": {
-                    "type": "string",
-                    "is": "url",
-                    "format": "url"
-                  },
                   "name": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   },
                   "category_id": {
                     "type": "integer",
+                    "permit": true,
                     "minimum": 1
                   },
                   "unit": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   },
                   "price": {
                     "type": "number",
                     "format": "float",
+                    "permit": true,
                     "minimum": 0
+                  },
+                  "on_sale": {
+                    "type": "boolean",
+                    "permit": true
+                  },
+                  "remarks": {
+                    "type": "string",
+                    "permit": true
+                  },
+                  "picture": {
+                    "type": "string",
+                    "format": "url",
+                    "is_a": "url",
+                    "permit": true
                   }
                 },
-                "permit": true,
                 "required": [
                   "name",
                   "category_id",
@@ -710,33 +725,39 @@
                 "type": "object",
                 "properties": {
                   "on_sale": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "permit": true
                   },
                   "remarks": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   },
                   "picture": {
                     "type": "string",
-                    "is": "url",
-                    "format": "url"
+                    "format": "url",
+                    "is_a": "url",
+                    "permit": true
                   },
                   "name": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   },
                   "category_id": {
                     "type": "integer",
+                    "permit": true,
                     "minimum": 1
                   },
                   "unit": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   },
                   "price": {
                     "type": "number",
                     "format": "float",
+                    "permit": true,
                     "minimum": 0
                   }
-                },
-                "permit": true
+                }
               }
             }
           }
@@ -804,33 +825,39 @@
                 "type": "object",
                 "properties": {
                   "on_sale": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "permit": true
                   },
                   "remarks": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   },
                   "picture": {
                     "type": "string",
-                    "is": "url",
-                    "format": "url"
+                    "format": "url",
+                    "is_a": "url",
+                    "permit": true
                   },
                   "name": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   },
                   "category_id": {
                     "type": "integer",
+                    "permit": true,
                     "minimum": 1
                   },
                   "unit": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   },
                   "price": {
                     "type": "number",
                     "format": "float",
+                    "permit": true,
                     "minimum": 0
                   }
-                },
-                "permit": true
+                }
               }
             }
           }
@@ -996,23 +1023,25 @@
             "name": "created_from",
             "in": "query",
             "required": false,
-            "description": "YY-MM-DD (HH:MM:SS, optional)",
             "schema": {
               "type": "string",
               "format": "date-time",
-              "as": "start"
-            }
+              "as": "start",
+              "description": "YY-MM-DD (HH:MM:SS, optional)"
+            },
+            "description": "YY-MM-DD (HH:MM:SS, optional)"
           },
           {
             "name": "created_to",
             "in": "query",
             "required": false,
-            "description": "YY-MM-DD (HH:MM:SS, optional)",
             "schema": {
               "type": "string",
               "format": "date-time",
-              "as": "end"
-            }
+              "as": "end",
+              "description": "YY-MM-DD (HH:MM:SS, optional)"
+            },
+            "description": "YY-MM-DD (HH:MM:SS, optional)"
           },
           {
             "name": "search_value",
@@ -1028,20 +1057,21 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "minimum": 1,
-              "default": 1
+              "default": 1,
+              "minimum": 1
             }
           },
           {
             "name": "rows",
             "in": "query",
             "required": false,
-            "description": "per page, number of result",
             "schema": {
               "type": "integer",
+              "default": 10,
               "minimum": 1,
-              "default": 10
-            }
+              "description": "per page, number of result"
+            },
+            "description": "per page, number of result"
           },
           {
             "name": "store_name",
@@ -1055,17 +1085,18 @@
             "name": "search_field",
             "in": "query",
             "required": false,
-            "description": "allows:<br/>",
             "schema": {
               "type": "string",
+              "as": "field",
               "enum": [
                 "name",
                 "category_name",
                 "unit",
                 "price"
               ],
-              "as": "field"
-            }
+              "description": "allows:<br/><br/>1/ name<br/>2/ category_name<br/>3/ unit<br/>4/ price"
+            },
+            "description": "allows:<br/><br/>1/ name<br/>2/ category_name<br/>3/ unit<br/>4/ price"
           }
         ],
         "responses": {
@@ -1114,20 +1145,21 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "minimum": 1,
-              "default": 1
+              "default": 1,
+              "minimum": 1
             }
           },
           {
             "name": "rows",
             "in": "query",
             "required": false,
-            "description": "per page, number of result",
             "schema": {
               "type": "integer",
+              "default": 10,
               "minimum": 1,
-              "default": 10
-            }
+              "description": "per page, number of result"
+            },
+            "description": "per page, number of result"
           }
         ],
         "responses": {
@@ -1173,17 +1205,18 @@
                 "type": "object",
                 "properties": {
                   "name": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   },
                   "address": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   }
                 },
                 "required": [
                   "name",
                   "address"
-                ],
-                "permit": true
+                ]
               }
             }
           }
@@ -1297,13 +1330,14 @@
                 "type": "object",
                 "properties": {
                   "name": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   },
                   "address": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   }
-                },
-                "permit": true
+                }
               }
             }
           }
@@ -1371,13 +1405,14 @@
                 "type": "object",
                 "properties": {
                   "name": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   },
                   "address": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   }
-                },
-                "permit": true
+                }
               }
             }
           }
@@ -1487,10 +1522,11 @@
             "name": "name",
             "in": "path",
             "required": true,
-            "description": "user name",
             "schema": {
-              "type": "string"
-            }
+              "type": "string",
+              "description": "user name"
+            },
+            "description": "user name"
           }
         ],
         "responses": {
@@ -1536,20 +1572,21 @@
             "required": false,
             "schema": {
               "type": "integer",
-              "minimum": 1,
-              "default": 1
+              "default": 1,
+              "minimum": 1
             }
           },
           {
             "name": "rows",
             "in": "query",
             "required": false,
-            "description": "per page, number of result",
             "schema": {
               "type": "integer",
+              "default": 10,
               "minimum": 1,
-              "default": 10
-            }
+              "description": "per page, number of result"
+            },
+            "description": "per page, number of result"
           }
         ],
         "responses": {
@@ -1602,27 +1639,31 @@
                 "type": "object",
                 "properties": {
                   "name": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   },
                   "password": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   },
                   "password_confirmation": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   },
                   "email": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   },
                   "phone_number": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   }
                 },
                 "required": [
                   "name",
                   "password",
                   "password_confirmation"
-                ],
-                "permit": true
+                ]
               }
             }
           }
@@ -1706,6 +1747,14 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "token": {
+                          "type": "jwt token"
+                        }
+                      }
+                    },
                     "result": {
                       "type": "object",
                       "properties": {
@@ -1716,14 +1765,6 @@
                         "message": {
                           "type": "string",
                           "default": "success"
-                        }
-                      }
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "token": {
-                          "type": "jwt token"
                         }
                       }
                     }
@@ -1808,22 +1849,26 @@
                 "type": "object",
                 "properties": {
                   "name": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   },
                   "password": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   },
                   "password_confirmation": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   },
                   "email": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   },
                   "phone_number": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   }
-                },
-                "permit": true
+                }
               }
             }
           }
@@ -1891,22 +1936,26 @@
                 "type": "object",
                 "properties": {
                   "name": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   },
                   "password": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   },
                   "password_confirmation": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   },
                   "email": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   },
                   "phone_number": {
-                    "type": "string"
+                    "type": "string",
+                    "permit": true
                   }
-                },
-                "permit": true
+                }
               }
             }
           }
