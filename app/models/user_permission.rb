@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UserPermission < ActiveRecord::Base
   has_and_belongs_to_many :related_roles,
                           join_table: 'user_roles_and_user_permissions', foreign_key: :user_permission_id,
@@ -8,11 +10,19 @@ class UserPermission < ActiveRecord::Base
   acts_as_permission
 end
 
-__END__
-
-  string  :action,     null: false
-  string  :obj_type
-  integer :obj_id
-  string  :desc
-
-  index %i[ action obj_type obj_id ], unique: true
+# == Schema Information
+#
+# Table name: user_permissions
+#
+#  id         :bigint(8)        not null, primary key
+#  action     :string           not null
+#  obj_type   :string
+#  remarks    :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  obj_id     :integer
+#
+# Indexes
+#
+#  user_permissions_unique_index  (action,obj_type,obj_id) UNIQUE
+#

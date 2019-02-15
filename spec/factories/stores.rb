@@ -6,7 +6,17 @@ FactoryBot.define do
   end
 end
 
-__END__
-
-http://www.rubydoc.info/gems/factory_bot/file/GETTING_STARTED.md#Inheritance
-http://www.rubydoc.info/gems/factory_bot/file/GETTING_STARTED.md#Associations
+# == Schema Information
+#
+# Table name: stores
+#
+#  id         :bigint(8)        not null, primary key
+#  address    :string           not null
+#  deleted_at :datetime
+#  name       :string           not null
+#
+# Indexes
+#
+#  index_stores_on_address  (address) UNIQUE
+#  index_stores_on_name     (name) UNIQUE
+#

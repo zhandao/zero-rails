@@ -23,10 +23,25 @@ class Inventory < ApplicationRecord
   end
 end
 
-__END__
-
-t.belongs_to :store,  foreign_key: true, null: false
-t.belongs_to :good,   foreign_key: true, null: false
-t.integer    :amount, null: false, default: 0
-
-add_index :inventories, [:store_id, :good_id], unique: true
+# == Schema Information
+#
+# Table name: inventories
+#
+#  id         :bigint(8)        not null, primary key
+#  amount     :integer          default(0), not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  good_id    :bigint(8)
+#  store_id   :bigint(8)
+#
+# Indexes
+#
+#  index_inventories_on_good_id               (good_id)
+#  index_inventories_on_store_id              (store_id)
+#  index_inventories_on_store_id_and_good_id  (store_id,good_id) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (good_id => goods.id)
+#  fk_rails_...  (store_id => stores.id)
+#

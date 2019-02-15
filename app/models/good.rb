@@ -44,13 +44,28 @@ class Good < ApplicationRecord
   end
 end
 
-__END__
-
-t.string     :name,       null: false,       index: true
-t.belongs_to :category,   foreign_key: true, index: true
-t.string     :unit,       null: false
-t.float      :price,      null: false
-t.string     :remarks
-t.string     :picture
-t.boolean    :on_sale,                       default: true
-t.datetime   :deleted_at
+# == Schema Information
+#
+# Table name: goods
+#
+#  id          :bigint(8)        not null, primary key
+#  deleted_at  :datetime
+#  name        :string           not null
+#  on_sale     :boolean          default(TRUE)
+#  picture     :string
+#  price       :float            not null
+#  remarks     :string
+#  unit        :string           not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  category_id :bigint(8)
+#
+# Indexes
+#
+#  index_goods_on_category_id  (category_id)
+#  index_goods_on_name         (name)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (category_id => categories.id)
+#

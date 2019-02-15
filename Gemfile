@@ -26,8 +26,11 @@ gem 'redis', '~> 4.1'
 # https://github.com/redis-store/redis-rails
 gem 'redis-rails'
 
+# https://github.com/paper-trail-gem/paper_trail
+# gem 'paper_trail'
 
-# === Query Extension ===
+
+# === Search & Query Extension ===
 
 # Pagination, https://github.com/kaminari/kaminari
 gem 'kaminari'
@@ -35,6 +38,12 @@ gem 'kaminari'
 # By_* Lets you find ActiveRecord + Mongoid objects by year, month, fortnight, week and more!
 # https://github.com/radar/by_star
 # gem 'by_star', github: 'radar/by_star'
+
+# Intelligent search made easy with Rails and Elasticsearch
+# https://github.com/ankane/searchkick
+# gem 'searchkick'
+# https://github.com/typhoeus/typhoeus
+# gem 'typhoeus'
 
 # https://github.com/rails/arel
 # Rails integrates it by default
@@ -87,6 +96,8 @@ gem 'puma'
 # === Ruby Extension ===
 # https://github.com/intridea/multi_json/
 gem 'multi_json'
+# https://github.com/ohler55/oj
+gem 'oj'
 
 
 # === Monitor ===
@@ -293,6 +304,14 @@ group :development do
   # A Ruby code quality reporter, https://github.com/whitesmith/rubycritic
   # https://ruby-china.org/topics/30746
   gem 'rubycritic', require: false # or just `gem install`
+
+  # Colorized logging for Memcached and Redis
+  # https://github.com/ankane/cacheflow
+  gem 'cacheflow'
+
+  # Annotate Rails classes with schema and routes info
+  # https://github.com/ctran/annotate_models
+  gem 'annotate' # 1000000 :+1
 end
 
 # console beautifying settings

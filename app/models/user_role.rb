@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UserRole < ActiveRecord::Base
   has_and_belongs_to_many :related_users,
                           join_table: 'users_and_user_roles', foreign_key: :user_role_id,
@@ -12,9 +14,17 @@ class UserRole < ActiveRecord::Base
   # default_scope { with_permissions }
 end
 
-__END__
-
-  string  :name, null: false
-  string  :desc
-
-  index :name, unique: true
+# == Schema Information
+#
+# Table name: user_roles
+#
+#  id         :bigint(8)        not null, primary key
+#  name       :string           not null
+#  remarks    :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+# Indexes
+#
+#  user_roles_unique_index  (name) UNIQUE
+#
