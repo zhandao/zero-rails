@@ -346,7 +346,7 @@ group :test do
 
   # Code coverage for Ruby 1.9+ with a powerful configuration library and automatic merging of coverage across test suites
   # https://github.com/colszowka/simplecov
-  gem 'simplecov', :require => false
+  gem 'simplecov', '>= 0.16.1', :require => false
 end
 
 group :production, :staging do
