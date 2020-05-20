@@ -7,7 +7,7 @@ end
 
 ruby '2.6.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.0'
+gem 'rails', '~> 5.2.4', '>= 5.2.4.3'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
@@ -24,13 +24,13 @@ gem 'pg', '~> 1.1.0'
 # Use Redis adapter to run Action Cable in production
 gem 'redis', '~> 4.1'
 # https://github.com/redis-store/redis-rails
-gem 'redis-rails'
+gem 'redis-rails', '>= 5.0.2'
 
 
 # === Query Extension ===
 
 # Pagination, https://github.com/kaminari/kaminari
-gem 'kaminari'
+gem 'kaminari', '>= 1.1.1'
 
 # By_* Lets you find ActiveRecord + Mongoid objects by year, month, fortnight, week and more!
 # https://github.com/radar/by_star
@@ -98,10 +98,10 @@ gem 'sentry-raven'
 # === View ===
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # https://devblast.com/b/jbuilder
-gem 'jbuilder'
+gem 'jbuilder', '>= 2.8.0'
 # https://github.com/ikkiuchi/builder_support
 # Provide a very simple way to transform ActiveRecord data into JSON output based on JBuilder
-gem 'builder_support'
+gem 'builder_support', '>= 1.0.0'
 
 # https://github.com/rails-api/active_model_serializers/
 # gem 'active_model_serializers'
@@ -134,7 +134,7 @@ gem 'rack-cors'
 
 # Easiest way to add multi-environment yaml settings to Rails
 # https://github.com/railsconfig/config
-gem 'config'
+gem 'config', '>= 1.7.1'
 
 # blocking & throttling, https://github.com/kickstarter/rack-attack
 gem 'rack-attack'
@@ -160,9 +160,9 @@ gem 'whenever', require: false
 
 # An attempt to tame Rails' default policy to log everything.
 # https://github.com/roidrage/lograge
-gem 'lograge'
+gem 'lograge', '>= 0.10.0'
 # https://github.com/shadabahmed/logstasher/
-gem 'logstasher'
+gem 'logstasher', '>= 1.3.0'
 # https://github.com/dwbutler/logstash-logger/
 # gem 'logstash-logger'
 
@@ -176,7 +176,7 @@ gem 'activeadmin', github: 'activeadmin/activeadmin'#, branch: '1-1-stable'
 gem 'arctic_admin', github: 'cle61/arctic_admin'#, branch: '2-0-alpha'
 # UI for ActiveAdmin, https://github.com/vigetlabs/active_material
 # gem "active_material", github: "vigetlabs/active_material"
-gem 'coffee-rails'
+gem 'coffee-rails', '>= 4.2.2'
 
 # https://github.com/sferik/rails_admin
 # gem 'rails_admin', '~> 1.2'
@@ -259,9 +259,9 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background.
   # Read more: https://github.com/rails/spring
-  gem 'spring'
+  gem 'spring', '>= 2.0.2'
   # https://github.com/jonleighton/spring-watcher-listen
-  gem 'spring-watcher-listen'
+  gem 'spring-watcher-listen', '>= 2.0.1'
   # https://github.com/guard/listen
   gem 'listen', '~> 3.0'
 
@@ -299,7 +299,7 @@ end
 # https://github.com/ascendbruce/awesome_rails_console
 # http://toyroom.bruceli.net/tw/2014/08/13/awesome-rails-console-customization-using-pry.html
 # http://toyroom.bruceli.net/tw/2014/06/14/using-irbrc-to-serve-frequent-used-commands-in-rails-console.html
-gem 'awesome_rails_console'
+gem 'awesome_rails_console', '>= 0.4.3'
 # Please clean up duplicated gems if any.
 # Feel free to remove gems that you don't want to use or if they conflict with other gem dependencies. (you might need to update .pryrc also)
 group :development, :test do
@@ -323,10 +323,10 @@ group :development, :test do
   # https://relishapp.com/rspec/rspec-rails/v/3-7
   # https://ruby-china.org/topics/9271
   # https://github.com/rspec/rspec-expectations
-  gem 'rspec-rails'
+  gem 'rspec-rails', '>= 3.8.2'
   # http://www.rubydoc.info/gems/factory_bot/file/GETTING_STARTED.md
   # https://github.com/thoughtbot/factory_bot_rails
-  gem 'factory_bot_rails'
+  gem 'factory_bot_rails', '>= 4.11.1'
 
   # https://github.com/grosser/parallel_tests
   # https://makandracards.com/makandra/1241-how-to-employ-and-run-your-tests-with-parallel_tests-to-speed-up-test-execution
