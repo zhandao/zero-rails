@@ -30,7 +30,7 @@ gem 'redis-rails'
 # === Query Extension ===
 
 # Pagination, https://github.com/kaminari/kaminari
-gem 'kaminari'
+gem 'kaminari', '>= 1.2.1'
 
 # By_* Lets you find ActiveRecord + Mongoid objects by year, month, fortnight, week and more!
 # https://github.com/radar/by_star
