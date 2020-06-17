@@ -7,7 +7,7 @@ end
 
 ruby '2.6.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.0'
+gem 'rails', '~> 5.2.2'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
@@ -24,7 +24,7 @@ gem 'pg', '~> 1.1.0'
 # Use Redis adapter to run Action Cable in production
 gem 'redis', '~> 4.1'
 # https://github.com/redis-store/redis-rails
-gem 'redis-rails'
+gem 'redis-rails', '>= 5.0.2'
 
 
 # === Query Extension ===
@@ -137,7 +137,7 @@ gem 'rack-cors'
 gem 'config'
 
 # blocking & throttling, https://github.com/kickstarter/rack-attack
-gem 'rack-attack'
+gem 'rack-attack', '>= 5.4.2'
 
 # Abort requests that are taking too long, https://github.com/heroku/rack-timeout
 gem 'rack-timeout', require: 'rack/timeout/base'
@@ -150,7 +150,7 @@ gem 'rack-timeout', require: 'rack/timeout/base'
 
 # https://github.com/mperham/sidekiq
 # https://github.com/mperham/sidekiq/wiki/Active-Job
-gem 'sidekiq'
+gem 'sidekiq', '>= 5.2.5'
 
 # provides a clear syntax for writing and deploying cron jobs, https://github.com/javan/whenever
 gem 'whenever', require: false
@@ -160,9 +160,9 @@ gem 'whenever', require: false
 
 # An attempt to tame Rails' default policy to log everything.
 # https://github.com/roidrage/lograge
-gem 'lograge'
+gem 'lograge', '>= 0.10.0'
 # https://github.com/shadabahmed/logstasher/
-gem 'logstasher'
+gem 'logstasher', '>= 1.3.0'
 # https://github.com/dwbutler/logstash-logger/
 # gem 'logstash-logger'
 
@@ -176,7 +176,7 @@ gem 'activeadmin', github: 'activeadmin/activeadmin'#, branch: '1-1-stable'
 gem 'arctic_admin', github: 'cle61/arctic_admin'#, branch: '2-0-alpha'
 # UI for ActiveAdmin, https://github.com/vigetlabs/active_material
 # gem "active_material", github: "vigetlabs/active_material"
-gem 'coffee-rails'
+gem 'coffee-rails', '>= 4.2.2'
 
 # https://github.com/sferik/rails_admin
 # gem 'rails_admin', '~> 1.2'
@@ -269,7 +269,7 @@ group :development do
   gem 'did_you_mean', require: false
 
   # https://github.com/charliesome/better_errors
-  gem 'better_errors'
+  gem 'better_errors', '>= 2.5.0'
   # https://github.com/banister/binding_of_caller
   gem 'binding_of_caller'
 
@@ -299,7 +299,7 @@ end
 # https://github.com/ascendbruce/awesome_rails_console
 # http://toyroom.bruceli.net/tw/2014/08/13/awesome-rails-console-customization-using-pry.html
 # http://toyroom.bruceli.net/tw/2014/06/14/using-irbrc-to-serve-frequent-used-commands-in-rails-console.html
-gem 'awesome_rails_console'
+gem 'awesome_rails_console', '>= 0.4.3'
 # Please clean up duplicated gems if any.
 # Feel free to remove gems that you don't want to use or if they conflict with other gem dependencies. (you might need to update .pryrc also)
 group :development, :test do
@@ -323,10 +323,10 @@ group :development, :test do
   # https://relishapp.com/rspec/rspec-rails/v/3-7
   # https://ruby-china.org/topics/9271
   # https://github.com/rspec/rspec-expectations
-  gem 'rspec-rails'
+  gem 'rspec-rails', '>= 3.8.2'
   # http://www.rubydoc.info/gems/factory_bot/file/GETTING_STARTED.md
   # https://github.com/thoughtbot/factory_bot_rails
-  gem 'factory_bot_rails'
+  gem 'factory_bot_rails', '>= 4.11.1'
 
   # https://github.com/grosser/parallel_tests
   # https://makandracards.com/makandra/1241-how-to-employ-and-run-your-tests-with-parallel_tests-to-speed-up-test-execution
@@ -335,7 +335,7 @@ end
 
 group :test do
   # https://github.com/philostler/rspec-sidekiq/
-  gem 'rspec-sidekiq'
+  gem 'rspec-sidekiq', '>= 3.0.3'
   # TODO
   # gem 'faker'
   # gem 'capybara'
