@@ -58,7 +58,7 @@ GIT
 PATH
   remote: ../ikkiuchi/i_am_i_can
   specs:
-    i_am_i_can (4.3.3)
+    i_am_i_can (4.4.1)
       activerecord
       activesupport
       colorize
