@@ -18,11 +18,11 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # Use mysql as the database for Active Record
 # gem 'mysql2', '>= 0.3.18', '< 0.5'
 # Use postgresql as the database for Active Record
-gem 'pg', '~> 1.1.0'
+gem 'pg', '~> 1.2.0'
 # https://github.com/devmynd/jsonb_accessor
 # gem 'jsonb_accessor', '~> 1.0.0'
 # Use Redis adapter to run Action Cable in production
-gem 'redis', '~> 4.1'
+gem 'redis', '~> 4.2'
 # https://github.com/redis-store/redis-rails
 gem 'redis-rails'
 
@@ -274,7 +274,7 @@ group :development do
   # https://github.com/jonleighton/spring-watcher-listen
   gem 'spring-watcher-listen'
   # https://github.com/guard/listen
-  gem 'listen', '~> 3.0'
+  gem 'listen'
 
   # https://github.com/yuki24/did_you_mean
   gem 'did_you_mean', require: false
