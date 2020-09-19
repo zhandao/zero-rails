@@ -5,13 +5,13 @@ Rails.application.configure do
 
   app_name = Rails.app_class.to_s.underscore.split('/')[0]
 
-  unless Rails.env.test?
-    config.lograge.logger =
-        ActiveSupport::Logger.new(
-            "/data/logs/logstash_#{app_name}_#{Rails.env}}.log",
-            leave_size = 6, leave_size = 200 * 1048576
-        )
-  end
+  # unless Rails.env.test?
+  config.lograge.logger =
+      ActiveSupport::Logger.new(
+          "log/logstash_#{app_name}_#{Rails.env}}.log",
+          leave_size = 6, leave_size = 200 * 1048576
+      )
+  # end
 
   config.lograge.base_controller_class = 'ActionController::API'
 

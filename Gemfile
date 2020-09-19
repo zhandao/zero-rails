@@ -5,9 +5,9 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '2.6.1'
+ruby '2.7.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.0'
+gem 'rails', '~> 6.0.3.3'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
@@ -58,7 +58,7 @@ gem 'kaminari'
 # gem 'friendly_id', '~> 5.1.0'
 
 # Soft Delete, https://github.com/ActsAsParanoid/acts_as_paranoid
-gem 'acts_as_paranoid', '~> 0.6.0'
+gem 'acts_as_paranoid', '~> 0.7.0'
 
 # https://github.com/ClosureTree/closure_tree
 # Easily and efficiently make your ActiveRecord models support hierarchies
@@ -182,9 +182,9 @@ gem 'logstasher'
 
 # https://activeadmin.info/documentation.html
 # https://github.com/activeadmin/activeadmin
-gem 'activeadmin', github: 'activeadmin/activeadmin'#, branch: '1-1-stable'
+gem 'activeadmin'#, github: 'activeadmin/activeadmin'#, branch: '1-1-stable'
 # UI for ActiveAdmin, https://github.com/cle61/arctic_admin
-gem 'arctic_admin', github: 'cle61/arctic_admin'#, branch: '2-0-alpha'
+gem 'arctic_admin'#, github: 'cle61/arctic_admin'#, branch: '2-0-alpha'
 # UI for ActiveAdmin, https://github.com/vigetlabs/active_material
 # gem "active_material", github: "vigetlabs/active_material"
 gem 'coffee-rails'
