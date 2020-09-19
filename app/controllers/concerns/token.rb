@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Token
   attr_accessor :current_user, :payload
 

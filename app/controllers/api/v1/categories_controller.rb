@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::V1::CategoriesController < Api::V1::BaseController
   # TODO: gen #Class
   include ActiveRecordErrorsRescuer

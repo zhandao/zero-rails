@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'params_processor' # TODO
 
 class Api::ApiController < ActionController::API

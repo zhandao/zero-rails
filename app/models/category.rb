@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Category < ApplicationRecord
   include Search
 
@@ -9,9 +11,9 @@ class Category < ApplicationRecord
 
   has_many :goods#, dependent: :nullify
 
-  builder_support rmv: %i[ updated_at created_at ]
-  builder_add :sub_categories_info, when: :get_nested_list
-  builder_add :base_category_info, name: :base_category, when: -> { base_category.present? } # TODO: 思考：为什么 get_nested_list 时不会有该 info？
+  active_serialize rmv: %i[ updated_at created_at ]
+  # builder_add :sub_categories_info, when: :get_nested_list TODO !!!
+  # builder_add :base_category_info, name: :base_category, when: -> { base_category.present? } # TODO: 思考：为什么 get_nested_list 时不会有该 info？
 
   soft_destroy
 
@@ -32,9 +34,19 @@ class Category < ApplicationRecord
   end
 end
 
-
-__END__
-
-t.string   :name,          null: false
-t.integer  :base_category
-t.datetime :deleted_at
+# == Schema Information
+#
+# Table name: categories
+#
+#  id               :bigint(8)        not null, primary key
+#  deleted_at       :datetime
+#  name             :string           not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  base_category_id :bigint(8)
+#
+# Indexes
+#
+#  index_categories_on_base_category_id  (base_category_id)
+#  index_categories_on_name              (name) UNIQUE
+#

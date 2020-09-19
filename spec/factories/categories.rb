@@ -11,7 +11,19 @@ FactoryBot.define do
   end
 end
 
-__END__
-
-http://www.rubydoc.info/gems/factory_bot/file/GETTING_STARTED.md#Inheritance
-http://www.rubydoc.info/gems/factory_bot/file/GETTING_STARTED.md#Associations
+# == Schema Information
+#
+# Table name: categories
+#
+#  id               :bigint(8)        not null, primary key
+#  deleted_at       :datetime
+#  name             :string           not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  base_category_id :bigint(8)
+#
+# Indexes
+#
+#  index_categories_on_base_category_id  (base_category_id)
+#  index_categories_on_name              (name) UNIQUE
+#

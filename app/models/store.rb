@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class Store < ApplicationRecord
   has_many :inventories, dependent: :destroy
 
   has_many :goods, -> { where('amount > 0') }, through: :inventories
 
-  builder_support rmv: %i[ ]
+  active_serialize rmv: %i[ ]
 
   soft_destroy
 
@@ -16,8 +18,17 @@ class Store < ApplicationRecord
   end
 end
 
-__END__
-
-t.string   :code,       null: false
-t.string   :addr,       null: false
-t.datetime :deleted_at
+# == Schema Information
+#
+# Table name: stores
+#
+#  id         :bigint(8)        not null, primary key
+#  address    :string           not null
+#  deleted_at :datetime
+#  name       :string           not null
+#
+# Indexes
+#
+#  index_stores_on_address  (address) UNIQUE
+#  index_stores_on_name     (name) UNIQUE
+#

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ActiveStorageHelper
   def file_name
     filename || file.filename.to_s.tap { |name| update(filename: name) }

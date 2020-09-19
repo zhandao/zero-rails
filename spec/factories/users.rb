@@ -8,7 +8,23 @@ FactoryBot.define do
   end
 end
 
-__END__
-
-http://www.rubydoc.info/gems/factory_bot/file/GETTING_STARTED.md#Inheritance
-http://www.rubydoc.info/gems/factory_bot/file/GETTING_STARTED.md#Associations
+# == Schema Information
+#
+# Table name: users
+#
+#  id              :bigint(8)        not null, primary key
+#  deleted_at      :datetime
+#  email           :string
+#  name            :string           not null
+#  password_digest :string           not null
+#  phone_number    :string
+#  token_version   :integer          default(0)
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#
+# Indexes
+#
+#  index_users_on_email         (email) UNIQUE
+#  index_users_on_name          (name) UNIQUE
+#  index_users_on_phone_number  (phone_number) UNIQUE
+#

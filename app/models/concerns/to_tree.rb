@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ToTree
   def self.included(base)
     base.class_eval do
@@ -20,7 +22,7 @@ module ToTree
       proc do |node|
         sub_nodes = self.clone.where(@tree_relation_key => node.id).to_a
         sub_nodes.map!(&_generating_tree)
-        node.to_builder.merge!(sub_nodes: sub_nodes)
+        node.to_h.merge!(sub_nodes: sub_nodes)
       end
     end
   end

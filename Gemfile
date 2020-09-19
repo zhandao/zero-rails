@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '2.6.0'
+ruby '2.6.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.0'
 
@@ -26,8 +26,11 @@ gem 'redis', '~> 4.1'
 # https://github.com/redis-store/redis-rails
 gem 'redis-rails'
 
+# https://github.com/paper-trail-gem/paper_trail
+# gem 'paper_trail'
 
-# === Query Extension ===
+
+# === Search & Query Extension ===
 
 # Pagination, https://github.com/kaminari/kaminari
 gem 'kaminari'
@@ -35,6 +38,12 @@ gem 'kaminari'
 # By_* Lets you find ActiveRecord + Mongoid objects by year, month, fortnight, week and more!
 # https://github.com/radar/by_star
 # gem 'by_star', github: 'radar/by_star'
+
+# Intelligent search made easy with Rails and Elasticsearch
+# https://github.com/ankane/searchkick
+# gem 'searchkick'
+# https://github.com/typhoeus/typhoeus
+# gem 'typhoeus'
 
 # https://github.com/rails/arel
 # Rails integrates it by default
@@ -87,6 +96,8 @@ gem 'puma'
 # === Ruby Extension ===
 # https://github.com/intridea/multi_json/
 gem 'multi_json'
+# https://github.com/ohler55/oj
+gem 'oj'
 
 
 # === Monitor ===
@@ -99,9 +110,9 @@ gem 'sentry-raven'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # https://devblast.com/b/jbuilder
 gem 'jbuilder'
-# https://github.com/ikkiuchi/builder_support
-# Provide a very simple way to transform ActiveRecord data into JSON output based on JBuilder
-gem 'builder_support'
+# https://github.com/ikkiuchi/active_serialize
+# Provide a very simple way to transform ActiveRecord data into Hash
+gem 'active_serialize'
 
 # https://github.com/rails-api/active_model_serializers/
 # gem 'active_model_serializers'
@@ -293,6 +304,14 @@ group :development do
   # A Ruby code quality reporter, https://github.com/whitesmith/rubycritic
   # https://ruby-china.org/topics/30746
   gem 'rubycritic', require: false # or just `gem install`
+
+  # Colorized logging for Memcached and Redis
+  # https://github.com/ankane/cacheflow
+  gem 'cacheflow'
+
+  # Annotate Rails classes with schema and routes info
+  # https://github.com/ctran/annotate_models
+  gem 'annotate' # 1000000 :+1
 end
 
 # console beautifying settings
@@ -316,21 +335,6 @@ group :development, :test do
   # https://github.com/pry/pry-stack_explorer
   gem 'pry-stack_explorer'
   # -- awesome_rails_console
-
-  # https://github.com/rspec/rspec-rails
-  # http://www.betterspecs.org/
-  # https://relishapp.com/rspec/rspec-core/v/3-7
-  # https://relishapp.com/rspec/rspec-rails/v/3-7
-  # https://ruby-china.org/topics/9271
-  # https://github.com/rspec/rspec-expectations
-  gem 'rspec-rails'
-  # http://www.rubydoc.info/gems/factory_bot/file/GETTING_STARTED.md
-  # https://github.com/thoughtbot/factory_bot_rails
-  gem 'factory_bot_rails'
-
-  # https://github.com/grosser/parallel_tests
-  # https://makandracards.com/makandra/1241-how-to-employ-and-run-your-tests-with-parallel_tests-to-speed-up-test-execution
-  gem 'parallel_tests' # TODO
 end
 
 group :test do
@@ -347,6 +351,21 @@ group :test do
   # Code coverage for Ruby 1.9+ with a powerful configuration library and automatic merging of coverage across test suites
   # https://github.com/colszowka/simplecov
   gem 'simplecov', :require => false
+
+  # https://github.com/rspec/rspec-rails
+  # http://www.betterspecs.org/
+  # https://relishapp.com/rspec/rspec-core/v/3-7
+  # https://relishapp.com/rspec/rspec-rails/v/3-7
+  # https://ruby-china.org/topics/9271
+  # https://github.com/rspec/rspec-expectations
+  gem 'rspec-rails'
+  # http://www.rubydoc.info/gems/factory_bot/file/GETTING_STARTED.md
+  # https://github.com/thoughtbot/factory_bot_rails
+  gem 'factory_bot_rails'
+
+  # https://github.com/grosser/parallel_tests
+  # https://makandracards.com/makandra/1241-how-to-employ-and-run-your-tests-with-parallel_tests-to-speed-up-test-execution
+  gem 'parallel_tests' # TODO
 end
 
 group :production, :staging do

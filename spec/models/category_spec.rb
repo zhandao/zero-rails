@@ -31,3 +31,20 @@ RSpec.describe Category, type: :model do
   # describe '#json_addition, show the base cate when not getting nested list' do
   # end
 end
+
+# == Schema Information
+#
+# Table name: categories
+#
+#  id               :bigint(8)        not null, primary key
+#  deleted_at       :datetime
+#  name             :string           not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  base_category_id :bigint(8)
+#
+# Indexes
+#
+#  index_categories_on_base_category_id  (base_category_id)
+#  index_categories_on_name              (name) UNIQUE
+#

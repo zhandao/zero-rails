@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module PaperTrailHelper
   extend ActiveSupport::Concern
 
   included do
-    def trails_to_builder
+    def trails_to_ha
       trails.reverse.map do |trail|
         {
               event: trail.event,
@@ -29,8 +31,8 @@ module PaperTrailHelper
       scope :with_trails, -> { includes(:trails) }
     end
 
-    def trails_to_builder
-      with_trails.map(&:trails_to_builder)
+    def trails_to_ha
+      with_trails.map(&:trails_to_ha)
     end
   end
 end

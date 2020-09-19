@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # https://activeadmin.info/documentation.html
 
 ActiveAdmin.register User do
