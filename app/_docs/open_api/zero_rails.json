@@ -15,7 +15,9 @@
       "description": "Internal staging server for testing"
     }
   ],
-  "security": null,
+  "security": [
+
+  ],
   "tags": [
     {
       "name": "Categories"

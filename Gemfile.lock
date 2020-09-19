@@ -22,9 +22,9 @@ GIT
 
 GIT
   remote: https://github.com/zhandao/zero-rails_openapi.git
-  revision: 371d74315f28db4a19ffab25a212dbded49b2f8d
+  revision: 2a32ca8ff8aae85ecd02c011dc4af4a171b49f07
   specs:
-    zero-rails_openapi (2.1.4)
+    zero-rails_openapi (2.1.5)
       activesupport (>= 4.1)
       colorize
       rails (>= 4.1)
