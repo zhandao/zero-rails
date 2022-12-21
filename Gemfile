@@ -182,7 +182,7 @@ gem 'logstasher'
 
 # https://activeadmin.info/documentation.html
 # https://github.com/activeadmin/activeadmin
-gem 'activeadmin'#, github: 'activeadmin/activeadmin'#, branch: '1-1-stable'
+gem 'activeadmin', '>= 2.9.0' #, github: 'activeadmin/activeadmin'#, branch: '1-1-stable'
 # UI for ActiveAdmin, https://github.com/cle61/arctic_admin
 gem 'arctic_admin'#, github: 'cle61/arctic_admin'#, branch: '2-0-alpha'
 # UI for ActiveAdmin, https://github.com/vigetlabs/active_material
