@@ -7,7 +7,7 @@ end
 
 ruby '2.7.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.3.3'
+gem 'rails', '~> 6.1.7.1'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
@@ -182,7 +182,7 @@ gem 'logstasher'
 
 # https://activeadmin.info/documentation.html
 # https://github.com/activeadmin/activeadmin
-gem 'activeadmin'#, github: 'activeadmin/activeadmin'#, branch: '1-1-stable'
+gem 'activeadmin', '>= 2.9.0' #, github: 'activeadmin/activeadmin'#, branch: '1-1-stable'
 # UI for ActiveAdmin, https://github.com/cle61/arctic_admin
 gem 'arctic_admin'#, github: 'cle61/arctic_admin'#, branch: '2-0-alpha'
 # UI for ActiveAdmin, https://github.com/vigetlabs/active_material
