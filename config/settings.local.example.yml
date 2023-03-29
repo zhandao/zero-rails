@@ -7,12 +7,12 @@ sentry:
 
 database:
   url: postgres://myuser:mypass@localhost/somedatabase
+redis:
+  cache_url: redis://localhost:6379/0
+  sidekiq_url: redis://localhost:6379/1
 
 admin:
   user_name: admin
   password: zero-rails-admin
 secure_storage:
   default: zero-rails
-redis:
-  cache_url: redis://localhost:6379/0
-  sidekiq_url: redis://localhost:6379/1
