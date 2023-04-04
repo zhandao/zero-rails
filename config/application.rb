@@ -34,7 +34,20 @@ module ZeroRails
     config.eager_load_paths << Rails.root.join('lib')
 
     # config.cache_store = :redis_store, Keys.redis.cache_url, { expires_in: 30.days, multithread: true }
-    config.cache_store = :redis_store, Keys.redis.cache_url, { expires_in: 1.day }
+    config.cache_store = :redis_cache_store, {
+      url: Keys.redis.cache_url,
+
+      connect_timeout:    20,
+      read_timeout:       1,
+      write_timeout:      1,
+      # reconnect_attempts: 1,
+
+      # error_handler: -> (method:, returning:, exception:) {
+        # Report errors to Sentry as warnings
+        # Raven.capture_exception exception, level: 'warning',
+        #                         tags: { method: method, returning: returning }
+      # }
+    }
 
     config.encoding = 'utf-8'
 

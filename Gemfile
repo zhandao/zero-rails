@@ -22,15 +22,13 @@ gem 'puma'
 
 # ===>                                  Databases                                   <===
 #
-# Use mysql as the database for Active Record
 # gem 'mysql2', '>= 0.3.18', '< 0.5'
-# Use postgresql as the database for Active Record
-gem 'pg', '~> 1.2.0'
+gem 'pg', '~> 1.4.0'
 # https://github.com/devmynd/jsonb_accessor
 # gem 'jsonb_accessor', '~> 1.0.0'
 #
-# Use Redis adapter to run Action Cable in production
-gem 'redis', '~> 4.2'
+gem 'redis', '~> 5.0'
+gem 'hiredis'
 # https://github.com/redis-store/redis-rails
 gem 'redis-rails'
 #
