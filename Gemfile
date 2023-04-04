@@ -365,6 +365,7 @@ gem 'lograge'
 gem 'logstasher'
 # https://github.com/dwbutler/logstash-logger/
 # gem 'logstash-logger'
+gem 'logstash-event'
 #
 # Keep personal data out of your logs
 # https://github.com/ankane/logstop
