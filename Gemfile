@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '2.7.1'
+ruby '2.7.8'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.3.3'
 
@@ -144,11 +144,12 @@ gem 'zero-rails_openapi', github: 'zhandao/zero-rails_openapi'
 gem 'zero-params_processor', github: 'zhandao/zero-params_processor'
 # gem 'zero-params_processor', path: '~/ws/zero-params_processor'
 #
-gem 'i_am_i_can', path: '~/ws/ikkiuchi/i_am_i_can'
+gem 'i_am_i_can', github: 'zhandao/i_am_i_can'
+# gem 'i_am_i_can', path: '~/ws/ikkiuchi/i_am_i_can'
 #
 # Business Error Management by using OOP
 # https://github.com/zhandao/business_error
-gem 'business_error'
+gem 'business_error', github: 'zhandao/business_error'
 # gem 'business_error', path: '~/ws/business_error'
 #
 # Render JSON response in a unified format
@@ -464,7 +465,7 @@ end
 # https://github.com/ascendbruce/awesome_rails_console
 # http://toyroom.bruceli.net/tw/2014/08/13/awesome-rails-console-customization-using-pry.html
 # http://toyroom.bruceli.net/tw/2014/06/14/using-irbrc-to-serve-frequent-used-commands-in-rails-console.html
-gem 'awesome_rails_console'
+gem 'awesome_rails_console', github: 'ascendbruce/awesome_rails_console'
 # Please clean up duplicated gems if any.
 # Feel free to remove gems that you don't want to use or if they conflict with other gem dependencies. (you might need to update .pryrc also)
 group :development, :test do
@@ -473,13 +474,13 @@ group :development, :test do
   gem 'hirb'
   # Unused, see: https://github.com/miaout17/hirb-unicode/pull/5
   ## gem 'hirb-unicode'
-  # Instead of steakknife/hirb-unicode: https://github.com/steakknife/hirb-unicode
-  gem 'hirb-unicode-steakknife', require: 'hirb-unicode'
-  gem 'pry', '0.12.2'
+  # https://github.com/steakknife/hirb-unicode, MOVED TO ./lib/hirb_unicode.rb
+  # gem 'hirb-unicode-steakknife', require: 'hirb-unicode'
+  gem 'pry', '>= 0.13'
   # https://github.com/deivid-rodriguez/pry-byebug
-  gem 'pry-byebug', '3.7.0'
+  gem 'pry-byebug'
   # https://github.com/pry/pry-stack_explorer
-  gem 'pry-stack_explorer', '0.4.9.3'
+  gem 'pry-stack_explorer'#, '0.4.9.3'
   # -- awesome_rails_console
 end
 
