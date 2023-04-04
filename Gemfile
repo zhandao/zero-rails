@@ -71,7 +71,7 @@ gem 'kaminari'
 # gem 'friendly_id', '~> 5.1.0'
 #
 # Soft Delete, https://github.com/ActsAsParanoid/acts_as_paranoid
-gem 'acts_as_paranoid', '~> 0.7.0'
+gem 'acts_as_paranoid', '~> 0.8'
 #
 # https://github.com/ClosureTree/closure_tree
 # Easily and efficiently make your ActiveRecord models support hierarchies
