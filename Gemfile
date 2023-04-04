@@ -7,7 +7,7 @@ end
 
 ruby '2.7.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.3.3'
+gem 'rails', '~> 6.1.7.3'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
@@ -90,7 +90,7 @@ gem 'out_put'
 
 # === App Server ===
 # https://github.com/puma/puma
-gem 'puma'
+gem 'puma', '>= 5.6.4'
 
 
 # === Ruby Extension ===
@@ -161,7 +161,7 @@ gem 'rack-timeout', require: 'rack/timeout/base'
 
 # https://github.com/mperham/sidekiq
 # https://github.com/mperham/sidekiq/wiki/Active-Job
-gem 'sidekiq'
+gem 'sidekiq', '>= 7.0.0'
 
 # provides a clear syntax for writing and deploying cron jobs, https://github.com/javan/whenever
 gem 'whenever', require: false
@@ -182,7 +182,7 @@ gem 'logstasher'
 
 # https://activeadmin.info/documentation.html
 # https://github.com/activeadmin/activeadmin
-gem 'activeadmin'#, github: 'activeadmin/activeadmin'#, branch: '1-1-stable'
+gem 'activeadmin', '>= 2.9.0' #, github: 'activeadmin/activeadmin'#, branch: '1-1-stable'
 # UI for ActiveAdmin, https://github.com/cle61/arctic_admin
 gem 'arctic_admin'#, github: 'cle61/arctic_admin'#, branch: '2-0-alpha'
 # UI for ActiveAdmin, https://github.com/vigetlabs/active_material
