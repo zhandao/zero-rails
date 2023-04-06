@@ -161,7 +161,7 @@ gem 'rack-timeout', require: 'rack/timeout/base'
 
 # https://github.com/mperham/sidekiq
 # https://github.com/mperham/sidekiq/wiki/Active-Job
-gem 'sidekiq'
+gem 'sidekiq', '>= 7.0.8'
 
 # provides a clear syntax for writing and deploying cron jobs, https://github.com/javan/whenever
 gem 'whenever', require: false
