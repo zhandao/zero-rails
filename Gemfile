@@ -7,7 +7,7 @@ end
 
 ruby '2.7.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.3.3'
+gem 'rails', '~> 6.1.7.4'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
@@ -171,7 +171,7 @@ gem 'whenever', require: false
 
 # An attempt to tame Rails' default policy to log everything.
 # https://github.com/roidrage/lograge
-gem 'lograge'
+gem 'lograge', '>= 0.12.0'
 # https://github.com/shadabahmed/logstasher/
 gem 'logstasher'
 # https://github.com/dwbutler/logstash-logger/
@@ -182,9 +182,9 @@ gem 'logstasher'
 
 # https://activeadmin.info/documentation.html
 # https://github.com/activeadmin/activeadmin
-gem 'activeadmin'#, github: 'activeadmin/activeadmin'#, branch: '1-1-stable'
+gem 'activeadmin', '>= 2.9.0' #, github: 'activeadmin/activeadmin'#, branch: '1-1-stable'
 # UI for ActiveAdmin, https://github.com/cle61/arctic_admin
-gem 'arctic_admin'#, github: 'cle61/arctic_admin'#, branch: '2-0-alpha'
+gem 'arctic_admin', '>= 3.2.1' #, github: 'cle61/arctic_admin'#, branch: '2-0-alpha'
 # UI for ActiveAdmin, https://github.com/vigetlabs/active_material
 # gem "active_material", github: "vigetlabs/active_material"
 gem 'coffee-rails'
@@ -318,7 +318,7 @@ end
 # https://github.com/ascendbruce/awesome_rails_console
 # http://toyroom.bruceli.net/tw/2014/08/13/awesome-rails-console-customization-using-pry.html
 # http://toyroom.bruceli.net/tw/2014/06/14/using-irbrc-to-serve-frequent-used-commands-in-rails-console.html
-gem 'awesome_rails_console'
+gem 'awesome_rails_console', '>= 0.4.5'
 # Please clean up duplicated gems if any.
 # Feel free to remove gems that you don't want to use or if they conflict with other gem dependencies. (you might need to update .pryrc also)
 group :development, :test do
@@ -358,10 +358,10 @@ group :test do
   # https://relishapp.com/rspec/rspec-rails/v/3-7
   # https://ruby-china.org/topics/9271
   # https://github.com/rspec/rspec-expectations
-  gem 'rspec-rails'
+  gem 'rspec-rails', '>= 4.0.2'
   # http://www.rubydoc.info/gems/factory_bot/file/GETTING_STARTED.md
   # https://github.com/thoughtbot/factory_bot_rails
-  gem 'factory_bot_rails'
+  gem 'factory_bot_rails', '>= 6.2.0'
 
   # https://github.com/grosser/parallel_tests
   # https://makandracards.com/makandra/1241-how-to-employ-and-run-your-tests-with-parallel_tests-to-speed-up-test-execution
