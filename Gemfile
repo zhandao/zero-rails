@@ -148,7 +148,7 @@ gem 'rack-cors'
 gem 'config'
 
 # blocking & throttling, https://github.com/kickstarter/rack-attack
-gem 'rack-attack'
+gem 'rack-attack', '>= 6.7.0'
 
 # Abort requests that are taking too long, https://github.com/heroku/rack-timeout
 gem 'rack-timeout', require: 'rack/timeout/base'
