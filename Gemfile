@@ -339,7 +339,7 @@ end
 
 group :test do
   # https://github.com/philostler/rspec-sidekiq/
-  gem 'rspec-sidekiq'
+  gem 'rspec-sidekiq', '>= 4.0.0'
   # TODO
   # gem 'faker'
   # gem 'capybara'
