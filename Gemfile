@@ -90,7 +90,7 @@ gem 'out_put'
 
 # === App Server ===
 # https://github.com/puma/puma
-gem 'puma'
+gem 'puma', '>= 5.6.7'
 
 
 # === Ruby Extension ===
